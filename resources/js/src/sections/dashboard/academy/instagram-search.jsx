@@ -488,7 +488,7 @@ const InstagramSearch = (props) => {
         </>
     );
 };
-const mapStateToProps = state => ({
-    searchs: state.searchs.searchs
-})
+// const mapStateToProps = state => ({
+//     searchs: state.searchs.searchs
+// })
 // export default connect(mapStateToProps)(InstagramSearch);
