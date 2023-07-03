@@ -22,4 +22,8 @@ class FinderController extends Controller
     {
         print_r($request->searchParams);
     }
+    public function saveSearch(Request $request)
+    {
+        print_r($request->searchParams);
+    }
 }

@@ -46,3 +46,4 @@ Route::post('handle_tfa', [App\Http\Controllers\UserController::class, 'handleTf
 Route::post('get_team_info', [App\Http\Controllers\UserController::class, 'getTeamInfo']);
 Route::post('send_invite_email', [App\Http\Controllers\UserController::class, 'sendInviteEmail']);
 Route::post('search_infs', [App\Http\Controllers\FinderController::class, 'findWithParams']);
+Route::post('save_search', [App\Http\Controllers\FinderController::class, 'saveSearch']);

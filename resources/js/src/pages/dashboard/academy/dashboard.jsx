@@ -127,7 +127,7 @@ const companies = [
     shortDescription: 'Established since 2010'
   },
   {
-    id: 'FR-58F46',
+    id: 'FR-58F45',
     averageRating: 4.3,
     employees: '25-50',
     isVerified: true,

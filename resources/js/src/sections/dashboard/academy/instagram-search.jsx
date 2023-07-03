@@ -38,6 +38,16 @@ export const InstagramSearch = () => {
                 }
             });
     }
+    const saveSearch = () => {
+        axios
+            .post("/api/save_search", { searchParams })
+            .then((response) => {
+                console.log(response)
+                if (response.data.status === 200) {
+
+                }
+            });
+    }
     return (
         <>
             <Stack
@@ -402,6 +412,7 @@ export const InstagramSearch = () => {
                                         <BookmarkBorderIcon />
                                     </SvgIcon>
                                 )}
+                                onClick={saveSearch}
                                 variant="contained"
                             >
                                 Save this Search

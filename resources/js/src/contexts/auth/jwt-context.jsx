@@ -81,11 +81,18 @@ export const AuthProvider = (props) => {
           localStorage.removeItem('email')
 
           localStorage.removeItem('time_token')
+          // dispatch({
+          //   type: ActionType.INITIALIZE,
+          //   payload: {
+          //     isAuthenticated: false,
+          //     user: null
+          //   }
+          // });
           dispatch({
             type: ActionType.INITIALIZE,
             payload: {
-              isAuthenticated: false,
-              user: null
+              isAuthenticated: true,
+              user
             }
           });
         }
