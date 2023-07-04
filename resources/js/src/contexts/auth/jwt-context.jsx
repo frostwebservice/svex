@@ -78,9 +78,9 @@ export const AuthProvider = (props) => {
         var token = localStorage.getItem('time_token');
         var tokenObj = JSON.parse(token);
         if (new Date().getTime() - tokenObj.time >= tokenObj.expire) {
-          localStorage.removeItem('email')
+          // localStorage.removeItem('email')
 
-          localStorage.removeItem('time_token')
+          // localStorage.removeItem('time_token')
           // dispatch({
           //   type: ActionType.INITIALIZE,
           //   payload: {
@@ -88,6 +88,16 @@ export const AuthProvider = (props) => {
           //     user: null
           //   }
           // });
+          let obj = {
+            time: new Date().getTime(),
+            value: "email",
+            expire: 3000000,
+          }
+          // You can only store strings
+          let objStr = JSON.stringify(obj);
+          localStorage.setItem("time_token", objStr);
+          const user = await authApi.me({ accessToken });
+          // const user = null;
           dispatch({
             type: ActionType.INITIALIZE,
             payload: {
