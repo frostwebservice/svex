@@ -24,6 +24,14 @@ class FinderController extends Controller
     }
     public function saveSearch(Request $request)
     {
-        print_r($request->searchParams);
-    }
+        $params = $request->searchParams;
+        $type = $params["tab"];
+        if($type=="instagram"){
+            print_r($params);
+        }
+        $flag = DB::table('searchs')->insert($params);
+		return response()->json(["status" => $this->status_code, "success" => true, "message" => "Save data successfully", "data" => $flag]);
+	}
+
+    
 }
