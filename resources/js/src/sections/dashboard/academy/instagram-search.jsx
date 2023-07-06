@@ -7,8 +7,10 @@ import { categoryOptions, locationOptions, followersOptions, ageOptions, genderO
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
 
 export const InstagramSearch = () => {
+    const email = JSON.parse(localStorage.getItem('email'));
     const [searchParams, setSearchParams] = useState(
         {
+            email: "",
             tab: "instagram",
             keywords: "",
             hashtags: "",
@@ -39,10 +41,12 @@ export const InstagramSearch = () => {
             });
     }
     const saveSearch = () => {
+
+        let values = searchParams
+        values["email"] = email;
         axios
-            .post("/api/save_search", { searchParams })
+            .post("/api/save_search", { values })
             .then((response) => {
-                console.log(response)
                 if (response.data.status === 200) {
 
                 }

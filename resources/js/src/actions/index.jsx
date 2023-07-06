@@ -42,3 +42,13 @@ export const getBillingInfo = (email) => dispatch => {
         .catch(err => console.log(err));
 
 }
+export const getSavedSearchs = (email) => dispatch => {
+    let payload = {};
+    axios
+        .post("/api/get_searchs", email)
+        .then(res => dispatch({
+            type: 'GET_SEARCHS',
+            payload: res.data
+        }))
+        .catch(err => console.log(err));
+}
