@@ -47,3 +47,4 @@ Route::post('get_team_info', [App\Http\Controllers\UserController::class, 'getTe
 Route::post('send_invite_email', [App\Http\Controllers\UserController::class, 'sendInviteEmail']);
 Route::post('search_infs', [App\Http\Controllers\FinderController::class, 'findWithParams']);
 Route::post('save_search', [App\Http\Controllers\FinderController::class, 'saveSearch']);
+Route::post('get_searchs', [App\Http\Controllers\FinderController::class, 'getSearchs']);

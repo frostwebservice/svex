@@ -29,6 +29,11 @@ class FinderController extends Controller
         $flag = DB::table('searchs')->insert($params);
 		return response()->json(["status" => $this->status_code, "success" => true, "message" => "Save data successfully", "data" => $flag]);
 	}
+    public function getSearchs(Request $request)
+    {
+        $searchs = DB::table('searchs')->where('email',$request->email)->get();
+        print_r(json_encode($searchs));
+	}
 
     
 }
