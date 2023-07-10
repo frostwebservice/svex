@@ -32,7 +32,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import LinkedinIcon from '@mui/icons-material/Linkedin';
 import { InfCard } from './inf_card';
-import { InstagramSearch } from '@/sections/dashboard/academy/instagram-search';
+import InstagramSearch from '@/sections/dashboard/academy/instagram-search';
 import { TiktokSearch } from '@/sections/dashboard/academy/tiktok-search';
 import { YoutubeSearch } from '@/sections/dashboard/academy/youtube-search';
 import { TwitterSearch } from '@/sections/dashboard/academy/twitter-search';
