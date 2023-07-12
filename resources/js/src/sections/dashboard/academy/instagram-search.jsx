@@ -448,7 +448,13 @@ const InstagramSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {searchs.map((option) => (
+                                <option
+                                    key="0"
+                                    value=""
+                                >
+
+                                </option>
+                                {searchs && searchs.map((option) => (
                                     <option
                                         key={option["id"]}
                                         value={option["id"]}
