@@ -16,6 +16,18 @@ const InstagramSearch = (props) => {
 
     }, [dispatch])
     const [savedSearchs, setSavedSearchs] = useState(searchs);
+    const saveSearch = () => {
+        let values = searchParams
+        values["email"] = email;
+        axios
+            .post("/api/save_search", { values })
+            .then((response) => {
+                if (response.data.status === 200) {
+
+                }
+            });
+    }
+
     const [searchParams, setSearchParams] = useState(
         {
             email: "",
@@ -48,18 +60,7 @@ const InstagramSearch = (props) => {
                 }
             });
     }
-    const saveSearch = () => {
 
-        let values = searchParams
-        values["email"] = email;
-        axios
-            .post("/api/save_search", { values })
-            .then((response) => {
-                if (response.data.status === 200) {
-
-                }
-            });
-    }
     return (
         <>
             <Stack
