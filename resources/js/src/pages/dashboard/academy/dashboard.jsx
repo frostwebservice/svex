@@ -125,6 +125,28 @@ const companies = [
     logo: '/assets/avatars/brandlogo.png',
     name: 'Canada Goose',
     shortDescription: 'Established since 2010'
+  },
+  {
+    id: 'FR-58F46',
+    averageRating: 4.3,
+    employees: '25-50',
+    isVerified: true,
+    jobs: [
+      {
+        id: '52cf72df2a519538d3d8a18d',
+        currency: '$',
+        isRemote: true,
+        publishedAt: subHours(now, 1).getTime(),
+        salaryMax: '600',
+        salaryMin: '400',
+        title: 'Instagram Influencer for a clothing brand who can market our products for a week',
+        jobType: 'Content creation & Shortouts',
+        paymentType: 'paid'
+      }
+    ],
+    logo: '/assets/avatars/brandlogo.png',
+    name: 'Canada Goose',
+    shortDescription: 'Established since 2010'
   }
 ];
 // }, [onSortChange]);
@@ -268,19 +290,6 @@ const Page = () => {
               >
                 42 Influencers found
               </Typography>
-              {/* <OutlinedInput
-                defaultValue=""
-                fullWidth
-                // inputProps={{ ref: queryRef }}
-                placeholder="Search customers"
-                startAdornment={(
-                  <InputAdornment position="start">
-                    <SvgIcon>
-                      <SearchMdIcon />
-                    </SvgIcon>
-                  </InputAdornment>
-                )}
-              /> */}
             </Box>
             <Box sx={{
               display: 'flex'
@@ -318,76 +327,6 @@ const Page = () => {
             ))}
 
           </Box>
-          {/* <Box sx={{ py: '64px' }}>
-          <Container maxWidth={settings.stretch ? false : 'xl'}>
-            <Grid
-              container
-              spacing={{
-                xs: 3,
-                lg: 4
-              }}
-            >
-              <Grid xs={12}>
-                <Typography variant="h6">
-                  Welcome back, Anika
-                </Typography>
-                <Typography
-                  color="text.secondary"
-                  sx={{ mt: 1 }}
-                  variant="body2"
-                >
-                  Nice progress so far, keep it up!
-                </Typography>
-              </Grid>
-              <Grid
-                xs={12}
-                md={9}
-              >
-                <AcademyDailyProgress
-                  timeCurrent={20}
-                  timeGoal={35}
-                />
-              </Grid>
-              <Grid
-                xs={12}
-                md={3}
-              >
-                <AcademyFind />
-              </Grid>
-              <Grid xs={12}>
-                <Stack
-                  alignItems="flex-start"
-                  direction="row"
-                  justifyContent="space-between"
-                  spacing={3}
-                >
-                  <Typography variant="h6">
-                    My Courses
-                  </Typography>
-                  <Button
-                    color="inherit"
-                    endIcon={(
-                      <SvgIcon>
-                        <ArrowRightIcon />
-                      </SvgIcon>
-                    )}
-                  >
-                    See all
-                  </Button>
-                </Stack>
-              </Grid>
-              {courses.map((course) => (
-                <Grid
-                  key={course.id}
-                  xs={12}
-                  md={4}
-                >
-                  <CourseCard course={course} />
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
-        </Box> */}
         </Container>
       </Box>
     </>

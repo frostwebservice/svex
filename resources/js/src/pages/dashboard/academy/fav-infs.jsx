@@ -94,6 +94,28 @@ const companies = [
     logo: '/assets/avatars/brandlogo.png',
     name: 'Canada Goose',
     shortDescription: 'Established since 2010'
+  },
+  {
+    id: 'FR-58F46',
+    averageRating: 4.3,
+    employees: '25-50',
+    isVerified: true,
+    jobs: [
+      {
+        id: '52cf72df2a519538d3d8a18d',
+        currency: '$',
+        isRemote: true,
+        publishedAt: subHours(now, 1).getTime(),
+        salaryMax: '600',
+        salaryMin: '400',
+        title: 'Instagram Influencer for a clothing brand who can market our products for a week',
+        jobType: 'Content creation & Shortouts',
+        paymentType: 'paid'
+      }
+    ],
+    logo: '/assets/avatars/brandlogo.png',
+    name: 'Canada Goose',
+    shortDescription: 'Established since 2010'
   }
 ];
 const Favinfs = () => {
