@@ -3,6 +3,8 @@ import * as Yup from 'yup';
 // import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useFormik } from 'formik';
 import { useSearchParams } from '@/hooks/use-search-params';
+import { useNavigate } from 'react-router-dom';
+
 // import { RedditTextfield} from '../../../frontendpage/TextfieldStyle'
 import "./Form.css";
 import {
@@ -31,103 +33,96 @@ import { paths } from '@/paths';
 const Page = () => {
 
 
-const validationSchema = Yup.object({
-  istogram: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  tiktok: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  youtube: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  facebook: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  twitter: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  linkedin: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  blogurl: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  pinterest: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
- 
- 
-});
+  const validationSchema = Yup.object({
+    instagram: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    tiktok: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    youtube: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    facebook: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    twitter: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    linkedin: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    blogurl: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    pinterest: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+  
+  
+  });
 
   
-const searchParams = useSearchParams();
-const returnTo = searchParams.get('returnTo');  
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get('returnTo');  
   const [isLoading, setIsLoading] = useState(false);
   const [letter, setLetter] = useState("Save changes and NEXT");
   const email = JSON.parse(localStorage.getItem('Email'));
+  const navigate = useNavigate();
 
   const [initialValues, setInitialValues] = useState({
-    istogram:"Your Istogram Handle",   
-    tiktok:"Your Tiktok Handle",
-    youtube:"Your Youtube Handle",   
-    facebook:"Your Facebook Handle", 
-    twitter:"Your Twitter Handle",  
-    pinterest:"Your Pinterest Handle",   
-    linkedin:"Your Linkedin Handle", 
-    blogurl:"Your Blog  Url ",  
+    instagram:"",   
+    tiktok:"",
+    youtube:"",   
+    facebook:"", 
+    twitter:"",  
+    pinterest:"",   
+    linkedin:"", 
+    blogurl:"",  
     email:""
   });
   initialValues.email = email;
-
   const onCancel = (e) =>{
-    window.location.href = returnTo || paths.auth.auth.signin;
+    navigate(returnTo || paths.auth.auth.signin);
 } 
-
   const formik = useFormik({
   initialValues,
   validationSchema,
   onSubmit: values => { 
-
-        setIsLoading(true);
-        setLetter("");
-        
-        setTimeout(() => {
-        axios
-          .post("/api/social-Info", values)
-           .then((response) => {
-             if (response.data.status === 200) {
-               setInitialValues({
-                istogram:"Your Istogram Handle",   
-                tiktok:"Your Tiktok Handle",
-                youtube:"Your Youtube Handle",   
-                facebook:"Your Facebook Handle", 
-                twitter:"Your Twitter Handle",  
-                pinterest:"Your Pinterest Handle",   
-                linkedin:"Your Linkedin Handle", 
-                blogurl:"Your Blog  Url ",  
-                email:""
-              })
-              window.location.href = returnTo || paths.auth.auth.trial;
-              setLetter("Save changes and NEXT")
-              setIsLoading(false)
-            }
-    
-            if (response.data.status === "failed") {
-            setLetter("Save changes and NEXT")
-            setIsLoading(false);
-
-            }
-          });
-        }, 500);
+    setIsLoading(true);
+    setLetter("");
+    axios
+      .post("/api/social-Info", values)
+        .then((response) => {
+          if (response.data.status === 200) {
+            setInitialValues({
+            instagram:"",   
+            tiktok:"",
+            youtube:"",   
+            facebook:"", 
+            twitter:"",  
+            pinterest:"",   
+            linkedin:"", 
+            blogurl:"",  
+            email:""
+          })
+          setLetter("Save changes and NEXT")
+          setIsLoading(false)
+          navigate(returnTo || paths.auth.auth.trial)
+        }
+        if (response.data.status === "failed") {
+          setLetter("Save changes and NEXT")
+          setIsLoading(false);
+        }
+      });
     }
   });
 
@@ -155,17 +150,17 @@ const returnTo = searchParams.get('returnTo');
             <Stack spacing={0} className = "col-md-6 col-12">
               <div className='p-1 '>
               <TextField
-                  label=" Istogram Handle"
+                  label=" Instagram Handle"
                   className="title-inter"
-                  name="istogram"
+                  name="instagram"
                   variant="filled"
                   fullWidth
                   style={{ marginTop: 11 }}
-                  error={!!(formik.touched.istogram && formik.errors.istogram)}
-                  helperText={formik.touched.istogram && formik.errors.istogram}
+                  error={!!(formik.touched.instagram && formik.errors.instagram)}
+                  helperText={formik.touched.instagram && formik.errors.instagram}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.istogram}
+                  value={formik.values.instagram}
                 /></div>
                 <div  className='p-1 '>
                 <TextField

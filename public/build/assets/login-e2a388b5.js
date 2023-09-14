@@ -1,0 +1,1 @@
+import{b as t,r,p as n}from"./app-51ffe495.js";const u=()=>{const{loginWithRedirect:a}=t(),e=r.useCallback(async()=>{const s=new URLSearchParams(window.location.search).get("returnTo");await a({returnTo:s||n.dashboard.index})},[a]);return r.useEffect(()=>{e()},[]),null};export{u as default};

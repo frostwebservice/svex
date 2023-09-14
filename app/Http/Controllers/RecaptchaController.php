@@ -9,12 +9,14 @@ class RecaptchaController extends Controller
     public function verifyRecaptcha(Request $request)
     {
         $recaptchaResponse = $request->input('recaptcha');
-        $recaptchaSecret = config('services.secret_key');
+        $recaptchaSecret = env('REACT_APP_SECRET_KEY');
         $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify',[
             'secret' => $recaptchaSecret,
             'response' =>$recaptchaResponse
         ]);
         $responseData = $response->json();
+
+
         if($responseData['success']){
             return response()->json(['message'=>'Recaptcha verification passed']);
         }

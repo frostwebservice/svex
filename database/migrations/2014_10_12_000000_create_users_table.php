@@ -20,17 +20,21 @@ class CreateUsersTable extends Migration
             $table->string("fullname")->nullable();
             $table->string("email")->unique();
             $table->string("password");
+            $table->string('api_token', 80)
+            ->unique()
+            ->nullable()
+            ->default(null);
             $table->string("condition")->nullable();
             $table->string("phonenumber")->nullable();
             $table->string("companyname")->nullable();
             $table->string("companyfounded")->nullable();
             $table->string("companywebsite")->nullable();
             $table->string("companylocation")->nullable();
-            $table->string("nicCategory")->nullable();
+            $table->string("nichecategory")->nullable();
             $table->string("budget")->nullable();
             $table->string("companysize")->nullable();
             $table->string("aboutbusiness")->nullable();
-            $table->string("istogram")->nullable();
+            $table->string("instagram")->nullable();
             $table->string("tiktok")->nullable();
             $table->string("youtube")->nullable();
             $table->string("facebook")->nullable();
@@ -39,7 +43,6 @@ class CreateUsersTable extends Migration
             $table->string("linkedin")->nullable();
             $table->string("blogurl")->nullable();
             $table->string("trial")->nullable();
-            $table->string("emailverified")->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_token')->nullable();
             $table->timestamps();

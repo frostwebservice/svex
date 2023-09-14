@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use ReCaptcha\ReCaptcha;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Str;
 class UserController extends Controller
 {
     //
@@ -30,18 +30,12 @@ class UserController extends Controller
 
         $user  =  User::create($userDataArray);
     
-        
         if(!is_null($user)) {
-         
 
             $user->generateVerificationToken();
             $user->sendEmailVerificationNotification();
             // $user = Auth::user();
-
             return response()->json(["status" => $this->status_code, "success" => true, "message" => "Verification Code Sent Successfully", "data" => $user]);
-
-          
-           
         }
 
         else {
@@ -92,7 +86,6 @@ class UserController extends Controller
         
         if(!is_null($user_status)) {
            
-            // $user = $user_status->update( $request->all());
             $user_status->firstname     =                       $request->firstname ;
             $user_status->lastname     =                        $request->lastname;
             $user_status->phonenumber     =                     $request->phonenumber;
@@ -123,18 +116,9 @@ class UserController extends Controller
     // -------------------- second Business Infomation Update ---------------------------------//
 
     public function secondInfo(Request $request) {
-     
-        // $name                   =       $request->name;
-        // $name                   =       explode(" ", $name);
-        // $first_name             =       $name[0];
-        // $last_name              =       "";
-
-        // if(isset($name[1])) {
-        //     $last_name   =    $name[1];
-        // }
 
         $userDataArray  =  array(
-            "nicCategory"              =>   $request->nicCategory,
+            "nichecategory"              =>   $request->nichecategory,
             "budget"                   =>   $request->budget,
             "companysize"              =>   $request->companysize,
             "companyfounded"           =>   $request->companyfounded,
@@ -145,8 +129,7 @@ class UserController extends Controller
 
         if(!is_null($user_status)) {
            
-            // $user=$user_status->update( $request->all());
-            $user_status->nicCategory     =                            $request->nicCategory ;
+            $user_status->nichecategory     =                            $request->nichecategory ;
             $user_status->budget             =                         $request->budget;
             $user_status->companysize     =                            $request->companysize;
             $user_status->companyfounded     =                         $request->companyfounded;
@@ -177,7 +160,7 @@ class UserController extends Controller
 public function socialInfo(Request $request) {
 
     $userDataArray  =  array(
-        "istogram"            =>    $request->istogram ,   
+        "instagram"            =>    $request->instagram ,   
         "tiktok"              =>    $request->tiktok,
         "youtube"             =>    $request->youtube,
         "facebook"            =>    $request->facebook,
@@ -191,7 +174,7 @@ public function socialInfo(Request $request) {
     if(!is_null($user_status)) {
        
       //  $company = User::find($request->email);
-      $user_status->istogram     =                            $request->istogram ;
+      $user_status->instagram     =                            $request->instagram ;
       $user_status->tiktok             =                         $request->tiktok;
       $user_status->youtube     =                            $request->youtube;
       $user_status->facebook     =                         $request->facebook;
@@ -248,8 +231,11 @@ public function socialInfo(Request $request) {
 
             // if password is correct
             if(!is_null($password_status)) {
-                $user           =       $this->userDetail($request->email);
-
+                $user = $this->userDetail($request->email);
+                //api_token generate
+                $api_token = Str::random(60);
+                $user->api_token = $api_token;
+                $user->save();
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => $user]);
             }
 
@@ -276,17 +262,13 @@ public function socialInfo(Request $request) {
 
     public function Usertrial(Request $request) {
 
-        $userDataArray  =  array(
-            "trial"             =>   $request,
-            
-        );
         $user_status = User::where("email", $request->email)->first();
      
         
         if(!is_null($user_status)) {
            
             // $user = $user_status->update( $request->all());
-            $user_status->trial     =                       $request ;
+            $user_status->trial     =      $request->trial ;
             $user = $user_status->save();
 
             if(!is_null($user)) {

@@ -2,6 +2,8 @@ import * as Yup from 'yup';
 import { useRef, useState } from "react";
 import { useFormik } from 'formik';
 import { useSearchParams } from '@/hooks/use-search-params';
+import { useNavigate } from 'react-router-dom';
+import { Link as ReactRouterLink } from 'react-router-dom';
 // import { Textfield} from '@/frontendpage/TextfieldStyle'
 // import "@/frontendpage/Form.CSS";
 import './Form.css';
@@ -50,6 +52,7 @@ const Page = () => {
     password: '',
     // submit: null,
   });
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues,
@@ -70,16 +73,13 @@ const Page = () => {
             });
             setLetter("Log In")
             setIsLoading(false)
-            // window.location.href = "/dashboard";
-    
             async function callSignin() {
               try {
-                await signIn(values.email, values.password);
+                await signIn(values.email,values.password,response.data.data);
         
                 if (isMounted()) {
                   // returnTo could be an absolute path
-                 
-                  window.location.href = returnTo || paths.dashboard.index;
+                 navigate(returnTo || paths.dashboard.index);
                 }
               } catch (err) {
                 console.error(err);
@@ -146,10 +146,10 @@ const Page = () => {
                 Don&apos;t have an account?
                 &nbsp;
                 <Link
-                  href={paths.auth.auth.signup}
                   underline="hover"
                   // variant="subtitle2"
                   className="title-inter smallsize"
+                  onClick={() => navigate(paths.auth.auth.signup)}
                 >
                   Register
                 </Link>
@@ -222,9 +222,10 @@ const Page = () => {
                 }}
               >
                 <Link
-                  href={paths.auth.auth.forgotPassword}
+                  // href={paths.auth.auth.forgotPassword}
                   underline="hover"
                   variant="subtitle2"
+                  onClick={() => navigate(paths.auth.auth.forgotPassword)}
                 >
                   Forgot password?
                 </Link>

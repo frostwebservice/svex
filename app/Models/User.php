@@ -21,8 +21,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'firstname', 'lastname', 'fullname', 'email', 'password', 'phonenumber','condition','companyname',
-        'companyfounded','companywebsite','companylocation','nicCategory','budget','companysize','aboutbusiness',
-        'istogram','tiktok','youtube','facebook','twitter','pinterest','linkedin','blogurl','trial','emailverified'
+        'companyfounded','companywebsite','companylocation','nichecategory','budget','companysize','aboutbusiness',
+        'instagram','tiktok','youtube','facebook','twitter','pinterest','linkedin','blogurl','trial'
     ];
 
     /**

@@ -19,7 +19,7 @@ export const paths = {
         trial: '/auth/auth/trial',
         forgotPassword: '/auth/auth/ForgotPassword',
         resetPassword: '/auth/auth/ResetPassword',
-        success: '/auth/auth/Success',
+        successful: '/auth/auth/Successful',
       },
       jwt: {
         login: '/auth/jwt/login',

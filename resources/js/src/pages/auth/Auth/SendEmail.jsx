@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 // import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import "./Form.css";
 import { useSearchParams } from '@/hooks/use-search-params';
+import { Seo } from '@/components/seo';
+
 import {
   Card,
   CardContent,
@@ -42,14 +44,14 @@ const onSubmitHandler = async(e) => {
 
     }
     return (
+      <>
+      <Seo title="Email Verification" />
       <div className="sendEmail-page">
+        <Typography   color="primary" variant="h4" sx={{pb:1, fontWeight:'bold',textAlign: 'center'}}>
+          LOGO
+        </Typography>
          <Card elevation={0} sx={{p:3, pb:0 ,borderRadius: 5}} className="transparent">
-          <CardHeader
-            sx={{ pb:2 ,  fontWeight:'bold  ',textAlign: 'center'}}
-            className="w-100"
-            variant="h3"
-            title="LOGO"
-          />
+
           <CardContent   >
             <form >
              <Typography  className="title bigsize mb-3 text-center">
@@ -61,7 +63,7 @@ const onSubmitHandler = async(e) => {
              <Typography  sx={{pb:4,textAlign: 'center'}}  className="title smallsize" >
                 {email}
              </Typography>
-            <div  className="d-flex justify-content-center" >
+            <div  className="d-flex justify-content-center resend-button" >
              <Button
                 fullWidth
                 size="large"
@@ -86,5 +88,7 @@ const onSubmitHandler = async(e) => {
         </CardContent>
         </Card>
       </div>
+      </>
+
     );
 }

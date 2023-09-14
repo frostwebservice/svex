@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
 import * as Yup from 'yup';
-// import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useFormik } from 'formik';
 import { useSearchParams } from '@/hooks/use-search-params';
+import { useNavigate } from 'react-router-dom';
+
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -30,32 +31,32 @@ import './Form.css';
 const Page = () => {
 
 
-const validationSchema = Yup.object({
-  firstname: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  lastname: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  phonenumber: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  companywebsite: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  companylocation: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  companyname: Yup
+  const validationSchema = Yup.object({
+    firstname: Yup
       .string()
       .max(255)
       .required('Name is required'),
-});
+    lastname: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    phonenumber: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    companywebsite: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    companylocation: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    companyname: Yup
+        .string()
+        .max(255)
+        .required('Name is required'),
+  });
 
   
   const searchParams = useSearchParams();
@@ -63,20 +64,21 @@ const validationSchema = Yup.object({
   const [isLoading, setIsLoading] = useState(false);
   const [letter, setLetter] = useState("Save changes and NEXT");
   const email = JSON.parse(localStorage.getItem('Email'));
+  const navigate = useNavigate();
 
   const [initialValues, setInitialValues] = useState({
-    firstname: 'Your First Name',
-    lastname: 'Your Last Name',
-    phonenumber: 'Your Phone Number',
-    companywebsite:'Your Company Website',
-    companylocation: 'Your Company Location',
-    companyname:'Your Company Name',
+    firstname: '',
+    lastname: '',
+    phonenumber: '',
+    companywebsite:'',
+    companylocation: '',
+    companyname:'',
     email:''
   });
   initialValues.email = email;
 
   const onCancel = () =>{
-    window.location.href = returnTo || paths.auth.auth.signin;
+    navigate(returnTo || paths.auth.auth.signin)
 } 
 
   const formik = useFormik({
@@ -84,35 +86,32 @@ const validationSchema = Yup.object({
   validationSchema,
   onSubmit: values => { 
 
-        setIsLoading(true);
-        setLetter("");
-        
-        setTimeout(() => {
-        axios
-          .post("/api/first-Info", values)
-           .then((response) => {
-             if (response.data.status === 200) {
-               setInitialValues({
-                firstname: '',
-                lastname: '',
-                phonenumber: '',
-                companywebsite:'',
-                companylocation: '',
-                companyname:'',
-                email:''
-              })
-              window.location.href = returnTo || paths.auth.auth.secondInfos;
-              setLetter("Save changes and NEXT")
-              setIsLoading(false)
-            }
-    
-            if (response.data.status === "failed") {
-            setLetter("Save changes and NEXT")
-            setIsLoading(false);
+    setIsLoading(true);
+    setLetter("");
+    axios
+      .post("/api/first-Info", values)
+        .then((response) => {
+          if (response.data.status === 200) {
+            setInitialValues({
+            firstname: '',
+            lastname: '',
+            phonenumber: '',
+            companywebsite:'',
+            companylocation: '',
+            companyname:'',
+            email:''
+          })
+          navigate(returnTo || paths.auth.auth.secondInfos)
+          setLetter("Save changes and NEXT")
+          setIsLoading(false)
+        }
 
-            }
-          });
-        }, 500);
+        if (response.data.status === "failed") {
+        setLetter("Save changes and NEXT")
+        setIsLoading(false);
+
+        }
+      });
     }
   });
 

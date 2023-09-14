@@ -145,3 +145,7 @@
     box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.03), 0 10px 10px 0 rgba(0, 0, 0, 0.03) !important;
     border:0px;
   }
+  .resend-button{
+    width:396px!important;
+    margin: 0 auto;
+  }

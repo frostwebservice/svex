@@ -13,7 +13,7 @@ import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
 import { Svexlogo } from '@/components/Svexlogo'; 
-import { brandImg } from '@/components/brand'; 
+// import { brandImg } from '@/components/brand'; 
 import { useState } from 'react';
 const Page = () => {
   const isMounted = useMounted();

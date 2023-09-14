@@ -77,7 +77,7 @@ export const AuthProvider = (props) => {
 
       if (accessToken) {
         const user = await authApi.me({ accessToken });
-
+        // const user = null;
         dispatch({
           type: ActionType.INITIALIZE,
           payload: {
@@ -112,12 +112,13 @@ export const AuthProvider = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
 
-  const signIn = useCallback(async (email, password) => {
-
-    const { accessToken } = await authApi.signIn({ email, password });
-    const user = await authApi.me({ accessToken, email, password});
-
-    sessionStorage.setItem(STORAGE_KEY, accessToken);
+  const signIn = useCallback(async (email,password,userinfo) => {
+    
+    const { api_token } = userinfo;
+    const user = userinfo;
+    console.log(api_token);
+    sessionStorage.setItem(STORAGE_KEY, api_token);
+    sessionStorage.setItem("email", userinfo.email);
 
     dispatch({
       type: ActionType.SIGN_IN,

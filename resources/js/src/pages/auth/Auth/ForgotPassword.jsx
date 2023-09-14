@@ -44,11 +44,14 @@ const Page = () => {
     <>
       <Seo title="Forgot Password" />
       <div className="forgotpassword-page">
+      <Typography   color="primary" variant="h4" sx={{pb:1, fontWeight:'bold',textAlign: 'center'}}>
+          LOGO
+        </Typography>
         <Box sx={{ mb: 4 }}>
           <Link
             color="text.primary"
             component={RouterLink}
-            // href={paths.dashboard.index}
+            to={paths.auth.auth.signin}
             sx={{
               alignItems: 'center',
               display: 'inline-flex'
@@ -59,17 +62,13 @@ const Page = () => {
               <ArrowLeftIcon />
             </SvgIcon>
             <Typography variant="subtitle2">
-            <Link
-                  href ={paths.auth.auth.signin}
-                  underline="hover"
-                  variant="subtitle2"
-                  className="title-inter"
-                >
-                  SignIn
-                </Link>
+
+              SignIn
+           
             </Typography>
           </Link>
         </Box>
+
         <Card elevation={16} sx={{borderRadius: 2.5 }}className="card  px-4 pt-4 pb-3">
           <CardHeader
             sx={{ pb: 0 }}

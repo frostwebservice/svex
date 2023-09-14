@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { RedditTextfield} from '../../../frontendpage/TextfieldStyle1'
+// import { RedditTextfield} from '../../../frontendpage/TextfieldStyle1'
 import "./Form.css";
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import {

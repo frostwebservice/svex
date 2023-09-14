@@ -108,38 +108,35 @@ class AuthApi {
   }
 
   me(request) {
-    const { accessToken, email, password } = request;
-
+    const { accessToken } = request;
+    console.log(request);
     return new Promise((resolve, reject) => {
-      try {
-        // Decode access token
-        const decodedToken = decode(accessToken);
-        // Merge static users (data file) with persisted users (browser storage)
-        const mergedUsers = [
-          ...users,
-          ...getPersistedUsers()
-        ];
+          resolve({
+            id: null,
+            avatar: null,
+            email: null,
+            name: null,
+            plan: null
+          });
+      // try {
+      //   // Decode access token
+      //   // const decodedToken = decode(accessToken);
 
-        // Find the user
-        const { email } = decodedToken;
-        // const user = mergedUsers.find((user) => user.email === email);
-        const user = {email:email}
-       
-        if (!user) {
-          reject(new Error('Invalid authorization token'));
-          return;
-        }
-        resolve({
-          // id: user.id,
-          // avatar: user.avatar,
-          email: user.email
-          // name: user.name,
-          // plan: user.plan
-        });
-      } catch (err) {
-        console.error('[Auth Api]: ', err);
-        reject(new Error('Internal server error'));
-      }
+      //   if (!user) {
+      //     reject(new Error('Invalid authorization token'));
+      //     return;
+      //   }
+      //   resolve({
+      //     // id: user.id,
+      //     // avatar: user.avatar,
+      //     email: user.email
+      //     // name: user.name,
+      //     // plan: user.plan
+      //   });
+      // } catch (err) {
+      //   console.error('[Auth Api]: ', err);
+      //   reject(new Error('Internal server error'));
+      // }
     });
   }
 }

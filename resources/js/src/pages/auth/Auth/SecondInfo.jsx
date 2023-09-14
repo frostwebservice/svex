@@ -3,6 +3,8 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useSearchParams } from '@/hooks/use-search-params';
 // import { RedditTextfield} from '../../../frontendpage/TextfieldStyle'
+import { useNavigate } from 'react-router-dom';
+
 import "./Form.css";
 import {
   Box,
@@ -23,91 +25,86 @@ import { RouterLink } from '@/components/router-link';
 import { Seo } from '@/components/seo';
 import { paths } from '@/paths';
 
-
-
-
-
 const Page = () => {
 
 
-const validationSchema = Yup.object({
-  nichecategory: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  budget: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  companysize: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  companyfounded: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  aboutbusiness: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
- 
-});
+  const validationSchema = Yup.object({
+    nichecategory: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    budget: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    companysize: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    companyfounded: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    aboutbusiness: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+  
+  });
 
   
-const searchParams = useSearchParams();
-const returnTo = searchParams.get('returnTo');  
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get('returnTo');  
   const [isLoading, setIsLoading] = useState(false);
   const [letter, setLetter] = useState("Save changes and NEXT");
   const email = JSON.parse(localStorage.getItem('Email'));
+  const navigate = useNavigate();
 
   const [initialValues, setInitialValues] = useState({
-    nichecategory: 'Your Niche Category',
-    budget: 'Your budget',
-    companysize: 'Your Company Size',
-    companyfounded:'Company founded date',
-    aboutbusiness: 'Write about your business',
+    nichecategory: '',
+    budget: '',
+    companysize: '',
+    companyfounded:'',
+    aboutbusiness: '',
     email:'',
   });
   initialValues.email = email;
 
   const onCancel = (e) =>{
-    window.location.href = returnTo || paths.auth.auth.signin;
-} 
+    navigate(returnTo || paths.auth.auth.signin);
+  } 
 
   const formik = useFormik({
   initialValues,
   validationSchema,
   onSubmit: values => { 
 
-        setIsLoading(true);
-        setLetter("");
-        
-        setTimeout(() => {
-        axios
-          .post("/api/second-Info", values)
-           .then((response) => {
-             if (response.data.status === 200) {
-               setInitialValues({
-                nichecategory: '',
-                budget: '',
-                companysize: '',
-                companyfounded:'',
-                aboutbusiness: '',
-                email:'',
-              })
-              window.location.href = returnTo || paths.auth.auth.socialHandle;
-              setLetter("Save changes and NEXT")
-              setIsLoading(false)
-            }
+    setIsLoading(true);
+    setLetter("");
     
-            if (response.data.status === "failed") {
-            setLetter("Save changes and NEXT")
-            setIsLoading(false);
+    axios
+      .post("/api/second-Info", values)
+        .then((response) => {
+          if (response.data.status === 200) {
+            setInitialValues({
+            nichecategory: '',
+            budget: '',
+            companysize: '',
+            companyfounded:'',
+            aboutbusiness: '',
+            email:'',
+          })
+          navigate(returnTo || paths.auth.auth.socialHandle)
+          setLetter("Save changes and NEXT")
+          setIsLoading(false)
+        }
 
-            }
-          });
-        }, 500);
+        if (response.data.status === "failed") {
+        setLetter("Save changes and NEXT")
+        setIsLoading(false);
+
+        }
+      });
     }
   });
 

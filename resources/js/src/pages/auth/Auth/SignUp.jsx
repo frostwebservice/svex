@@ -34,63 +34,55 @@ import { useMounted } from '@/hooks/use-mounted';
 const Page = () => {
 
   
-const validationSchema = Yup.object({
-  email: Yup
-    .string()
-    .email('Must be a valid email')
-    .max(255)
-    .required('Email is required'),
-  name: Yup
-    .string()
-    .max(255)
-    .required('Name is required'),
-  password: Yup
-    .string()
-    .min(7)
-    .max(255)
-    .required('Password is required'),
-  confirmpassword: Yup
-    .string()
-    .min(7)
-    .max(255)
-    .required('Password is required')
-    .oneOf([Yup.ref('password')], 'Passwords must match'),
-  policy: Yup
-    .boolean()
-    .oneOf([true], 'This field must be checked')
-});
+  const validationSchema = Yup.object({
+    email: Yup
+      .string()
+      .email('Must be a valid email')
+      .max(255)
+      .required('Email is required'),
+    name: Yup
+      .string()
+      .max(255)
+      .required('Name is required'),
+    password: Yup
+      .string()
+      .min(7)
+      .max(255)
+      .required('Password is required'),
+    confirmpassword: Yup
+      .string()
+      .min(7)
+      .max(255)
+      .required('Password is required')
+      .oneOf([Yup.ref('password')], 'Passwords must match'),
+    policy: Yup
+      .boolean()
+      .oneOf([true], 'This field must be checked')
+  });
 
-const handleRecaptchaChanged = (value) =>{
-  setRecaptchaValue(value);
-}
-
-const sendEmailVerification = async () => {
-  try {
-    await axios.post(location.protocol + '//' + location.host +'/api/verify-email');
-    console.log('Verification email sent');
-  } catch (error) {
-    console.error('Error sending verification email', error);
+  const handleRecaptchaChanged = (value) =>{
+    setRecaptchaValue(value);
   }
-};
 
-const verifyRecaptcha = () => {
-   
-  if (recaptchaValue){
-    axios.post('/api/verify-recaptcha',{recaptcha:recaptchaValue})
-    .then(response =>{
-      return  true;
-      // console.log(response.data.message)
-    })
-    .catch(error =>{
-      console.error('Error verifying reCAPTCHA',error);
+  const verifyRecaptcha = () => {
+    
+    if (recaptchaValue){
+      axios.post('/api/verify-recaptcha',{recaptcha:recaptchaValue})
+      .then(response =>{
+        console.log(response.data.message)
+
+        return  true;
+      })
+      .catch(error =>{
+        console.error('Error verifying reCAPTCHA',error);
+        return false;
+      })
+    }
+    else{
+      alert("Please complete the reCAPTCHA");
       return false;
-    })
+    }
   }
-  else{
-    // alert("Please complete the reCAPTCHA");
-    return false;
-  }
-}
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -110,43 +102,31 @@ const verifyRecaptcha = () => {
   onSubmit: values => { 
 
       localStorage.setItem("Email",JSON.stringify(values.email));
-      // if( verifyRecaptcha() == false) {
-      //   alert("Please complete the reCAPTCHA");
-      //   captchaRef.current.reset();
-      //   return;
-      // }
-        setIsLoading(true);
-        setRegister("");
-        // console.log(values)
-        
-        setTimeout(() => {
-        axios
-          .post("/api/user-signup", values)
-           .then((response) => {
-             if (response.data.status === 200&&response.data.success) {
-                // captchaRef.current.reset();
-              //  sendEmailVerification()
-              // setInitialValues({
-              //   email: '',
-              //   name: '',
-              //   password: '',
-              //   confirmpassword:'',
-              //   policy: false,
-              // })
-              navigate('/auth/auth/SendEmail')
-              // setRegister("Register")
-              setIsLoading(false)
-            }
-    
-            if (response.data.status === "failed") {
-            // setRegister("Register")
+      if( verifyRecaptcha() == false) {
+        alert("Please complete the reCAPTCHA");
+        captchaRef.current.reset();
+        return;
+      }
+      setIsLoading(true);
+      setRegister("");
+
+      axios
+        .post("/api/user-signup", values)
+          .then((response) => {
+            if (response.data.status === 200&&response.data.success) {
+            captchaRef.current.reset();
+            setIsLoading(false)
+            navigate('/auth/auth/SendEmail')
+            
+          }
+  
+          if (response.data.status === "failed") {
+            setRegister("Register")
             alert(response.data.message);
             setIsLoading(false)
-            console.log(false)
+          }
+        });
 
-            }
-          });
-        }, 500);
     }
   });
 
@@ -189,7 +169,7 @@ const verifyRecaptcha = () => {
                 Already have an account?
                 &nbsp;
                 <Link
-                  href ={paths.auth.auth.signin}
+                  onClick={() => navigate(paths.auth.auth.signin)}
                   underline="hover"
                   variant="subtitle2"
                   className="title-inter"
@@ -299,9 +279,9 @@ const verifyRecaptcha = () => {
                   {formik.errors.policy}
                 </FormHelperText>
               )}
-               {/* <div className='formGroup  px-2 '>
-               <ReCAPTCHA sitekey={"6Le9z7knAAAAANZgZ6Z1uahHF22pBxmtVVZlFdEx"}   ref={captchaRef} onChange={handleRecaptchaChanged}/>
-                </div> */}
+               <div className='formGroup  px-2 '>
+               <ReCAPTCHA sitekey={"6LfZCiEoAAAAAFYWmXEdUvMwg2TD8op988LvKGpO"}   ref={captchaRef} onChange={handleRecaptchaChanged}/>
+                </div>
 
               <Button
                 fullWidth

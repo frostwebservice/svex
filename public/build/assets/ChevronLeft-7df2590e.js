@@ -1,0 +1,1 @@
+import{j as e,_ as o,d as t}from"./app-51ffe495.js";var i=function(r){return e("svg",o({xmlns:"http://www.w3.org/2000/svg",width:24,height:24,fill:"none"},r,{children:[t("path",{fill:"#fff",fillOpacity:.01,d:"m15 18-6-6 6-6"}),t("path",{stroke:"currentColor",strokeLinecap:"round",strokeLinejoin:"round",strokeWidth:2,d:"m15 18-6-6 6-6"})]}))};export{i as C};

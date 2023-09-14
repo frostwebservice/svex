@@ -17,7 +17,7 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { bytesToSize } from '@/utils/bytes-to-size';
-import { ItemIcon } from '@/item-icon';
+// import { ItemIcon } from '@/item-icon';
 import { ItemTags } from './item-tags';
 import { ItemShared } from './item-shared';
 

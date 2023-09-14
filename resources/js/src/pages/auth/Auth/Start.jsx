@@ -25,6 +25,8 @@ import {
   CircularProgress
 } from '@mui/material';
 import { borders } from '@mui/system';
+import { Seo } from '@/components/seo';
+
 export default function Start (props) {
    
   const searchParams = useSearchParams();
@@ -38,18 +40,19 @@ export default function Start (props) {
   const  onStartClicked =(e) =>{
     setIsLoading(true)
     setClick("")
-
-    window.location.href = returnTo || paths.auth.auth.firstInfos;
+    navigate(paths.auth.auth.firstInfos)
     setIsLoading(false)
     setClick("Get Started")
 
   
   }
   const  onLaterClicked = (e)=>{
-    navigate("/auth/auth/SignIn")
-    window.location.href = returnTo || paths.auth.auth.signin;
+    navigate(returnTo || paths.auth.auth.signin)
   }
     return (
+      <>
+      <Seo title="Register" />
+      
       <div className="start-page">
          <Typography   color="primary" variant="h3" sx={{pb:2, fontWeight:'bold',textAlign: 'center'}}>
           LOGO
@@ -109,5 +112,7 @@ export default function Start (props) {
         </CardContent>
         </Card>
       </div>
+      </>
+
     );
   }

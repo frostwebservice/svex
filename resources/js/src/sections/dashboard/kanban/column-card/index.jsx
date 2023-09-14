@@ -2,8 +2,8 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import { useSelector } from '@/store';
-import { TaskAdd } from '@/task-add';
-import { TaskCard } from '@/task-card';
+import { TaskAdd } from '../task-add';
+import { TaskCard } from '../task-card';
 import { ColumnHeader } from './column-header';
 
 const useColumn = (columnId) => {

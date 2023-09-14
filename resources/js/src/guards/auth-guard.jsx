@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from '@/hooks/use-router';
 import { paths } from '@/paths';
 import { Issuer } from '@/utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 const loginPaths = {
   [Issuer.Amplify]: paths.auth.amplify.login,
@@ -18,12 +19,13 @@ export const AuthGuard = (props) => {
   const router = useRouter();
   const { isAuthenticated, issuer } = useAuth();
   const [checked, setChecked] = useState(false);
+  const navigate = useNavigate();
 
   const check = useCallback(() => {
     if (!isAuthenticated) {
       const searchParams = new URLSearchParams({ returnTo: window.location.href }).toString();
       const href = loginPaths[issuer] + `?${searchParams}`;
-      router.replace(href);
+      navigate("/auth/auth/SignIn");
     } else {
       setChecked(true);
     }

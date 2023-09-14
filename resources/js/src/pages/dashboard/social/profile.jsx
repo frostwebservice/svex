@@ -3,6 +3,8 @@ import MessageChatSquareIcon from '@untitled-ui/icons-react/build/esm/MessageCha
 import DotsHorizontalIcon from '@untitled-ui/icons-react/build/esm/DotsHorizontal';
 import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
 import UserPlus02Icon from '@untitled-ui/icons-react/build/esm/UserPlus02';
+import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
+
 import {
   Avatar,
   Box,
@@ -112,7 +114,17 @@ export const Page = () => {
   const posts = usePosts();
   const [connectionsQuery, setConnectionsQuery] = useState('');
   const connections = useConnections(connectionsQuery);
+  const [isLiked, setIsLiked] = useState(isLikedProp);
+  
+  const handleLike = useCallback(() => {
+    setIsLiked(true);
+    setLikes((prevLikes) => prevLikes + 1);
+  }, []);
 
+  const handleUnlike = useCallback(() => {
+    setIsLiked(false);
+    setLikes((prevLikes) => prevLikes - 1);
+  }, []);
   usePageView();
 
   const handleConnectionAdd = useCallback(() => {
@@ -237,29 +249,32 @@ export const Page = () => {
                   }
                 }}
               >
-                {showConnect && (
-                  <Button
-                    onClick={handleConnectionAdd}
-                    size="small"
-                    startIcon={(
-                      <SvgIcon>
-                        <UserPlus02Icon />
+              {isLiked
+                ? (
+                  <Tooltip title="Unlike">
+                    <IconButton onClick={handleUnlike}>
+                      <SvgIcon
+                        sx={{
+                          color: 'error.main',
+                          '& path': {
+                            fill: (theme) => theme.palette.error.main,
+                            fillOpacity: 1
+                          }
+                        }}
+                      >
+                        <HeartIcon />
                       </SvgIcon>
-                    )}
-                    variant="outlined"
-                  >
-                    Connect
-                  </Button>
-                )}
-                {showPending && (
-                  <Button
-                    color="primary"
-                    onClick={handleConnectionRemove}
-                    size="small"
-                    variant="outlined"
-                  >
-                    Pending
-                  </Button>
+                    </IconButton>
+                  </Tooltip>
+                )
+                : (
+                  <Tooltip title="Like">
+                    <IconButton onClick={handleLike}>
+                      <SvgIcon>
+                        <HeartIcon />
+                      </SvgIcon>
+                    </IconButton>
+                  </Tooltip>
                 )}
                 <Button
                   component={RouterLink}
@@ -275,13 +290,6 @@ export const Page = () => {
                   Send Message
                 </Button>
               </Stack>
-              <Tooltip title="More options">
-                <IconButton>
-                  <SvgIcon>
-                    <DotsHorizontalIcon />
-                  </SvgIcon>
-                </IconButton>
-              </Tooltip>
             </Stack>
           </div>
           <Tabs

@@ -24,6 +24,7 @@ const FirebaseRegisterPage = lazy(() => import('@/pages/auth/firebase/register')
 const AuthSignInPage = lazy(() => import('@/pages/auth/auth/SignIn'));
 const AuthSignUpPage = lazy(() => import('@/pages/auth/auth/SignUp'));
 const AuthFirstInfoPage = lazy(() => import('@/pages/auth/auth/FirstInfos'));
+const AuthSuccessfulPage = lazy(() => import('@/pages/auth/auth/Successful'));
 const AuthForgotPasswordPage = lazy(() => import('@/pages/auth/auth/ForgotPassword'));
 const AuthResetPasswordPage = lazy(() => import('@/pages/auth/auth/ResetPassword'));
 const AuthSecondInfoPage = lazy(() => import('@/pages/auth/auth/SecondInfo'));
@@ -219,6 +220,10 @@ export const authRoutes = [
           {
             path: 'trial',
             element: <AuthTrialPage />
+          },
+          {
+            path: 'successful',
+            element: <AuthSuccessfulPage />
           },
         ]
       }
