@@ -41,7 +41,8 @@ class VerifyEmail extends Notification
     public function toMail($notifiable)
     {
         $verificationUrl = url("/verify-email?token={$notifiable->verification_token}");
-
+        // print_r($notifiable);
+        // die();
         return (new MailMessage)
             ->line('Please verify your email address by clicking the link below.')
             ->action('Verify Email Address', $verificationUrl)

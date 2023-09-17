@@ -1,4 +1,6 @@
 import * as Yup from 'yup';
+import { Component, useState } from "react";
+
 import { useFormik } from 'formik';
 import "./Form.css";
 import { useSearchParams } from '@/hooks/use-search-params';
@@ -11,6 +13,7 @@ import {
   Link,
   SvgIcon,
   TextField,
+  CircularProgress,
   Typography
 } from '@mui/material';
 import { RouterLink } from '@/components/router-link';
@@ -34,17 +37,37 @@ const validationSchema = Yup.object({
 const Page = () => {
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
+  const [start, setStart] = useState("Send Reset Link");
+  const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: () => { }
+    onSubmit: values => {
+      localStorage.setItem("email", values.email);
+      setIsLoading(true)
+      setStart("")
+
+      try {
+        axios.post('/api/send-reset', values)
+          .then((response) => {
+            console.log(response);
+          });
+        console.log('Send Reset sent');
+      } catch (error) {
+        console.error('Error sending reset', error);
+      }
+
+      setIsLoading(false)
+      setStart("Send Reset Link")
+    }
   });
+
 
   return (
     <>
       <Seo title="Forgot Password" />
       <div className="forgotpassword-page">
-      <Typography   color="primary" variant="h4" sx={{pb:1, fontWeight:'bold',textAlign: 'center'}}>
+        <Typography color="primary" variant="h4" sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}>
           LOGO
         </Typography>
         <Box sx={{ mb: 4 }}>
@@ -64,12 +87,12 @@ const Page = () => {
             <Typography variant="subtitle2">
 
               SignIn
-           
+
             </Typography>
           </Link>
         </Box>
 
-        <Card elevation={16} sx={{borderRadius: 2.5 }}className="card  px-4 pt-4 pb-3">
+        <Card elevation={16} sx={{ borderRadius: 2.5 }} className="card  px-4 pt-4 pb-3">
           <CardHeader
             sx={{ pb: 0 }}
             title="Forgot password"
@@ -102,6 +125,12 @@ const Page = () => {
                 variant="contained"
               >
                 Send reset link
+                {isLoading ? (
+
+                  <CircularProgress color="inherit" size="1.4rem" />
+                ) : (
+                  <span></span>
+                )}
               </Button>
             </form>
           </CardContent>

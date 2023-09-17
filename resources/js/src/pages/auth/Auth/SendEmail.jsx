@@ -17,32 +17,31 @@ import { useFormik } from 'formik';
 
 export default function EmailVerify (props) {
 
-const searchParams = useSearchParams();
-const returnTo = searchParams.get('returnTo');    
-const [start, setStart] = useState("Resend verification link");
-const [isLoading, setIsLoading] = useState(false);
-const email = JSON.parse(localStorage.getItem('Email'));
-const values = {"email":email};
-const onSubmitHandler = async(e) => {
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get('returnTo');    
+  const [start, setStart] = useState("Resend verification link");
+  const [isLoading, setIsLoading] = useState(false);
+  const email = JSON.parse(localStorage.getItem('Email'));
+  const values = {"email":email};
+  const onSubmitHandler = async(e) => {
     setIsLoading(true)
     setStart("")
-    setTimeout(() => 
-      {
-      try {
-        axios.post('/api/resend-email',values)
-        .then((response)=>{
-          console.log(response);
-        });
-        console.log('Verification email sent');
-      } catch (error) {
-        console.error('Error sending verification email', error);
-      }
 
-      setIsLoading(false)
-      setStart("Resend Verification link")
-      }, 1000);
-
+    try {
+      axios.post('/api/resend-email',values)
+      .then((response)=>{
+        console.log(response);
+      });
+      console.log('Verification email sent');
+    } catch (error) {
+      console.error('Error sending verification email', error);
     }
+
+    setIsLoading(false)
+    setStart("Resend Verification link")
+
+
+  }
     return (
       <>
       <Seo title="Email Verification" />

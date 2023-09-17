@@ -2,94 +2,71 @@ import Attachment01Icon from '@untitled-ui/icons-react/build/esm/Attachment01';
 import FaceSmileIcon from '@untitled-ui/icons-react/build/esm/FaceSmile';
 import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
 import Link01Icon from '@untitled-ui/icons-react/build/esm/Link01';
+import BookOpen01Icon from '@untitled-ui/icons-react/build/esm/BookOpen01';
+import Briefcase01Icon from '@untitled-ui/icons-react/build/esm/Briefcase01';
+import Home02Icon from '@untitled-ui/icons-react/build/esm/Home02';
+import Mail01Icon from '@untitled-ui/icons-react/build/esm/Mail01';
 import {
   Avatar,
   Button,
   Card,
+  CardHeader,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Link,
   CardContent,
   IconButton,
   OutlinedInput,
   Stack,
+  Typography,
   SvgIcon,
   useMediaQuery
 } from '@mui/material';
 import { useMockedUser } from '@/hooks/use-mocked-user';
 import { getInitials } from '@/utils/get-initials';
-
+import "./social.css"
 export const SocialPostAdd = (props) => {
   const user = useMockedUser();
   const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
   return (
-    <Card {...props}>
+    <Card>
+      <CardHeader title="Niche" />
       <CardContent>
-        <Stack
-          alignItems="flex-start"
-          direction="row"
-          spacing={2}
-        >
-          <Avatar
-            src={user.avatar}
-            sx={{
-              height: 40,
-              width: 40
-            }}
+        <div className='profile-niche'>Clothing</div>
+        <div className='profile-niche'>Men Fashion</div>
+
+      </CardContent>
+      <CardHeader title="Social Media Links" />
+      <CardContent>
+        <List disablePadding>
+          <ListItem
+            disableGutters
+            divider
           >
-            {getInitials(user.name)}
-          </Avatar>
-          <Stack
-            spacing={3}
-            sx={{ flexGrow: 1 }}
-          >
-            <OutlinedInput
-              fullWidth
-              multiline
-              placeholder="What's on your mind"
-              rows={3}
-            />
-            <Stack
-              alignItems="center"
-              direction="row"
-              justifyContent="space-between"
-              spacing={3}
-            >
-              {smUp && (
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={1}
+            <ListItemAvatar>
+              <SvgIcon color="action">
+                <BookOpen01Icon />
+              </SvgIcon>
+            </ListItemAvatar>
+            <ListItemText
+              primary={(
+                <Link
+                  color="text.secondary"
+                  sx={{ cursor: 'pointer' }}
+                  variant="caption"
                 >
-                  <IconButton>
-                    <SvgIcon>
-                      <Image01Icon />
-                    </SvgIcon>
-                  </IconButton>
-                  <IconButton>
-                    <SvgIcon>
-                      <Attachment01Icon />
-                    </SvgIcon>
-                  </IconButton>
-                  <IconButton>
-                    <SvgIcon>
-                      <Link01Icon />
-                    </SvgIcon>
-                  </IconButton>
-                  <IconButton>
-                    <SvgIcon>
-                      <FaceSmileIcon />
-                    </SvgIcon>
-                  </IconButton>
-                </Stack>
+                  www.facebook.com/xxxxxxx
+                </Link>
               )}
-              <div>
-                <Button variant="contained">
-                  Post
-                </Button>
-              </div>
-            </Stack>
-          </Stack>
-        </Stack>
+            />
+          </ListItem>
+        </List>
+
       </CardContent>
     </Card>
+
   );
 };

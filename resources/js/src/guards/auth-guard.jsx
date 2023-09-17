@@ -33,8 +33,8 @@ export const AuthGuard = (props) => {
 
   // Only check on mount, this allows us to redirect the user manually when auth state changes
   useEffect(() => {
-      check();
-    },
+    check();
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
 

@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+
 class VerificationController extends Controller
 {
     /*
@@ -38,13 +40,13 @@ class VerificationController extends Controller
     {
         // $this->middleware('auth');
         // $this->middleware('signed')->only('verify');
-        $this->middleware('throttle:6,1')->only('verify', 'resend');
+        $this->middleware('throttle:6,1')->only('verify', 'resend', '');
     }
 
-        // ---------------------verify Email  ---------------------------------------------------//
+    // ---------------------verify Email  ---------------------------------------------------//
 
     public function verifyEmail(Request $request)
-    {   
+    {
         $user = User::where('verification_token', $request->token)->first();
         if (!$user) {
             //failed verify
@@ -55,5 +57,17 @@ class VerificationController extends Controller
         // return response()->json(['message' => 'Email verified']);
         //success verify
         return redirect("/auth/auth/Start");
+    }
+    public function verifyResetPassword(Request $request)
+    {
+        $reset = DB::table("users")->where("reset_token", $request->token)->first();
+        if (!$reset) {
+            //failed verify
+            // return response()->json(['message' => 'Invalid verification token'], 422);
+            return redirect("/auth/auth/ForgotPassword");
+        }
+        // return response()->json(['message' => 'Email verified']);
+        //success verify
+        return redirect("/auth/auth/ResetPassword");
     }
 }

@@ -21,9 +21,9 @@ class CreateUsersTable extends Migration
             $table->string("email")->unique();
             $table->string("password");
             $table->string('api_token', 80)
-            ->unique()
-            ->nullable()
-            ->default(null);
+                ->unique()
+                ->nullable()
+                ->default(null);
             $table->string("condition")->nullable();
             $table->string("phonenumber")->nullable();
             $table->string("companyname")->nullable();
@@ -45,6 +45,7 @@ class CreateUsersTable extends Migration
             $table->string("trial")->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_token')->nullable();
+            $table->string('reset_token')->nullable();
             $table->timestamps();
         });
     }

@@ -41,7 +41,7 @@ const validationSchema = Yup.object({
 
 const Page = () => {
 
-  const isMounted = useMounted(); 
+  const isMounted = useMounted();
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
   const [isLoading, setIsLoading] = useState(false);
@@ -57,62 +57,62 @@ const Page = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: values=> {
+    onSubmit: values => {
       setIsLoading(true);
       setLetter("");
       setTimeout(() => {
-       axios
-        .post("/api/user-signin", values)
-         .then((response) => {
-          
-          if (response.data.status === 200) {
-            setInitialValues({
-              email: "",
-              password: "",
-              // submit:null,
-            });
-            setLetter("Log In")
-            setIsLoading(false)
-            async function callSignin() {
-              try {
-                await signIn(values.email,values.password,response.data.data);
-        
-                if (isMounted()) {
-                  // returnTo could be an absolute path
-                 navigate(returnTo || paths.dashboard.index);
-                }
-              } catch (err) {
-                console.error(err);
-        
-                if (isMounted()) {
-                  helpers.setStatus({ success: false });
-                  helpers.setErrors({ submit: err.message });
-                  helpers.setSubmitting(false);
+        axios
+          .post("/api/user-signin", values)
+          .then((response) => {
+
+            if (response.data.status === 200) {
+              setInitialValues({
+                email: "",
+                password: "",
+                // submit:null,
+              });
+              setLetter("Log In")
+              setIsLoading(false)
+              async function callSignin() {
+                try {
+                  await signIn(values.email, values.password, response.data.data);
+
+                  if (isMounted()) {
+                    // returnTo could be an absolute path
+                    navigate(returnTo || paths.dashboard.index);
+                  }
+                } catch (err) {
+                  console.error(err);
+
+                  if (isMounted()) {
+                    helpers.setStatus({ success: false });
+                    helpers.setErrors({ submit: err.message });
+                    helpers.setSubmitting(false);
+                  }
                 }
               }
+              callSignin();
+              setLetter("Log in")
+              setIsLoading(false)
+              // window.location.href = returnTo || paths.dashboard.index;
             }
-            callSignin();
-            setLetter("Log in")
-            setIsLoading(false)
-            // window.location.href = returnTo || paths.dashboard.index;
-          }
-  
-          if (response.data.status === "failed") {
-          setLetter("Log In")
-          setIsLoading(false)
-          
-          alert(response.data.message);
 
-          }
-        });
+            if (response.data.status === "failed") {
+              setLetter("Log In")
+              setIsLoading(false)
+
+              alert(response.data.message);
+
+            }
+          });
       }, 2000);
-     }
+    }
   });
 
   return (
     <>
       <Seo title="Login" />
-      <div style={{width: '620px', margin: 'auto'}}>
+      <div style={{ width: '620px', margin: 'auto' }}>
         <Box sx={{ mb: 2 }}>
           <Link
             color="text.primary"
@@ -128,20 +128,20 @@ const Page = () => {
               <ArrowLeftIcon />
             </SvgIcon>
             <Typography variant="body1"
-            sx={{color:'rgba(0, 0, 0, 0.87)'}}>
+              sx={{ color: 'rgba(0, 0, 0, 0.87)' }}>
               Dashboard
             </Typography>
           </Link>
         </Box>
-        <Card  sx={{borderRadius: 2.5 }}className="mainCard card  px-4 pt-4 pb-3" >
-       
-          <CardHeader 
+        <Card sx={{ borderRadius: 2.5 }} className="mainCard card  px-4 pt-4 pb-3" >
+
+          <CardHeader
             subheader={(
               <Typography
-              className="title-inter smallsize"
+                className="title-inter smallsize"
                 color="text.secondary"
-                // variant="body1"
-               
+              // variant="body1"
+
               >
                 Don&apos;t have an account?
                 &nbsp;
@@ -164,11 +164,11 @@ const Page = () => {
               noValidate
               onSubmit={formik.handleSubmit}
             >
-              
+
 
               <Stack spacing={3}>
                 <TextField
-                 className="title-inter mt-4"
+                  className="title-inter mt-4"
                   variant="filled"
                   sx={{ mt: 1.5 }}
                   autoFocus
@@ -183,9 +183,9 @@ const Page = () => {
                   value={formik.values.email}
                 />
                 <TextField
-                  className="title-inter mt-4"      
+                  className="title-inter mt-4"
                   variant="filled"
-                 sx={{ mt: 1.5 }}
+                  sx={{ mt: 1.5 }}
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
@@ -205,11 +205,11 @@ const Page = () => {
                 color="primary"
                 variant="contained"
                 className="title-inter smallsize mainButton background-blue"
-                
+
               >
-                  <span className="ml-2"> { letter } </span>
+                <span className="ml-2"> {letter} </span>
                 {isLoading ? (
-                 <CircularProgress color="inherit" size="2rem" />
+                  <CircularProgress color="inherit" size="2rem" />
                 ) : (
                   <span></span>
                 )}

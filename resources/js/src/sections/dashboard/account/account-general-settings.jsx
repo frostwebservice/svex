@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import Camera01Icon from '@untitled-ui/icons-react/build/esm/Camera01';
 import User01Icon from '@untitled-ui/icons-react/build/esm/User01';
+import { useCallback, useState } from "react";
+
 import {
   Avatar,
   Box,
@@ -16,10 +18,43 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-
+import "./account.css";
 export const AccountGeneralSettings = (props) => {
-  const { avatar, email, name } = props;
 
+  const { avatar } = props;
+  const [email, setEmail] = useState("frostwebservice.com");
+  const [first, setFirst] = useState("Felix");
+  const [last, setLast] = useState("Jin");
+  const [editemail, setEditemail] = useState(false);
+  const [editfirst, setEditfirst] = useState(false);
+  const [editlast, setEditlast] = useState(false);
+  const [edittimezone, setEdittimezone] = useState(false);
+  const sortOptions = [
+    {
+      label: 'Toronto,Canada',
+      value: '1'
+    },
+    {
+      label: 'Toronto,Canada',
+      value: '2'
+    }
+  ];
+  const handleemail = useCallback(() => {
+    setEditemail((prevState) => !prevState);
+  }, []);
+  const handlefirst = useCallback(() => {
+    setEditfirst((prevState) => !prevState);
+  }, []);
+  const handlelast = useCallback(() => {
+    setEditlast((prevState) => !prevState);
+  }, []);
+  const handletimezone = useCallback(() => {
+    setEdittimezone((prevState) => !prevState);
+  }, []);
+  // const handleSortChange = useCallback((event) => {
+  //   const sortDir = event.target.value;
+  //   onSortChange?.(sortDir);
+  // }, [onSortChange]);
   return (
     <Stack
       spacing={4}
@@ -35,7 +70,7 @@ export const AccountGeneralSettings = (props) => {
               md={4}
             >
               <Typography variant="h6">
-                Basic details
+                Personal Information
               </Typography>
             </Grid>
             <Grid
@@ -129,15 +164,24 @@ export const AccountGeneralSettings = (props) => {
                   spacing={2}
                 >
                   <TextField
-                    defaultValue={name}
-                    label="Full Name"
-                    sx={{ flexGrow: 1 }}
+                    defaultValue={first}
+                    disabled={!editfirst}
+                    label="First Name"
+                    sx={{
+                      flexGrow: 1,
+                      ...(!editfirst && {
+                        '& .MuiOutlinedInput-notchedOutline': {
+                          borderStyle: 'dotted'
+                        }
+                      })
+                    }}
                   />
                   <Button
                     color="inherit"
                     size="small"
+                    onClick={handlefirst}
                   >
-                    Save
+                    {editfirst ? "Save" : "Edit"}
                   </Button>
                 </Stack>
                 <Stack
@@ -146,133 +190,120 @@ export const AccountGeneralSettings = (props) => {
                   spacing={2}
                 >
                   <TextField
-                    defaultValue={email}
-                    disabled
-                    label="Email Address"
-                    required
+                    defaultValue={last}
+                    label="Last Name"
+                    disabled={!editlast}
                     sx={{
                       flexGrow: 1,
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderStyle: 'dashed'
-                      }
+                      ...(!editlast && {
+                        '& .MuiOutlinedInput-notchedOutline': {
+                          borderStyle: 'dotted'
+                        }
+                      })
                     }}
                   />
                   <Button
                     color="inherit"
                     size="small"
+                    onClick={handlelast}
                   >
-                    Edit
+                    {editlast ? "Save" : "Edit"}
+
                   </Button>
                 </Stack>
-              </Stack>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              xs={12}
-              md={4}
-            >
-              <Typography variant="h6">
-                Public profile
-              </Typography>
-            </Grid>
-            <Grid
-              xs={12}
-              sm={12}
-              md={8}
-            >
-              <Stack
-                divider={<Divider />}
-                spacing={3}
-              >
+
                 <Stack
-                  alignItems="flex-start"
+                  alignItems="center"
                   direction="row"
-                  justifyContent="space-between"
-                  spacing={3}
+                  spacing={2}
                 >
-                  <Stack spacing={1}>
-                    <Typography variant="subtitle1">
-                      Make Contact Info Public
-                    </Typography>
-                    <Typography
-                      color="text.secondary"
-                      variant="body2"
-                    >
-                      Means that anyone viewing your profile will be able to see your contacts
-                      details.
-                    </Typography>
-                  </Stack>
-                  <Switch />
+                  <TextField
+                    defaultValue={email}
+                    disabled={!editemail}
+                    label="Email Address"
+                    required
+                    sx={{
+                      flexGrow: 1,
+                      ...(!editemail && {
+                        '& .MuiOutlinedInput-notchedOutline': {
+                          borderStyle: 'dotted'
+                        }
+                      })
+                    }}
+                  />
+                  <Button
+                    color="inherit"
+                    size="small"
+                    onClick={handleemail}
+                  >
+                    {editemail ? "Save" : "Edit"}
+
+                  </Button>
                 </Stack>
                 <Stack
-                  alignItems="flex-start"
+                  alignItems="center"
                   direction="row"
-                  justifyContent="space-between"
-                  spacing={3}
+                  spacing={2}
                 >
-                  <Stack spacing={1}>
-                    <Typography variant="subtitle1">
-                      Available to hire
-                    </Typography>
-                    <Typography
-                      color="text.secondary"
-                      variant="body2"
-                    >
-                      Toggling this will let your teammates know that you are available for
-                      acquiring new projects.
-                    </Typography>
-                  </Stack>
-                  <Switch defaultChecked />
+                  <TextField
+                    label="Timezone"
+                    name="timezone"
+                    disabled={!edittimezone}
+                    // onChange={handleSortChange}
+                    select
+                    SelectProps={{ native: true }}
+                    sx={{
+                      flexGrow: 1,
+                      ...(!edittimezone && {
+                        '& .MuiOutlinedInput-notchedOutline': {
+                          borderStyle: 'dotted'
+                        }
+                      })
+                    }}
+                  // value={sortDir}
+                  >
+                    {sortOptions.map((option) => (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                  <Button
+                    color="inherit"
+                    size="small"
+                    onClick={handletimezone}
+                  >
+                    {edittimezone ? "Save" : "Edit"}
+
+                  </Button>
                 </Stack>
-              </Stack>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              xs={12}
-              md={4}
-            >
-              <Typography variant="h6">
-                Delete Account
-              </Typography>
-            </Grid>
-            <Grid
-              xs={12}
-              md={8}
-            >
-              <Stack
-                alignItems="flex-start"
-                spacing={3}
-              >
-                <Typography variant="subtitle1">
-                  Delete your account and all of your source data. This is irreversible.
-                </Typography>
-                <Button
-                  color="error"
-                  variant="outlined"
+
+                <Stack
+                  alignItems="right"
+                  direction="row"
+                  spacing={2}
                 >
-                  Delete account
-                </Button>
+                  <Button
+                    size="small"
+                    type="button"
+                    color="primary"
+                    variant="contained"
+                    className="title-inter w-75 smallsize save-btn"
+                  >
+                    <span className="ml-2"> Save Changes </span>
+
+                  </Button>
+                </Stack>
+
               </Stack>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
+
     </Stack>
   );
 };

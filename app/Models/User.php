@@ -3,13 +3,14 @@
 namespace App\Models;
 // use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;  
-use Illuminate\Auth\MustVerifyEmail; 
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use App\Notifications\VerifyEmail;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, MustVerifyEmail;
@@ -20,9 +21,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'firstname', 'lastname', 'fullname', 'email', 'password', 'phonenumber','condition','companyname',
-        'companyfounded','companywebsite','companylocation','nichecategory','budget','companysize','aboutbusiness',
-        'instagram','tiktok','youtube','facebook','twitter','pinterest','linkedin','blogurl','trial'
+        'firstname', 'lastname', 'fullname', 'email', 'password', 'phonenumber', 'condition', 'companyname',
+        'companyfounded', 'companywebsite', 'companylocation', 'nichecategory', 'budget', 'companysize', 'aboutbusiness',
+        'instagram', 'tiktok', 'youtube', 'facebook', 'twitter', 'pinterest', 'linkedin', 'blogurl', 'trial'
     ];
 
     /**
@@ -54,6 +55,13 @@ class User extends Authenticatable
     {
         $this->notify(new  \App\Notifications\VerifyEmail);
     }
-
+    public function generateResetToken()
+    {
+        $this->reset_token = Str::random(40);
+        $this->save();
+    }
+    public function sendResetNotification()
+    {
+        $this->notify(new  \App\Notifications\VerifyReset);
+    }
 }
-

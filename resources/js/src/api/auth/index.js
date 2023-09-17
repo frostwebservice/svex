@@ -5,12 +5,12 @@ import { users } from './data';
 
 const STORAGE_KEY = 'users';
 
-// NOTE: We use sessionStorage since memory storage is lost after page reload.
+// NOTE: We use localStorage since memory storage is lost after page reload.
 //  This should be replaced with a server call that returns DB persisted data.
 
 const getPersistedUsers = () => {
   try {
-    const data = sessionStorage.getItem(STORAGE_KEY);
+    const data = localStorage.getItem(STORAGE_KEY);
 
     if (!data) {
       return [];
@@ -27,7 +27,7 @@ const persistUser = (user) => {
   try {
     const users = getPersistedUsers();
     const data = JSON.stringify([...users, user]);
-    sessionStorage.setItem(STORAGE_KEY, data);
+    localStroage.setItem(STORAGE_KEY, data);
   } catch (err) {
     console.error(err);
   }

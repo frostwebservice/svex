@@ -14,7 +14,7 @@ export const SocialTimeline = (props) => {
         spacing={4}
       >
         <Grid
-          lg={4}
+          lg={7}
           xs={12}
         >
           <SocialAbout
@@ -30,24 +30,12 @@ export const SocialTimeline = (props) => {
           />
         </Grid>
         <Grid
-          lg={8}
+          lg={5}
           xs={12}
         >
           <Stack spacing={3}>
             <SocialPostAdd />
-            {posts.map((post) => (
-              <SocialPostCard
-                key={post.id}
-                authorAvatar={post.author.avatar}
-                authorName={post.author.name}
-                comments={post.comments}
-                createdAt={post.createdAt}
-                isLiked={post.isLiked}
-                likes={post.likes}
-                media={post.media}
-                message={post.message}
-              />
-            ))}
+
           </Stack>
         </Grid>
       </Grid>

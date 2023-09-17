@@ -29,56 +29,41 @@ export const AccountTeamSettings = (props) => {
   return (
     <Card>
       <CardContent>
-        <Grid
-          container
+
+
+        <Stack spacing={1}>
+          <Typography variant="h6">
+            Invite members
+          </Typography>
+
+        </Stack>
+
+
+        <Stack
+          alignItems="center"
+          direction="row"
           spacing={3}
         >
-          <Grid
-            xs={12}
-            md={4}
-          >
-            <Stack spacing={1}>
-              <Typography variant="h6">
-                Invite members
-              </Typography>
-              <Typography
-                color="text.secondary"
-                variant="body2"
-              >
-                You currently pay for 2 Editor Seats.
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid
-            xs={12}
-            md={8}
-          >
-            <Stack
-              alignItems="center"
-              direction="row"
-              spacing={3}
-            >
-              <TextField
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon>
-                        <Mail01Icon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
-                }}
-                label="Email address"
-                name="email"
-                sx={{ flexGrow: 1 }}
-                type="email"
-              />
-              <Button variant="contained">
-                Send Invite
-              </Button>
-            </Stack>
-          </Grid>
-        </Grid>
+          <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SvgIcon>
+                    <Mail01Icon />
+                  </SvgIcon>
+                </InputAdornment>
+              )
+            }}
+            label="Email address"
+            name="email"
+            sx={{ flexGrow: 1 }}
+            type="email"
+          />
+          <Button variant="contained">
+            Send Invite
+          </Button>
+        </Stack>
+
       </CardContent>
       <Scrollbar>
         <Table sx={{ minWidth: 400 }}>

@@ -33,7 +33,7 @@ import { useMounted } from '@/hooks/use-mounted';
 
 const Page = () => {
 
-  
+
   const validationSchema = Yup.object({
     email: Yup
       .string()
@@ -60,25 +60,25 @@ const Page = () => {
       .oneOf([true], 'This field must be checked')
   });
 
-  const handleRecaptchaChanged = (value) =>{
+  const handleRecaptchaChanged = (value) => {
     setRecaptchaValue(value);
   }
 
   const verifyRecaptcha = () => {
-    
-    if (recaptchaValue){
-      axios.post('/api/verify-recaptcha',{recaptcha:recaptchaValue})
-      .then(response =>{
-        console.log(response.data.message)
 
-        return  true;
-      })
-      .catch(error =>{
-        console.error('Error verifying reCAPTCHA',error);
-        return false;
-      })
+    if (recaptchaValue) {
+      axios.post('/api/verify-recaptcha', { recaptcha: recaptchaValue })
+        .then(response => {
+          console.log(response.data.message)
+
+          return true;
+        })
+        .catch(error => {
+          console.error('Error verifying reCAPTCHA', error);
+          return false;
+        })
     }
-    else{
+    else {
       alert("Please complete the reCAPTCHA");
       return false;
     }
@@ -87,22 +87,22 @@ const Page = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [Register, setRegister] = useState("Register");
-  const [recaptchaValue, setRecaptchaValue]= useState('');
+  const [recaptchaValue, setRecaptchaValue] = useState('');
   const captchaRef = useRef(null);
   const [initialValues, setInitialValues] = useState({
-    email: 'DanDoe @ gmail.com',
-    name: '',
-    password: '111111',
-    confirmpassword:'',
+    email: 'frostwebservice@gmail.com',
+    name: 'Felix',
+    password: '123123123',
+    confirmpassword: '123123123',
     policy: false,
   });
   const formik = useFormik({
-  initialValues,
-  validationSchema,
-  onSubmit: values => { 
+    initialValues,
+    validationSchema,
+    onSubmit: values => {
 
-      localStorage.setItem("Email",JSON.stringify(values.email));
-      if( verifyRecaptcha() == false) {
+      localStorage.setItem("Email", JSON.stringify(values.email));
+      if (verifyRecaptcha() == false) {
         alert("Please complete the reCAPTCHA");
         captchaRef.current.reset();
         return;
@@ -112,14 +112,14 @@ const Page = () => {
 
       axios
         .post("/api/user-signup", values)
-          .then((response) => {
-            if (response.data.status === 200&&response.data.success) {
+        .then((response) => {
+          if (response.data.status === 200 && response.data.success) {
             captchaRef.current.reset();
             setIsLoading(false)
             navigate('/auth/auth/SendEmail')
-            
+
           }
-  
+
           if (response.data.status === "failed") {
             setRegister("Register")
             alert(response.data.message);
@@ -133,12 +133,12 @@ const Page = () => {
   return (
     <>
       <Seo title="Register" />
-      <div  className="signup-page">
+      <div className="signup-page">
         <Box sx={{ mb: 2 }}>
           <Link
             color="text.primary"
             component={RouterLink}
-            to ="/Dashboard"
+            to="/Dashboard"
             sx={{
               alignItems: 'center',
               display: 'inline-flex'
@@ -153,12 +153,12 @@ const Page = () => {
             </Typography>
           </Link>
         </Box>
-        <Typography color='black' 
-           className="title largesize my-4"
-            variant="h4" >
-             Brand account creation
-          </Typography>
-        <Card  sx={{borderRadius: 2.5 }}elevation={16} className="mainCard card  px-4 pt-4 pb-3" >
+        <Typography color='black'
+          className="title largesize my-4"
+          variant="h4" >
+          Brand account creation
+        </Typography>
+        <Card sx={{ borderRadius: 2.5 }} elevation={16} className="mainCard card  px-4 pt-4 pb-3" >
           <CardHeader
             subheader={(
               <Typography
@@ -188,7 +188,7 @@ const Page = () => {
               onSubmit={formik.handleSubmit}
             >
               <Stack spacing={3}>
-              <TextField
+                <TextField
                   label="Username"
                   className="title-inter mt-3"
                   name="name"
@@ -230,7 +230,7 @@ const Page = () => {
                   value={formik.values.password}
                 />
                 <TextField
-                  variant="filled"  
+                  variant="filled"
                   className="title-inter mt-3"
                   style={{ marginTop: 11 }}
                   error={!!(formik.touched.confirmpassword && formik.errors.confirmpassword)}
@@ -279,9 +279,9 @@ const Page = () => {
                   {formik.errors.policy}
                 </FormHelperText>
               )}
-               <div className='formGroup  px-2 '>
-               <ReCAPTCHA sitekey={"6LfZCiEoAAAAAFYWmXEdUvMwg2TD8op988LvKGpO"}   ref={captchaRef} onChange={handleRecaptchaChanged}/>
-                </div>
+              <div className='formGroup  px-2 '>
+                <ReCAPTCHA sitekey={"6LfZCiEoAAAAAFYWmXEdUvMwg2TD8op988LvKGpO"} ref={captchaRef} onChange={handleRecaptchaChanged} />
+              </div>
 
               <Button
                 fullWidth
@@ -291,9 +291,9 @@ const Page = () => {
                 variant="contained"
                 className="title-inter mainButton background-blue"
               >
-                 <span className="ml-2"> {Register} </span>
+                <span className="ml-2"> {Register} </span>
                 {isLoading ? (
-                 <CircularProgress color="inherit" size="2rem" />
+                  <CircularProgress color="inherit" size="2rem" />
                 ) : (
                   <span></span>
                 )}

@@ -20,7 +20,7 @@ export const AccountNotificationsSettings = () => (
           md={4}
         >
           <Typography variant="h6">
-            Email
+            In-App
           </Typography>
         </Grid>
         <Grid
@@ -40,13 +40,13 @@ export const AccountNotificationsSettings = () => (
             >
               <Stack spacing={1}>
                 <Typography variant="subtitle1">
-                  Product updates
+                  New Messages
                 </Typography>
                 <Typography
                   color="text.secondary"
                   variant="body2"
                 >
-                  News, announcements, and product updates.
+                  Lorem Ipsum
                 </Typography>
               </Stack>
               <Switch defaultChecked />
@@ -59,16 +59,73 @@ export const AccountNotificationsSettings = () => (
             >
               <Stack spacing={1}>
                 <Typography variant="subtitle1">
-                  Security updates
+                  Job Applicants
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                 >
-                  Important notifications about your account security.
+                  Lorem Ipsum
                 </Typography>
               </Stack>
-              <Switch defaultChecked />
+              <Switch />
+            </Stack>
+            <Stack
+              alignItems="flex-start"
+              direction="row"
+              justifyContent="space-between"
+              spacing={3}
+            >
+              <Stack spacing={1}>
+                <Typography variant="subtitle1">
+                  Influencer Signups
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Lorem Ipsum
+                </Typography>
+              </Stack>
+              <Switch />
+            </Stack>
+            <Stack
+              alignItems="flex-start"
+              direction="row"
+              justifyContent="space-between"
+              spacing={3}
+            >
+              <Stack spacing={1}>
+                <Typography variant="subtitle1">
+                  Influencer added to database
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Lorem Ipsum
+                </Typography>
+              </Stack>
+              <Switch />
+            </Stack>
+            <Stack
+              alignItems="flex-start"
+              direction="row"
+              justifyContent="space-between"
+              spacing={3}
+            >
+              <Stack spacing={1}>
+                <Typography variant="subtitle1">
+                  Membership
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Lorem Ipsum
+                </Typography>
+              </Stack>
+              <Switch />
             </Stack>
           </Stack>
         </Grid>
@@ -83,7 +140,7 @@ export const AccountNotificationsSettings = () => (
           md={4}
         >
           <Typography variant="h6">
-            Phone notifications
+            Email
           </Typography>
         </Grid>
         <Grid
@@ -91,6 +148,7 @@ export const AccountNotificationsSettings = () => (
           sm={12}
           md={8}
         >
+
           <Stack
             divider={<Divider />}
             spacing={3}
@@ -103,13 +161,89 @@ export const AccountNotificationsSettings = () => (
             >
               <Stack spacing={1}>
                 <Typography variant="subtitle1">
-                  Security updates
+                  New Messages
                 </Typography>
                 <Typography
                   color="text.secondary"
                   variant="body2"
                 >
-                  Important notifications about your account security.
+                  Lorem Ipsum
+                </Typography>
+              </Stack>
+              <Switch defaultChecked />
+            </Stack>
+            <Stack
+              alignItems="flex-start"
+              direction="row"
+              justifyContent="space-between"
+              spacing={3}
+            >
+              <Stack spacing={1}>
+                <Typography variant="subtitle1">
+                  Job Applicants
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Lorem Ipsum
+                </Typography>
+              </Stack>
+              <Switch />
+            </Stack>
+            <Stack
+              alignItems="flex-start"
+              direction="row"
+              justifyContent="space-between"
+              spacing={3}
+            >
+              <Stack spacing={1}>
+                <Typography variant="subtitle1">
+                  Influencer Signups
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Lorem Ipsum
+                </Typography>
+              </Stack>
+              <Switch />
+            </Stack>
+            <Stack
+              alignItems="flex-start"
+              direction="row"
+              justifyContent="space-between"
+              spacing={3}
+            >
+              <Stack spacing={1}>
+                <Typography variant="subtitle1">
+                  Influencer added to database
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Lorem Ipsum
+                </Typography>
+              </Stack>
+              <Switch />
+            </Stack>
+            <Stack
+              alignItems="flex-start"
+              direction="row"
+              justifyContent="space-between"
+              spacing={3}
+            >
+              <Stack spacing={1}>
+                <Typography variant="subtitle1">
+                  Membership
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  Lorem Ipsum
                 </Typography>
               </Stack>
               <Switch />

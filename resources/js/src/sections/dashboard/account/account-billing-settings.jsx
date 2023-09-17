@@ -29,25 +29,19 @@ const plans = [
   {
     id: 'startup',
     icon: <AccountPlanIcon name="startup" />,
-    name: 'Startup',
+    name: 'Free Plan',
     price: 0
   },
   {
     id: 'standard',
     icon: <AccountPlanIcon name="standard" />,
     name: 'Standard',
-    price: 4.99
-  },
-  {
-    id: 'business',
-    icon: <AccountPlanIcon name="business" />,
-    name: 'Business',
-    price: 29.99
+    price: 99
   }
 ];
 
 export const AccountBillingSettings = (props) => {
-  const { plan: currentPlan = 'standard', invoices = [] } = props;
+  const { plan: currentPlan = 'startup', invoices = [] } = props;
   const [selectedPlan, setSelectedPlan] = useState(currentPlan);
 
   return (

@@ -28,10 +28,10 @@ import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
 import { SocialConnections } from '@/sections/dashboard/social/social-connections';
 import { SocialTimeline } from '@/sections/dashboard/social/social-timeline';
-
+import "./profile.css";
 const tabs = [
-  { label: 'Timeline', value: 'timeline' },
-  { label: 'Connections', value: 'connections' }
+  { label: 'Overview', value: 'timeline' },
+  { label: 'Jobs Posted', value: 'connections' }
 ];
 
 const useProfile = () => {
@@ -51,8 +51,8 @@ const useProfile = () => {
   }, [isMounted]);
 
   useEffect(() => {
-      handleProfileGet();
-    },
+    handleProfileGet();
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
 
@@ -76,8 +76,8 @@ const usePosts = () => {
   }, [isMounted]);
 
   useEffect(() => {
-      handlePostsGet();
-    },
+    handlePostsGet();
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
 
@@ -97,8 +97,8 @@ const useConnections = (search = '') => {
   }, [isMounted]);
 
   useEffect(() => {
-      handleConnectionsGet();
-    },
+    handleConnectionsGet();
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [search]);
 
@@ -114,16 +114,16 @@ export const Page = () => {
   const posts = usePosts();
   const [connectionsQuery, setConnectionsQuery] = useState('');
   const connections = useConnections(connectionsQuery);
-  const [isLiked, setIsLiked] = useState(isLikedProp);
-  
+  const [isLiked, setIsLiked] = useState(false);
+
   const handleLike = useCallback(() => {
     setIsLiked(true);
-    setLikes((prevLikes) => prevLikes + 1);
+    // setLikes((prevLikes) => prevLikes + 1);
   }, []);
 
   const handleUnlike = useCallback(() => {
     setIsLiked(false);
-    setLikes((prevLikes) => prevLikes - 1);
+    // setLikes((prevLikes) => prevLikes - 1);
   }, []);
   usePageView();
 
@@ -210,31 +210,42 @@ export const Page = () => {
             <Stack
               alignItems="center"
               direction="row"
+              className="custom-parent"
               spacing={2}
               sx={{ mt: 5 }}
             >
               <Stack
                 alignItems="center"
                 direction="row"
+                className="custom-avatar"
                 spacing={2}
               >
                 <Avatar
                   src={profile.avatar}
                   sx={{
-                    height: 64,
-                    width: 64
+                    height: 120,
+                    width: 120
                   }}
                 />
                 <div>
+                  <Typography
+                    color="primary"
+                    variant="h6">
+                    {profile.name}
+                  </Typography>
                   <Typography
                     color="text.secondary"
                     variant="overline"
                   >
                     {profile.bio}
                   </Typography>
-                  <Typography variant="h6">
-                    {profile.name}
+                  <Typography
+                    color="primary"
+                    variant="subtitle2"
+                  >
+                    from address
                   </Typography>
+
                 </div>
               </Stack>
               <Box sx={{ flexGrow: 1 }} />
@@ -249,33 +260,47 @@ export const Page = () => {
                   }
                 }}
               >
-              {isLiked
-                ? (
-                  <Tooltip title="Unlike">
-                    <IconButton onClick={handleUnlike}>
-                      <SvgIcon
-                        sx={{
-                          color: 'error.main',
-                          '& path': {
-                            fill: (theme) => theme.palette.error.main,
-                            fillOpacity: 1
-                          }
-                        }}
-                      >
-                        <HeartIcon />
-                      </SvgIcon>
-                    </IconButton>
-                  </Tooltip>
-                )
-                : (
-                  <Tooltip title="Like">
-                    <IconButton onClick={handleLike}>
-                      <SvgIcon>
-                        <HeartIcon />
-                      </SvgIcon>
-                    </IconButton>
-                  </Tooltip>
-                )}
+                {isLiked
+                  ? (
+                    <Button
+
+                      onClick={handleUnlike}
+                      size="small"
+                      startIcon={(
+                        <SvgIcon
+                          sx={{
+                            color: 'error.main',
+                            '& path': {
+                              fill: (theme) => theme.palette.error.main,
+                              fillOpacity: 1
+                            }
+                          }}
+                        >
+                          <HeartIcon />
+                        </SvgIcon>
+                      )}
+                      variant="outlined"
+                    >
+                      Favorite
+                    </Button>
+
+
+                  )
+                  : (
+                    <Button
+                      onClick={handleLike}
+                      size="small"
+                      startIcon={(
+                        <SvgIcon>
+                          <HeartIcon />
+                        </SvgIcon>
+                      )}
+                      variant="outlined"
+                    >
+                      Favorite
+                    </Button>
+                  )}
+
                 <Button
                   component={RouterLink}
                   href={paths.dashboard.chat}

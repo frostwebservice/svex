@@ -37,23 +37,6 @@ export const SocialAbout = (props) => {
       spacing={3}
       {...other}>
       <Card>
-        <CardHeader title="Profile Progress" />
-        <CardContent>
-          <Stack spacing={2}>
-            <LinearProgress
-              value={profileProgress}
-              variant="determinate"
-            />
-            <Typography
-              color="text.secondary"
-              variant="subtitle2"
-            >
-              50% Set Up Complete
-            </Typography>
-          </Stack>
-        </CardContent>
-      </Card>
-      <Card>
         <CardHeader title="About" />
         <CardContent>
           <Typography

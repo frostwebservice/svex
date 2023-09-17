@@ -22,6 +22,7 @@ import { Seo } from '@/components/seo';
 // import { paths } from 'src/paths';
 
 const initialValues = {
+  email: localStorage.getItem('email'),
   password: '',
   passwordConfirm: ''
 };
@@ -39,10 +40,27 @@ const validationSchema = Yup.object({
 });
 
 const Page = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: () => { }
+    onSubmit: values => {
+
+      axios
+        .post("/api/user-reset", values)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status === 200 && response.data.success) {
+            navigate('/auth/auth/SignIn')
+
+          }
+
+          if (response.data.status === "failed") {
+            alert(response.data.message);
+          }
+        });
+    }
   });
 
   return (
@@ -68,7 +86,7 @@ const Page = () => {
             </Typography>
           </Link>
         </Box>
-        <Card elevation={16} sx={{borderRadius: 5 }}className="card  px-4 pt-4 pb-3">
+        <Card elevation={16} sx={{ borderRadius: 5 }} className="card  px-4 pt-4 pb-3">
           <CardHeader
             sx={{ pb: 0 }}
             title="Reset Password"
@@ -79,7 +97,7 @@ const Page = () => {
               onSubmit={formik.handleSubmit}
             >
               <Stack spacing={3}>
-                <RedditTextfield
+                <TextField
                   className="title-inter mt-4"
                   variant="filled"
                   style={{ marginTop: 11 }}
@@ -93,7 +111,7 @@ const Page = () => {
                   type="password"
                   value={formik.values.password}
                 />
-                <RedditTextfield
+                <TextField
                   className="title-inter mt-4"
                   variant="filled"
                   style={{ marginTop: 11 }}

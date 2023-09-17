@@ -9,7 +9,6 @@ import { AccountGeneralSettings } from '@/sections/dashboard/account/account-gen
 import { AccountNotificationsSettings } from '@/sections/dashboard/account/account-notifications-settings';
 import { AccountTeamSettings } from '@/sections/dashboard/account/account-team-settings';
 import { AccountSecuritySettings } from '@/sections/dashboard/account/account-security-settings';
-
 const now = new Date();
 
 const tabs = [
@@ -77,7 +76,7 @@ const Page = () => {
           )}
           {currentTab === 'billing' && (
             <AccountBillingSettings
-              plan="standard"
+              plan="startup"
               invoices={[
                 {
                   id: '5547409069c59755261f5546',
