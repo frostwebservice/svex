@@ -33,11 +33,11 @@ import PinterestIcon from '@mui/icons-material/Pinterest';
 import LinkedinIcon from '@mui/icons-material/Linkedin';
 import { InfCard } from './inf_card';
 import { InstagramSave } from '@/sections/dashboard/academy/instagram-Save';
-// import { TiktokSave } from '@/sections/dashboard/academy/tiktok-save';
-// import { YoutubeSave } from '@/sections/dashboard/academy/youtube-save';
-// import { TwitterSave } from '@/sections/dashboard/academy/twitter-save';
-// import { PinterestSave } from '@/sections/dashboard/academy/pinterest-save';
-// import { LinkedinSave } from '@/sections/dashboard/academy/linkedin-save';
+import { TiktokSave } from '@/sections/dashboard/academy/tiktok-save';
+import { YoutubeSave } from '@/sections/dashboard/academy/youtube-save';
+import { TwitterSave } from '@/sections/dashboard/academy/twitter-save';
+import { PinterestSave } from '@/sections/dashboard/academy/pinterest-save';
+import { LinkedinSave } from '@/sections/dashboard/academy/linkedin-save';
 
 const SavedSearchs = () => {
     const settings = useSettings();
@@ -58,6 +58,11 @@ const SavedSearchs = () => {
                     </Typography>
                     <Card>
                         <InstagramSave />
+                        <TiktokSave />
+                        <YoutubeSave />
+                        <TwitterSave />
+                        <PinterestSave />
+                        <LinkedinSave />
 
                     </Card>
 
