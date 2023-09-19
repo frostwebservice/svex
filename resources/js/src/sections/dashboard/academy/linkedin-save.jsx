@@ -64,60 +64,77 @@ export const LinkedinSave = () => {
 
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="" fullWidth label="Search" name="keywords" placeholder="Keywords"
-                                InputLabelProps={{ shrink: true }} />
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Search"
+                                name="keywords"
+                                placeholder="Keywords"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="web" fullWidth label="Category" name="category" select SelectProps={{
-                                native: true
-                            }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Category"
+                                name="category"
+                                placeholder="Category"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="web" fullWidth label="Location" name="location" select SelectProps={{
-                                native: true
-                            }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Location"
+                                name="location"
+                                placeholder="Location"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="web" fullWidth label="Language" name="language" select SelectProps={{
-                                native: true
-                            }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Language"
+                                name="language"
+                                placeholder="Language"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="web" fullWidth label="Followers" name="followers_from" select SelectProps={{
-                                native: true
-                            }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Followers"
+                                name="followers_from"
+                                placeholder="Followers"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
@@ -128,82 +145,108 @@ export const LinkedinSave = () => {
                                 fontWeight: 700, whiteSpace: 'normal', marginRight: 5, display: 'flex',
                                 alignItems: 'center', mr: 5
                             }}>To</span>
-                            <TextField defaultValue="web" fullWidth label="Followers" name="followers_to" select SelectProps={{
-                                native:
-                                    true
-                            }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Followers"
+                                name="followers_to"
+                                placeholder="Followers"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
 
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="web" fullWidth label="Engagement rate" name="engagement" select SelectProps={{
-                                native: true
-                            }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Engagement rate"
+                                name="engagement"
+                                placeholder="Engagement rate"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="web" fullWidth label="Connections" name="connections" select SelectProps={{
-                                native:
-                                    true
-                            }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Connections"
+                                name="connections"
+                                placeholder="Connections"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="web" fullWidth label="Industry" name="industry" select SelectProps={{
-                                native: true
-                            }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Industry"
+                                name="industry"
+                                placeholder="Industry"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="web" fullWidth label="Skills" name="Skills" select SelectProps={{ native: true }}>
-                                {platformOptions.map((option) => (
-                                    <option key={option} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Skills"
+                                name="skills"
+                                placeholder="Skills"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="" fullWidth label="Search" name="username" placeholder="Username"
-                                InputLabelProps={{ shrink: true }} />
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Search"
+                                name="username"
+                                placeholder="Username"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4} className='custom-grid'>
                         <Box sx={{ flexGrow: 1 }}>
-                            <TextField defaultValue="" fullWidth label="Search" name="url" placeholder="URL" InputLabelProps={{
-                                shrink:
-                                    true
-                            }} />
+                            <TextField
+                                defaultValue=""
+                                fullWidth
+                                label="Search"
+                                name="url"
+                                placeholder="URL"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                 </Grid>
