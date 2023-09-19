@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useFormik } from 'formik';
 import { useSearchParams } from '@/hooks/use-search-params';
 import { useNavigate } from 'react-router-dom';
 import { Link as ReactRouterLink } from 'react-router-dom';
-// import { Textfield} from '@/frontendpage/TextfieldStyle'
+import RedditTextField from '../../../frontendpage/TextfieldStyle';
 // import "@/frontendpage/Form.CSS";
-import './Form.css';
+import "./Form.css";
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import {
   Box,
@@ -27,19 +27,21 @@ import { paths } from '@/paths';
 import { useAuth } from '@/hooks/use-auth';
 import { useMounted } from '@/hooks/use-mounted';
 
-const validationSchema = Yup.object({
-  email: Yup
-    .string()
-    .email('Must be a valid email')
-    .max(255)
-    .required('Email is required'),
-  password: Yup
-    .string()
-    .max(255)
-    .required('Password is required')
-});
 
 const Page = () => {
+
+
+  const validationSchema = Yup.object({
+    email: Yup
+      .string()
+      .email('Must be a valid email')
+      .max(255)
+      .required('Email is required'),
+    password: Yup
+      .string()
+      .max(255)
+      .required('Password is required')
+  });
 
   const isMounted = useMounted();
   const searchParams = useSearchParams();
@@ -48,9 +50,8 @@ const Page = () => {
   const [letter, setLetter] = useState("Log In");
   const { signIn } = useAuth();
   const [initialValues, setInitialValues] = useState({
-    email: '',
-    password: '',
-    // submit: null,
+    email: "frostwebservice@gmail.com",
+    password: "123123123",
   });
   const navigate = useNavigate();
 
@@ -112,7 +113,7 @@ const Page = () => {
   return (
     <>
       <Seo title="Login" />
-      <div style={{ width: '620px', margin: 'auto' }}>
+      <div className='signup-page'>
         <Box sx={{ mb: 2 }}>
           <Link
             color="text.primary"
@@ -133,12 +134,12 @@ const Page = () => {
             </Typography>
           </Link>
         </Box>
-        <Card sx={{ borderRadius: 2.5 }} className="mainCard card  px-4 pt-4 pb-3" >
+        <Card sx={{ borderRadius: 2.5 }} elevation={16} className="mainCard card  px-4 pt-4 pb-3" >
 
           <CardHeader
             subheader={(
               <Typography
-                className="title-inter smallsize"
+                className="title-inter"
                 color="text.secondary"
               // variant="body1"
 
@@ -148,7 +149,7 @@ const Page = () => {
                 <Link
                   underline="hover"
                   // variant="subtitle2"
-                  className="title-inter smallsize"
+                  className="title-inter"
                   onClick={() => navigate(paths.auth.auth.signup)}
                 >
                   Register
@@ -156,10 +157,10 @@ const Page = () => {
               </Typography>
             )}
             sx={{ pb: 0 }}
-            className="title  smalltitle"
+            className="title  smalltitle signup-form-title"
             title="Log in"
           />
-          <CardContent>
+          <CardContent className="signup-form">
             <form
               noValidate
               onSubmit={formik.handleSubmit}
@@ -167,11 +168,9 @@ const Page = () => {
 
 
               <Stack spacing={3}>
-                <TextField
-                  className="title-inter mt-4"
+                <RedditTextField
+                  className="title-inter mt-3"
                   variant="filled"
-                  sx={{ mt: 1.5 }}
-                  autoFocus
                   error={!!(formik.touched.email && formik.errors.email)}
                   fullWidth
                   helperText={formik.touched.email && formik.errors.email}
@@ -182,10 +181,9 @@ const Page = () => {
                   type="email"
                   value={formik.values.email}
                 />
-                <TextField
-                  className="title-inter mt-4"
+                <RedditTextField
+                  className="title-inter mt-3"
                   variant="filled"
-                  sx={{ mt: 1.5 }}
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
@@ -196,6 +194,7 @@ const Page = () => {
                   type="password"
                   value={formik.values.password}
                 />
+
               </Stack>
               <Button
                 fullWidth

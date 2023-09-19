@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
-// import  RedditTextfield from '../../../frontendpage/TextfieldStyle';
+import RedditTextField from '../../../frontendpage/TextfieldStyle';
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import "./Form.css";
@@ -179,16 +179,16 @@ const Page = () => {
               </Typography>
             )}
             sx={{ pb: 0 }}
-            className="title smalltitle mt-2"
+            className="title smalltitle mt-2 signup-form-title"
             title="Register"
           />
-          <CardContent>
+          <CardContent className="signup-form" >
             <form
               noValidate
               onSubmit={formik.handleSubmit}
             >
               <Stack spacing={3}>
-                <TextField
+                <RedditTextField
                   label="Username"
                   className="title-inter mt-3"
                   name="name"
@@ -201,7 +201,7 @@ const Page = () => {
                   onChange={formik.handleChange}
                   value={formik.values.name}
                 />
-                <TextField
+                <RedditTextField
                   variant="filled"
                   className="title-inter mt-3"
                   style={{ marginTop: 11 }}
@@ -215,7 +215,7 @@ const Page = () => {
                   type="email"
                   value={formik.values.email}
                 />
-                <TextField
+                <RedditTextField
                   variant="filled"
                   className="title-inter mt-3"
                   style={{ marginTop: 11 }}
@@ -229,7 +229,7 @@ const Page = () => {
                   type="password"
                   value={formik.values.password}
                 />
-                <TextField
+                <RedditTextField
                   variant="filled"
                   className="title-inter mt-3"
                   style={{ marginTop: 11 }}
@@ -279,7 +279,7 @@ const Page = () => {
                   {formik.errors.policy}
                 </FormHelperText>
               )}
-              <div className='formGroup  px-2 '>
+              <div className='formGroup  px-2'>
                 <ReCAPTCHA sitekey={"6LfZCiEoAAAAAFYWmXEdUvMwg2TD8op988LvKGpO"} ref={captchaRef} onChange={handleRecaptchaChanged} />
               </div>
 

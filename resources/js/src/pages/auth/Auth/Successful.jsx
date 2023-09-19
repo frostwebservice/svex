@@ -34,7 +34,7 @@ export default function Successful(props) {
     return (
         <>
             <Seo title="Register" />
-            <div className="sendEmail-page">
+            <div className="register-page">
                 <Typography color="primary" variant="h4" sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}>
                     LOGO
                 </Typography>

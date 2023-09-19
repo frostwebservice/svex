@@ -4,6 +4,8 @@ import { Component, useState } from "react";
 import { useFormik } from 'formik';
 import "./Form.css";
 import { useSearchParams } from '@/hooks/use-search-params';
+import RedditTextField from '../../../frontendpage/TextfieldStyle';
+
 import {
   Box,
   Button,
@@ -66,7 +68,7 @@ const Page = () => {
   return (
     <>
       <Seo title="Forgot Password" />
-      <div className="forgotpassword-page">
+      <div className="signup-page">
         <Typography color="primary" variant="h4" sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}>
           LOGO
         </Typography>
@@ -96,13 +98,14 @@ const Page = () => {
           <CardHeader
             sx={{ pb: 0 }}
             title="Forgot password"
+            className="title  smalltitle signup-form-title"
           />
-          <CardContent>
+          <CardContent className='signup-form'>
             <form
               noValidate
               onSubmit={formik.handleSubmit}
             >
-              <TextField
+              <RedditTextField
                 className="title-inter mt-4"
                 autoFocus
                 variant="filled"

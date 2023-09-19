@@ -1,7 +1,8 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-// import { RedditTextfield} from '../../../frontendpage/TextfieldStyle1'
+import RedditTextField from '../../../frontendpage/TextfieldStyle';
+
 import "./Form.css";
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import {
@@ -66,7 +67,7 @@ const Page = () => {
   return (
     <>
       <Seo title="Reset Password" />
-      <div className="resetpassword-page">
+      <div className="signup-page">
         <Box sx={{ mb: 4 }}>
           <Link
             color="text.primary"
@@ -90,14 +91,17 @@ const Page = () => {
           <CardHeader
             sx={{ pb: 0 }}
             title="Reset Password"
+            className="title  smalltitle signup-form-title"
           />
-          <CardContent>
+          <CardContent
+            className='signup-form'
+          >
             <form
               noValidate
               onSubmit={formik.handleSubmit}
             >
               <Stack spacing={3}>
-                <TextField
+                <RedditTextField
                   className="title-inter mt-4"
                   variant="filled"
                   style={{ marginTop: 11 }}
@@ -111,7 +115,7 @@ const Page = () => {
                   type="password"
                   value={formik.values.password}
                 />
-                <TextField
+                <RedditTextField
                   className="title-inter mt-4"
                   variant="filled"
                   style={{ marginTop: 11 }}
