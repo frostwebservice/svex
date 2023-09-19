@@ -73,6 +73,9 @@ export const TwitterSave = () => {
                                 name="keywords"
                                 placeholder="Keywords"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -81,22 +84,16 @@ export const TwitterSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Category"
                                 name="category"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Category"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -104,22 +101,16 @@ export const TwitterSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Location"
                                 name="location"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Location"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -127,22 +118,16 @@ export const TwitterSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Language"
                                 name="language"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Language"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -150,22 +135,16 @@ export const TwitterSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Followers"
                                 name="followers_from"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Followers"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -181,22 +160,16 @@ export const TwitterSave = () => {
                                 , alignItems: 'center', mr: 5
                             }}>To</span>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Followers"
                                 name="followers_to"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Followers"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
 
@@ -206,22 +179,16 @@ export const TwitterSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
-                                label="Engagement rate"
-                                name="engagement"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                label="Engagement"
+                                name="engagement_rate"
+                                placeholder="Engagement"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -229,22 +196,16 @@ export const TwitterSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Avg likes range"
                                 name="avg_likes"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Avg likes range"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -252,22 +213,16 @@ export const TwitterSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Avg comments range"
                                 name="avg_comments"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Avg comments range"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -275,22 +230,16 @@ export const TwitterSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Total favorites count"
                                 name="total_favorites_count"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Total favorites count"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -304,6 +253,9 @@ export const TwitterSave = () => {
                                 name="username"
                                 placeholder="Username"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -318,6 +270,9 @@ export const TwitterSave = () => {
                                 name="url"
                                 placeholder="URL"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
