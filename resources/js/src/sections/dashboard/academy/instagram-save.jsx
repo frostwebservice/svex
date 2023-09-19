@@ -73,6 +73,9 @@ export const InstagramSave = () => {
                                 name="keywords"
                                 placeholder="Keywords"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -88,6 +91,9 @@ export const InstagramSave = () => {
                                 name="hashtags"
                                 placeholder="Hashtags"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -102,6 +108,9 @@ export const InstagramSave = () => {
                                 name="category"
                                 placeholder="Category"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -116,6 +125,9 @@ export const InstagramSave = () => {
                                 name="location"
                                 placeholder="Location"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -130,6 +142,9 @@ export const InstagramSave = () => {
                                 name="followers_from"
                                 placeholder="Followers"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -150,6 +165,9 @@ export const InstagramSave = () => {
                                 name="followers_to"
                                 placeholder="Followers"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -165,6 +183,9 @@ export const InstagramSave = () => {
                                 name="age"
                                 placeholder="Age"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -179,6 +200,9 @@ export const InstagramSave = () => {
                                 name="gender"
                                 placeholder="Gender"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -193,6 +217,9 @@ export const InstagramSave = () => {
                                 name="language"
                                 placeholder="Language"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -207,6 +234,9 @@ export const InstagramSave = () => {
                                 name="engagement"
                                 placeholder="Engagement rate"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -221,6 +251,9 @@ export const InstagramSave = () => {
                                 name="avg_likes"
                                 placeholder="Avg likes range"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -235,6 +268,9 @@ export const InstagramSave = () => {
                                 name="avg_comments"
                                 placeholder="Avg comments range"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -249,6 +285,9 @@ export const InstagramSave = () => {
                                 name="username"
                                 placeholder="Username"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -257,12 +296,16 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
+                                readOnly={true}
                                 defaultValue=""
                                 fullWidth
                                 label="Search"
                                 name="url"
                                 placeholder="URL"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
