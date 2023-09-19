@@ -73,7 +73,11 @@ export const TiktokSave = () => {
                                 name="keywords"
                                 placeholder="Keywords"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
+
                         </Box>
                     </Grid>
 
@@ -88,6 +92,9 @@ export const TiktokSave = () => {
                                 name="hashtags"
                                 placeholder="Hashtags"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -96,22 +103,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Category"
                                 name="category"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Category"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -119,22 +120,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Location"
                                 name="location"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Location"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -142,29 +137,21 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Followers"
                                 name="followers_from"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Followers"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
-
-
                         <Box sx={{
                             flexGrow: 1, display: 'flex'
                         }}>
@@ -173,22 +160,16 @@ export const TiktokSave = () => {
                                 , alignItems: 'center', mr: 5
                             }}>To</span>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Followers"
                                 name="followers_to"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Followers"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
 
@@ -197,22 +178,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Age"
                                 name="age"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Age"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -220,22 +195,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Gender"
                                 name="gender"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Gender"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -243,22 +212,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Language"
                                 name="language"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Language"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -266,22 +229,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Engagement rate"
                                 name="engagement"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Engagement rate"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -289,22 +246,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Avg likes range"
                                 name="avg_likes"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Avg likes range"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -312,22 +263,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Avg comments range"
                                 name="avg_comments"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Avg comments range"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -335,22 +280,16 @@ export const TiktokSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                defaultValue=""
                                 fullWidth
                                 label="Total likes"
                                 name="total_likes"
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
+                                placeholder="Total likes"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
+                            />
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={4}
@@ -364,6 +303,9 @@ export const TiktokSave = () => {
                                 name="username"
                                 placeholder="Username"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
@@ -378,6 +320,9 @@ export const TiktokSave = () => {
                                 name="url"
                                 placeholder="URL"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={
+                                    { readOnly: true, }
+                                }
                             />
                         </Box>
                     </Grid>
