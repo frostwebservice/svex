@@ -160,7 +160,7 @@ export const Page = () => {
           py: 8
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <div>
             <Box
               style={{ backgroundImage: `url(${profile.cover})` }}
@@ -212,7 +212,7 @@ export const Page = () => {
               direction="row"
               className="custom-parent"
               spacing={2}
-              sx={{ mt: 5 }}
+              sx={{ mt: 4 }}
             >
               <Stack
                 alignItems="center"
@@ -235,15 +235,17 @@ export const Page = () => {
                   </Typography>
                   <Typography
                     color="text.secondary"
+                    className='font-inter'
                     variant="overline"
                   >
-                    {profile.bio}
+                    Established since 2010
                   </Typography>
                   <Typography
                     color="primary"
                     variant="subtitle2"
+                    className='font-inter'
                   >
-                    from address
+                    Toronto, Canada
                   </Typography>
 
                 </div>

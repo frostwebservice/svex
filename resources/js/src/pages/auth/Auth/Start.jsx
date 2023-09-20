@@ -76,12 +76,13 @@ export default function Start(props) {
                 Lets complete you profile and start connecting with potential influencers
               </Typography>
 
-              <div className="d-flex ">
+              <div className="row d-flex  pt-4 px-1 title-inter ">
+
                 <Button
                   className="text-center m-2 w-50 btn btn-outline-primary mainButton title-inter smallsize"
                   size="medium"
                   variant="contained"
-                  style={{ maxWidth: '260px', maxHeight: '48px', minWidth: '100px', minHeight: '48px' }}
+                  style={{ maxHeight: '48px', minWidth: '100px', minHeight: '48px' }}
                   onClick={onStartClicked}
                   sx={{
                     width: 200,
@@ -93,6 +94,7 @@ export default function Start(props) {
                   {click}
                 </Button>
                 <Button
+                  size="medium"
                   className="text-center m-2 w-25 later-btn mainButton title-inter smallsize"
                   color="primary"
                   onClick={onLaterClicked}

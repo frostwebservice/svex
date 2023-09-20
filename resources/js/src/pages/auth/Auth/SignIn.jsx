@@ -50,8 +50,8 @@ const Page = () => {
   const [letter, setLetter] = useState("Log In");
   const { signIn } = useAuth();
   const [initialValues, setInitialValues] = useState({
-    email: "frostwebservice@gmail.com",
-    password: "123123123",
+    email: "",
+    password: "",
   });
   const navigate = useNavigate();
 
@@ -61,52 +61,52 @@ const Page = () => {
     onSubmit: values => {
       setIsLoading(true);
       setLetter("");
-      setTimeout(() => {
-        axios
-          .post("/api/user-signin", values)
-          .then((response) => {
 
-            if (response.data.status === 200) {
-              setInitialValues({
-                email: "",
-                password: "",
-                // submit:null,
-              });
-              setLetter("Log In")
-              setIsLoading(false)
-              async function callSignin() {
-                try {
-                  await signIn(values.email, values.password, response.data.data);
+      axios
+        .post("/api/user-signin", values)
+        .then((response) => {
 
-                  if (isMounted()) {
-                    // returnTo could be an absolute path
-                    navigate(returnTo || paths.dashboard.index);
-                  }
-                } catch (err) {
-                  console.error(err);
+          if (response.data.status === 200) {
+            setInitialValues({
+              email: "",
+              password: "",
+              // submit:null,
+            });
+            setLetter("Log In")
+            setIsLoading(false)
+            async function callSignin() {
+              try {
+                await signIn(values.email, values.password, response.data.data);
 
-                  if (isMounted()) {
-                    helpers.setStatus({ success: false });
-                    helpers.setErrors({ submit: err.message });
-                    helpers.setSubmitting(false);
-                  }
+                if (isMounted()) {
+                  // returnTo could be an absolute path
+                  navigate(returnTo || paths.dashboard.index);
+                }
+              } catch (err) {
+                console.error(err);
+
+                if (isMounted()) {
+                  helpers.setStatus({ success: false });
+                  helpers.setErrors({ submit: err.message });
+                  helpers.setSubmitting(false);
                 }
               }
-              callSignin();
-              setLetter("Log in")
-              setIsLoading(false)
-              // window.location.href = returnTo || paths.dashboard.index;
             }
+            callSignin();
+            setLetter("Log in")
+            setIsLoading(false)
+            // window.location.href = returnTo || paths.dashboard.index;
+          }
 
-            if (response.data.status === "failed") {
-              setLetter("Log In")
-              setIsLoading(false)
+          if (response.data.status === "failed") {
+            setLetter("Log In")
+            setIsLoading(false)
 
-              alert(response.data.message);
+            alert(response.data.message);
 
-            }
-          });
-      }, 2000);
+          }
+        });
+
     }
   });
 
@@ -164,6 +164,7 @@ const Page = () => {
             <form
               noValidate
               onSubmit={formik.handleSubmit}
+
             >
 
 
@@ -189,12 +190,12 @@ const Page = () => {
                   helperText={formik.touched.password && formik.errors.password}
                   label="Password"
                   name="password"
+                  autoComplete="new password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   type="password"
                   value={formik.values.password}
                 />
-
               </Stack>
               <Button
                 fullWidth

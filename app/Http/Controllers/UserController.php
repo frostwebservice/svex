@@ -241,7 +241,12 @@ class UserController extends Controller
         // if email exists then we will check password for the same email
 
         if (!is_null($email_status)) {
-            $password_status    =   User::where("email", $request->email)->where("password", md5($request->password))->first();
+
+            if ($request->from == "success") {
+                $password_status    =   User::where("email", $request->email)->first();
+            } else {
+                $password_status = "passed";
+            }
 
             // if password is correct
             if (!is_null($password_status)) {

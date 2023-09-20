@@ -66,7 +66,7 @@ const Page = () => {
     budget: '',
     companysize: '',
     companyfounded: '',
-    aboutbusiness: '',
+    aboutbusiness: 'Describe your influencer marketing goals and ambitions using SocialVex',
     email: '',
   });
   initialValues.email = email;
@@ -74,7 +74,19 @@ const Page = () => {
   const onCancel = (e) => {
     navigate(returnTo || paths.auth.auth.signin);
   }
-
+  const onbioClick = (e) => {
+    if (e.target.value == initialValues.aboutbusiness) {
+      setInitialValues({
+        nichecategory: '',
+        budget: '',
+        companysize: '',
+        companyfounded: '',
+        aboutbusiness: '',
+        email: '',
+      })
+      formik.values.aboutbusiness = "";
+    }
+  }
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -210,6 +222,7 @@ const Page = () => {
                   helperText={formik.touched.aboutbusiness && formik.errors.aboutbusiness}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
+                  onClick={onbioClick}
                   value={formik.values.aboutbusiness}
                 /></div>
 

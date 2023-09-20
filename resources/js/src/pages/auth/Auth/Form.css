@@ -5,6 +5,14 @@
   height: 100%;
 }
 
+input[type="password"] {
+
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: square;
+
+}
+
 .containers {
   background-color: rgb(255, 255, 255);
   padding: 20px 40px;
@@ -138,6 +146,10 @@ a {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
+.MuiInputLabel-root {
+  font-size: 11px !important;
+}
+
 .largesize {
   font-Size: 32px !important;
   font-Weight: bold !important;
@@ -185,6 +197,7 @@ a {
 .MuiButton-root,
 .mainButton {
   border-radius: 12px !important;
+  height: 42px !important;
   margin-bottom: 10px
 }
 
@@ -236,6 +249,8 @@ a {
 
 .later-btn {
   border: 1px solid blue;
+  height: 48px !important;
+
 }
 
 .later-btn:hover {
@@ -295,4 +310,11 @@ a {
   font-size: 16px !important;
   font-family: inter !important;
   margin: 0px !important;
+}
+
+@media screen and (max-width:548px) {
+
+  .mainButton {
+    width: 100% !important;
+  }
 }

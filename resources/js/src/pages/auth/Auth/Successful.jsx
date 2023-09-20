@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { Seo } from '@/components/seo';
 import { paths } from '@/paths';
+import { useAuth } from '@/hooks/use-auth';
+import { useMounted } from '@/hooks/use-mounted';
 
 import {
     Card,
@@ -20,17 +22,53 @@ import { useFormik } from 'formik';
 
 export default function Successful(props) {
 
+    const isMounted = useMounted();
     const searchParams = useSearchParams();
     const returnTo = searchParams.get('returnTo');
     const [isLoading, setIsLoading] = useState(false);
     const [launch, setLaunch] = useState("LAUNCH DASHBOARD");
     const email = JSON.parse(localStorage.getItem('Email'));
-    const values = { "email": email };
+    const { signIn } = useAuth();
+
+    const values = {
+        "email": email,
+        "from": "success"
+    };
     const navigate = useNavigate();
 
     const onClickHandler = (e) => {
-        navigate(paths.dashboard.index)
+
+        axios
+            .post("/api/user-signin", values)
+            .then((response) => {
+
+                if (response.data.status === 200) {
+
+                    async function callSignin() {
+                        try {
+                            await signIn(values.email, values.password, response.data.data);
+
+                            if (isMounted()) {
+                                // returnTo could be an absolute path
+                                navigate(returnTo || paths.dashboard.index);
+                            }
+                        } catch (err) {
+                            console.error(err);
+
+                        }
+                    }
+                    callSignin();
+                }
+
+                if (response.data.status === "failed") {
+
+                    alert(response.data.message);
+
+                }
+            });
+
     }
+
     return (
         <>
             <Seo title="Register" />

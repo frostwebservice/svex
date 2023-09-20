@@ -45,7 +45,7 @@ export default function EmailVerify(props) {
   return (
     <>
       <Seo title="Email Verification" />
-      <div className="sendEmail-page">
+      <div className="signup-page">
         <Typography color="primary" variant="h4" sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}>
           LOGO
         </Typography>
@@ -62,7 +62,7 @@ export default function EmailVerify(props) {
               <Typography sx={{ pb: 4, textAlign: 'center' }} className="title smallsize" >
                 {email}
               </Typography>
-              <div className="d-flex justify-content-center resend-button" >
+              <div className="row d-flex justify-content-center resend-button" >
                 <Button
                   fullWidth
                   size="large"

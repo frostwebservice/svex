@@ -7,3 +7,11 @@
 .custom-parent {
     position: relative
 }
+
+.font-inter {
+    font-Family: 'inter' !important;
+}
+
+.font-plus {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}

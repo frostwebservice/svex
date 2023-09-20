@@ -90,10 +90,10 @@ const Page = () => {
   const [recaptchaValue, setRecaptchaValue] = useState('');
   const captchaRef = useRef(null);
   const [initialValues, setInitialValues] = useState({
-    email: 'frostwebservice@gmail.com',
-    name: 'Felix',
-    password: '123123123',
-    confirmpassword: '123123123',
+    email: '',
+    name: '',
+    password: '',
+    confirmpassword: '',
     policy: false,
   });
   const formik = useFormik({
@@ -224,6 +224,7 @@ const Page = () => {
                   helperText={formik.touched.password && formik.errors.password}
                   label="Password"
                   name="password"
+                  autoComplete="new password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   type="password"
