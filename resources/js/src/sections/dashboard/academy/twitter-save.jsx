@@ -181,9 +181,9 @@ export const TwitterSave = () => {
                             <TextField
                                 defaultValue=""
                                 fullWidth
-                                label="Engagement"
-                                name="engagement_rate"
-                                placeholder="Engagement"
+                                label="Engagement rate"
+                                name="engagement"
+                                placeholder="Engagement rate"
                                 InputLabelProps={{ shrink: true }}
                                 inputProps={
                                     { readOnly: true, }
