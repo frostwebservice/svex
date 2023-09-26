@@ -20,43 +20,12 @@ import {
 import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import { useSettings } from '@/hooks/use-settings';
-import { AcademyDailyProgress } from '@/sections/dashboard/academy/academy-daily-progress';
-import { AcademyFind } from '@/sections/dashboard/academy/academy-find';
-import { CourseCard } from '@/sections/dashboard/academy/course-card';
 import "./inf_finder.css"
 import { useCallback, useState } from 'react'
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YoutubeIcon from '@mui/icons-material/Youtube';
-// import TiktokIcon from '@mui/icons-material/tiktok';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import PinterestIcon from '@mui/icons-material/Pinterest';
-import LinkedinIcon from '@mui/icons-material/Linkedin';
 import { InfCard } from './inf_card';
-import { InstagramSearch } from '@/sections/dashboard/academy/instagram-search';
-import { TiktokSearch } from '@/sections/dashboard/academy/tiktok-search';
-import { YoutubeSearch } from '@/sections/dashboard/academy/youtube-search';
-import { TwitterSearch } from '@/sections/dashboard/academy/twitter-search';
-import { PinterestSearch } from '@/sections/dashboard/academy/pinterest-search';
-import { LinkedinSearch } from '@/sections/dashboard/academy/linkedin-search';
 
 const now = new Date();
 
-const TiktokIcon = ({ color = "#000000" }) => {
-  return (
-
-    <svg
-      fill={color}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 50 50"
-      width="24px"
-      height="24px"
-    >
-      <path d="M41,4H9C6.243,4,4,6.243,4,9v32c0,2.757,2.243,5,5,5h32c2.757,0,5-2.243,5-5V9C46,6.243,43.757,4,41,4z M37.006,22.323 c-0.227,0.021-0.457,0.035-0.69,0.035c-2.623,0-4.928-1.349-6.269-3.388c0,5.349,0,11.435,0,11.537c0,4.709-3.818,8.527-8.527,8.527 s-8.527-3.818-8.527-8.527s3.818-8.527,8.527-8.527c0.178,0,0.352,0.016,0.527,0.027v4.202c-0.175-0.021-0.347-0.053-0.527-0.053 c-2.404,0-4.352,1.948-4.352,4.352s1.948,4.352,4.352,4.352s4.527-1.894,4.527-4.298c0-0.095,0.042-19.594,0.042-19.594h4.016 c0.378,3.591,3.277,6.425,6.901,6.685V22.323z" />
-    </svg>
-
-
-  );
-};
 const sortOptions = [
   {
     label: 'Last update (newest)',
@@ -127,16 +96,9 @@ const companies = [
     shortDescription: 'Established since 2010'
   }
 ];
-// }, [onSortChange]);
 const Favinfs = () => {
   const settings = useSettings();
-  const courses = useCourses();
-
   usePageView();
-
-  const handleTabsChange = useCallback((event, value) => {
-    setCurrentTab(value);
-  }, []);
 
   const handleSortChange = useCallback((event) => {
     // const [sortBy, sortDir] = event.target.value.split('|');
@@ -146,26 +108,7 @@ const Favinfs = () => {
     //   sortDir
     // });
   }, []);
-  const tabs = [
-    { label: "Instagram", value: "instagram" },
-    { label: "Tiktok", value: "tiktok" },
-    { label: "Youtube", value: "youtube" },
-    { label: "Twitter", value: "twitter" },
-    { label: "Pinterest", value: "pinterest" },
-    { label: "Linkedin", value: "linkedin" },
-  ]
-  const [currentTab, setCurrentTab] = useState("instagram");
-  const renderLabel = (type) => {
-    console.log(type)
-    if (type == "Instagram") return (<><InstagramIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Youtube") return (<><YoutubeIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Tiktok") return (<><TiktokIcon color={currentTab == "tiktok" ? "#2970FF" : "grey"} style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Twitter") return (<><TwitterIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Pinterest") return (<><PinterestIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Linkedin") return (<><LinkedinIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
 
-
-  }
   return (
     <>
       <Seo title="Dashboard: Favorite Influencers" />
@@ -196,19 +139,6 @@ const Favinfs = () => {
               >
                 42 Influencers found
               </Typography>
-              {/* <OutlinedInput
-                defaultValue=""
-                fullWidth
-                // inputProps={{ ref: queryRef }}
-                placeholder="Search customers"
-                startAdornment={(
-                  <InputAdornment position="start">
-                    <SvgIcon>
-                      <SearchMdIcon />
-                    </SvgIcon>
-                  </InputAdornment>
-                )}
-              /> */}
             </Box>
             <Box sx={{
               display: 'flex'
