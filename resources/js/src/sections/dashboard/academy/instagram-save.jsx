@@ -1,7 +1,7 @@
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
-import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { Typography, Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
@@ -27,16 +27,16 @@ export const InstagramSave = () => {
                     >
                         <Stack
                             alignItems="flex-start"
-                            spacing={2}
+                            // spacing={2}
                             direction={{
                                 xs: 'column',
-                                sm: 'row'
+                                sm: 'column'
                             }}
                         >
-                            <Typography sx={{ color: "text.primary" }} style={{ fontSize: 24 }}>
+                            <Typography sx={{ color: "text.primary" }} style={{ fontSize: 24, fontWeight: 700 }}>
                                 Search Name
                             </Typography>
-                            <Typography sx={{ color: "text.primary" }} style={{ fontSize: 24 }}>
+                            <Typography sx={{ color: "text.secondary" }} style={{ fontSize: 20 }}>
                                 Influeners with XYZ properties
                             </Typography>
                         </Stack>
@@ -58,6 +58,11 @@ export const InstagramSave = () => {
 
 
 
+                </Box>
+                <Box sx={{ mt: 3 }}>
+                    <Typography sx={{ color: "text.primary" }} style={{ fontSize: 18, fontWeight: 600 }}>
+                        Filters Selected
+                    </Typography>
                 </Box>
                 <Grid container spacing={3}>
 
@@ -365,7 +370,16 @@ export const InstagramSave = () => {
                         <FormControlLabel control={<Checkbox defaultChecked />} label="Is Verified" />
                     </Box>
                 </FormGroup>
-
+                <Box sx={{ mt: 3 }}>
+                    <Typography sx={{ color: "text.primary" }} style={{ fontSize: 18, fontWeight: 600 }}>
+                        Number of Influencers fall in this search
+                    </Typography>
+                </Box>
+                <Box>
+                    <Typography style={{ fontSize: 18, color: "#2970FF" }}>
+                        42
+                    </Typography>
+                </Box>
             </Stack >
         </>
     );
