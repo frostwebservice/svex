@@ -33,8 +33,11 @@ export const InstagramSave = () => {
                                 sm: 'row'
                             }}
                         >
-                            <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                {company.shortDescription}
+                            <Typography sx={{ color: "text.primary" }} style={{ fontSize: 24 }}>
+                                Search Name
+                            </Typography>
+                            <Typography sx={{ color: "text.primary" }} style={{ fontSize: 24 }}>
+                                Influeners with XYZ properties
                             </Typography>
                         </Stack>
                         <Stack
