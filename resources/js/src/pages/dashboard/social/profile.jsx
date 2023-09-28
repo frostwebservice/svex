@@ -230,13 +230,16 @@ export const Page = () => {
                 <div>
                   <Typography
                     color="primary"
-                    variant="h6">
+                    variant="h6"
+                    style={{ fontSize: 22 }}
+                  >
                     {profile.name}
                   </Typography>
                   <Typography
                     color="text.secondary"
                     className='font-inter'
                     variant="overline"
+                    style={{ fontSize: 13 }}
                   >
                     Established since 2010
                   </Typography>
@@ -244,6 +247,7 @@ export const Page = () => {
                     color="primary"
                     variant="subtitle2"
                     className='font-inter'
+                    style={{ fontSize: 12 }}
                   >
                     Toronto, Canada
                   </Typography>
@@ -353,7 +357,7 @@ export const Page = () => {
             )}
           </Box>
         </Container>
-      </Box>
+      </Box >
     </>
   );
 };

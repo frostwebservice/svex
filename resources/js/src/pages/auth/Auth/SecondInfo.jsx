@@ -5,7 +5,7 @@ import { useSearchParams } from '@/hooks/use-search-params';
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
 
 import { useNavigate } from 'react-router-dom';
-
+import Select from '@mui/material/Select';
 import "./Form.css";
 import {
   Box,
@@ -22,18 +22,65 @@ import {
   Typography,
   CircularProgress
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 import { RouterLink } from '@/components/router-link';
 import { Seo } from '@/components/seo';
 import { paths } from '@/paths';
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
+const names = [
+  'Acne and Skin Care',
+  'Alcohol',
+  'Art',
+  'Baby and Maternity',
+  'Blockchain and Cryptocurrency',
+  'Books and Fiction',
+  'Business and Career',
+  'Cameras, Photography and Videography',
+  'Cars and Vehicles',
+  'Cooking and Recipes',
+  'Crafts and DIY',
+  'Diet and Weight Loss',
+  'Digital Marketing and Making Money Online',
+  'Exercise and Fitness',
+  'Farming',
+  'Gardening and Lawn Care',
+  'Health',
+  'Makeup and Beauty',
+  'Martial Arts',
+  'Music and Instruments',
+  'Outdoors and Hiking',
+  'Pets and Animal Care',
+  'Sports',
+  'Technology and Gadgets',
+  'Travel',
+  'Wedding'
+];
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 const Page = () => {
 
-
   const validationSchema = Yup.object({
-    nichecategory: Yup
-      .string()
-      .max(255)
-      .required('Name is required'),
     budget: Yup
       .string()
       .max(255)
@@ -53,6 +100,19 @@ const Page = () => {
 
   });
 
+  const theme = useTheme();
+  const [personName, setPersonName] = useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+    // console.log(personName);
+  };
 
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
@@ -62,7 +122,6 @@ const Page = () => {
   const navigate = useNavigate();
 
   const [initialValues, setInitialValues] = useState({
-    nichecategory: '',
     budget: '',
     companysize: '',
     companyfounded: '',
@@ -77,7 +136,7 @@ const Page = () => {
   const onbioClick = (e) => {
     if (e.target.value == initialValues.aboutbusiness) {
       setInitialValues({
-        nichecategory: '',
+        // nichecategory: '',
         budget: '',
         companysize: '',
         companyfounded: '',
@@ -94,7 +153,8 @@ const Page = () => {
 
       setIsLoading(true);
       setLetter("");
-
+      values.nichecategory = personName;
+      // console.log("custom", values); return;
       axios
         .post("/api/second-Info", values)
         .then((response) => {
@@ -144,7 +204,7 @@ const Page = () => {
               </Typography>
               <Stack spacing={0} className="col-md-6 col-12">
                 <div className='p-1 '>
-                  <RedditTextField
+                  {/* <RedditTextField
                     label=" Niche category"
                     className="title-inter"
                     name="nichecategory"
@@ -156,7 +216,31 @@ const Page = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.nichecategory}
-                  /></div>
+                  /> */}
+                  <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    variant="filled"
+                    className="title-inter"
+                    id="demo-multiple-name"
+                    multiple
+                    value={personName}
+                    onChange={handleChange}
+                    input={<OutlinedInput label="Name" />}
+                    MenuProps={MenuProps}
+                    fullWidth
+                  >
+                    {names.map((name) => (
+                      <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, personName, theme)}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
                 <div className='p-1 '>
                   <RedditTextField
                     variant="filled"

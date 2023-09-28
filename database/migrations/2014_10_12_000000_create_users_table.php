@@ -30,7 +30,6 @@ class CreateUsersTable extends Migration
             $table->string("companyfounded")->nullable();
             $table->string("companywebsite")->nullable();
             $table->string("companylocation")->nullable();
-            $table->string("nichecategory")->nullable();
             $table->string("budget")->nullable();
             $table->string("companysize")->nullable();
             $table->string("aboutbusiness")->nullable();

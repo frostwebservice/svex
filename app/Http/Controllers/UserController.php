@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Niche;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -151,13 +152,20 @@ class UserController extends Controller
 
         if (!is_null($user_status)) {
 
-            $user_status->nichecategory     =                            $request->nichecategory;
+            // $user_status->nichecategory     =                            $request->nichecategory;
             $user_status->budget             =                         $request->budget;
             $user_status->companysize     =                            $request->companysize;
             $user_status->companyfounded     =                         $request->companyfounded;
             $user_status->aboutbusiness     =                          $request->aboutbusiness;
-
             $user = $user_status->save();
+            foreach ($userDataArray["nichecategory"] as $key => $niche) {
+                $insert = array(
+                    "niche" => $niche,
+                    "user_id" => $user_status->id
+                );
+
+                $inserted = Niche::create($insert);
+            }
 
             if (!is_null($user)) {
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "Update completed successfully", "data" => $user]);
