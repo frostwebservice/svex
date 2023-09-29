@@ -129,14 +129,9 @@ export const JobFinalStep = (props) => {
           onClick={onNext}
           variant="contained"
         >
-          Create Job
+          Post the Job
         </Button>
-        <Button
-          color="inherit"
-          onClick={onBack}
-        >
-          Back
-        </Button>
+       
       </Stack>
     </Stack>
   );

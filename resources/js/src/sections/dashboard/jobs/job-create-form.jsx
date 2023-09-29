@@ -1,11 +1,14 @@
 import { useCallback, useMemo, useState } from 'react';
 import CheckIcon from '@untitled-ui/icons-react/build/esm/Check';
 import { Avatar, Step, StepContent, StepLabel, Stepper, SvgIcon, Typography } from '@mui/material';
-import { JobCategoryStep } from './job-category-step';
-import { JobDescriptionStep } from './job-description-step';
-import { JobDetailsStep } from './job-details-step';
 import { JobFinalStep } from './job-final-step';
 import { JobPreview } from './job-preview';
+import { JobBriefSummeryStep } from './job-briefsummery-step';
+import { JobSocialDetailStep } from './job-social-detail-step';
+import { JobCompensationStep } from './job-compensation-step';
+import { JobShotoutStep } from './job-shotout-step';
+import { JobExclusionStep } from './job-exclusions-step';
+import { JobShareStep } from './job-share-step';
 
 const StepIcon = (props) => {
   const { active, completed, icon } = props;
@@ -37,6 +40,7 @@ const StepIcon = (props) => {
 
 export const JobCreateForm = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [review, setReview] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
   const handleNext = useCallback(() => {
@@ -46,6 +50,9 @@ export const JobCreateForm = () => {
   const handleBack = useCallback(() => {
     setActiveStep((prevState) => prevState - 1);
   }, []);
+  const handleReview = useCallback(() => {
+    setReview(1);
+  })
 
   const handleComplete = useCallback(() => {
     setIsComplete(true);
@@ -56,7 +63,7 @@ export const JobCreateForm = () => {
       {
         label: ' Brief Summery',
         content: (
-          <JobCategoryStep
+          <JobBriefSummeryStep
             onBack={handleBack}
             onNext={handleNext}
           />
@@ -65,7 +72,7 @@ export const JobCreateForm = () => {
       {
         label: 'Social Details',
         content: (
-          <JobDetailsStep
+          <JobSocialDetailStep
             onBack={handleBack}
             onNext={handleNext}
           />
@@ -74,7 +81,7 @@ export const JobCreateForm = () => {
       {
         label: 'Compensation Details',
         content: (
-          <JobDetailsStep
+          <JobCompensationStep
             onBack={handleBack}
             onNext={handleNext}
           />
@@ -83,7 +90,7 @@ export const JobCreateForm = () => {
       {
         label: 'Shortout Instruction',
         content: (
-          <JobDescriptionStep
+          <JobShotoutStep
             onBack={handleBack}
             onNext={handleNext}
           />
@@ -92,7 +99,7 @@ export const JobCreateForm = () => {
       {
         label: 'Exclusions',
         content: (
-          <JobDetailsStep
+          <JobExclusionStep
             onBack={handleBack}
             onNext={handleNext}
           />
@@ -101,9 +108,9 @@ export const JobCreateForm = () => {
       {
         label: 'Share',
         content: (
-          <JobDetailsStep
+          <JobShareStep
             onBack={handleBack}
-            onNext={handleNext}
+            onNext={handleReview}
           />
         )
       },
@@ -126,6 +133,7 @@ export const JobCreateForm = () => {
   return (
     <Stepper
       activeStep={activeStep}
+      review={review}
       orientation="vertical"
       sx={{
         '& .MuiStepConnector-line': {
@@ -136,8 +144,8 @@ export const JobCreateForm = () => {
       }}
     >
       {steps.map((step, index) => {
-        const isCurrentStep = activeStep === index;
-
+        const isCurrentStep = ((activeStep === index) || (review === 1));
+        { console.log(isCurrentStep) }
         return (
           <Step key={step.label}>
             <StepLabel StepIconComponent={StepIcon}>
