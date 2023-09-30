@@ -17,7 +17,7 @@ export const profile = {
   previousJobCompany: 'Focus Aesthetic Dynamics',
   previousJobTitle: 'UX Designer',
   profileProgress: 50,
-  quote: 'Everyone thinks of changing the world, but no one thinks of changing himself.'
+  quote: 'Canada Goose is a premium Canadian clothing brand that was founded in 1957. The brand is known for its high-quality and stylish outerwear that is designed to withstand extreme weather conditions. The company initially started as a manufacturer of woolen vests, raincoats, and snowmobile suits for Canadian Rangers and police officers. However, in recent years, Canada Goose has gained widespread popularity as a luxury fashion brand and is now considered a status symbol.'
 };
 
 export const connections = [

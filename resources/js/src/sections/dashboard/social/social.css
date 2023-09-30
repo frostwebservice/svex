@@ -5,3 +5,15 @@
     margin: 20px;
     text-align: center;
 }
+
+.head-font .MuiCardHeader-title {
+    font-size: 18px !important;
+}
+
+.about-content {
+    font-size: 18px !important;
+}
+
+.about-list-font {
+    font-size: 16px !important;
+}

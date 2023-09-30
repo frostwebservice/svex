@@ -169,7 +169,7 @@ export const Page = () => {
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
                 borderRadius: 1,
-                height: 348,
+                height: 421,
                 position: 'relative',
                 '&:hover': {
                   '& button': {
@@ -223,11 +223,11 @@ export const Page = () => {
                 <Avatar
                   src={profile.avatar}
                   sx={{
-                    height: 120,
-                    width: 120
+                    height: 140,
+                    width: 140
                   }}
                 />
-                <div>
+                <div className='brand-info'>
                   <Typography
                     color="primary"
                     variant="h6"
@@ -238,16 +238,25 @@ export const Page = () => {
                   <Typography
                     color="text.secondary"
                     className='font-inter'
-                    variant="overline"
-                    style={{ fontSize: 13 }}
+                    variant="subtitle2"
+                    style={{ fontSize: 12, fontWeight: 600, marginTop: 4 }}
                   >
                     Established since 2010
                   </Typography>
                   <Typography
+                    color="text.secondary"
+                    className='font-inter location-pointer'
+                    variant="overline"
+                    style={{ fontSize: 12, marginTop: 17 }}
+                  >
+
+                  </Typography>
+                  <Typography
                     color="primary"
-                    variant="subtitle2"
+                    variant="overline"
+                    // variant="subtitle2"
                     className='font-inter'
-                    style={{ fontSize: 12 }}
+                    style={{ fontSize: 13 }}
                   >
                     Toronto, Canada
                   </Typography>
@@ -259,10 +268,11 @@ export const Page = () => {
                 alignItems="center"
                 direction="row"
                 spacing={2}
+                className='button-bar'
                 sx={{
                   display: {
                     md: 'block',
-                    xs: 'none'
+                    // xs: 'none'
                   }
                 }}
               >
@@ -272,6 +282,7 @@ export const Page = () => {
 
                       onClick={handleUnlike}
                       size="small"
+                      className='fav-btn'
                       startIcon={(
                         <SvgIcon
                           sx={{
@@ -296,6 +307,7 @@ export const Page = () => {
                     <Button
                       onClick={handleLike}
                       size="small"
+                      className='fav-btn'
                       startIcon={(
                         <SvgIcon>
                           <HeartIcon />
@@ -311,6 +323,7 @@ export const Page = () => {
                   component={RouterLink}
                   href={paths.dashboard.chat}
                   size="small"
+                  className="social-btn"
                   startIcon={(
                     <SvgIcon>
                       <MessageChatSquareIcon />
@@ -331,9 +344,11 @@ export const Page = () => {
             textColor="primary"
             value={currentTab}
             variant="scrollable"
+            style={{ marginTop: 70 }}
           >
             {tabs.map((tab) => (
               <Tab
+                className='social-font'
                 key={tab.value}
                 label={tab.label}
                 value={tab.value}

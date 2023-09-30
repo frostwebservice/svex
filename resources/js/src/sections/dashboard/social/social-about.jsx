@@ -17,7 +17,7 @@ import {
   SvgIcon,
   Typography
 } from '@mui/material';
-
+import './social.css'
 export const SocialAbout = (props) => {
   const {
     currentCity,
@@ -37,16 +37,18 @@ export const SocialAbout = (props) => {
       spacing={3}
       {...other}>
       <Card>
-        <CardHeader title="About" />
-        <CardContent>
+        <CardHeader
+          title="About"
+          className='head-font'
+        />
+        <CardContent style={{ paddingTop: 2 }}>
           <Typography
             color="text.secondary"
             sx={{ mb: 2 }}
             variant="subtitle2"
+            className='about-content'
           >
-            &quot;
             {quote}
-            &quot;
           </Typography>
           <List disablePadding>
             <ListItem
@@ -61,36 +63,9 @@ export const SocialAbout = (props) => {
               <ListItemText
                 disableTypography
                 primary={(
-                  <Typography variant="subtitle2">
-                    {currentJobTitle}
-                    {' '}
-                    at
-                    {' '}
-                    <Link
-                      color="text.primary"
-                      href="#"
-                      variant="subtitle2"
-                    >
-                      {currentJobCompany}
-                    </Link>
-                  </Typography>
-                )}
-                secondary={(
-                  <Typography
-                    color="text.secondary"
-                    variant="body2"
-                  >
-                    Past:
-                    {' '}
-                    {previousJobTitle}
-                    {' '}
-                    <Link
-                      color="text.secondary"
-                      href="#"
-                      variant="body2"
-                    >
-                      {previousJobCompany}
-                    </Link>
+                  <Typography variant="subtitle2" className='about-list-font'>
+                    {/* {currentJobTitle} */}
+                    www.canadagoose.com/shop
                   </Typography>
                 )}
               />
@@ -101,18 +76,16 @@ export const SocialAbout = (props) => {
             >
               <ListItemAvatar>
                 <SvgIcon color="action">
-                  <BookOpen01Icon />
+                  <Briefcase01Icon />
                 </SvgIcon>
               </ListItemAvatar>
               <ListItemText
+                disableTypography
                 primary={(
-                  <Link
-                    color="text.secondary"
-                    sx={{ cursor: 'pointer' }}
-                    variant="caption"
-                  >
-                    Add school or collage
-                  </Link>
+                  <Typography variant="subtitle2" className='about-list-font'>
+                    {/* {currentJobTitle} */}
+                    +92313524856
+                  </Typography>
                 )}
               />
             </ListItem>
@@ -128,37 +101,25 @@ export const SocialAbout = (props) => {
               <ListItemText
                 disableTypography
                 primary={(
-                  <Typography variant="subtitle2">
-                    Lives in
+                  <Typography variant="subtitle2"
+                    className='about-list-font'>
+                    Toronto, Ontario, Canada
                     {' '}
-                    <Link
+                    {/* <Link
                       color="text.primary"
                       href="#"
                       variant="subtitle2"
                     >
                       {currentCity}
-                    </Link>
+                    </Link> */}
                   </Typography>
                 )}
-                secondary={(
-                  <Typography
-                    color="text.secondary"
-                    variant="body2"
-                  >
-                    Originally from
-                    {' '}
-                    <Link
-                      color="text.secondary"
-                      href="#"
-                      variant="body2"
-                    >
-                      {originCity}
-                    </Link>
-                  </Typography>
-                )}
+
               />
             </ListItem>
-            <ListItem disableGutters>
+            <ListItem
+              disableGutters
+              divider>
               <ListItemAvatar>
                 <SvgIcon color="action">
                   <Mail01Icon />
@@ -166,8 +127,28 @@ export const SocialAbout = (props) => {
               </ListItemAvatar>
               <ListItemText
                 primary={(
-                  <Typography variant="subtitle2">
-                    {email}
+                  <Typography variant="subtitle2" className='about-list-font'>
+                    {/* {email} */}
+                    katarina.smith@devias.io
+                  </Typography>
+                )}
+              />
+            </ListItem>
+            <ListItem
+              disableGutters
+              divider
+            >
+              <ListItemAvatar>
+                <SvgIcon color="action">
+                  <Briefcase01Icon />
+                </SvgIcon>
+              </ListItemAvatar>
+              <ListItemText
+                disableTypography
+                primary={(
+                  <Typography variant="subtitle2" className='about-list-font'>
+                    {/* {currentJobTitle} */}
+                    25-75
                   </Typography>
                 )}
               />

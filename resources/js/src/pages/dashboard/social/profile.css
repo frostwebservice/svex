@@ -15,3 +15,47 @@
 .font-plus {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
+
+.brand-info {
+    margin-top: 47px !important;
+}
+
+.location-pointer {
+    display: inline-block !important;
+    background-image: url(./img/locationpointer.png);
+    width: 9px;
+    height: 12px;
+    margin-right: 12px;
+}
+
+@media screen and (max-width:820px) {
+
+    .button-bar {
+        margin-top: 100px !important;
+    }
+
+}
+
+@media screen and (min-width:500px) {
+
+    .social-btn {
+        font-size: 18px !important;
+        width: 215px !important;
+        height: 54px !important;
+    }
+
+    .fav-btn {
+        font-size: 18px !important;
+        width: 162px !important;
+        height: 54px !important;
+    }
+
+    .social-btn:hover {
+        background-color: lightgreen;
+        color: black;
+    }
+}
+
+.social-font {
+    font-size: 18px !important;
+}
