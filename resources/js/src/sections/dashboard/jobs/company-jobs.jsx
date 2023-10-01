@@ -16,7 +16,8 @@ export const CompanyJobs = (props) => {
             new Date(),
             { addSuffix: true });
           const salary = `${job.currency}${job.salaryMin} - ${job.currency}${job.salaryMax}`;
-
+          const jobtype = job.jobType;
+          const paymenttype = job.paymentType;
           return (
             <Stack
               alignItems="center"
@@ -37,7 +38,21 @@ export const CompanyJobs = (props) => {
                   color="text.secondary"
                   variant="caption"
                 >
-                  {location} • {salary}
+                  Budget • {salary}
+                </Typography>
+                <Typography
+                  color="text.secondary"
+                  variant="caption"
+                  style={{ marginLeft: 20 }}
+                >
+                  Job Type • {jobtype}
+                </Typography>
+                <Typography
+                  color="text.secondary"
+                  style={{ marginLeft: 20 }}
+                  variant="caption"
+                >
+                  Payment Type • {paymenttype}
                 </Typography>
               </div>
               <Stack
@@ -48,10 +63,13 @@ export const CompanyJobs = (props) => {
                 <Typography
                   color="text.secondary"
                   variant="caption"
+                  style={{ fontSize: 12 }}
                 >
                   {publishedAt}
                 </Typography>
-                <Button size="small">
+                <Button size="small"
+                  style={{ fontSize: 14 }}
+                >
                   Apply
                 </Button>
               </Stack>

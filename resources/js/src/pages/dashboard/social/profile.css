@@ -36,6 +36,10 @@
 
 }
 
+.fav-btn {
+    margin-bottom: 0px !important;
+}
+
 @media screen and (min-width:500px) {
 
     .social-btn {
@@ -56,6 +60,43 @@
     }
 }
 
+@media screen and (max-width:500px) {
+    .tab-panel {
+        margin-top: 150px !important;
+    }
+}
+
+.tab-panel {
+    margin-top: 90px;
+}
+
 .social-font {
     font-size: 18px !important;
+}
+
+.quick-link-bar {
+    margin-top: 50px;
+
+}
+
+.quick-links {
+    margin-top: 10px;
+}
+
+.quick-font {
+    font-family: Inter !important;
+    font-size: 18px;
+    font-weight: 600;
+
+}
+
+.quick-link {
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 15px;
+    display: inline-block
+}
+
+.right-quick {
+    float: right;
 }

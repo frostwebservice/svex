@@ -336,6 +336,19 @@ export const Page = () => {
               </Stack>
             </Stack>
           </div>
+          <div className='quick-link-bar'>
+            <div className='right-quick'>
+              <div className='quick-font'>Quick links</div>
+              <div className='quick-links'>
+                <a className='instagram-icon quick-link' href='https://www.instagram.com' target='_blank'></a>
+                <a className='tiktok-icon quick-link' href='https://www.tiktok.com' target='_blank'></a>
+                <a className='youtube-icon quick-link' href='https://www.youtube.com' target='_blank'></a>
+                <a className='twitter-icon quick-link' href='https://www.twitter.com' target='_blank'></a>
+                <a className='pinterest-icon quick-link' href='https://www.pinterest' target='_blank'></a>
+              </div>
+            </div>
+
+          </div>
           <Tabs
             indicatorColor="primary"
             onChange={handleTabsChange}
@@ -344,7 +357,7 @@ export const Page = () => {
             textColor="primary"
             value={currentTab}
             variant="scrollable"
-            style={{ marginTop: 70 }}
+            className='tab-panel'
           >
             {tabs.map((tab) => (
               <Tab
@@ -356,7 +369,7 @@ export const Page = () => {
             ))}
           </Tabs>
           <Divider />
-          <Box sx={{ mt: 3 }}>
+          <Box>
             {currentTab === 'timeline' && (
               <SocialTimeline
                 posts={posts}

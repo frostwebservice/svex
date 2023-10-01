@@ -11,7 +11,7 @@ export const SocialTimeline = (props) => {
     <div {...other}>
       <Grid
         container
-        spacing={4}
+      // spacing={4}
       >
         <Grid
           lg={7}

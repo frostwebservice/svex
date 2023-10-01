@@ -4,6 +4,28 @@ const now = new Date();
 
 export const companies = [
   {
+    id: 'FR-58F46',
+    averageRating: 4.3,
+    employees: '25-50',
+    isVerified: true,
+    jobs: [
+      {
+        id: '52cf72df2a519538d3d8a18d',
+        currency: '$',
+        isRemote: true,
+        publishedAt: subHours(now, 1).getTime(),
+        salaryMax: '600',
+        salaryMin: '400',
+        title: 'Instagram Influencer for a clothing brand who can market our products for a week',
+        jobType: 'Content creation & Shortouts',
+        paymentType: 'paid'
+      }
+    ],
+    logo: '/assets/avatars/brandlogo.png',
+    name: 'Canada Goose',
+    shortDescription: 'Established since 2010'
+  },
+  {
     id: 'GR-2FR43',
     averageRating: 4.5,
     employees: '50-100',
@@ -33,26 +55,7 @@ export const companies = [
     name: 'Augmastic Inc.',
     shortDescription: 'Building technologies and ideas that move us as the leaders in Augmented Reality'
   },
-  {
-    id: 'FR-58F46',
-    averageRating: 4.3,
-    employees: '50-100',
-    isVerified: false,
-    jobs: [
-      {
-        id: '52cf72df2a519538d3d8a18d',
-        currency: '$',
-        isRemote: true,
-        publishedAt: subHours(now, 1).getTime(),
-        salaryMax: '160k',
-        salaryMin: '80k',
-        title: 'Remote React / React Native Developer'
-      }
-    ],
-    logo: '/assets/companies/company-logo-2.svg',
-    name: 'Cryptomania SRL',
-    shortDescription: 'Monitor and optimize your content for long-term audience loyalty'
-  },
+
   {
     id: 'FR-2X70G',
     averageRating: 4.5,
@@ -66,7 +69,9 @@ export const companies = [
         publishedAt: subDays(subHours(subMinutes(subSeconds(now, 52), 39), 7), 5).getTime(),
         salaryMax: '210k',
         salaryMin: '150k',
-        title: 'Senior Backend Engineer'
+        title: 'Senior Backend Engineer',
+        jobType: 'Content creation & Shortouts',
+        paymentType: 'paid'
       }
     ],
     logo: '/assets/companies/company-logo-3.svg',

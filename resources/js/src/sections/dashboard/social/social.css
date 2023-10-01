@@ -1,5 +1,6 @@
 .profile-niche {
-    background-color: lightgrey;
+    background-color: #2970FF1F;
+    font-size: 18px !important;
     border-radius: 5px;
     padding: 10px;
     margin: 20px;
@@ -16,4 +17,85 @@
 
 .about-list-font {
     font-size: 16px !important;
+}
+
+.social-list-font {
+    font-size: 16px !important;
+    color: black;
+}
+
+.social-icons {
+    min-width: 40px !important;
+}
+
+.facebook-icon {
+    width: 22px;
+    height: 22px;
+    background-image: url('./images/facebook.png');
+}
+
+.verified-icon {
+    width: 20px;
+    height: 20px;
+    background-image: url('./images/verifiedIcon.png');
+}
+
+.tiktok-icon {
+    width: 22px;
+    height: 22px;
+    background-image: url('./images/tiktok.png');
+}
+
+.pinterest-icon {
+    width: 22px;
+    height: 22px;
+    background-image: url('./images/pinterest.png');
+}
+
+.youtube-icon {
+    width: 22px;
+    height: 22px;
+    background-image: url('./images/youtube.png');
+}
+
+.twitter-icon {
+    width: 22px;
+    height: 22px;
+    background-image: url('./images/twitter.png');
+}
+
+.instagram-icon {
+    width: 22px;
+    height: 22px;
+    background-image: url('./images/instagram.jpg');
+}
+
+.home-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('./images/homeIcon.png');
+}
+
+.mail-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('./images/mailicon.jpg');
+}
+
+.connect-icon {
+    width: 21px;
+    height: 23px;
+    background-image: url('./images/connecticon.jpg');
+}
+
+.phone-icon {
+    width: 22px;
+    height: 22px;
+    background-image: url('./images/phone.png');
+}
+
+.url-icon {
+    width: 20px;
+    height: 20px;
+    background-image: url('./images/urlicon.png');
 }

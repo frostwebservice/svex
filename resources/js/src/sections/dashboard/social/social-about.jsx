@@ -36,10 +36,14 @@ export const SocialAbout = (props) => {
     <Stack
       spacing={3}
       {...other}>
-      <Card>
+      <Card
+
+        style={{ borderRadius: 0, boxShadow: 'none' }}
+      >
         <CardHeader
           title="About"
           className='head-font'
+
         />
         <CardContent style={{ paddingTop: 2 }}>
           <Typography
@@ -47,18 +51,18 @@ export const SocialAbout = (props) => {
             sx={{ mb: 2 }}
             variant="subtitle2"
             className='about-content'
+            style={{ borderBottom: '0.5px solid #F2F4F7', paddingBottom: 50 }}
           >
             {quote}
           </Typography>
+
           <List disablePadding>
             <ListItem
               disableGutters
               divider
             >
               <ListItemAvatar>
-                <SvgIcon color="action">
-                  <Briefcase01Icon />
-                </SvgIcon>
+                <div className='url-icon'></div>
               </ListItemAvatar>
               <ListItemText
                 disableTypography
@@ -75,9 +79,7 @@ export const SocialAbout = (props) => {
               divider
             >
               <ListItemAvatar>
-                <SvgIcon color="action">
-                  <Briefcase01Icon />
-                </SvgIcon>
+                <div className='phone-icon'></div>
               </ListItemAvatar>
               <ListItemText
                 disableTypography
@@ -94,9 +96,7 @@ export const SocialAbout = (props) => {
               divider
             >
               <ListItemAvatar>
-                <SvgIcon color="action">
-                  <Home02Icon />
-                </SvgIcon>
+                <div className='home-icon'></div>
               </ListItemAvatar>
               <ListItemText
                 disableTypography
@@ -121,9 +121,7 @@ export const SocialAbout = (props) => {
               disableGutters
               divider>
               <ListItemAvatar>
-                <SvgIcon color="action">
-                  <Mail01Icon />
-                </SvgIcon>
+                <div className='mail-icon'></div>
               </ListItemAvatar>
               <ListItemText
                 primary={(
@@ -136,12 +134,10 @@ export const SocialAbout = (props) => {
             </ListItem>
             <ListItem
               disableGutters
-              divider
+
             >
               <ListItemAvatar>
-                <SvgIcon color="action">
-                  <Briefcase01Icon />
-                </SvgIcon>
+                <div className='connect-icon'></div>
               </ListItemAvatar>
               <ListItemText
                 disableTypography

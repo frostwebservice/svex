@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import { useCallback, useEffect, useState } from 'react';
+import { jobsApi } from '@/api/jobs';
+import { JobCard } from '@/sections/dashboard/jobs/profile-job-card';
 import {
   Box,
   Card,
@@ -11,54 +14,54 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { SocialConnection } from './social-connection';
+import { useMounted } from '@/hooks/use-mounted';
 
+const useCompanies = () => {
+  const isMounted = useMounted();
+  const [companies, setCompanies] = useState([]);
+
+  const handleCompaniesGet = useCallback(async () => {
+    try {
+      const response = await jobsApi.getCompanies();
+
+      if (isMounted()) {
+        setCompanies(response);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, [isMounted]);
+
+  useEffect(() => {
+    handleCompaniesGet();
+  },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []);
+
+  return companies;
+};
 export const SocialConnections = (props) => {
   const { connections = [], query = '', onQueryChange, ...other } = props;
-
+  const companies = useCompanies();
   return (
-    <Card {...other}>
-      <CardHeader title="Connections" />
+    <Card {...other}
+      style={{ borderRadius: 0, boxShadow: 'none' }}
+
+    >
+      {/* <CardHeader title="Connections" /> */}
+
       <Divider />
-      <Stack
-        alignItems="center"
-        direction="row"
-        spacing={2}
-        sx={{
-          px: 3,
-          py: 2
-        }}
-      >
-        <SvgIcon>
-          <SearchMdIcon />
-        </SvgIcon>
-        <Box sx={{ flexGrow: 1 }}>
-          <Input
-            disableUnderline
-            fullWidth
-            onChange={onQueryChange}
-            placeholder="Search connections"
-            value={query}
+      <Box sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
+
+        {companies.map((company) => (
+          <JobCard
+            key={company.id}
+            company={company}
           />
-        </Box>
-      </Stack>
-      <Divider />
-      <Box sx={{ p: 3 }}>
-        <Grid
-          container
-          spacing={3}
-        >
-          {connections.map((connection) => (
-            <Grid
-              key={connection.id}
-              xs={12}
-              md={6}
-            >
-              <SocialConnection connection={connection} />
-            </Grid>
-          ))}
-        </Grid>
+        ))}
+
       </Box>
-    </Card>
+    </Card >
   );
 };
 
