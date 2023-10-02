@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import MessageChatSquareIcon from '@untitled-ui/icons-react/build/esm/MessageChatSquare';
 import DotsHorizontalIcon from '@untitled-ui/icons-react/build/esm/DotsHorizontal';
 import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
 import UserPlus02Icon from '@untitled-ui/icons-react/build/esm/UserPlus02';
+import MessageChatSquareIcon from '@untitled-ui/icons-react/build/esm/MessageChatSquare';
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import { useNavigate } from 'react-router-dom';

@@ -31,3 +31,50 @@
 .res-btn {
     height: 53.13px !important
 }
+
+.right-btn {
+    height: 53.13px !important;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 514px) {
+    .right-btn {
+        margin-bottom: 15px !important;
+    }
+
+    .right-panel {
+        display: grid;
+        width: -webkit-fill-available;
+    }
+}
+
+.location-pointer {
+    display: inline-block !important;
+    background-image: url(./img/locationpointer.png);
+    width: 9px;
+    height: 12px;
+    margin-right: 12px;
+}
+
+.verified-image {
+    background-image: url("/assets/icons/verified.png");
+    width: 14px;
+    height: 14px;
+    background-size: cover;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.custom-reach {
+    border: 1px solid #2970FF;
+    border-radius: 6px;
+}
+
+.reach-arrow {
+    background-image: url('/assets/stats/reach-arrow.png');
+    width: 32px;
+    height: 20px;
+    background-size: cover;
+    margin-left: 5px;
+    margin-right: 10px;
+}
