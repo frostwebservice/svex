@@ -23,7 +23,6 @@ import { useSettings } from '@/hooks/use-settings';
 import { AcademyDailyProgress } from '@/sections/dashboard/academy/academy-daily-progress';
 import { AcademyFind } from '@/sections/dashboard/academy/academy-find';
 import { CourseCard } from '@/sections/dashboard/academy/course-card';
-import { InstagramSearch } from '@/sections/dashboard/academy/instagram-search';
 import "./inf_finder.css"
 import { useCallback, useState } from 'react'
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -33,6 +32,9 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import LinkedinIcon from '@mui/icons-material/Linkedin';
 import { InfCard } from './inf_card';
+import { InstagramSearch } from '@/sections/dashboard/academy/instagram-search';
+import { TiktokSearch } from '@/sections/dashboard/academy/tiktok-search';
+
 const now = new Date();
 
 const TiktokIcon = ({ color = "#000000" }) => {
@@ -216,21 +218,23 @@ const Page = () => {
                 {currentTab == 'instagram' && (
                   <InstagramSearch />
                 )}
-                {/* {currentTab == 'youtube' && (
-                <InfStatYt total={total} />
-              )}
-              {currentTab == 'tiktok' && (
-                <InfStatTt total={total} />
-              )}
-              {currentTab == 'twitter' && (
-                <InfStatTw total={total} />
-              )}
-              {currentTab == 'pinterest' && (
-                <InfStatPt total={total} />
-              )}
-              {currentTab == 'linkedin' && (
-                <InfStatPt total={total} />
-              )} */}
+                {currentTab == 'youtube' && (
+                  <InstagramSearch />
+
+                )}
+                {currentTab == 'tiktok' && (
+                  <TiktokSearch />
+
+                )}
+                {currentTab == 'twitter' && (
+                  <InstagramSearch />
+                )}
+                {currentTab == 'pinterest' && (
+                  <InstagramSearch />
+                )}
+                {currentTab == 'linkedin' && (
+                  <InstagramSearch />
+                )}
               </Box>
 
 
