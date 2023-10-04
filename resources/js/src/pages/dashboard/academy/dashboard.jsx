@@ -35,6 +35,7 @@ import { InfCard } from './inf_card';
 import { InstagramSearch } from '@/sections/dashboard/academy/instagram-search';
 import { TiktokSearch } from '@/sections/dashboard/academy/tiktok-search';
 import { YoutubeSearch } from '@/sections/dashboard/academy/youtube-search';
+import { TwitterSearch } from '@/sections/dashboard/academy/twitter-search';
 
 const now = new Date();
 
@@ -228,7 +229,7 @@ const Page = () => {
 
                 )}
                 {currentTab == 'twitter' && (
-                  <InstagramSearch />
+                  <TwitterSearch />
                 )}
                 {currentTab == 'pinterest' && (
                   <InstagramSearch />
