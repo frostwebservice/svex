@@ -186,8 +186,8 @@ export const LinkedinSearch = () => {
                             <TextField
                                 defaultValue="web"
                                 fullWidth
-                                label="Avg likes range"
-                                name="avg_likes"
+                                label="Connections"
+                                name="connections"
                                 select
                                 SelectProps={{ native: true }}
                             >
@@ -209,8 +209,8 @@ export const LinkedinSearch = () => {
                             <TextField
                                 defaultValue="web"
                                 fullWidth
-                                label="Avg comments range"
-                                name="avg_comments"
+                                label="Industry"
+                                name="industry"
                                 select
                                 SelectProps={{ native: true }}
                             >
@@ -232,8 +232,8 @@ export const LinkedinSearch = () => {
                             <TextField
                                 defaultValue="web"
                                 fullWidth
-                                label="Total likes count"
-                                name="total_likes_count"
+                                label="Skills"
+                                name="Skills"
                                 select
                                 SelectProps={{ native: true }}
                             >
