@@ -34,6 +34,7 @@ import LinkedinIcon from '@mui/icons-material/Linkedin';
 import { InfCard } from './inf_card';
 import { InstagramSearch } from '@/sections/dashboard/academy/instagram-search';
 import { TiktokSearch } from '@/sections/dashboard/academy/tiktok-search';
+import { YoutubeSearch } from '@/sections/dashboard/academy/youtube-search';
 
 const now = new Date();
 
@@ -219,7 +220,7 @@ const Page = () => {
                   <InstagramSearch />
                 )}
                 {currentTab == 'youtube' && (
-                  <InstagramSearch />
+                  <YoutubeSearch />
 
                 )}
                 {currentTab == 'tiktok' && (
