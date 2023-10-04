@@ -36,6 +36,7 @@ import { InstagramSearch } from '@/sections/dashboard/academy/instagram-search';
 import { TiktokSearch } from '@/sections/dashboard/academy/tiktok-search';
 import { YoutubeSearch } from '@/sections/dashboard/academy/youtube-search';
 import { TwitterSearch } from '@/sections/dashboard/academy/twitter-search';
+import { PinterestSearch } from '@/sections/dashboard/academy/pinterest-search';
 
 const now = new Date();
 
@@ -232,7 +233,7 @@ const Page = () => {
                   <TwitterSearch />
                 )}
                 {currentTab == 'pinterest' && (
-                  <InstagramSearch />
+                  <PinterestSearch />
                 )}
                 {currentTab == 'linkedin' && (
                   <InstagramSearch />
