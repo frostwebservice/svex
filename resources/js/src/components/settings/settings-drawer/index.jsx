@@ -110,10 +110,10 @@ export const SettingsDrawer = (props) => {
           spacing={5}
           sx={{ p: 3 }}
         >
-          <OptionsColorPreset
+          {/* <OptionsColorPreset
             onChange={(value) => handleFieldUpdate('colorPreset', value)}
             value={values.colorPreset}
-          />
+          /> */}
           <OptionsColorScheme
             onChange={(value) => handleFieldUpdate('paletteMode', value)}
             value={values.paletteMode}
@@ -134,10 +134,10 @@ export const SettingsDrawer = (props) => {
             onChange={(value) => handleFieldUpdate('contrast', value)}
             value={values.contrast}
           />
-          <OptionsDirection
+          {/* <OptionsDirection
             onChange={(value) => handleFieldUpdate('direction', value)}
             value={values.direction}
-          />
+          /> */}
         </Stack>
       </Scrollbar>
     </Drawer>

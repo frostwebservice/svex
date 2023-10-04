@@ -5,7 +5,10 @@ import axios from "axios";
 import "./Form.css";
 // import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
-
+import { borders } from '@mui/system';
+import { Seo } from '@/components/seo';
+import { useAuth } from '@/hooks/use-auth';
+import { useMounted } from '@/hooks/use-mounted';
 import { Link } from "react-router-dom";
 import { useSearchParams } from '@/hooks/use-search-params';
 import { paths } from '@/paths';
@@ -24,8 +27,6 @@ import {
   Typography,
   CircularProgress
 } from '@mui/material';
-import { borders } from '@mui/system';
-import { Seo } from '@/components/seo';
 
 export default function Start(props) {
 
@@ -34,7 +35,14 @@ export default function Start(props) {
   const [nowLoading, setIsLoading] = useState(false);
   const [click, setClick] = useState("Get Started")
   const navigate = useNavigate();
+  const email = JSON.parse(localStorage.getItem('Email'));
+  const { signIn } = useAuth();
+  const isMounted = useMounted();
 
+  const values = {
+    "email": email,
+    "from": "start"
+  };
 
 
   const onStartClicked = (e) => {
@@ -47,7 +55,34 @@ export default function Start(props) {
 
   }
   const onLaterClicked = (e) => {
-    navigate(returnTo || paths.auth.auth.signin)
+    axios
+      .post("/api/user-signin", values)
+      .then((response) => {
+
+        if (response.data.status === 200) {
+
+          async function callSignin() {
+            try {
+              await signIn(values.email, values.password, response.data.data);
+
+              if (isMounted()) {
+                // returnTo could be an absolute path
+                navigate(returnTo || paths.dashboard.index);
+              }
+            } catch (err) {
+              console.error(err);
+
+            }
+          }
+          callSignin();
+        }
+
+        if (response.data.status === "failed") {
+
+          alert(response.data.message);
+
+        }
+      });
   }
   return (
     <>

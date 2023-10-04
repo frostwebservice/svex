@@ -1,15 +1,5 @@
-import Attachment01Icon from '@untitled-ui/icons-react/build/esm/Attachment01';
-import FaceSmileIcon from '@untitled-ui/icons-react/build/esm/FaceSmile';
-import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
-import Link01Icon from '@untitled-ui/icons-react/build/esm/Link01';
-import BookOpen01Icon from '@untitled-ui/icons-react/build/esm/BookOpen01';
-import Briefcase01Icon from '@untitled-ui/icons-react/build/esm/Briefcase01';
-import Home02Icon from '@untitled-ui/icons-react/build/esm/Home02';
-import Mail01Icon from '@untitled-ui/icons-react/build/esm/Mail01';
-import FacebookIcon from '@mui/icons-material/Facebook';
+
 import {
-  Avatar,
-  Button,
   Card,
   CardHeader,
   List,
@@ -18,27 +8,29 @@ import {
   ListItemText,
   Link,
   CardContent,
-  IconButton,
-  OutlinedInput,
-  Stack,
-  Typography,
-  SvgIcon,
   useMediaQuery
 } from '@mui/material';
 import { useMockedUser } from '@/hooks/use-mocked-user';
 import { getInitials } from '@/utils/get-initials';
 import "./social.css"
-export const SocialPostAdd = (props) => {
+import { connect } from 'react-redux';
+const SocialPostAdd = (props) => {
   const user = useMockedUser();
   const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-
+  const { brandinfo } = props;
+  const renderNiches = () => {
+    console.log(brandinfo);
+    if (!brandinfo.niches) return;
+    const nicheView = brandinfo.niches.map((niche) =>
+      <div className='profile-niche' key={niche.id}>{niche.niche}</div>
+    )
+    return nicheView
+  }
   return (
     <Card style={{ borderRadius: 0, boxShadow: 'none', borderLeft: '0.5px solid #F2F4F7', paddingLeft: 60, paddingRight: 0 }}>
       <CardHeader title="Niche" className='head-font' />
       <CardContent style={{ padding: 0 }}>
-        <div className='profile-niche'>Clothing</div>
-        <div className='profile-niche'>Men Fashion</div>
-
+        {renderNiches()}
       </CardContent>
       <CardHeader title="Social media links" className='head-font' />
       <CardContent>
@@ -58,7 +50,7 @@ export const SocialPostAdd = (props) => {
                   variant="caption"
                   className='social-list-font'
                 >
-                  www.facebook.com/xxxxxxx
+                  {brandinfo ? brandinfo.facebook : ''}
                 </Link>
               )}
             />
@@ -78,7 +70,7 @@ export const SocialPostAdd = (props) => {
                   variant="caption"
                   className='social-list-font'
                 >
-                  www.instagram.com/xxxxxxx
+                  {brandinfo ? brandinfo.instagram : ''}
                 </Link>
               )}
             />
@@ -98,7 +90,7 @@ export const SocialPostAdd = (props) => {
                   variant="caption"
                   className='social-list-font'
                 >
-                  www.tiktok.com/xxxxxxx
+                  {brandinfo ? brandinfo.tiktok : ''}
                 </Link>
               )}
             />
@@ -118,7 +110,7 @@ export const SocialPostAdd = (props) => {
                   variant="caption"
                   className='social-list-font'
                 >
-                  www.youtube.com/xxxxxxx
+                  {brandinfo ? brandinfo.youtube : ''}
                 </Link>
               )}
             />
@@ -138,7 +130,7 @@ export const SocialPostAdd = (props) => {
                   variant="caption"
                   className='social-list-font'
                 >
-                  www.twitter.com/xxxxxxx
+                  {brandinfo ? brandinfo.twitter : ''}
                 </Link>
               )}
             />
@@ -157,7 +149,8 @@ export const SocialPostAdd = (props) => {
                   variant="caption"
                   className='social-list-font'
                 >
-                  www.pinterest.com/xxxxxxx
+                  {brandinfo ? brandinfo.pinterest : ''}
+
                 </Link>
               )}
             />
@@ -165,7 +158,11 @@ export const SocialPostAdd = (props) => {
         </List>
 
       </CardContent>
-    </Card>
+    </Card >
 
   );
 };
+const mapStateToProps = state => ({
+  brandinfo: state.profile.brandinfo
+});
+export default connect(mapStateToProps)(SocialPostAdd);

@@ -37,35 +37,35 @@ const Page = () => {
     instagram: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     tiktok: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     youtube: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     facebook: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     twitter: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     linkedin: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     blogurl: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     pinterest: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
 
 
   });

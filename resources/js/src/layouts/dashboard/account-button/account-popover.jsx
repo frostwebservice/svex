@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import CreditCard01Icon from '@untitled-ui/icons-react/build/esm/CreditCard01';
@@ -21,12 +21,17 @@ import { useMockedUser } from '@/hooks/use-mocked-user';
 import { useRouter } from '@/hooks/use-router';
 import { paths } from '@/paths';
 import { Issuer } from '@/utils/auth';
-
-export const AccountPopover = (props) => {
-  const { anchorEl, onClose, open, ...other } = props;
+import { useSelector, connect } from 'react-redux';
+const AccountPopover = (props) => {
+  const { anchorEl, userinfo, onClose, open, ...other } = props;
   const router = useRouter();
   const auth = useAuth();
   const user = useMockedUser();
+
+  // console.log(useSelector(state => state.profile));
+  // const profile_link = `/profile/${useSelector(state => state.profile.userinfo).firstname}-${useSelector(state => state.profile.userinfo).lastname}-${useSelector(state => state.profile.userinfo).id}`
+
+
 
   const handleLogout = useCallback(async () => {
     try {
@@ -83,20 +88,22 @@ export const AccountPopover = (props) => {
       {...other}>
       <Box sx={{ p: 2 }}>
         <Typography variant="body1">
-          {user.name}
+          {userinfo ? userinfo.fullname : ''}
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          demo@devias.io
+          {userinfo ? userinfo.email : ''}
+
         </Typography>
       </Box>
       <Divider />
       <Box sx={{ p: 1 }}>
         <ListItemButton
           component={RouterLink}
-          href={paths.dashboard.social.profile}
+          // href={paths.dashboard.social.profile}
+          href={userinfo ? `/profile/${userinfo.firstname}-${userinfo.lastname}-${userinfo.id}` : ''}
           onClick={onClose}
           sx={{
             borderRadius: 1,
@@ -189,3 +196,8 @@ AccountPopover.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool
 };
+const mapStateToProps = state => ({
+  userinfo: state.profile.userinfo
+});
+
+export default connect(mapStateToProps)(AccountPopover);

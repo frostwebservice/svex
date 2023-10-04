@@ -29,6 +29,8 @@ import { paths } from '@/paths';
 import { SocialConnections } from '@/sections/dashboard/social/social-connections';
 import { SocialTimeline } from '@/sections/dashboard/social/social-timeline';
 import "./profile.css";
+import { getBrandProfile } from '@/actions';
+import { useDispatch, connect } from "react-redux";
 const tabs = [
   { label: 'Overview', value: 'timeline' },
   { label: 'Jobs Posted', value: 'connections' }
@@ -52,9 +54,8 @@ const useProfile = () => {
 
   useEffect(() => {
     handleProfileGet();
-  },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []);
+
+  }, []);
 
   return profile;
 };
@@ -107,7 +108,8 @@ const useConnections = (search = '') => {
   });
 };
 
-export const Page = () => {
+const Page = (props) => {
+  const { brandinfo } = props;
   const profile = useProfile();
   const [currentTab, setCurrentTab] = useState('timeline');
   const [status, setStatus] = useState('not_connected');
@@ -115,6 +117,14 @@ export const Page = () => {
   const [connectionsQuery, setConnectionsQuery] = useState('');
   const connections = useConnections(connectionsQuery);
   const [isLiked, setIsLiked] = useState(false);
+  const dispatch = useDispatch();
+  // console.log(props.history);
+  // if (!brandinfo)
+
+  useEffect(() => {
+    dispatch(getBrandProfile({ brandID: 7 }));
+
+  }, [dispatch])
 
   const handleLike = useCallback(() => {
     setIsLiked(true);
@@ -233,7 +243,7 @@ export const Page = () => {
                     variant="h6"
                     style={{ fontSize: 22 }}
                   >
-                    {profile.name}
+                    {brandinfo ? brandinfo.fullname : ''}
                   </Typography>
                   <Typography
                     color="text.secondary"
@@ -241,7 +251,7 @@ export const Page = () => {
                     variant="subtitle2"
                     style={{ fontSize: 12, fontWeight: 600, marginTop: 4 }}
                   >
-                    Established since 2010
+                    Established since {brandinfo ? brandinfo.companyfounded : ''}
                   </Typography>
                   <Typography
                     color="text.secondary"
@@ -258,7 +268,7 @@ export const Page = () => {
                     className='font-inter'
                     style={{ fontSize: 13 }}
                   >
-                    Toronto, Canada
+                    {brandinfo ? brandinfo.companylocation : ''}
                   </Typography>
 
                 </div>
@@ -389,5 +399,9 @@ export const Page = () => {
     </>
   );
 };
+const mapStateToProps = state => ({
+  brandinfo: state.profile.brandinfo
+});
 
-export default Page;
+export default connect(mapStateToProps)(Page);
+

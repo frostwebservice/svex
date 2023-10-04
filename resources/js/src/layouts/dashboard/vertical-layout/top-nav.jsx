@@ -7,14 +7,24 @@ import { ContactsButton } from '../contacts-button';
 import { LanguageSwitch } from '../language-switch';
 import { NotificationsButton } from '../notifications-button';
 import { SearchButton } from '../search-button';
-
+import { ButtonBase, Tooltip } from '@mui/material';
+import Settings03Icon from '@untitled-ui/icons-react/build/esm/Settings03';
+import { getUserProfile } from '@/actions';
 const TOP_NAV_HEIGHT = 64;
 const SIDE_NAV_WIDTH = 280;
-
+import { useDispatch } from "react-redux";
+import { useEffect } from 'react';
 export const TopNav = (props) => {
   const { onMobileNavOpen, ...other } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const email = JSON.parse(localStorage.getItem('Email'));
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserProfile({ email }));
+
+
+  }, [dispatch])
   return (
     <Box
       component="header"
@@ -61,6 +71,34 @@ export const TopNav = (props) => {
           direction="row"
           spacing={2}
         >
+          <Tooltip title="Settings">
+            <Box
+              sx={{
+                backgroundColor: 'background.paper',
+                borderRadius: '50%',
+                // bottom: 0,
+                boxShadow: 16,
+                margin: (theme) => theme.spacing(4),
+                // position: 'fixed',
+                // right: 0,
+                zIndex: (theme) => theme.zIndex.speedDial
+              }}
+            >
+              <ButtonBase
+                sx={{
+                  backgroundColor: 'primary.main',
+                  borderRadius: '50%',
+                  color: 'primary.contrastText',
+                  p: '10px'
+                }}
+                onClick={() => { document.getElementsByClassName('realtooltip')[0].click() }}
+              >
+                <SvgIcon>
+                  <Settings03Icon />
+                </SvgIcon>
+              </ButtonBase>
+            </Box>
+          </Tooltip>
           <LanguageSwitch />
           <NotificationsButton />
           <ContactsButton />

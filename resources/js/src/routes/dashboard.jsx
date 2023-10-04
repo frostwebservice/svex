@@ -272,5 +272,21 @@ export const dashboardRoutes = [
         element: <MailPage />
       }
     ]
+  },
+  {
+    path: 'profile',
+    element: (
+      <DashboardLayout>
+        <Suspense>
+          <Outlet />
+        </Suspense>
+      </DashboardLayout>
+    ),
+    children: [
+      {
+        path: '*',
+        element: <SocialProfilePage />
+      }
+    ]
   }
 ];

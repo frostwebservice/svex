@@ -94,7 +94,8 @@
     width: 20px !important;
     height: 20px !important;
     margin-right: 15px;
-    display: inline-block
+    display: inline-block;
+    background-size: cover;
 }
 
 .right-quick {

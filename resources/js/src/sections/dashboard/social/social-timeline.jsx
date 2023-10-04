@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { Stack, Unstable_Grid2 as Grid } from '@mui/material';
-import { SocialPostAdd } from './social-post-add';
+import SocialPostAdd from './social-post-add';
 import { SocialPostCard } from './social-post-card';
-import { SocialAbout } from './social-about';
+import SocialAbout from './social-about';
 
 export const SocialTimeline = (props) => {
   const { posts = [], profile, ...other } = props;

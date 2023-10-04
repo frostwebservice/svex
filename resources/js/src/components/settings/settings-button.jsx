@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import Settings03Icon from '@untitled-ui/icons-react/build/esm/Settings03';
 import { Box, ButtonBase, SvgIcon, Tooltip } from '@mui/material';
+// import { SettingsButton } from './components/settings/settings-button';
 
 export const SettingsButton = (props) => (
-  <Tooltip title="Settings">
+  <Tooltip title="Settings" className='realtooltip'>
     <Box
       sx={{
         backgroundColor: 'background.paper',
@@ -16,7 +17,7 @@ export const SettingsButton = (props) => (
         zIndex: (theme) => theme.zIndex.speedDial
       }}
       {...props}>
-      <ButtonBase
+      {/* <ButtonBase
         sx={{
           backgroundColor: 'primary.main',
           borderRadius: '50%',
@@ -27,7 +28,7 @@ export const SettingsButton = (props) => (
         <SvgIcon>
           <Settings03Icon />
         </SvgIcon>
-      </ButtonBase>
+      </ButtonBase> */}
     </Box>
   </Tooltip>
 );

@@ -2,7 +2,7 @@ import User01Icon from '@untitled-ui/icons-react/build/esm/User01';
 import { Avatar, Box, ButtonBase, SvgIcon } from '@mui/material';
 import { useMockedUser } from '@/hooks/use-mocked-user';
 import { usePopover } from '@/hooks/use-popover';
-import { AccountPopover } from './account-popover';
+import AccountPopover from './account-popover';
 
 export const AccountButton = () => {
   const user = useMockedUser();

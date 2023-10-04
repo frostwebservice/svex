@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use App\Notifications\VerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Niche;
 
 class User extends Authenticatable
 {
@@ -35,7 +37,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    public function niches()
+    {
+        return $this->hasMany(Niche::class);
+    }
     /**
      * The attributes that should be cast.
      *

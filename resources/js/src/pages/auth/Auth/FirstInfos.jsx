@@ -1,11 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as Yup from 'yup';
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { useFormik } from 'formik';
+import { isEmptyArray, useFormik } from 'formik';
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
 import { useSearchParams } from '@/hooks/use-search-params';
 import { useNavigate } from 'react-router-dom';
-
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
+import '@geoapify/geocoder-autocomplete/styles/minimal.css'
 import {
   Box,
   Card,
@@ -36,27 +37,27 @@ const Page = () => {
     firstname: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     lastname: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     phonenumber: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     companywebsite: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     companylocation: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     companyname: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
   });
 
 
@@ -66,7 +67,7 @@ const Page = () => {
   const [letter, setLetter] = useState("Save changes and NEXT");
   const email = JSON.parse(localStorage.getItem('Email'));
   const navigate = useNavigate();
-
+  const [templocation, setTemplocation] = useState("");
   const [initialValues, setInitialValues] = useState({
     firstname: '',
     lastname: '',
@@ -81,12 +82,63 @@ const Page = () => {
   const onCancel = () => {
     navigate(returnTo || paths.auth.auth.signin)
   }
+  function isEmpty(value) {
+    for (let prop in value) {
+      if (value.hasOwnProperty(prop)) return false;
+    }
+    return true;
+  }
+  const onPlaceSelect = value => {
 
+    if (value != null) {
+      setInitialValues({
+        ...formik.values,
+        companylocation: value.properties.formatted
+      });
+      document.getElementsByClassName('geoapify-autocomplete-input')[0].style.opacity = "0";
+    }
+    else {
+      document.getElementsByClassName('geoapify-autocomplete-input')[0].style.opacity = "1";
+      setInitialValues({
+        ...formik.values,
+        companylocation: ''
+      });
+
+    }
+  }
+
+  const onUserInput = value => {
+    console.log("userinput", value);
+    document.getElementsByClassName('geoapify-autocomplete-input')[0].style.opacity = "1";
+    console.log(isEmpty(formik.errors));
+    setInitialValues({
+      ...formik.values,
+      companylocation: ' '
+    });
+  }
+
+  const onSuggectionChange = value => {
+    console.log("suggestion", value);
+    setInitialValues({
+      ...formik.values,
+      companylocation: ' '
+    });
+  }
+  const onClose = value => {
+  }
+  const onChange = () => {
+    document.getElementsByClassName('geoapify-autocomplete-input')[0].style.visibility = "inherit";
+    setInitialValues({
+      ...formik.values,
+      companylocation: ' '
+    });
+  }
   const formik = useFormik({
     initialValues,
+    enableReinitialize: true,
     validationSchema,
     onSubmit: values => {
-
+      console.log(values); return;
       setIsLoading(true);
       setLetter("");
       axios
@@ -115,7 +167,15 @@ const Page = () => {
         });
     }
   });
+  useEffect(() => {
 
+    if (isEmpty(formik.errors)) {
+      document.getElementsByClassName("geoapify-autocomplete-input")[0].style.top = '-67px';
+
+    } else {
+      document.getElementsByClassName("geoapify-autocomplete-input")[0].style.top = '-70px';
+    }
+  });
   return (
     <>
       <Seo title="Business Info" />
@@ -211,7 +271,7 @@ const Page = () => {
                     onChange={formik.handleChange}
                     value={formik.values.companyname}
                   /></div>
-                <div className='p-2'>
+                <div className='p-2' style={{ position: 'relative' }}>
                   <RedditTextField
                     variant="filled"
                     className="title-inter "
@@ -221,10 +281,22 @@ const Page = () => {
                     label="Company Location"
                     name="companylocation"
                     fullWidth
+                    // onBlur={onBlur}
                     onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
+                    onChange={onChange}
+                    // onChange={formik.handleChange}
+
                     value={formik.values.companylocation}
-                  /></div>
+                  />
+                  <GeoapifyContext apiKey="1040c1c2e3e34b3b80b351a587232b75">
+                    <GeoapifyGeocoderAutocomplete placeholder=" "
+                      onUserInput={onUserInput}
+                      onClose={onClose}
+                      placeSelect={onPlaceSelect}
+                      suggestionsChange={onSuggectionChange}
+                    />
+                  </GeoapifyContext>
+                </div>
               </Stack>
 
 

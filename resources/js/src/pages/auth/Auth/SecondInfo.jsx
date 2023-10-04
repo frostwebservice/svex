@@ -84,19 +84,19 @@ const Page = () => {
     budget: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     companysize: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     companyfounded: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
     aboutbusiness: Yup
       .string()
       .max(255)
-      .required('Name is required'),
+      .required('This Field is required'),
 
   });
 

@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
-import BookOpen01Icon from '@untitled-ui/icons-react/build/esm/BookOpen01';
-import Briefcase01Icon from '@untitled-ui/icons-react/build/esm/Briefcase01';
-import Home02Icon from '@untitled-ui/icons-react/build/esm/Home02';
-import Mail01Icon from '@untitled-ui/icons-react/build/esm/Mail01';
+
 import {
   Card,
   CardContent,
@@ -18,13 +15,15 @@ import {
   Typography
 } from '@mui/material';
 import './social.css'
-export const SocialAbout = (props) => {
+import { connect } from 'react-redux'
+const SocialAbout = (props) => {
   const {
     currentCity,
     currentJobCompany,
     currentJobTitle,
     email,
     originCity,
+    brandinfo,
     previousJobCompany,
     previousJobTitle,
     profileProgress,
@@ -53,7 +52,7 @@ export const SocialAbout = (props) => {
             className='about-content'
             style={{ borderBottom: '0.5px solid #F2F4F7', paddingBottom: 50 }}
           >
-            {quote}
+            {brandinfo ? brandinfo.aboutbusiness : ''}
           </Typography>
 
           <List disablePadding>
@@ -69,7 +68,7 @@ export const SocialAbout = (props) => {
                 primary={(
                   <Typography variant="subtitle2" className='about-list-font'>
                     {/* {currentJobTitle} */}
-                    www.canadagoose.com/shop
+                    {brandinfo ? brandinfo.companywebsite : ''}
                   </Typography>
                 )}
               />
@@ -86,7 +85,7 @@ export const SocialAbout = (props) => {
                 primary={(
                   <Typography variant="subtitle2" className='about-list-font'>
                     {/* {currentJobTitle} */}
-                    +92313524856
+                    {brandinfo ? brandinfo.phonenumber : ''}
                   </Typography>
                 )}
               />
@@ -103,7 +102,7 @@ export const SocialAbout = (props) => {
                 primary={(
                   <Typography variant="subtitle2"
                     className='about-list-font'>
-                    Toronto, Ontario, Canada
+                    {brandinfo ? brandinfo.companylocation : ''}
                     {' '}
                     {/* <Link
                       color="text.primary"
@@ -127,7 +126,7 @@ export const SocialAbout = (props) => {
                 primary={(
                   <Typography variant="subtitle2" className='about-list-font'>
                     {/* {email} */}
-                    katarina.smith@devias.io
+                    {brandinfo ? brandinfo.email : ''}
                   </Typography>
                 )}
               />
@@ -167,3 +166,7 @@ SocialAbout.propTypes = {
   profileProgress: PropTypes.number.isRequired,
   quote: PropTypes.string.isRequired
 };
+const mapStateToProps = state => ({
+  brandinfo: state.profile.brandinfo
+})
+export default connect(mapStateToProps)(SocialAbout);

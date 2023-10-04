@@ -7,6 +7,7 @@ use App\Models\Niche;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\JsonEncodingException;
 use ReCaptcha\ReCaptcha;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -136,7 +137,20 @@ class UserController extends Controller
     }
 
     // -------------------- second Business Infomation Update ---------------------------------//
-
+    public function getBrandInfo(Request $request)
+    {
+        $id = $request->brandID;
+        $brand = User::find($id);
+        $niches = User::find($id)->niches;
+        $brand['niches'] = $niches;
+        return json_encode($brand);
+    }
+    public function getUserInfo(Request $request)
+    {
+        $email = $request->email;
+        $user = User::where("email", $email)->first();
+        return json_encode($user);
+    }
     public function secondInfo(Request $request)
     {
 

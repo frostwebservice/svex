@@ -30,3 +30,5 @@ Route::post("verify-recaptcha", [App\Http\Controllers\RecaptchaController::class
 Route::post('verify-email', [App\Http\Controllers\Auth\VerificationController::class, 'verifyEmail']);
 Route::post('send-reset', [App\Http\Controllers\UserController::class, 'sendReset']);
 Route::post("resend-email", [App\Http\Controllers\UserController::class, 'resendVerify']);
+Route::post('get_brand_info', [App\Http\Controllers\UserController::class, 'getBrandInfo']);
+Route::post('get_user_info', [App\Http\Controllers\UserController::class, 'getUserInfo']);
