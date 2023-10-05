@@ -27,7 +27,7 @@ export default function Successful(props) {
     const returnTo = searchParams.get('returnTo');
     const [isLoading, setIsLoading] = useState(false);
     const [launch, setLaunch] = useState("LAUNCH DASHBOARD");
-    const email = JSON.parse(localStorage.getItem('Email'));
+    const email = JSON.parse(localStorage.getItem('email'));
     const { signIn } = useAuth();
 
     const values = {

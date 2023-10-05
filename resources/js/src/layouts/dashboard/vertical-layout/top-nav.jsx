@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 export const TopNav = (props) => {
   const { onMobileNavOpen, ...other } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
-  const email = JSON.parse(localStorage.getItem('Email'));
+  const email = JSON.parse(localStorage.getItem('email'));
 
   const dispatch = useDispatch();
   useEffect(() => {

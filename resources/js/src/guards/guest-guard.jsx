@@ -9,11 +9,15 @@ export const GuestGuard = (props) => {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [checked, setChecked] = useState(false);
-
+  const curloc = window.location.pathname.split("/")[window.location.pathname.split("/").length - 1]
   const check = useCallback(() => {
     if (isAuthenticated) {
+      if (curloc == "firstinfos" || curloc == "secondinfo" || curloc == "socialhandle") {
+        setChecked(true);
+      } else {
+        router.replace(paths.dashboard.index);
+      }
 
-      router.replace(paths.dashboard.index);
     } else {
       setChecked(true);
     }

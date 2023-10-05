@@ -22,7 +22,7 @@ export default function Trial(props) {
         trial: "",
         email: "",
     });
-    const curEmail = JSON.parse(localStorage.getItem('Email'));
+    const curEmail = JSON.parse(localStorage.getItem('email'));
     const searchParams = useSearchParams();
     const returnTo = searchParams.get('returnTo');
     const navigate = useNavigate();

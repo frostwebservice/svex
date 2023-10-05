@@ -101,7 +101,7 @@ const Page = () => {
     validationSchema,
     onSubmit: values => {
 
-      localStorage.setItem("Email", JSON.stringify(values.email));
+      localStorage.setItem("email", JSON.stringify(values.email));
       if (verifyRecaptcha() == false) {
         alert("Please complete the reCAPTCHA");
         captchaRef.current.reset();

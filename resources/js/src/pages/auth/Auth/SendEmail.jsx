@@ -21,7 +21,7 @@ export default function EmailVerify(props) {
   const returnTo = searchParams.get('returnTo');
   const [start, setStart] = useState("Resend verification link");
   const [isLoading, setIsLoading] = useState(false);
-  const email = JSON.parse(localStorage.getItem('Email'));
+  const email = JSON.parse(localStorage.getItem('email'));
   const values = { "email": email };
   const onSubmitHandler = async (e) => {
     setIsLoading(true)

@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useSearchParams } from '@/hooks/use-search-params';
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
-
+import { connect, useDispatch } from 'react-redux';
+import { getUserProfile } from "../../../actions";
 import { useNavigate } from 'react-router-dom';
 import Select from '@mui/material/Select';
 import "./Form.css";
@@ -78,8 +79,8 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-const Page = () => {
-
+const Page = (props) => {
+  const { userinfo } = props
   const validationSchema = Yup.object({
     budget: Yup
       .string()
@@ -95,11 +96,16 @@ const Page = () => {
       .required('This Field is required'),
     aboutbusiness: Yup
       .string()
-      .max(255)
+      .max(2550)
       .required('This Field is required'),
 
   });
+  const [renderedonce, setRenderedonce] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserProfile({ email: email }));
 
+  }, [dispatch])
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
 
@@ -118,14 +124,14 @@ const Page = () => {
   const returnTo = searchParams.get('returnTo');
   const [isLoading, setIsLoading] = useState(false);
   const [letter, setLetter] = useState("Save changes and NEXT");
-  const email = JSON.parse(localStorage.getItem('Email'));
+  const email = JSON.parse(localStorage.getItem('email'));
   const navigate = useNavigate();
 
   const [initialValues, setInitialValues] = useState({
     budget: '',
     companysize: '',
     companyfounded: '',
-    aboutbusiness: 'Describe your influencer marketing goals and ambitions using SocialVex',
+    aboutbusiness: '',
     email: '',
   });
   initialValues.email = email;
@@ -133,21 +139,20 @@ const Page = () => {
   const onCancel = (e) => {
     navigate(returnTo || paths.auth.auth.signin);
   }
-  const onbioClick = (e) => {
-    if (e.target.value == initialValues.aboutbusiness) {
-      setInitialValues({
-        // nichecategory: '',
-        budget: '',
-        companysize: '',
-        companyfounded: '',
-        aboutbusiness: '',
-        email: '',
-      })
-      formik.values.aboutbusiness = "";
-    }
-  }
+  // const onbioClick = (e) => {
+  //   if (e.target.value == initialValues.aboutbusiness) {
+  //     setInitialValues({
+  //       ...initialValues,
+  //       aboutbusiness: ''
+  //     })
+  //     // formik.values.aboutbusiness = "";
+  //   }
+  // }
+  var nichesArr = [];
   const formik = useFormik({
     initialValues,
+    enableReinitialize: true,
+
     validationSchema,
     onSubmit: values => {
 
@@ -180,7 +185,29 @@ const Page = () => {
         });
     }
   });
+  useEffect(() => {
 
+    if (!renderedonce && userinfo) {
+
+      if (userinfo) {
+        userinfo.niches.map(niche => {
+          nichesArr.push(niche.niche);
+        })
+      }
+      console.log(nichesArr)
+      setPersonName(nichesArr);
+      setInitialValues({
+        ...initialValues,
+        nichecategory: userinfo ? nichesArr : '',
+        budget: userinfo ? userinfo.budget : '',
+        companysize: userinfo ? userinfo.companysize : '',
+        companyfounded: userinfo ? userinfo.companyfounded : '',
+        aboutbusiness: userinfo ? userinfo.aboutbusiness : '',
+      })
+      setRenderedonce(true);
+    }
+
+  });
   return (
     <>
       <Seo title="Business Info" />
@@ -217,7 +244,7 @@ const Page = () => {
                     onChange={formik.handleChange}
                     value={formik.values.nichecategory}
                   /> */}
-                  <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+                  <InputLabel id="demo-multiple-name-label">Niche category</InputLabel>
                   <Select
                     labelId="demo-multiple-name-label"
                     variant="filled"
@@ -303,11 +330,11 @@ const Page = () => {
                   fullWidth
                   style={{ marginTop: 11 }}
                   error={!!(formik.touched.aboutbusiness && formik.errors.aboutbusiness)}
-                  helperText={formik.touched.aboutbusiness && formik.errors.aboutbusiness}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  onClick={onbioClick}
+                  // onClick={onbioClick}
                   value={formik.values.aboutbusiness}
+                  helperText="Describe your influencer marketing goals and ambitions using SocialVex"
                 /></div>
 
               <div className="row d-flex justify-content-end pt-4 px-1 title-inter ">
@@ -346,5 +373,7 @@ const Page = () => {
     </>
   );
 };
-
-export default Page;
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+})
+export default connect(mapStateToProps)(Page);

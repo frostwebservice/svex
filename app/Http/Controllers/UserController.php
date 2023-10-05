@@ -149,6 +149,8 @@ class UserController extends Controller
     {
         $email = $request->email;
         $user = User::where("email", $email)->first();
+        $niches = User::where("email", $email)->first()->niches;
+        $user['niches'] = $niches;
         return json_encode($user);
     }
     public function secondInfo(Request $request)
@@ -177,8 +179,8 @@ class UserController extends Controller
                     "niche" => $niche,
                     "user_id" => $user_status->id
                 );
-
-                $inserted = Niche::create($insert);
+                $tmp = Niche::where(array("niche" => $niche, "user_id" => $user_status->id))->count();
+                if ($tmp == 0)        $inserted = Niche::create($insert);
             }
 
             if (!is_null($user)) {

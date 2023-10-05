@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as Yup from 'yup';
 // import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { useFormik } from 'formik';
 import { useSearchParams } from '@/hooks/use-search-params';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch, connect } from "react-redux";
+import { getUserProfile } from "../../../actions";
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
 import "./Form.css";
 import {
@@ -30,42 +31,43 @@ import { paths } from '@/paths';
 
 
 
-const Page = () => {
-
-
+const Page = (props) => {
+  const [renderedonce, setRenderedonce] = useState(false)
+  const { userinfo } = props
+  const [toDashboard, setToDashboard] = useState(false)
   const validationSchema = Yup.object({
     instagram: Yup
       .string()
-      .max(255)
-      .required('This Field is required'),
+      .max(255),
+    // .required('This Field is required'),
     tiktok: Yup
       .string()
-      .max(255)
-      .required('This Field is required'),
+      .max(255),
+    // .required('This Field is required'),
     youtube: Yup
       .string()
-      .max(255)
-      .required('This Field is required'),
+      .max(255),
+    // .required('This Field is required'),
     facebook: Yup
       .string()
-      .max(255)
-      .required('This Field is required'),
+      .max(255),
+    // .required('This Field is required'),
     twitter: Yup
       .string()
-      .max(255)
-      .required('This Field is required'),
+      .max(255),
+    // .required('This Field is required'),
     linkedin: Yup
       .string()
-      .max(255)
-      .required('This Field is required'),
+      .max(255),
+    // .required('This Field is required'),
     blogurl: Yup
       .string()
-      .max(255)
-      .required('This Field is required'),
+      .max(255),
+    // .required('This Field is required'),
     pinterest: Yup
       .string()
-      .max(255)
-      .required('This Field is required'),
+      .max(255),
+    // .required('This Field is required'),
 
 
   });
@@ -75,7 +77,12 @@ const Page = () => {
   const returnTo = searchParams.get('returnTo');
   const [isLoading, setIsLoading] = useState(false);
   const [letter, setLetter] = useState("Save changes and NEXT");
-  const email = JSON.parse(localStorage.getItem('Email'));
+  const email = JSON.parse(localStorage.getItem('email'));
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserProfile({ email: email }));
+
+  }, [dispatch])
   const navigate = useNavigate();
 
   const [initialValues, setInitialValues] = useState({
@@ -93,8 +100,19 @@ const Page = () => {
   const onCancel = (e) => {
     navigate(returnTo || paths.auth.auth.signin);
   }
+  const onSkip = (e) => {
+    if (toDashboard) {
+      navigate(returnTo || paths.dashboard.index)
+
+    }
+    else {
+      navigate(returnTo || paths.auth.auth.trial)
+    }
+  }
   const formik = useFormik({
     initialValues,
+    enableReinitialize: true,
+
     validationSchema,
     onSubmit: values => {
       setIsLoading(true);
@@ -116,7 +134,13 @@ const Page = () => {
             })
             setLetter("Save changes and NEXT")
             setIsLoading(false)
-            navigate(returnTo || paths.auth.auth.trial)
+            if (toDashboard) {
+              navigate(returnTo || paths.dashboard.index)
+
+            }
+            else {
+              navigate(returnTo || paths.auth.auth.trial)
+            }
           }
           if (response.data.status === "failed") {
             setLetter("Save changes and NEXT")
@@ -125,7 +149,29 @@ const Page = () => {
         });
     }
   });
+  useEffect(() => {
+    console.log("ss");
+    if (!renderedonce && userinfo) {
+      setInitialValues({
+        ...initialValues,
+        instagram: userinfo ? userinfo.instagram : '',
+        tiktok: userinfo ? userinfo.tiktok : '',
+        youtube: userinfo ? userinfo.youtube : '',
+        facebook: userinfo ? userinfo.facebook : '',
+        twitter: userinfo ? userinfo.twitter : '',
+        pinterest: userinfo ? userinfo.pinterest : '',
+        linkedin: userinfo ? userinfo.linkedin : '',
+        blogurl: userinfo ? userinfo.blogurl : '',
+      })
+      setRenderedonce(true);
+    }
+    if (userinfo) {
+      if (userinfo.instagram || userinfo.tiktok || userinfo.youtube || userinfo.facebook || userinfo.twitter || userinfo.pinterest || userinfo.linkedin || userinfo.blogurl) {
+        setToDashboard(true)
+      }
+    }
 
+  });
   return (
     <>
       <Seo title="Business Info" />
@@ -287,6 +333,16 @@ const Page = () => {
                   )}
                 </Button>
               </div>
+              <div className="row d-flex justify-content-end pt-4 px-1 title-inter ">
+
+                <Button
+                  className="text-center w-50  btn  mainButton smallsize"
+                  variant="text"
+                  onClick={onSkip}
+                >
+                  Skip for now
+                </Button>
+              </div>
             </form>
           </CardContent>
         </Card>
@@ -294,5 +350,7 @@ const Page = () => {
     </>
   );
 };
-
-export default Page;
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+})
+export default connect(mapStateToProps)(Page);

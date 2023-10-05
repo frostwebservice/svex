@@ -35,126 +35,145 @@ const SocialPostAdd = (props) => {
       <CardHeader title="Social media links" className='head-font' />
       <CardContent>
         <List disablePadding>
-          <ListItem
-            disableGutters
-            divider
-          >
-            <ListItemAvatar className='social-icons'>
-              <div className='facebook-icon'></div>
-            </ListItemAvatar>
-            <ListItemText
-              primary={(
-                <Link
-                  // color="text.secondary"
-                  sx={{ cursor: 'pointer' }}
-                  variant="caption"
-                  className='social-list-font'
-                >
-                  {brandinfo ? brandinfo.facebook : ''}
-                </Link>
-              )}
-            />
-          </ListItem>
-          <ListItem
-            disableGutters
-            divider
-          >
-            <ListItemAvatar className='social-icons'>
-              <div className='instagram-icon'></div>
-            </ListItemAvatar>
-            <ListItemText
-              primary={(
-                <Link
-                  // color="text.secondary"
-                  sx={{ cursor: 'pointer' }}
-                  variant="caption"
-                  className='social-list-font'
-                >
-                  {brandinfo ? brandinfo.instagram : ''}
-                </Link>
-              )}
-            />
-          </ListItem>
-          <ListItem
-            disableGutters
-            divider
-          >
-            <ListItemAvatar className='social-icons'>
-              <div className='tiktok-icon'></div>
-            </ListItemAvatar>
-            <ListItemText
-              primary={(
-                <Link
-                  // color="text.secondary"
-                  sx={{ cursor: 'pointer' }}
-                  variant="caption"
-                  className='social-list-font'
-                >
-                  {brandinfo ? brandinfo.tiktok : ''}
-                </Link>
-              )}
-            />
-          </ListItem>
-          <ListItem
-            disableGutters
-            divider
-          >
-            <ListItemAvatar className='social-icons'>
-              <div className='youtube-icon'></div>
-            </ListItemAvatar>
-            <ListItemText
-              primary={(
-                <Link
-                  // color="text.secondary"
-                  sx={{ cursor: 'pointer' }}
-                  variant="caption"
-                  className='social-list-font'
-                >
-                  {brandinfo ? brandinfo.youtube : ''}
-                </Link>
-              )}
-            />
-          </ListItem>
-          <ListItem
-            disableGutters
-            divider
-          >
-            <ListItemAvatar className='social-icons'>
-              <div className='twitter-icon'></div>
-            </ListItemAvatar>
-            <ListItemText
-              primary={(
-                <Link
-                  // color="text.secondary"
-                  sx={{ cursor: 'pointer' }}
-                  variant="caption"
-                  className='social-list-font'
-                >
-                  {brandinfo ? brandinfo.twitter : ''}
-                </Link>
-              )}
-            />
-          </ListItem>
-          <ListItem
-            disableGutters
-          >
-            <ListItemAvatar className='social-icons'>
-              <div className='pinterest-icon'></div>
-            </ListItemAvatar>
-            <ListItemText
-              primary={(
-                <Link
-                  // color="text.secondary"
-                  sx={{ cursor: 'pointer' }}
-                  variant="caption"
-                  className='social-list-font'
-                >
-                  {brandinfo ? brandinfo.pinterest : ''}
+          {brandinfo ? (brandinfo.facebook ? (
 
-                </Link>
-              )}
-            />
-          </ListItem>
+            <ListItem
+              disableGutters
+              divider
+            >
+
+              <ListItemAvatar className='social-icons'>
+                <div className='facebook-icon'></div>
+              </ListItemAvatar>
+              <ListItemText
+                primary={(
+                  <Link
+                    // color="text.secondary"
+                    sx={{ cursor: 'pointer' }}
+                    variant="caption"
+                    className='social-list-font'
+                  >
+                    {brandinfo ? brandinfo.facebook : ''}
+                  </Link>
+                )}
+              />
+            </ListItem>
+          ) : '') : ''}
+
+          {brandinfo ? (brandinfo.instagram ? (
+            <ListItem
+              disableGutters
+              divider
+            >
+              <ListItemAvatar className='social-icons'>
+                <div className='instagram-icon'></div>
+              </ListItemAvatar>
+              <ListItemText
+                primary={(
+                  <Link
+                    // color="text.secondary"
+                    sx={{ cursor: 'pointer' }}
+                    variant="caption"
+                    className='social-list-font'
+                  >
+                    {brandinfo ? brandinfo.instagram : ''}
+                  </Link>
+                )}
+              />
+            </ListItem>
+          ) : '') : ''}
+          {brandinfo ? (brandinfo.tiktok ? (
+
+            <ListItem
+              disableGutters
+              divider
+            >
+              <ListItemAvatar className='social-icons'>
+                <div className='tiktok-icon'></div>
+              </ListItemAvatar>
+              <ListItemText
+                primary={(
+                  <Link
+                    // color="text.secondary"
+                    sx={{ cursor: 'pointer' }}
+                    variant="caption"
+                    className='social-list-font'
+                  >
+                    {brandinfo ? brandinfo.tiktok : ''}
+                  </Link>
+                )}
+              />
+            </ListItem>
+          ) : '') : ''}
+          {brandinfo ? (brandinfo.youtube ? (
+
+            <ListItem
+              disableGutters
+              divider
+            >
+              <ListItemAvatar className='social-icons'>
+                <div className='youtube-icon'></div>
+              </ListItemAvatar>
+              <ListItemText
+                primary={(
+                  <Link
+                    // color="text.secondary"
+                    sx={{ cursor: 'pointer' }}
+                    variant="caption"
+                    className='social-list-font'
+                  >
+                    {brandinfo ? brandinfo.youtube : ''}
+                  </Link>
+                )}
+              />
+            </ListItem>
+          ) : '') : ''}
+          {brandinfo ? (brandinfo.twitter ? (
+
+            <ListItem
+              disableGutters
+              divider
+            >
+              <ListItemAvatar className='social-icons'>
+                <div className='twitter-icon'></div>
+              </ListItemAvatar>
+              <ListItemText
+                primary={(
+                  <Link
+                    // color="text.secondary"
+                    sx={{ cursor: 'pointer' }}
+                    variant="caption"
+                    className='social-list-font'
+                  >
+                    {brandinfo ? brandinfo.twitter : ''}
+                  </Link>
+                )}
+              />
+            </ListItem>
+          ) : '') : ''}
+          {brandinfo ? (brandinfo.pinterest ? (
+
+            <ListItem
+              disableGutters
+            >
+              <ListItemAvatar className='social-icons'>
+                <div className='pinterest-icon'></div>
+              </ListItemAvatar>
+              <ListItemText
+                primary={(
+                  <Link
+                    // color="text.secondary"
+                    sx={{ cursor: 'pointer' }}
+                    variant="caption"
+                    className='social-list-font'
+                  >
+                    {brandinfo ? brandinfo.pinterest : ''}
+
+                  </Link>
+                )}
+              />
+            </ListItem>
+          ) : '') : ''}
         </List>
 
       </CardContent>

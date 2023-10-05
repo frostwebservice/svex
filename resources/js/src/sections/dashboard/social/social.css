@@ -32,6 +32,7 @@
     width: 22px;
     height: 22px;
     background-image: url('./images/facebook.png');
+    background-size: cover;
 }
 
 .verified-icon {
@@ -44,30 +45,35 @@
     width: 22px;
     height: 22px;
     background-image: url('./images/tiktok.png');
+    background-size: cover;
 }
 
 .pinterest-icon {
     width: 22px;
     height: 22px;
     background-image: url('./images/pinterest.png');
+    background-size: cover;
 }
 
 .youtube-icon {
     width: 22px;
     height: 22px;
     background-image: url('./images/youtube.png');
+    background-size: cover;
 }
 
 .twitter-icon {
     width: 22px;
     height: 22px;
     background-image: url('./images/twitter.png');
+    background-size: cover;
 }
 
 .instagram-icon {
     width: 22px;
     height: 22px;
     background-image: url('./images/instagram.jpg');
+    background-size: cover;
 }
 
 .home-icon {

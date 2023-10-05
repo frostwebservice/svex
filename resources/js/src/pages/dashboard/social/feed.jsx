@@ -4,7 +4,7 @@ import { socialApi } from '@/api/social';
 import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
-import { SocialPostAdd } from '@/sections/dashboard/social/social-post-add';
+import SocialPostAdd from '@/sections/dashboard/social/social-post-add';
 import { SocialPostCard } from '@/sections/dashboard/social/social-post-card';
 
 const usePosts = () => {
@@ -24,8 +24,8 @@ const usePosts = () => {
   }, [isMounted]);
 
   useEffect(() => {
-      handlePostsGet();
-    },
+    handlePostsGet();
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
 

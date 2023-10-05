@@ -25,13 +25,12 @@ import { RouterLink } from '@/components/router-link';
 import { Seo } from '@/components/seo';
 import { paths } from '@/paths';
 import './Form.css';
+import { useDispatch, connect } from "react-redux";
 
+import { getUserProfile } from '@/actions';
+import { set } from "nprogress";
 
-
-
-
-const Page = () => {
-
+const Page = (props) => {
 
   const validationSchema = Yup.object({
     firstname: Yup
@@ -59,13 +58,18 @@ const Page = () => {
       .max(255)
       .required('This Field is required'),
   });
-
-
+  const [renderedonce, setRenderedonce] = useState(false);
+  const { userinfo } = props
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
   const [isLoading, setIsLoading] = useState(false);
   const [letter, setLetter] = useState("Save changes and NEXT");
-  const email = JSON.parse(localStorage.getItem('Email'));
+  const email = JSON.parse(localStorage.getItem('email'));
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserProfile({ email: email }));
+
+  }, [dispatch])
   const navigate = useNavigate();
   const [templocation, setTemplocation] = useState("");
   const [initialValues, setInitialValues] = useState({
@@ -138,7 +142,7 @@ const Page = () => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: values => {
-      console.log(values); return;
+      // console.log(values); return;
       setIsLoading(true);
       setLetter("");
       axios
@@ -175,6 +179,19 @@ const Page = () => {
     } else {
       document.getElementsByClassName("geoapify-autocomplete-input")[0].style.top = '-70px';
     }
+    if (!renderedonce && userinfo) {
+      setInitialValues({
+        ...initialValues,
+        firstname: userinfo ? userinfo.firstname : '',
+        lastname: userinfo ? userinfo.lastname : '',
+        phonenumber: userinfo ? userinfo.phonenumber : '',
+        companywebsite: userinfo ? userinfo.companywebsite : '',
+        companylocation: userinfo ? userinfo.companylocation : '',
+        companyname: userinfo ? userinfo.companyname : '',
+      })
+      setRenderedonce(true);
+    }
+
   });
   return (
     <>
@@ -333,5 +350,7 @@ const Page = () => {
     </>
   );
 };
-
-export default Page;
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+})
+export default connect(mapStateToProps)(Page);

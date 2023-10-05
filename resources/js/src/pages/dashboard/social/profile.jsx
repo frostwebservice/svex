@@ -4,6 +4,8 @@ import DotsHorizontalIcon from '@untitled-ui/icons-react/build/esm/DotsHorizonta
 import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
 import UserPlus02Icon from '@untitled-ui/icons-react/build/esm/UserPlus02';
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
+import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Avatar,
@@ -31,6 +33,7 @@ import { SocialTimeline } from '@/sections/dashboard/social/social-timeline';
 import "./profile.css";
 import { getBrandProfile } from '@/actions';
 import { useDispatch, connect } from "react-redux";
+
 const tabs = [
   { label: 'Overview', value: 'timeline' },
   { label: 'Jobs Posted', value: 'connections' }
@@ -109,7 +112,8 @@ const useConnections = (search = '') => {
 };
 
 const Page = (props) => {
-  const { brandinfo } = props;
+  // console.log(props);
+  const { brandinfo, userinfo } = props;
   const profile = useProfile();
   const [currentTab, setCurrentTab] = useState('timeline');
   const [status, setStatus] = useState('not_connected');
@@ -118,13 +122,13 @@ const Page = (props) => {
   const connections = useConnections(connectionsQuery);
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
-  // console.log(props.history);
-  // if (!brandinfo)
-
+  const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getBrandProfile({ brandID: 7 }));
+    dispatch(getBrandProfile({ brandID: window.location.pathname.split("/")[2].split("-")[2] }));
 
   }, [dispatch])
+
+
 
   const handleLike = useCallback(() => {
     setIsLiked(true);
@@ -188,34 +192,37 @@ const Page = (props) => {
                 }
               }}
             >
-              <Button
-                startIcon={(
-                  <SvgIcon>
-                    <Image01Icon />
-                  </SvgIcon>
-                )}
-                sx={{
-                  backgroundColor: blueGrey[900],
-                  bottom: {
-                    lg: 24,
-                    xs: 'auto'
-                  },
-                  color: 'common.white',
-                  position: 'absolute',
-                  right: 24,
-                  top: {
-                    lg: 'auto',
-                    xs: 24
-                  },
-                  visibility: 'hidden',
-                  '&:hover': {
-                    backgroundColor: blueGrey[900]
-                  }
-                }}
-                variant="contained"
-              >
-                Change Cover
-              </Button>
+              {userinfo.id == brandinfo.id ? (
+                <Button
+                  startIcon={(
+                    <SvgIcon>
+                      <Image01Icon />
+                    </SvgIcon>
+                  )}
+                  sx={{
+                    backgroundColor: blueGrey[900],
+                    bottom: {
+                      lg: 24,
+                      xs: 'auto'
+                    },
+                    color: 'common.white',
+                    position: 'absolute',
+                    right: 24,
+                    top: {
+                      lg: 'auto',
+                      xs: 24
+                    },
+                    visibility: 'hidden',
+                    '&:hover': {
+                      backgroundColor: blueGrey[900]
+                    }
+                  }}
+                  variant="contained"
+                >
+                  Change Cover
+                </Button>
+              ) : ('')}
+
             </Box>
             <Stack
               alignItems="center"
@@ -274,76 +281,123 @@ const Page = (props) => {
                 </div>
               </Stack>
               <Box sx={{ flexGrow: 1 }} />
-              <Stack
-                alignItems="center"
-                direction="row"
-                spacing={2}
-                className='button-bar'
-                sx={{
-                  display: {
-                    md: 'block',
-                    // xs: 'none'
-                  }
-                }}
-              >
-                {isLiked
-                  ? (
-                    <Button
-
-                      onClick={handleUnlike}
-                      size="small"
-                      className='fav-btn'
-                      startIcon={(
-                        <SvgIcon
-                          sx={{
-                            color: 'error.main',
-                            '& path': {
-                              fill: (theme) => theme.palette.error.main,
-                              fillOpacity: 1
-                            }
-                          }}
-                        >
-                          <HeartIcon />
-                        </SvgIcon>
-                      )}
-                      variant="outlined"
-                    >
-                      Favorite
-                    </Button>
-
-
-                  )
-                  : (
-                    <Button
-                      onClick={handleLike}
-                      size="small"
-                      className='fav-btn'
-                      startIcon={(
-                        <SvgIcon>
-                          <HeartIcon />
-                        </SvgIcon>
-                      )}
-                      variant="outlined"
-                    >
-                      Favorite
-                    </Button>
-                  )}
-
-                <Button
-                  component={RouterLink}
-                  href={paths.dashboard.chat}
-                  size="small"
-                  className="social-btn"
-                  startIcon={(
-                    <SvgIcon>
-                      <MessageChatSquareIcon />
-                    </SvgIcon>
-                  )}
-                  variant="contained"
+              {(userinfo.id === brandinfo.id) ? (
+                <Stack
+                  alignItems="center"
+                  direction="row"
+                  spacing={2}
+                  className='button-bar'
+                  sx={{
+                    display: {
+                      md: 'block',
+                      // xs: 'none'
+                    }
+                  }}
                 >
-                  Send Message
-                </Button>
-              </Stack>
+                  <Button
+                    // component={RouterLink}
+                    // href={paths.dashboard.chat}
+                    size="small"
+                    className="social-btn"
+                    startIcon={(
+                      <SvgIcon>
+                        <Edit02Icon />
+                      </SvgIcon>
+                    )}
+                    onClick={() => { navigate('/auth/auth/firstinfos') }}
+                    variant="contained"
+                  >
+                    Edit Profile
+                  </Button>
+                </Stack>
+              ) : (
+                <Stack
+                  alignItems="center"
+                  direction="row"
+                  spacing={2}
+                  className='button-bar'
+                  sx={{
+                    display: {
+                      md: 'block',
+                      // xs: 'none'
+                    }
+                  }}
+                >
+                  {isLiked
+                    ? (
+                      <>
+                        <Button
+                          onClick={handleUnlike}
+                          size="small"
+                          className='fav-btn'
+                          startIcon={(
+                            <SvgIcon
+                              sx={{
+                                color: 'error.main',
+                                '& path': {
+                                  fill: (theme) => theme.palette.error.main,
+                                  fillOpacity: 1
+                                }
+                              }}
+                            >
+                              <HeartIcon />
+                            </SvgIcon>
+                          )}
+                          variant="outlined"
+                        >
+                          Favorite
+                        </Button>
+                        <Button
+                          component={RouterLink}
+                          href={paths.dashboard.chat}
+                          size="small"
+                          className="social-btn"
+                          startIcon={(
+                            <SvgIcon>
+                              <MessageChatSquareIcon />
+                            </SvgIcon>
+                          )}
+                          variant="contained"
+                        >
+                          Send Message
+                        </Button>
+                      </>
+                    )
+                    : (
+                      <>
+                        <Button
+                          onClick={handleLike}
+                          size="small"
+                          className='fav-btn'
+                          startIcon={(
+                            <SvgIcon>
+                              <HeartIcon />
+                            </SvgIcon>
+                          )}
+                          variant="outlined"
+                        >
+                          Favorite
+                        </Button>
+                        <Button
+                          component={RouterLink}
+                          href={paths.dashboard.chat}
+                          size="small"
+                          className="social-btn"
+                          startIcon={(
+                            <SvgIcon>
+                              <MessageChatSquareIcon />
+                            </SvgIcon>
+                          )}
+                          variant="contained"
+                        >
+                          Send Message
+                        </Button>
+                      </>
+
+                    )}
+                </Stack>
+              )}
+
             </Stack>
           </div>
           <div className='quick-link-bar'>
@@ -394,13 +448,14 @@ const Page = (props) => {
               />
             )}
           </Box>
-        </Container>
+        </Container >
       </Box >
     </>
   );
 };
 const mapStateToProps = state => ({
-  brandinfo: state.profile.brandinfo
+  brandinfo: state.profile.brandinfo,
+  userinfo: state.profile.userinfo,
 });
 
 export default connect(mapStateToProps)(Page);

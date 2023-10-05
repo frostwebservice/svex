@@ -101,7 +101,8 @@ const AccountPopover = (props) => {
       <Divider />
       <Box sx={{ p: 1 }}>
         <ListItemButton
-          component={RouterLink}
+          // component={RouterLink}
+          component="a"
           // href={paths.dashboard.social.profile}
           href={userinfo ? `/profile/${userinfo.firstname}-${userinfo.lastname}-${userinfo.id}` : ''}
           onClick={onClose}

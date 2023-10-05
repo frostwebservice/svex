@@ -332,7 +332,7 @@ a {
   letter-spacing: inherit;
   color: currentColor;
   padding: 4px 0 5px;
-  border: 0;
+  border: 0 !important;
   box-sizing: content-box;
   background: none;
   height: 1.4375em;

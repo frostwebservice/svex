@@ -35,7 +35,7 @@ export default function Start(props) {
   const [nowLoading, setIsLoading] = useState(false);
   const [click, setClick] = useState("Get Started")
   const navigate = useNavigate();
-  const email = JSON.parse(localStorage.getItem('Email'));
+  const email = JSON.parse(localStorage.getItem('email'));
   const { signIn } = useAuth();
   const isMounted = useMounted();
 

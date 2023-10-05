@@ -111,13 +111,13 @@ class AuthApi {
     const { accessToken } = request;
     console.log(request);
     return new Promise((resolve, reject) => {
-          resolve({
-            id: null,
-            avatar: null,
-            email: null,
-            name: null,
-            plan: null
-          });
+      resolve({
+        id: null,
+        avatar: null,
+        email: null,
+        name: null,
+        plan: null
+      });
       // try {
       //   // Decode access token
       //   // const decodedToken = decode(accessToken);

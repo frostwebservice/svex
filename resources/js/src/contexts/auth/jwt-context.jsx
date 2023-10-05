@@ -117,8 +117,8 @@ export const AuthProvider = (props) => {
     const { api_token } = userinfo;
     const user = userinfo;
     console.log(api_token);
-    localStorage.setItem(STORAGE_KEY, api_token);
-    window.localStorage.setItem("email", userinfo.email);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(api_token));
+    window.localStorage.setItem("email", JSON.stringify(userinfo.email));
     // window.localStorage.setItem("user", userinfo)
     dispatch({
       type: ActionType.SIGN_IN,
@@ -132,7 +132,7 @@ export const AuthProvider = (props) => {
     const { accessToken } = await authApi.signUp({ email, name, password });
     const user = await authApi.me({ accessToken });
 
-    window.localStorage.setItem(STORAGE_KEY, accessToken);
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(accessToken));
 
     dispatch({
       type: ActionType.SIGN_UP,

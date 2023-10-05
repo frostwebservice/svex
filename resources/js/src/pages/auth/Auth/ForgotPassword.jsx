@@ -45,7 +45,7 @@ const Page = () => {
     initialValues,
     validationSchema,
     onSubmit: values => {
-      localStorage.setItem("email", values.email);
+      localStorage.setItem("email", JSON.stringify(values.email));
       setIsLoading(true)
       setStart("")
 
