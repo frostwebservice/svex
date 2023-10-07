@@ -205,7 +205,7 @@ const Page = (props) => {
                 }
               }}
             >
-              {userinfo.id == brandinfo.id ? (
+              {userinfo && brandinfo && userinfo.id == brandinfo.id ? (
                 <Button
                   onClick={() => {
                     setKind("cover")
@@ -302,7 +302,7 @@ const Page = (props) => {
                 </div>
               </Stack>
               <Box sx={{ flexGrow: 1 }} />
-              {(userinfo.id === brandinfo.id) ? (
+              {(userinfo && brandinfo && userinfo.id === brandinfo.id) ? (
                 <Stack
                   alignItems="center"
                   direction="row"

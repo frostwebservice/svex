@@ -284,7 +284,7 @@ const Page = () => {
                 </FormHelperText>
               )}
               <div className='formGroup  px-2'>
-                <ReCAPTCHA sitekey={"6LfZCiEoAAAAAFYWmXEdUvMwg2TD8op988LvKGpO"} type="image" size="normal" ref={captchaRef} onChange={handleRecaptchaChanged} />
+                <ReCAPTCHA sitekey={"6LeYAjEoAAAAADaBcAm2mapO1zL0Tkun5yTS772H"} type="image" size="normal" ref={captchaRef} onChange={handleRecaptchaChanged} />
               </div>
 
               <Button
