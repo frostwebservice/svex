@@ -49,10 +49,10 @@ const Page = (props) => {
       .string()
       .max(255)
       .required('This Field is required'),
-    companylocation: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
+    // companylocation: Yup
+    //   .string()
+    //   .max(255)
+    //   .required('This Field is required'),
     companyname: Yup
       .string()
       .max(255)
@@ -131,6 +131,23 @@ const Page = (props) => {
   const onClose = value => {
   }
   const onChange = () => {
+    document.getElementsByClassName('geoapify-autocomplete-input')[0].style.visibility = "inherit";
+    setInitialValues({
+      ...formik.values,
+      companylocation: ' '
+    });
+  }
+  const onFocus = (e) => {
+    // document.getElementsByClassName('geoapify-autocomplete-input')[0].style.visibility = "inherit";
+    // setInitialValues({
+    //   ...formik.values,
+    //   companylocation: ' '
+    // });
+    // e.target.blur()
+    // document.getElementsByClassName('geoapify-autocomplete-input')[0].click();
+
+  }
+  const onLeave = () => {
     document.getElementsByClassName('geoapify-autocomplete-input')[0].style.visibility = "inherit";
     setInitialValues({
       ...formik.values,
@@ -230,34 +247,6 @@ const Page = (props) => {
                     onChange={formik.handleChange}
                     value={formik.values.firstname}
                   /></div>
-                <div className='p-2 '>
-                  <RedditTextField
-                    variant="filled"
-                    className="title-inter "
-                    style={{ marginTop: 11 }}
-                    error={!!(formik.touched.phonenumber && formik.errors.phonenumber)}
-                    helperText={formik.touched.phonenumber && formik.errors.phonenumber}
-                    label="Phone Number"
-                    name="phonenumber"
-                    fullWidth
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.phonenumber}
-                  /></div>
-                <div className='p-2'>
-                  <RedditTextField
-                    variant="filled"
-                    className="title-inter "
-                    style={{ marginTop: 11 }}
-                    error={!!(formik.touched.companywebsite && formik.errors.companywebsite)}
-                    helperText={formik.touched.companywebsite && formik.errors.companywebsite}
-                    label="Company Website"
-                    name="companywebsite"
-                    fullWidth
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.companywebsite}
-                  /></div>
               </Stack>
               <Stack spacing={0} className="col-md-6 col-12 ">
                 <div className='p-2  '>
@@ -274,6 +263,25 @@ const Page = (props) => {
                     onChange={formik.handleChange}
                     value={formik.values.lastname}
                   /></div>
+              </Stack>
+              <Stack spacing={0} className="col-md-6 col-12 ">
+
+                <div className='p-2 '>
+                  <RedditTextField
+                    variant="filled"
+                    className="title-inter "
+                    style={{ marginTop: 11 }}
+                    error={!!(formik.touched.phonenumber && formik.errors.phonenumber)}
+                    helperText={formik.touched.phonenumber && formik.errors.phonenumber}
+                    label="Phone Number"
+                    name="phonenumber"
+                    fullWidth
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.phonenumber}
+                  /></div>
+              </Stack>
+              <Stack spacing={0} className="col-md-6 col-12 ">
                 <div className='p-2 '>
                   <RedditTextField
                     variant="filled"
@@ -288,6 +296,27 @@ const Page = (props) => {
                     onChange={formik.handleChange}
                     value={formik.values.companyname}
                   /></div>
+              </Stack>
+              <Stack spacing={0} className="col-md-6 col-12 ">
+
+                <div className='p-2'>
+                  <RedditTextField
+                    variant="filled"
+                    className="title-inter "
+                    style={{ marginTop: 11 }}
+                    error={!!(formik.touched.companywebsite && formik.errors.companywebsite)}
+                    helperText={formik.touched.companywebsite && formik.errors.companywebsite}
+                    label="Company Website"
+                    name="companywebsite"
+                    fullWidth
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.companywebsite}
+                  /></div>
+              </Stack>
+
+              <Stack spacing={0} className="col-md-6 col-12 ">
+
                 <div className='p-2' style={{ position: 'relative' }}>
                   <RedditTextField
                     variant="filled"
@@ -298,9 +327,11 @@ const Page = (props) => {
                     label="Company Location"
                     name="companylocation"
                     fullWidth
-                    // onBlur={onBlur}
-                    onBlur={formik.handleBlur}
+                    onBlur={onLeave}
+                    // onBlur={formik.handleBlur}
                     onChange={onChange}
+                    // onLeave={onLeave}
+                    onFocus={onFocus}
                     // onChange={formik.handleChange}
 
                     value={formik.values.companylocation}
@@ -345,7 +376,7 @@ const Page = (props) => {
               </div>
             </form>
           </CardContent>
-        </Card>
+        </Card >
       </div >
     </>
   );

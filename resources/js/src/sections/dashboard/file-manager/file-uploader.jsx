@@ -5,7 +5,7 @@ import { FileDropzone } from '@/components/file-dropzone';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 
 export const FileUploader = (props) => {
-  const { onClose, open = false } = props;
+  const { onClose, open = false, onUpgrade, kind } = props;
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,8 @@ export const FileUploader = (props) => {
 
   const handleDrop = useCallback((newFiles) => {
     setFiles((prevFiles) => {
-      return [...prevFiles, ...newFiles];
+      // return [...prevFiles, ...newFiles];
+      return [...newFiles];
     });
   }, []);
 
@@ -23,11 +24,27 @@ export const FileUploader = (props) => {
       return prevFiles.filter((_file) => _file.path !== file.path);
     });
   }, []);
+  const email = JSON.parse(localStorage.getItem('email'));
 
   const handleRemoveAll = useCallback(() => {
     setFiles([]);
   }, []);
+  const onUpload = () => {
+    console.log(files[0]);
+    const data = new FormData()
+    data.append('file', files[0])
+    data.append('email', email)
+    data.append('kind', kind)
+    let url = "/api/upload_cover";
 
+    axios.post(url, data, {
+    })
+      .then(res => {
+        onUpgrade()
+        onClose();
+      })
+
+  }
   return (
     <Dialog
       fullWidth
@@ -65,7 +82,7 @@ export const FileUploader = (props) => {
           onDrop={handleDrop}
           onRemove={handleRemove}
           onRemoveAll={handleRemoveAll}
-          onUpload={onClose}
+          onUpload={onUpload}
         />
       </DialogContent>
     </Dialog>

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\JsonEncodingException;
 use ReCaptcha\ReCaptcha;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -31,6 +32,11 @@ class UserController extends Controller
 
         if (!is_null($user_status)) {
             return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! email already registered"]);
+        }
+        $user_status = User::where("fullname", $request->name)->first();
+
+        if (!is_null($user_status)) {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! username already registered"]);
         }
 
         $user  =  User::create($userDataArray);
@@ -153,9 +159,39 @@ class UserController extends Controller
         $user['niches'] = $niches;
         return json_encode($user);
     }
+    public function getSocialProfile(Request $request)
+    {
+        $infname = $request->infname;
+        $socialtype = $request->socialtype;
+        $table_name = "influencers_" . $socialtype;
+        $socialinfo = DB::table($table_name)->where('username', $infname)->first();
+        return json_encode($socialinfo);
+    }
+    public function uploadCover(Request $request)
+    {
+        if ($request->kind == "cover")
+            $path = $request->file('file')->store('public/covers');
+        else $path = $request->file('file')->store('public/avatars');
+        $user = User::where('email', $request->email)->first();
+        $tmpArr = explode("/", $path);
+        $tmp = "";
+        foreach ($tmpArr as $key => $value) {
+            $tmp = $tmp . "/";
+            if ($key == 0) $tmp = $tmp . "storage";
+            else $tmp = $tmp . $value;
+        }
+        if ($request->kind == "cover")
+            $user->cover_photo = $tmp;
+        else $user->avatar = $tmp;
+        $user->save();
+        return response()->json(["status" => "success", "success" => true, "message" => "Success to upload"]);
+    }
     public function secondInfo(Request $request)
     {
-
+        $count = count($request->nichecategory);
+        if ($count > 5) {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Niche category field should not over 5 items"]);
+        }
         $userDataArray  =  array(
             "nichecategory"              =>   $request->nichecategory,
             "budget"                   =>   $request->budget,
@@ -174,13 +210,15 @@ class UserController extends Controller
             $user_status->companyfounded     =                         $request->companyfounded;
             $user_status->aboutbusiness     =                          $request->aboutbusiness;
             $user = $user_status->save();
+            Niche::where('user_id', $user_status->id)->delete();
             foreach ($userDataArray["nichecategory"] as $key => $niche) {
                 $insert = array(
-                    "niche" => $niche,
+                    "niche" => $niche['label'],
                     "user_id" => $user_status->id
                 );
-                $tmp = Niche::where(array("niche" => $niche, "user_id" => $user_status->id))->count();
-                if ($tmp == 0)        $inserted = Niche::create($insert);
+                // $tmp = Niche::where(array("niche" => $niche, "user_id" => $user_status->id))->count();
+                // if ($tmp == 0)        
+                $inserted = Niche::create($insert);
             }
 
             if (!is_null($user)) {

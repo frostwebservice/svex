@@ -27,9 +27,12 @@ export default defineConfig({
             // "@": path.resolve(__dirname, "/public/build/assets"),
         }
 
-    },    
+    },
     server: {
         https: false,
         host: 'localhost',
     },
+    optimizeDeps: {
+        exclude: ['js-big-decimal']
+    }
 });

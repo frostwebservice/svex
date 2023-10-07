@@ -5,6 +5,9 @@ import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
 import UserPlus02Icon from '@untitled-ui/icons-react/build/esm/UserPlus02';
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
+import { useDialog } from '@/hooks/use-dialog';
+import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
+
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -112,6 +115,8 @@ const useConnections = (search = '') => {
 };
 
 const Page = (props) => {
+  const uploadDialog = useDialog();
+  const [kind, setKind] = useState("cover");
   // console.log(props);
   const { brandinfo, userinfo } = props;
   const profile = useProfile();
@@ -128,8 +133,12 @@ const Page = (props) => {
 
   }, [dispatch])
 
+  const [key, setKey] = useState("")
+  const onUpgrade = () => {
+    dispatch(getBrandProfile({ brandID: window.location.pathname.split("/")[2].split("-")[2] }));
 
-
+    setKey(key + "a")
+  }
   const handleLike = useCallback(() => {
     setIsLiked(true);
     // setLikes((prevLikes) => prevLikes + 1);
@@ -160,7 +169,10 @@ const Page = (props) => {
   if (!profile) {
     return null;
   }
-
+  const avatarClick = () => {
+    setKind("avatar")
+    uploadDialog.handleOpen()
+  }
   const showConnect = status === 'not_connected';
   const showPending = status === 'pending';
 
@@ -177,7 +189,8 @@ const Page = (props) => {
         <Container maxWidth="xl">
           <div>
             <Box
-              style={{ backgroundImage: `url(${profile.cover})` }}
+              key={key}
+              style={{ backgroundImage: `url(${brandinfo.cover_photo ? brandinfo.cover_photo : profile.cover})` }}
               sx={{
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -194,6 +207,11 @@ const Page = (props) => {
             >
               {userinfo.id == brandinfo.id ? (
                 <Button
+                  onClick={() => {
+                    setKind("cover")
+                    uploadDialog.handleOpen()
+                  }}
+
                   startIcon={(
                     <SvgIcon>
                       <Image01Icon />
@@ -238,12 +256,15 @@ const Page = (props) => {
                 spacing={2}
               >
                 <Avatar
-                  src={profile.avatar}
+                  onClick={avatarClick}
+                  src={brandinfo.avatar ? brandinfo.avatar : `https://ui-avatars.com/api/?name=${brandinfo.fullname}&background=0D8ABC&color=fff&rounded=true`}
                   sx={{
                     height: 140,
                     width: 140
                   }}
-                />
+                  style={{ cursor: 'pointer' }}
+                >
+                </Avatar>
                 <div className='brand-info'>
                   <Typography
                     color="primary"
@@ -450,6 +471,12 @@ const Page = (props) => {
           </Box>
         </Container >
       </Box >
+      <FileUploader
+        onClose={uploadDialog.handleClose}
+        open={uploadDialog.open}
+        onUpgrade={onUpgrade}
+        kind={kind}
+      />
     </>
   );
 };

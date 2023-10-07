@@ -35,6 +35,15 @@
     background-size: cover;
 }
 
+.homepage-icon {
+    width: 24px !important;
+    height: 21px;
+    background-image: url('./images/homepage.png');
+    background-size: cover;
+    margin-right: 15px;
+    display: inline-block;
+}
+
 .verified-icon {
     width: 20px;
     height: 20px;

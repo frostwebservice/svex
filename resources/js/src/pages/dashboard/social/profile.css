@@ -40,6 +40,12 @@
     margin-bottom: 0px !important;
 }
 
+.fav-btn-alone {
+    margin-bottom: 0px !important;
+    padding: 0;
+    background-color: none;
+}
+
 @media screen and (min-width:500px) {
 
     .social-btn {

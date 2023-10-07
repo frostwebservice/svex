@@ -149,7 +149,7 @@ const Page = () => {
                 <Link
                   underline="hover"
                   // variant="subtitle2"
-                  className="title-inter"
+                  className="title-inter pointer"
                   onClick={() => navigate(paths.auth.auth.signup)}
                 >
                   Register
@@ -224,6 +224,7 @@ const Page = () => {
                 <Link
                   // href={paths.auth.auth.forgotPassword}
                   underline="hover"
+                  className='pointer'
                   variant="subtitle2"
                   onClick={() => navigate(paths.auth.auth.forgotPassword)}
                 >

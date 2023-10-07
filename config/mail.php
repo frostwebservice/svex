@@ -100,7 +100,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'svexactivations@worldofmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'From Svex'),
+        'name' => env('MAIL_FROM_NAME', 'From Social Vex'),
     ],
 
     /*

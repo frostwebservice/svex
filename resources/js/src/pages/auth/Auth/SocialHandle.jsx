@@ -103,7 +103,6 @@ const Page = (props) => {
   const onSkip = (e) => {
     if (toDashboard) {
       navigate(returnTo || paths.dashboard.index)
-
     }
     else {
       navigate(returnTo || paths.auth.auth.trial)
@@ -336,7 +335,8 @@ const Page = (props) => {
               <div className="row d-flex justify-content-end pt-4 px-1 title-inter ">
 
                 <Button
-                  className="text-center w-50  btn  mainButton smallsize"
+                  className="text-center w-50  btn  mainButton smallsize skip-btn"
+                  style={{ textAlign: 'right!important' }}
                   variant="text"
                   onClick={onSkip}
                 >

@@ -47,6 +47,8 @@ const ProductCreatePage = lazy(() => import('@/pages/dashboard/products/create')
 // Social
 const SocialFeedPage = lazy(() => import('@/pages/dashboard/social/feed'));
 const SocialProfilePage = lazy(() => import('@/pages/dashboard/social/profile'));
+const SocialInfGlobalPage = lazy(() => import('@/pages/dashboard/social/infglobalprofile'));
+const SocialInfPage = lazy(() => import('@/pages/dashboard/social/infprofile'));
 
 // Other
 const AccountPage = lazy(() => import('@/pages/dashboard/account'));
@@ -284,7 +286,26 @@ export const dashboardRoutes = [
     ),
     children: [
       {
-        path: '*',
+        path: 'inf',
+        children: [
+          {
+            path: ':userName',
+            element: <SocialInfGlobalPage />
+          },
+          {
+            path: ':socialType',
+            children: [
+              {
+                path: ':userName',
+                element: <SocialInfPage />
+              }
+            ]
+          },
+
+        ]
+      },
+      {
+        path: ':brandId',
         element: <SocialProfilePage />
       }
     ]

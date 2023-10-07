@@ -46,12 +46,14 @@ const Page = () => {
       .required('Name is required'),
     password: Yup
       .string()
-      .min(7)
-      .max(255)
-      .required('Password is required'),
+      .required('please enter your password')
+      .matches(
+        /^(?=.*[a-z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
+      ),
     confirmpassword: Yup
       .string()
-      .min(7)
+      .min(8)
       .max(255)
       .required('Password is required')
       .oneOf([Yup.ref('password')], 'Passwords must match'),
@@ -169,10 +171,11 @@ const Page = () => {
                 Already have an account?
                 &nbsp;
                 <Link
+
                   onClick={() => navigate(paths.auth.auth.signin)}
                   underline="hover"
                   variant="subtitle2"
-                  className="title-inter"
+                  className="title-inter pointer"
                 >
                   Log in
                 </Link>
@@ -281,7 +284,7 @@ const Page = () => {
                 </FormHelperText>
               )}
               <div className='formGroup  px-2'>
-                <ReCAPTCHA sitekey={"6LfZCiEoAAAAAFYWmXEdUvMwg2TD8op988LvKGpO"} ref={captchaRef} onChange={handleRecaptchaChanged} />
+                <ReCAPTCHA sitekey={"6LfZCiEoAAAAAFYWmXEdUvMwg2TD8op988LvKGpO"} type="image" size="normal" ref={captchaRef} onChange={handleRecaptchaChanged} />
               </div>
 
               <Button

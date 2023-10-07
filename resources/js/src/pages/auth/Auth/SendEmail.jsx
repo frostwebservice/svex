@@ -14,7 +14,7 @@ import {
   Button,
 } from '@mui/material';
 import { useFormik } from 'formik';
-
+import { Alert } from '@mui/material';
 export default function EmailVerify(props) {
 
   const searchParams = useSearchParams();
@@ -23,7 +23,12 @@ export default function EmailVerify(props) {
   const [isLoading, setIsLoading] = useState(false);
   const email = JSON.parse(localStorage.getItem('email'));
   const values = { "email": email };
+  const [showAlert, setShowAlert] = useState(false);
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
   const onSubmitHandler = async (e) => {
+
     setIsLoading(true)
     setStart("")
 
@@ -31,8 +36,10 @@ export default function EmailVerify(props) {
       axios.post('/api/resend-email', values)
         .then((response) => {
           console.log(response);
+          setShowAlert(true)
+        }).catch(e => {
+          setShowAlert(true)
         });
-      console.log('Verification email sent');
     } catch (error) {
       console.error('Error sending verification email', error);
     }
@@ -57,7 +64,7 @@ export default function EmailVerify(props) {
                 Confirm your email address
               </Typography>
               <Typography color="text.secondary" className="title-inter smallsize" sx={{ pt: 2, textAlign: 'center' }}>
-                please verify your email address by clicking the link sent to
+                Please verify your email address by clicking the link sent to
               </Typography>
               <Typography sx={{ pb: 4, textAlign: 'center' }} className="title smallsize" >
                 {email}
@@ -81,6 +88,11 @@ export default function EmailVerify(props) {
                     <span></span>
                   )}
                 </Button>
+                {showAlert && (
+                  <Alert severity="info" onClose={handleCloseAlert}>
+                    Verification link has been sent
+                  </Alert>
+                )}
               </div>
 
             </form>

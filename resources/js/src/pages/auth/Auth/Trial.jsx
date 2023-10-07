@@ -95,42 +95,42 @@ export default function Trial(props) {
                                         <div className="col">
                                             <div className="trial-panel">
                                                 <div className="d-flex justify-content-start justify-items-center">
-                                                    <img src={ReactCheck} className="me-2  mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Access the Influencer Analyzer(Limited)</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start  justify-items-center">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Access the Influencer Finder(Limited)</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Messaging System(Limited)</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Job Board</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Location</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Total Reach Count</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Engagement Rate</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Compensation Method</Typography>
                                                 </div>
 
@@ -174,42 +174,42 @@ export default function Trial(props) {
                                         <div className="col">
                                             <div className="trial-panel">
                                                 <div className="d-flex justify-content-start justify-items-center">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Access the Influencer Analyzer(Full)</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start  justify-items-center">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Access the Influencer Finder(Full)</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Messaging System(Full)</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Job Board</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Compaign Management</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2">Perfermance Tracking</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize">Reporting</Typography>
                                                 </div>
 
                                                 <div className="d-flex justify-content-start">
-                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2" />
+                                                    <img src={ReactCheck} className="me-2 mb-2 pb-2 check-custom" />
                                                     <Typography className="mb-2 pb-2 title-inter tinysize" >Etc...</Typography>
                                                 </div>
                                             </div>

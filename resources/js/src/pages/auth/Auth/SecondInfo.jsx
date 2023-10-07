@@ -21,6 +21,7 @@ import {
   SvgIcon,
   TextField,
   Typography,
+  Grid,
   CircularProgress
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -31,6 +32,9 @@ import FormControl from '@mui/material/FormControl';
 import { RouterLink } from '@/components/router-link';
 import { Seo } from '@/components/seo';
 import { paths } from '@/paths';
+import MultiSelectAll from "./MultiSelectAll";
+import { Alert } from '@mui/material';
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -43,34 +47,33 @@ const MenuProps = {
 };
 
 const names = [
-  'Acne and Skin Care',
-  'Alcohol',
-  'Art',
-  'Baby and Maternity',
-  'Blockchain and Cryptocurrency',
-  'Books and Fiction',
-  'Business and Career',
-  'Cameras, Photography and Videography',
-  'Cars and Vehicles',
-  'Cooking and Recipes',
-  'Crafts and DIY',
-  'Diet and Weight Loss',
-  'Digital Marketing and Making Money Online',
-  'Exercise and Fitness',
-  'Farming',
-  'Gardening and Lawn Care',
-  'Health',
-  'Makeup and Beauty',
-  'Martial Arts',
-  'Music and Instruments',
-  'Outdoors and Hiking',
-  'Pets and Animal Care',
-  'Sports',
-  'Technology and Gadgets',
-  'Travel',
-  'Wedding'
+  { label: 'Acne and Skin Care', value: 'Acne and Skin Care' },
+  { label: 'Alcohol', value: 'Alcohol' },
+  { label: 'Art', value: 'Art' },
+  { label: 'Baby and Maternity', value: 'Baby and Maternity' },
+  { label: 'Blockchain and Cryptocurrency', value: 'Blockchain and Cryptocurrency' },
+  { label: 'Books and Fiction', value: 'Books and Fiction' },
+  { label: 'Business and Career', value: 'Business and Career' },
+  { label: 'Cameras, Photography and Videography', value: 'Cameras, Photography and Videography' },
+  { label: 'Cars and Vehicles', value: 'Cars and Vehicles' },
+  { label: 'Cooking and Recipes', value: 'Cooking and Recipes' },
+  { label: 'Crafts and DIY', value: 'Crafts and DIY' },
+  { label: 'Diet and Weight Loss', value: 'Diet and Weight Loss' },
+  { label: 'Digital Marketing and Making Money Online', value: 'Digital Marketing and Making Money Online' },
+  { label: 'Exercise and Fitness', value: 'Exercise and Fitness' },
+  { label: 'Farming', value: 'Farming' },
+  { label: 'Gardening and Lawn Care', value: 'Gardening and Lawn Care' },
+  { label: 'Health', value: 'Health' },
+  { label: 'Makeup and Beauty', value: 'Makeup and Beauty' },
+  { label: 'Martial Arts', value: 'Martial Arts' },
+  { label: 'Music and Instruments', value: 'Music and Instruments' },
+  { label: 'Outdoors and Hiking', value: 'Outdoors and Hiking' },
+  { label: 'Pets and Animal Care', value: 'Pets and Animal Care' },
+  { label: 'Sports', value: 'Sports' },
+  { label: 'Technology and Gadgets', value: 'Technology and Gadgets' },
+  { label: 'Travel', value: 'Travel' },
+  { label: 'Wedding', value: 'Wedding' }
 ];
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -80,6 +83,11 @@ function getStyles(name, personName, theme) {
   };
 }
 const Page = (props) => {
+  const [tmpkey, setTempkey] = useState("1");
+  const [showAlert, setShowAlert] = useState(false);
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
   const { userinfo } = props
   const validationSchema = Yup.object({
     budget: Yup
@@ -135,7 +143,7 @@ const Page = (props) => {
     email: '',
   });
   initialValues.email = email;
-
+  const [initialSelect, setInitialSelect] = useState([])
   const onCancel = (e) => {
     navigate(returnTo || paths.auth.auth.signin);
   }
@@ -158,8 +166,8 @@ const Page = (props) => {
 
       setIsLoading(true);
       setLetter("");
-      values.nichecategory = personName;
-      // console.log("custom", values); return;
+      values.nichecategory = currentSelection;
+      // console.log("custom", initialSelect); return;
       axios
         .post("/api/second-Info", values)
         .then((response) => {
@@ -180,6 +188,7 @@ const Page = (props) => {
           if (response.data.status === "failed") {
             setLetter("Save changes and NEXT")
             setIsLoading(false);
+            setShowAlert(true)
 
           }
         });
@@ -190,24 +199,43 @@ const Page = (props) => {
     if (!renderedonce && userinfo) {
 
       if (userinfo) {
+        let tmpArr = [];
         userinfo.niches.map(niche => {
-          nichesArr.push(niche.niche);
+          tmpArr.push({ value: niche.niche, label: niche.niche })
         })
+        setInitialSelect(tmpArr)
+        // renderBox()
+        setTempkey(tmpkey + "aa")
       }
-      console.log(nichesArr)
-      setPersonName(nichesArr);
+
       setInitialValues({
         ...initialValues,
-        nichecategory: userinfo ? nichesArr : '',
+        nichecategory: userinfo ? currentSelection : '',
         budget: userinfo ? userinfo.budget : '',
         companysize: userinfo ? userinfo.companysize : '',
         companyfounded: userinfo ? userinfo.companyfounded : '',
         aboutbusiness: userinfo ? userinfo.aboutbusiness : '',
       })
       setRenderedonce(true);
+
     }
 
   });
+  // const getTextBoxInputValue = (input) => {
+  //   return input.map((itm) => itm.label).join(";");
+  // };
+
+  const [currentSelection, setCurrentSelection] = useState(
+    []
+  );
+
+  const handleSelectionChange = (result) => {
+    console.log(result)
+    // const valueToSave = result.map((itm) => itm.label).join(";");
+
+    setCurrentSelection(result);
+
+  };
   return (
     <>
       <Seo title="Business Info" />
@@ -229,7 +257,7 @@ const Page = (props) => {
               >
                 General Business Information
               </Typography>
-              <Stack spacing={0} className="col-md-6 col-12">
+              <Stack spacing={0} className="col-md-12 col-12">
                 <div className='p-1 '>
                   {/* <RedditTextField
                     label=" Niche category"
@@ -244,7 +272,7 @@ const Page = (props) => {
                     onChange={formik.handleChange}
                     value={formik.values.nichecategory}
                   /> */}
-                  <InputLabel id="demo-multiple-name-label">Niche category</InputLabel>
+                  {/* <InputLabel id="demo-multiple-name-label">Niche category</InputLabel>
                   <Select
                     labelId="demo-multiple-name-label"
                     variant="filled"
@@ -266,8 +294,49 @@ const Page = (props) => {
                         {name}
                       </MenuItem>
                     ))}
-                  </Select>
+                  </Select> */}
+                  {/* <Grid container flexDirection="column" alignItems="center"> */}
+
+                  <Grid item xs={12} sx={{ p: 0 }}>
+                    <MultiSelectAll
+                      sx={{ maxheight: "700px" }}
+                      items={names}
+                      selectAllLabel="Select All"
+                      value={initialSelect}
+                      key={tmpkey}
+                      onChange={handleSelectionChange}
+                    />
+                  </Grid>
+                  {showAlert && (
+                    <Alert severity="info" onClose={handleCloseAlert}>
+                      Niche category field should not over 5 items
+                    </Alert>
+                  )}
+                  {/* <Grid item xs={12} sx={{ p: 2 }}>
+                      <Typography>Selected items:</Typography>
+                      <TextField sx={{ width: "450px" }} value={currentSelection} />
+                    </Grid>
+                  </Grid> */}
                 </div>
+              </Stack>
+              <Stack spacing={0} className="col-md-4 col-12">
+                <div className='p-1 '>
+                  <RedditTextField
+                    variant="filled"
+                    className="title-inter "
+                    style={{ marginTop: 11 }}
+                    error={!!(formik.touched.budget && formik.errors.budget)}
+                    helperText={formik.touched.budget && formik.errors.budget}
+                    label="Budget"
+                    name="budget"
+                    fullWidth
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.budget}
+                  /></div>
+
+              </Stack>
+              <Stack spacing={0} className="col-md-4 col-12 ">
                 <div className='p-1 '>
                   <RedditTextField
                     variant="filled"
@@ -283,21 +352,7 @@ const Page = (props) => {
                     value={formik.values.companysize}
                   /></div>
               </Stack>
-              <Stack spacing={0} className="col-md-6 col-12 ">
-                <div className='p-1 '>
-                  <RedditTextField
-                    variant="filled"
-                    className="title-inter "
-                    style={{ marginTop: 11 }}
-                    error={!!(formik.touched.budget && formik.errors.budget)}
-                    helperText={formik.touched.budget && formik.errors.budget}
-                    label="Budget"
-                    name="budget"
-                    fullWidth
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.budget}
-                  /></div>
+              <Stack spacing={0} className="col-md-4 col-12 ">
 
                 <div className='p-1  '>
                   <RedditTextField
@@ -369,7 +424,7 @@ const Page = (props) => {
             </form>
           </CardContent>
         </Card>
-      </div>
+      </div >
     </>
   );
 };

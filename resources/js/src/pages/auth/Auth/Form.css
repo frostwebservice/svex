@@ -182,6 +182,10 @@ a {
 
 }
 
+.skip-btn:hover {
+  background-color: none;
+}
+
 .card {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
@@ -322,6 +326,14 @@ a {
 
 .geoapify-autocomplete-items {
   display: contents !important;
+}
+
+.pointer {
+  cursor: pointer !important;
+}
+
+.check-custom {
+  height: 29px !important;
 }
 
 .geoapify-autocomplete-input {
