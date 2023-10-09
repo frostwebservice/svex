@@ -1,4 +1,5 @@
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
 import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -350,7 +351,7 @@ export const InstagramSearch = () => {
                                 fullWidth
                                 startIcon={(
                                     <SvgIcon>
-                                        <SearchMdIcon />
+                                        <BookmarkBorderIcon />
                                     </SvgIcon>
                                 )}
                                 variant="contained"
