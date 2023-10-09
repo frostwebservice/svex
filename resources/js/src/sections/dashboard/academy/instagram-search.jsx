@@ -321,58 +321,86 @@ export const InstagramSearch = () => {
                         <FormControlLabel control={<Checkbox defaultChecked />} label="Is Verified" />
                     </Box>
                 </FormGroup>
+
                 <Box>
-
-                    <Button
-                        sx={{ marginRight: 2, height: 53.13 }}
-                        size="large"
-                        startIcon={(
-                            <SvgIcon>
-                                <SearchMdIcon />
-                            </SvgIcon>
-                        )}
-                        variant="contained"
-                    >
-                        Search
-                    </Button>
-                    <Button
-                        sx={{ marginRight: 2, height: 53.13 }}
-                        size="large"
-                        startIcon={(
-                            <SvgIcon>
-                                <SearchMdIcon />
-                            </SvgIcon>
-                        )}
-                        variant="contained"
-                    >
-                        Save this Search
-                    </Button>
-                    <Button
-                        size="large"
-                        variant="contained"
-                        sx={{ float: 'right', marginRight: 2, height: 53.13 }}
-                    >
-                        Run this Search
-                    </Button>
-                    <TextField
-                        defaultValue="web"
-                        // fullWidth
-                        sx={{ minWidth: 200, float: 'right', marginRight: 2, height: 53.13 }}
-                        label="Saved Searchs"
-                        name="saved_searchs"
-                        select
-                        SelectProps={{ native: true }}
-                    >
-                        {platformOptions.map((option) => (
-                            <option
-                                key={option}
-                                value={option}
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={2} sm={3}
+                            className='custom-grid'
+                        >
+                            <Button
+                                sx={{ marginRight: 2, height: 53.13 }}
+                                size="large"
+                                fullWidth
+                                startIcon={(
+                                    <SvgIcon>
+                                        <SearchMdIcon />
+                                    </SvgIcon>
+                                )}
+                                variant="contained"
                             >
-                                {option}
-                            </option>
-                        ))}
-                    </TextField>
+                                Search
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12} md={3} sm={3}
+                            className='custom-grid'
+                        >
+                            <Button
+                                sx={{ marginRight: 2, height: 53.13 }}
+                                size="large"
+                                fullWidth
+                                startIcon={(
+                                    <SvgIcon>
+                                        <SearchMdIcon />
+                                    </SvgIcon>
+                                )}
+                                variant="contained"
+                            >
+                                Save this Search
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12} md={3} sm={3}
+                            className='custom-grid'
+                        ></Grid>
+                        <Grid item xs={12} md={2} sm={3}
+                            className='custom-grid'
+                        >
+                            <TextField
+                                defaultValue="web"
+                                // fullWidth
+                                sx={{ height: 53.13 }}
+                                label="Saved Searchs"
+                                name="saved_searchs"
+                                fullWidth
+                                select
+                                SelectProps={{ native: true }}
+                            >
+                                {platformOptions.map((option) => (
+                                    <option
+                                        key={option}
+                                        value={option}
+                                    >
+                                        {option}
+                                    </option>
+                                ))}
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={12} md={2} sm={3}
+                            className='custom-grid'
+                        >
+                            <Button
+                                size="large"
+                                fullWidth
+                                variant="contained"
+                                sx={{ height: 53.13 }}
+                            >
+                                Run this Search
+                            </Button>
+                        </Grid>
 
+
+
+
+                    </Grid>
 
                 </Box>
             </Stack >
