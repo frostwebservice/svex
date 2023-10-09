@@ -39,7 +39,7 @@ const items = [
           },
           {
             title: 'Academy',
-            path: paths.dashboard.academy.index
+            path: paths.academy.index
           }
         ]
       },
@@ -79,11 +79,11 @@ const items = [
 
 const renderItems = ({ depth = 0, items, pathname }) => items.reduce((acc,
   item) => reduceChildRoutes({
-  acc,
-  depth,
-  item,
-  pathname
-}), []);
+    acc,
+    depth,
+    item,
+    pathname
+  }), []);
 
 const reduceChildRoutes = ({ acc, depth, item, pathname }) => {
   const checkPath = !!(item.path && pathname);

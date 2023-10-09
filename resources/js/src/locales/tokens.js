@@ -4,6 +4,10 @@ export const tokens = {
   },
   nav: {
     academy: 'nav.academy',
+    findertool: 'nav.findertool',
+    outreachgroups: 'nav.outreachgroups',
+    savedsearchs: 'nav.savedsearchs',
+    favinfs: 'nav.favinfs',
     account: 'nav.account',
     analytics: 'nav.analytics',
     auth: 'nav.auth',

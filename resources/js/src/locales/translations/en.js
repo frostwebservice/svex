@@ -2,7 +2,11 @@ import { tokens } from '../tokens';
 
 export const en = {
   [tokens.common.languageChanged]: 'Language changed',
-  [tokens.nav.academy]: 'Academy',
+  [tokens.nav.academy]: 'Influencer Finder Tool',
+  [tokens.nav.findertool]: 'Finder Tool',
+  [tokens.nav.outreachgroups]: 'Outreach Groups',
+  [tokens.nav.savedsearchs]: 'Saved Searchs',
+  [tokens.nav.favinfs]: 'Favorite Influencers',
   [tokens.nav.account]: 'Account',
   [tokens.nav.analytics]: 'Analytics',
   [tokens.nav.auth]: 'Auth',

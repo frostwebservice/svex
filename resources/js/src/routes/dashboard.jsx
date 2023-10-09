@@ -6,7 +6,9 @@ const IndexPage = lazy(() => import('@/pages/dashboard/index'));
 
 // Academy
 const AcademyDashboardPage = lazy(() => import('@/pages/dashboard/academy/dashboard'));
-const AcademyCoursePage = lazy(() => import('@/pages/dashboard/academy/course'));
+const OutreachGroups = lazy(() => import('@/pages/dashboard/academy/outreach-groups'));
+const SavedSearchs = lazy(() => import('@/pages/dashboard/academy/saved-searchs'));
+const FavInfs = lazy(() => import('@/pages/dashboard/academy/fav-infs'));
 
 // Blog
 const BlogPostListPage = lazy(() => import('@/pages/dashboard/blog/list'));
@@ -78,24 +80,7 @@ export const dashboardRoutes = [
         index: true,
         element: <IndexPage />
       },
-      {
-        path: 'academy',
-        children: [
-          {
-            index: true,
-            element: <AcademyDashboardPage />
-          },
-          {
-            path: 'courses',
-            children: [
-              {
-                path: ':courseId',
-                element: <AcademyCoursePage />
-              }
-            ]
-          }
-        ]
-      },
+
       {
         path: 'blog',
         children: [
@@ -273,6 +258,35 @@ export const dashboardRoutes = [
       {
         path: 'mail',
         element: <MailPage />
+      }
+    ]
+  },
+  {
+    path: 'inf-finder',
+    element: (
+      <DashboardLayout>
+        <Suspense>
+          <Outlet />
+        </Suspense>
+      </DashboardLayout>
+    ),
+    children: [
+      {
+        index: true,
+        element: <AcademyDashboardPage />
+      },
+      {
+        path: 'outreach-groups',
+        element: <OutreachGroups />
+
+      },
+      {
+        path: 'saved-searchs',
+        element: <SavedSearchs />
+      },
+      {
+        path: 'fav-infs',
+        element: <FavInfs />
       }
     ]
   },

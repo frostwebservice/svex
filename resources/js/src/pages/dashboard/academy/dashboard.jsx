@@ -135,7 +135,7 @@ const Page = () => {
   }
   return (
     <>
-      <Seo title="Dashboard: Academy Dashboard" />
+      <Seo title="Dashboard: Influencer Finder Tool" />
       <Box
         component="main"
         sx={{ flexGrow: 1 }}
@@ -205,6 +205,8 @@ const Page = () => {
                 <InfStatPt total={total} />
               )} */}
               </Box>
+
+
             </Card>
 
 

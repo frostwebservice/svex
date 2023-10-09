@@ -46,6 +46,42 @@ export const useSections = () => {
             )
           },
           {
+            title: t(tokens.nav.account),
+            path: paths.dashboard.account,
+            icon: (
+              <SvgIcon fontSize="small">
+                <HomeSmileIcon />
+              </SvgIcon>
+            )
+          },
+          {
+            title: t(tokens.nav.academy),
+            path: paths.academy.index,
+            icon: (
+              <SvgIcon fontSize="small">
+                <GraduationHat01Icon />
+              </SvgIcon>
+            ),
+            items: [
+              {
+                title: t(tokens.nav.findertool),
+                path: paths.academy.index
+              },
+              {
+                title: t(tokens.nav.outreachgroups),
+                path: paths.academy.outreachgroups
+              },
+              {
+                title: t(tokens.nav.savedsearchs),
+                path: paths.academy.savedsearchs
+              },
+              {
+                title: t(tokens.nav.favinfs),
+                path: paths.academy.favinfs
+              }
+            ]
+          },
+          {
             title: t(tokens.nav.analytics),
             path: paths.dashboard.analytics,
             icon: (
@@ -78,16 +114,8 @@ export const useSections = () => {
                 size="small"
               />
             )
-          },
-          {
-            title: t(tokens.nav.account),
-            path: paths.dashboard.account,
-            icon: (
-              <SvgIcon fontSize="small">
-                <HomeSmileIcon />
-              </SvgIcon>
-            )
           }
+
         ]
       },
       {
@@ -215,25 +243,7 @@ export const useSections = () => {
               }
             ]
           },
-          {
-            title: t(tokens.nav.academy),
-            path: paths.dashboard.academy.index,
-            icon: (
-              <SvgIcon fontSize="small">
-                <GraduationHat01Icon />
-              </SvgIcon>
-            ),
-            items: [
-              {
-                title: t(tokens.nav.dashboard),
-                path: paths.dashboard.academy.index
-              },
-              {
-                title: t(tokens.nav.course),
-                path: paths.dashboard.academy.courseDetails
-              }
-            ]
-          },
+
           {
             title: t(tokens.nav.jobList),
             path: paths.dashboard.jobs.index,
@@ -255,7 +265,7 @@ export const useSections = () => {
                 title: t(tokens.nav.history),
                 path: paths.dashboard.jobs.companies.details
               }
-             
+
             ]
           },
           {

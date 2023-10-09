@@ -70,12 +70,15 @@ export const paths = {
     influencer: '',
 
   },
+  academy: {
+    index: '/inf-finder',
+    outreachgroups: '/inf-finder/outreach-groups',
+    savedsearchs: '/inf-finder/saved-searchs',
+    favinfs: '/inf-finder/fav-infs'
+    // courseDetails: '/academy/courses/:courseId'
+  },
   dashboard: {
     index: '/dashboard',
-    academy: {
-      index: '/dashboard/academy',
-      courseDetails: '/dashboard/academy/courses/:courseId'
-    },
     account: '/dashboard/account',
     analytics: '/dashboard/analytics',
     blank: '/dashboard/blank',
