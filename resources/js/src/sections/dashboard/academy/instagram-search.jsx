@@ -328,10 +328,11 @@ export const InstagramSearch = () => {
                 <Box>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={2} sm={3}
-                            className='custom-grid'
+                            className='custom-grid1'
                         >
                             <Button
                                 sx={{ marginRight: 2, height: 53.13 }}
+                                className="res-btn"
                                 size="large"
                                 fullWidth
                                 startIcon={(
@@ -345,11 +346,12 @@ export const InstagramSearch = () => {
                             </Button>
                         </Grid>
                         <Grid item xs={12} md={3} sm={3}
-                            className='custom-grid'
+                            className='custom-grid1'
                         >
                             <Button
                                 sx={{ marginRight: 2, height: 53.13 }}
                                 size="large"
+                                className="res-btn"
                                 fullWidth
                                 startIcon={(
                                     <SvgIcon>
@@ -362,10 +364,10 @@ export const InstagramSearch = () => {
                             </Button>
                         </Grid>
                         <Grid item xs={12} md={3} sm={3}
-                            className='custom-grid'
+                            className='custom-grid1 hidden-grid'
                         ></Grid>
                         <Grid item xs={12} md={2} sm={3}
-                            className='custom-grid'
+                            className='custom-grid1'
                         >
                             <TextField
                                 defaultValue="web"
@@ -388,10 +390,11 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={2} sm={3}
-                            className='custom-grid'
+                            className='custom-grid1'
                         >
                             <Button
                                 size="large"
+                                className="res-btn"
                                 fullWidth
                                 variant="contained"
                                 sx={{ height: 53.13 }}
