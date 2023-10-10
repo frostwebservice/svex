@@ -1,5 +1,6 @@
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
 
 import {
   Box,
@@ -31,6 +32,9 @@ import YoutubeIcon from '@mui/icons-material/Youtube';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import LinkedinIcon from '@mui/icons-material/Linkedin';
+import { InfCard } from './inf_card';
+const now = new Date();
+
 const TiktokIcon = ({ color = "#000000" }) => {
   return (
 
@@ -93,7 +97,30 @@ const useCourses = () => {
     }
   ];
 };
-
+const companies = [
+  {
+    id: 'FR-58F46',
+    averageRating: 4.3,
+    employees: '25-50',
+    isVerified: true,
+    jobs: [
+      {
+        id: '52cf72df2a519538d3d8a18d',
+        currency: '$',
+        isRemote: true,
+        publishedAt: subHours(now, 1).getTime(),
+        salaryMax: '600',
+        salaryMin: '400',
+        title: 'Instagram Influencer for a clothing brand who can market our products for a week',
+        jobType: 'Content creation & Shortouts',
+        paymentType: 'paid'
+      }
+    ],
+    logo: '/assets/avatars/brandlogo.png',
+    name: 'Canada Goose',
+    shortDescription: 'Established since 2010'
+  }
+];
 // }, [onSortChange]);
 const Page = () => {
   const settings = useSettings();
@@ -213,7 +240,7 @@ const Page = () => {
           </Container>
         </Box>
         <Container maxWidth={settings.stretch ? false : 'xl'} >
-          <div>sdf</div>
+
           <Stack
             alignItems="center"
             direction="row"
@@ -226,7 +253,14 @@ const Page = () => {
               // onSubmit={handleQueryChange}
               sx={{ flexGrow: 1 }}
             >
-              <OutlinedInput
+              <Typography
+                color="#00359E"
+                sx={{ mt: 1, fontSize: 28, fontWeight: 700 }}
+                variant="body2"
+              >
+                42 Influencers found
+              </Typography>
+              {/* <OutlinedInput
                 defaultValue=""
                 fullWidth
                 // inputProps={{ ref: queryRef }}
@@ -238,26 +272,44 @@ const Page = () => {
                     </SvgIcon>
                   </InputAdornment>
                 )}
-              />
+              /> */}
             </Box>
-            <TextField
-              label="Sort By"
-              name="sort"
-              onChange={handleSortChange}
-              select
-              SelectProps={{ native: true }}
-            // value={`${sortBy}|${sortDir}`}
-            >
-              {sortOptions.map((option) => (
-                <option
-                  key={option.value}
-                  value={option.value}
-                >
-                  {option.label}
-                </option>
-              ))}
-            </TextField>
+            <Box sx={{
+              display: 'flex'
+            }}>
+              <span style={{
+                fontWeight: 500, whiteSpace: 'normal', marginRight: 15, display: 'flex'
+                , alignItems: 'center', mr: 5
+              }}>Sort by</span>
+              <TextField
+                label="Sort By"
+                name="sort"
+                onChange={handleSortChange}
+                select
+                SelectProps={{ native: true }}
+              // value={`${sortBy}|${sortDir}`}
+              >
+                {sortOptions.map((option) => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </Box>
           </Stack>
+          <Box sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
+
+            {companies.map((company) => (
+              <InfCard
+                key={company.id}
+                company={company}
+              />
+            ))}
+
+          </Box>
           {/* <Box sx={{ py: '64px' }}>
           <Container maxWidth={settings.stretch ? false : 'xl'}>
             <Grid

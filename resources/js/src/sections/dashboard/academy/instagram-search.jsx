@@ -18,7 +18,7 @@ export const InstagramSearch = () => {
             >
                 <Grid container spacing={3}>
 
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -33,7 +33,7 @@ export const InstagramSearch = () => {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -47,7 +47,7 @@ export const InstagramSearch = () => {
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -70,7 +70,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -93,7 +93,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -116,7 +116,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
 
@@ -148,7 +148,7 @@ export const InstagramSearch = () => {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -171,7 +171,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -194,7 +194,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -217,7 +217,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -240,7 +240,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -263,7 +263,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -286,7 +286,7 @@ export const InstagramSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -300,7 +300,7 @@ export const InstagramSearch = () => {
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3}
+                    <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
