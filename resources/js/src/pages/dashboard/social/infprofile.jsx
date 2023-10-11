@@ -29,14 +29,13 @@ import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
 import { SocialConnections } from '@/sections/dashboard/social/social-connections';
-import { SocialTimeline } from '@/sections/dashboard/social/social-timeline';
+import { InfOverview } from '@/sections/dashboard/social/inf-overview';
 import "./profile.css";
 import { getSocialProfile } from '@/actions';
 import { useDispatch, connect } from "react-redux";
 
 const tabs = [
-    { label: 'Overview', value: 'timeline' },
-    { label: 'Jobs Posted', value: 'connections' }
+    { label: 'Overview', value: 'infoverview' }
 ];
 
 const useProfile = () => {
@@ -400,17 +399,10 @@ const Page = (props) => {
                     </Tabs>
                     <Divider />
                     <Box>
-                        {currentTab === 'timeline' && (
-                            <SocialTimeline
+                        {currentTab === 'infoverview' && (
+                            <InfOverview
                                 posts={posts}
                                 profile={profile}
-                            />
-                        )}
-                        {currentTab === 'connections' && (
-                            <SocialConnections
-                                connections={connections}
-                                onQueryChange={handleConnectionsQueryChange}
-                                query={connectionsQuery}
                             />
                         )}
                     </Box>

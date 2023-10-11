@@ -145,8 +145,13 @@ class UserController extends Controller
     // -------------------- second Business Infomation Update ---------------------------------//
     public function getBrandInfo(Request $request)
     {
+
         $id = $request->brandID;
+        if ($id == 0) {
+            return json_encode("sss");
+        }
         $brand = User::find($id);
+
         $niches = User::find($id)->niches;
         $brand['niches'] = $niches;
         return json_encode($brand);

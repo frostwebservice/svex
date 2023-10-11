@@ -3,8 +3,10 @@ import { Avatar, Box, ButtonBase, SvgIcon } from '@mui/material';
 import { useMockedUser } from '@/hooks/use-mocked-user';
 import { usePopover } from '@/hooks/use-popover';
 import AccountPopover from './account-popover';
-
-export const AccountButton = () => {
+import { connect } from 'react-redux';
+import { useEffect, useState } from 'react';
+const AccountButton = (props) => {
+  const { userinfo } = props;
   const user = useMockedUser();
   const popover = usePopover();
 
@@ -30,7 +32,9 @@ export const AccountButton = () => {
             height: 32,
             width: 32
           }}
-          src={user.avatar}
+          // src={user.avatar}
+          src={userinfo && userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+
         >
           <SvgIcon>
             <User01Icon />
@@ -45,3 +49,8 @@ export const AccountButton = () => {
     </>
   );
 };
+const mapStateToProps = state => ({
+  userinfo: state.profile.userinfo,
+});
+
+export default connect(mapStateToProps)(AccountButton);

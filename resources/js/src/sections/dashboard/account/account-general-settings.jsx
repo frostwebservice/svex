@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import Camera01Icon from '@untitled-ui/icons-react/build/esm/Camera01';
 import User01Icon from '@untitled-ui/icons-react/build/esm/User01';
 import { useCallback, useState } from "react";
+import { connect, useDispatch } from 'react-redux'
 
 import {
   Avatar,
@@ -19,9 +20,15 @@ import {
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import "./account.css";
-export const AccountGeneralSettings = (props) => {
+import { useDialog } from '@/hooks/use-dialog';
+import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
+import { getBrandProfile, getUserProfile } from '@/actions';
 
-  const { avatar } = props;
+const AccountGeneralSettings = (props) => {
+  const dispatch = useDispatch();
+  const uploadDialog = useDialog();
+
+  const { avatar, userinfo } = props;
   const [email, setEmail] = useState("frostwebservice.com");
   const [first, setFirst] = useState("Felix");
   const [last, setLast] = useState("Jin");
@@ -51,6 +58,16 @@ export const AccountGeneralSettings = (props) => {
   const handletimezone = useCallback(() => {
     setEdittimezone((prevState) => !prevState);
   }, []);
+  const avatarUpload = () => {
+    uploadDialog.handleOpen()
+  }
+  const [key, setKey] = useState("")
+  const onUpgrade = () => {
+    // dispatch(getBrandProfile({ brandID: window.location.pathname.split("/")[2].split("-")[2] }));
+    dispatch(getUserProfile({ email: JSON.parse(localStorage.getItem('email')) }));
+
+    setKey(key + "a")
+  }
   // const handleSortChange = useCallback((event) => {
   //   const sortDir = event.target.value;
   //   onSortChange?.(sortDir);
@@ -125,6 +142,7 @@ export const AccountGeneralSettings = (props) => {
                           alignItems="center"
                           direction="row"
                           spacing={1}
+                          onClick={avatarUpload}
                         >
                           <SvgIcon color="inherit">
                             <Camera01Icon />
@@ -139,7 +157,9 @@ export const AccountGeneralSettings = (props) => {
                         </Stack>
                       </Box>
                       <Avatar
-                        src={avatar}
+                        key={key}
+
+                        src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
                         sx={{
                           height: 100,
                           width: 100
@@ -152,6 +172,7 @@ export const AccountGeneralSettings = (props) => {
                     </Box>
                   </Box>
                   <Button
+                    onClick={avatarUpload}
                     color="inherit"
                     size="small"
                   >
@@ -303,8 +324,14 @@ export const AccountGeneralSettings = (props) => {
           </Grid>
         </CardContent>
       </Card>
-
+      <FileUploader
+        onClose={uploadDialog.handleClose}
+        open={uploadDialog.open}
+        onUpgrade={onUpgrade}
+      // kind={kind}
+      />
     </Stack>
+
   );
 };
 
@@ -313,3 +340,8 @@ AccountGeneralSettings.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 };
+const mapStateToProps = state => ({
+  userinfo: state.profile.userinfo
+});
+
+export default connect(mapStateToProps)(AccountGeneralSettings);

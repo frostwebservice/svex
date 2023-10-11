@@ -72,7 +72,8 @@ const names = [
   { label: 'Sports', value: 'Sports' },
   { label: 'Technology and Gadgets', value: 'Technology and Gadgets' },
   { label: 'Travel', value: 'Travel' },
-  { label: 'Wedding', value: 'Wedding' }
+  { label: 'Wedding', value: 'Wedding' },
+  { label: 'OK', value: 'OK' }
 ];
 function getStyles(name, personName, theme) {
   return {
@@ -216,7 +217,8 @@ const Page = (props) => {
         companyfounded: userinfo ? userinfo.companyfounded : '',
         aboutbusiness: userinfo ? userinfo.aboutbusiness : '',
       })
-      setRenderedonce(true);
+      if (userinfo.id != 0)
+        setRenderedonce(true);
 
     }
 
@@ -304,6 +306,7 @@ const Page = (props) => {
                       selectAllLabel="Select All"
                       value={initialSelect}
                       key={tmpkey}
+                      placeholder="sss"
                       onChange={handleSelectionChange}
                     />
                   </Grid>

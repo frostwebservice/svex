@@ -36,24 +36,26 @@ const SocialPostAdd = (props) => {
       <CardContent>
         <List disablePadding>
           {brandinfo ? (brandinfo.facebook ? (
-
             <ListItem
               disableGutters
               divider
             >
-
               <ListItemAvatar className='social-icons'>
                 <div className='facebook-icon'></div>
               </ListItemAvatar>
               <ListItemText
                 primary={(
                   <Link
-                    // color="text.secondary"
+                    component="a"
+                    target='_blank'
+                    color="text.primary"
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
+                    href={"https://" + (brandinfo ? (brandinfo.facebook.split("/").length > 1 ? brandinfo.facebook : 'www.instagram.com/' + brandinfo.facebook) : '')}
                   >
-                    {brandinfo ? brandinfo.facebook : ''}
+                    {brandinfo ? (brandinfo.facebook.split("/").length > 1 ? brandinfo.facebook : 'www.instagram.com/' + brandinfo.facebook) : ''}
+
                   </Link>
                 )}
               />
@@ -71,12 +73,15 @@ const SocialPostAdd = (props) => {
               <ListItemText
                 primary={(
                   <Link
-                    // color="text.secondary"
+                    component="a"
+                    target='_blank'
+                    color="text.primary"
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
+                    href={"https://" + (brandinfo ? (brandinfo.instagram.split("/").length > 1 ? brandinfo.instagram : 'www.instagram.com/' + brandinfo.instagram) : '')}
                     className='social-list-font'
                   >
-                    {brandinfo ? brandinfo.instagram : ''}
+                    {(brandinfo ? (brandinfo.instagram.split("/").length > 1 ? brandinfo.instagram : 'www.instagram.com/' + brandinfo.instagram) : '')}
                   </Link>
                 )}
               />
@@ -94,12 +99,16 @@ const SocialPostAdd = (props) => {
               <ListItemText
                 primary={(
                   <Link
-                    // color="text.secondary"
+                    component="a"
+                    target='_blank'
+                    color="text.primary"
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
+                    href={"https://" + (brandinfo ? (brandinfo.tiktok.split("/").length > 1 ? brandinfo.tiktok : 'www.instagram.com/' + brandinfo.tiktok) : '')}
+
                   >
-                    {brandinfo ? brandinfo.tiktok : ''}
+                    {(brandinfo ? (brandinfo.tiktok.split("/").length > 1 ? brandinfo.tiktok : 'www.instagram.com/' + brandinfo.tiktok) : '')}
                   </Link>
                 )}
               />
@@ -117,12 +126,16 @@ const SocialPostAdd = (props) => {
               <ListItemText
                 primary={(
                   <Link
-                    // color="text.secondary"
+                    component="a"
+                    target='_blank'
+                    color="text.primary"
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
+                    href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.instagram.com/' + brandinfo.youtube) : '')}
+
                   >
-                    {brandinfo ? brandinfo.youtube : ''}
+                    {(brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.instagram.com/' + brandinfo.youtube) : '')}
                   </Link>
                 )}
               />
@@ -140,12 +153,16 @@ const SocialPostAdd = (props) => {
               <ListItemText
                 primary={(
                   <Link
-                    // color="text.secondary"
+                    component="a"
+                    target='_blank'
+                    color="text.primary"
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
+                    href={"https://" + (brandinfo ? (brandinfo.twitter.split("/").length > 1 ? brandinfo.twitter : 'www.instagram.com/' + brandinfo.twitter) : '')}
+
                   >
-                    {brandinfo ? brandinfo.twitter : ''}
+                    {(brandinfo ? (brandinfo.twitter.split("/").length > 1 ? brandinfo.twitter : 'www.instagram.com/' + brandinfo.twitter) : '')}
                   </Link>
                 )}
               />
@@ -162,13 +179,16 @@ const SocialPostAdd = (props) => {
               <ListItemText
                 primary={(
                   <Link
-                    // color="text.secondary"
+                    component="a"
+                    target='_blank'
+                    color="text.primary"
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
-                  >
-                    {brandinfo ? brandinfo.pinterest : ''}
+                    href={"https://" + (brandinfo ? (brandinfo.pinterest.split("/").length > 1 ? brandinfo.pinterest : 'www.instagram.com/' + brandinfo.pinterest) : '')}
 
+                  >
+                    {(brandinfo ? (brandinfo.pinterest.split("/").length > 1 ? brandinfo.pinterest : 'www.instagram.com/' + brandinfo.pinterest) : '')}
                   </Link>
                 )}
               />

@@ -8,6 +8,7 @@ import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import { useDialog } from '@/hooks/use-dialog';
 import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
 
+import { useSettings } from '@/hooks/use-settings';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -34,7 +35,7 @@ import { paths } from '@/paths';
 import { SocialConnections } from '@/sections/dashboard/social/social-connections';
 import { SocialTimeline } from '@/sections/dashboard/social/social-timeline';
 import "./profile.css";
-import { getBrandProfile } from '@/actions';
+import { getBrandProfile, getUserProfile } from '@/actions';
 import { useDispatch, connect } from "react-redux";
 
 const tabs = [
@@ -116,6 +117,8 @@ const useConnections = (search = '') => {
 
 const Page = (props) => {
   const uploadDialog = useDialog();
+  const settings = useSettings();
+
   const [kind, setKind] = useState("cover");
   // console.log(props);
   const { brandinfo, userinfo } = props;
@@ -136,6 +139,7 @@ const Page = (props) => {
   const [key, setKey] = useState("")
   const onUpgrade = () => {
     dispatch(getBrandProfile({ brandID: window.location.pathname.split("/")[2].split("-")[2] }));
+    dispatch(getUserProfile({ email: JSON.parse(localStorage.getItem('email')) }));
 
     setKey(key + "a")
   }
@@ -183,10 +187,12 @@ const Page = (props) => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
+
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth={settings.stretch ? false : 'xl'} >
+
           <div>
             <Box
               key={key}
@@ -198,11 +204,11 @@ const Page = (props) => {
                 borderRadius: 1,
                 height: 421,
                 position: 'relative',
-                '&:hover': {
-                  '& button': {
-                    visibility: 'visible'
-                  }
-                }
+                // '&:hover': {
+                //   '& button': {
+                //     visibility: 'visible'
+                //   }
+                // }
               }}
             >
               {userinfo && brandinfo && userinfo.id == brandinfo.id ? (
@@ -230,7 +236,7 @@ const Page = (props) => {
                       lg: 'auto',
                       xs: 24
                     },
-                    visibility: 'hidden',
+                    // visibility: 'hidden',
                     '&:hover': {
                       backgroundColor: blueGrey[900]
                     }
@@ -257,7 +263,7 @@ const Page = (props) => {
               >
                 <Avatar
                   onClick={avatarClick}
-                  src={brandinfo.avatar ? brandinfo.avatar : `https://ui-avatars.com/api/?name=${brandinfo.fullname}&background=0D8ABC&color=fff&rounded=true`}
+                  src={brandinfo.avatar ? brandinfo.avatar : `https://ui-avatars.com/api/?name=${brandinfo.companyname}&background=2970FF&color=fff&rounded=true`}
                   sx={{
                     height: 140,
                     width: 140
@@ -325,7 +331,7 @@ const Page = (props) => {
                         <Edit02Icon />
                       </SvgIcon>
                     )}
-                    onClick={() => { navigate('/auth/auth/firstinfos') }}
+                    onClick={() => { navigate('/profile/edit/' + userinfo.id) }}
                     variant="contained"
                   >
                     Edit Profile

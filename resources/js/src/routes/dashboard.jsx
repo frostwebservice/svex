@@ -47,6 +47,7 @@ const ProductCreatePage = lazy(() => import('@/pages/dashboard/products/create')
 // Social
 const SocialFeedPage = lazy(() => import('@/pages/dashboard/social/feed'));
 const SocialProfilePage = lazy(() => import('@/pages/dashboard/social/profile'));
+const SocialProfileEdit = lazy(() => import('@/pages/dashboard/social/edit'));
 const SocialInfGlobalPage = lazy(() => import('@/pages/dashboard/social/infglobalprofile'));
 const SocialInfPage = lazy(() => import('@/pages/dashboard/social/infprofile'));
 
@@ -302,6 +303,15 @@ export const dashboardRoutes = [
             ]
           },
 
+        ]
+      },
+      {
+        path: 'edit',
+        children: [
+          {
+            path: ':userId',
+            element: <SocialProfileEdit />
+          }
         ]
       },
       {

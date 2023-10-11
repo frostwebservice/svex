@@ -7,7 +7,8 @@ import {
     Checkbox,
     Grid,
     FormControlLabel,
-    TextField
+    TextField,
+    Button
 } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 
@@ -102,7 +103,10 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
             }
         }
     };
-
+    const onOKClicked = () => {
+        console.log("ok");
+        document.getElementsByClassName('MuiAutocomplete-popupIndicator')[0].click()
+    }
     const handleCheckboxChange = (e, option) => {
         if (option.value === "select-all") {
             handleToggleSelectAll();
@@ -129,6 +133,24 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
             option.value === "select-all" // To control the state of 'select-all' checkbox
                 ? { checked: allItemsSelected() }
                 : {};
+        if (option.value === "OK") {
+            return (
+                <Grid container key={option.label}>
+                    <Grid item xs={12} sx={{ pl: 1, pr: 1 }}>
+                        <div className="justify-content-end">
+                            <Button
+                                className="text-center mx-8  multiselect-ok"
+                                variant="contained"
+                                onClick={onOKClicked}
+                                type="submit">
+                                <span className="ml-2"> {option.value} </span>
+                            </Button>
+                        </div>
+
+                    </Grid>
+                </Grid>
+            );
+        }
         return (
             <Grid container key={option.label}>
                 <Grid item xs={12} sx={{ pl: 1, pr: 1 }}>
@@ -162,34 +184,39 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
         debouncedStateValue(filtered);
     };
 
-    const inputRenderer = (params) => <TextField {...params} />;
+    const inputRenderer = (params) => <TextField {...params} label="Category/Niche" />;
 
     const filter = createFilterOptions();
 
     return (
-        <Autocomplete
-            ref={multiSelectRef}
-            sx={{
-                // width: "350px",
-                maxHeight: "120px",
-                overflowY: "scroll"
-            }}
-            multiple
-            size="small"
-            options={items}
-            value={selectedOptions}
-            disableCloseOnSelect
-            getOptionLabel={getOptionLabel}
-            isOptionEqualToValue={(option, val) => option.value === val.value}
-            filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-                updateFilteredOptions(filtered);
-                return [{ label: selectAllLabel, value: "select-all" }, ...filtered];
-            }}
-            onChange={handleChange}
-            renderOption={optionRenderer}
-            renderInput={inputRenderer}
-        />
+        <>
+            <Autocomplete
+                ref={multiSelectRef}
+                sx={{
+                    // width: "350px",
+                    maxHeight: "120px",
+                    overflowY: "auto",
+                    p: 2
+                }}
+                multiple
+                size="small"
+                options={items}
+                value={selectedOptions}
+                disableCloseOnSelect
+                getOptionLabel={getOptionLabel}
+                isOptionEqualToValue={(option, val) => option.value === val.value}
+                filterOptions={(options, params) => {
+                    const filtered = filter(options, params);
+                    updateFilteredOptions(filtered);
+                    return [{ label: selectAllLabel, value: "select-all" }, ...filtered];
+                }}
+
+                onChange={handleChange}
+                renderOption={optionRenderer}
+                renderInput={inputRenderer}
+            />
+        </>
+
     );
 };
 

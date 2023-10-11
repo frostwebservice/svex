@@ -86,17 +86,17 @@ const AccountPopover = (props) => {
       open={!!open}
       PaperProps={{ sx: { width: 200 } }}
       {...other}>
-      <Box sx={{ p: 2 }}>
+      <Box sx={{ pl: 2, pr: 2, pt: 0.5, pb: 0.5 }}>
         <Typography variant="body1">
           {userinfo ? userinfo.fullname : ''}
         </Typography>
-        <Typography
+        {/* <Typography
           color="text.secondary"
           variant="body2"
         >
           {userinfo ? userinfo.email : ''}
 
-        </Typography>
+        </Typography> */}
       </Box>
       <Divider />
       <Box sx={{ p: 1 }}>

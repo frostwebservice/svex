@@ -5,6 +5,7 @@
     padding: 10px;
     margin: 20px;
     text-align: center;
+
 }
 
 .head-font .MuiCardHeader-title {
@@ -21,7 +22,7 @@
 
 .social-list-font {
     font-size: 16px !important;
-    color: black;
+    /* color: black; */
 }
 
 .social-icons {
@@ -94,13 +95,13 @@
 .mail-icon {
     width: 24px;
     height: 24px;
-    background-image: url('./images/mailicon.jpg');
+    background-image: url('./images/mail.png');
 }
 
 .connect-icon {
     width: 21px;
     height: 23px;
-    background-image: url('./images/connecticon.jpg');
+    background-image: url('./images/connection.png');
 }
 
 .phone-icon {

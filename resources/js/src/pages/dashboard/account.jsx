@@ -5,7 +5,7 @@ import { Seo } from '@/components/seo';
 import { useMockedUser } from '@/hooks/use-mocked-user';
 import { usePageView } from '@/hooks/use-page-view';
 import { AccountBillingSettings } from '@/sections/dashboard/account/account-billing-settings';
-import { AccountGeneralSettings } from '@/sections/dashboard/account/account-general-settings';
+import AccountGeneralSettings from '@/sections/dashboard/account/account-general-settings';
 import { AccountNotificationsSettings } from '@/sections/dashboard/account/account-notifications-settings';
 import { AccountTeamSettings } from '@/sections/dashboard/account/account-team-settings';
 import { AccountSecuritySettings } from '@/sections/dashboard/account/account-security-settings';

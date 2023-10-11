@@ -8,7 +8,7 @@ import { RouterLink } from '@/components/router-link';
 import { Scrollbar } from '@/components/scrollbar';
 import { usePathname } from '@/hooks/use-pathname';
 import { paths } from '@/paths';
-import { AccountButton } from '../account-button';
+import AccountButton from '../account-button';
 import { ContactsButton } from '../contacts-button';
 import { LanguageSwitch } from '../language-switch';
 import { NotificationsButton } from '../notifications-button';
