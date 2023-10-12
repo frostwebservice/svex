@@ -165,7 +165,6 @@ const Page = (props) => {
 
       setIsLoading(true);
       setLetter("");
-      // console.log("submit", values); return;
       axios
         .post("/api/first-Info", values)
         .then((response) => {
@@ -216,8 +215,7 @@ const Page = (props) => {
       })
       setRenderedonce(true);
       document.getElementsByClassName('geoapify-autocomplete-input')[0].value = userinfo ? userinfo.companylocation : ''
-      if (userinfo.companylocation) document.getElementsByClassName('geoapify-autocomplete-input')[0].click();
-
+      // if (userinfo.companylocation) document.getElementsByClassName('geoapify-autocomplete-input')[0].click();
     }
 
   });
@@ -334,24 +332,7 @@ const Page = (props) => {
               <Stack spacing={0} className="col-md-6 col-12 ">
 
                 <div className='p-2' style={{ position: 'relative' }}>
-                  {/* <RedditTextField
-                    variant="filled"
-                    className="title-inter "
-                    style={{ marginTop: 11 }}
-                    error={!!(formik.touched.companylocation && formik.errors.companylocation)}
-                    helperText={formik.touched.companylocation && formik.errors.companylocation}
-                    label="Company Location"
-                    name="companylocation"
-                    fullWidth
-                    onBlur={onLeave}
-                    // onBlur={formik.handleBlur}
-                    onChange={onChange}
-                    // onLeave={onLeave}
-                    onFocus={onFocus}
-                    // onChange={formik.handleChange}
 
-                    value={formik.values.companylocation}
-                  /> */}
                   <GeoapifyContext apiKey="1040c1c2e3e34b3b80b351a587232b75">
                     <GeoapifyGeocoderAutocomplete placeholder=" "
                       key={renderkey}
@@ -360,7 +341,6 @@ const Page = (props) => {
                       placeSelect={onPlaceSelect}
                       suggestionsChange={onSuggectionChange}
                     />
-                    {/* <div className={focused ? 'location-placeholder-top' : 'location-placeholder-general' & haserror ? 'location-placeholder-error' : ''}>Company Location</div> */}
                     <div
                       onClick={convertInput}
                       className={`${focused ? 'location-placeholder-top' : 'location-placeholder-general'} ${haserror ? 'location-placeholder-error' : ''}`}

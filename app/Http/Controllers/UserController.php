@@ -240,7 +240,79 @@ class UserController extends Controller
 
     }
     // -------------------- social Infomation Update ---------------------------------//
+    public function editProfile(Request $request)
+    {
+        $count = count($request->nichecategory);
+        if ($count > 5) {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Niche category field should not over 5 items"]);
+        }
+        $userDataArray  =  array(
+            "firstname"             =>   $request->firstname,
+            "lastname"              =>   $request->lastname,
+            "phonenumber"           =>   $request->phonenumber,
+            "companyname"           =>   $request->companyname,
+            "companywebsite"        =>   $request->companywebsite,
+            "companylocation"       =>   $request->companylocation,
+            "nichecategory"              =>   $request->nichecategory,
+            "budget"                   =>   $request->budget,
+            "companysize"              =>   $request->companysize,
+            "companyfounded"           =>   $request->companyfounded,
+            "aboutbusiness"            =>   $request->aboutbusiness,
+            "instagram"            =>    $request->instagram,
+            "tiktok"              =>    $request->tiktok,
+            "youtube"             =>    $request->youtube,
+            "facebook"            =>    $request->facebook,
+            "twiter"              =>    $request->twitter,
+            "pinterest"           =>    $request->pinterest,
+            "linkedin"            =>    $request->linkedin,
+            "blogurl"             =>    $request->blogurl,
+        );
 
+        $user_status = User::where("email", $request->email)->first();
+
+        if (!is_null($user_status)) {
+            $user_status->firstname     =                       $request->firstname;
+            $user_status->lastname     =                        $request->lastname;
+            $user_status->phonenumber     =                     $request->phonenumber;
+            $user_status->companyname     =                     $request->companyname;
+            $user_status->companywebsite     =                  $request->companywebsite;
+            $user_status->companylocation     =                 $request->companylocation;
+            $user_status->budget             =                         $request->budget;
+            $user_status->companysize     =                            $request->companysize;
+            $user_status->companyfounded     =                         $request->companyfounded;
+            $user_status->aboutbusiness     =                          $request->aboutbusiness;
+            $user_status->instagram     =                            $request->instagram;
+            $user_status->tiktok             =                         $request->tiktok;
+            $user_status->youtube     =                            $request->youtube;
+            $user_status->facebook     =                         $request->facebook;
+            $user_status->twitter     =                          $request->twitter;
+            $user_status->pinterest     =                          $request->pinterest;
+            $user_status->linkedin     =                          $request->linkedin;
+            $user_status->blogurl     =                          $request->blogurl;
+
+            $user = $user_status->save();
+            Niche::where('user_id', $user_status->id)->delete();
+            foreach ($userDataArray["nichecategory"] as $key => $niche) {
+                $insert = array(
+                    "niche" => $niche['label'],
+                    "user_id" => $user_status->id
+                );
+                $inserted = Niche::create($insert);
+            }
+
+            if (!is_null($user)) {
+                return response()->json(["status" => $this->status_code, "success" => true, "message" => "Update completed successfully", "data" => $user]);
+            } else {
+                return response()->json(["status" => "failed", "success" => false, "message" => "failed to update"]);
+            }
+        } else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! there is no such email"]);
+        }
+
+        // $user  =  User::create($userDataArray);
+
+
+    }
     public function socialInfo(Request $request)
     {
 

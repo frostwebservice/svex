@@ -148,15 +148,7 @@ const Page = (props) => {
   const onCancel = (e) => {
     navigate(returnTo || paths.auth.auth.signin);
   }
-  // const onbioClick = (e) => {
-  //   if (e.target.value == initialValues.aboutbusiness) {
-  //     setInitialValues({
-  //       ...initialValues,
-  //       aboutbusiness: ''
-  //     })
-  //     // formik.values.aboutbusiness = "";
-  //   }
-  // }
+
   var nichesArr = [];
   const formik = useFormik({
     initialValues,
@@ -223,9 +215,6 @@ const Page = (props) => {
     }
 
   });
-  // const getTextBoxInputValue = (input) => {
-  //   return input.map((itm) => itm.label).join(";");
-  // };
 
   const [currentSelection, setCurrentSelection] = useState(
     []
@@ -233,8 +222,6 @@ const Page = (props) => {
 
   const handleSelectionChange = (result) => {
     console.log(result)
-    // const valueToSave = result.map((itm) => itm.label).join(";");
-
     setCurrentSelection(result);
 
   };
@@ -261,44 +248,6 @@ const Page = (props) => {
               </Typography>
               <Stack spacing={0} className="col-md-12 col-12">
                 <div className='p-1 '>
-                  {/* <RedditTextField
-                    label=" Niche category"
-                    className="title-inter"
-                    name="nichecategory"
-                    variant="filled"
-                    fullWidth
-                    style={{ marginTop: 11 }}
-                    error={!!(formik.touched.nichecategory && formik.errors.nichecategory)}
-                    helperText={formik.touched.nichecategory && formik.errors.nichecategory}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.nichecategory}
-                  /> */}
-                  {/* <InputLabel id="demo-multiple-name-label">Niche category</InputLabel>
-                  <Select
-                    labelId="demo-multiple-name-label"
-                    variant="filled"
-                    className="title-inter"
-                    id="demo-multiple-name"
-                    multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput label="Name" />}
-                    MenuProps={MenuProps}
-                    fullWidth
-                  >
-                    {names.map((name) => (
-                      <MenuItem
-                        key={name}
-                        value={name}
-                        style={getStyles(name, personName, theme)}
-                      >
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </Select> */}
-                  {/* <Grid container flexDirection="column" alignItems="center"> */}
-
                   <Grid item xs={12} sx={{ p: 0 }}>
                     <MultiSelectAll
                       sx={{ maxheight: "700px" }}
@@ -315,11 +264,6 @@ const Page = (props) => {
                       Niche category field should not over 5 items
                     </Alert>
                   )}
-                  {/* <Grid item xs={12} sx={{ p: 2 }}>
-                      <Typography>Selected items:</Typography>
-                      <TextField sx={{ width: "450px" }} value={currentSelection} />
-                    </Grid>
-                  </Grid> */}
                 </div>
               </Stack>
               <Stack spacing={0} className="col-md-4 col-12">

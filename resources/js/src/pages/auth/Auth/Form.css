@@ -371,6 +371,11 @@ a {
 
 }
 
+.location-bar {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
 .location-placeholder-general {
   font-family: Inter;
   font-size: 11px;
