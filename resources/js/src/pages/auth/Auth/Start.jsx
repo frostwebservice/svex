@@ -48,7 +48,8 @@ export default function Start(props) {
   const onStartClicked = (e) => {
     setIsLoading(true)
     setClick("")
-    navigate(paths.auth.auth.firstInfos)
+    // navigate(paths.auth.auth.firstInfos)
+    window.location.href = "/auth/auth/firstInfos"
     setIsLoading(false)
     setClick("Get Started")
 

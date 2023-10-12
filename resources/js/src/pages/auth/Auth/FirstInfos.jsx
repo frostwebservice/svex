@@ -60,6 +60,7 @@ const Page = (props) => {
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
   const [isLoading, setIsLoading] = useState(false);
+  const [menuclick, Setmenuclick] = useState(false);
   const [letter, setLetter] = useState("Save changes and NEXT");
   const email = JSON.parse(localStorage.getItem('email'));
   const dispatch = useDispatch();
@@ -95,7 +96,7 @@ const Page = (props) => {
   }
   const onPlaceSelect = value => {
     console.log("select", value)
-
+    Setmenuclick(true)
     if (value != null) {
       setInitialValues({
         ...formik.values,
@@ -112,7 +113,24 @@ const Page = (props) => {
       SetFocused(false)
 
     }
+
   }
+  $('.geoapify-autocomplete-input').on('focusout', function () {
+
+    console.log("out1", initialValues.companylocation)
+    console.log("out2", $('.geoapify-autocomplete-input')[0].value)
+
+    if (($('.geoapify-autocomplete-input')[0].value == "" || $('.geoapify-autocomplete-input')[0].value == " ") && (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ')) {
+      setInitialValues({
+        ...formik.values,
+        companylocation: ''
+      });
+      SetHaserror(true)
+      SetFocused(false)
+      Setrenderkey(renderkey + "a")
+    }
+    Setmenuclick(false)
+  })
   const onUserInput = value => {
 
     console.log("input", value);
@@ -123,29 +141,7 @@ const Page = (props) => {
       document.getElementsByClassName('geoapify-autocomplete-input')[0].value = ' '
     }
   }
-  $('.geoapify-autocomplete-input').on('focusout', function () {
-    console.log("out", initialValues.companylocation)
-    if (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ') {
-      setInitialValues({
-        ...formik.values,
-        companylocation: ''
-      });
-      SetHaserror(true)
-      SetFocused(false)
-      Setrenderkey(renderkey + "a")
-    }
-  })
-  $('form').on('submit', function () {
-    if (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ') {
-      setInitialValues({
-        ...formik.values,
-        companylocation: ''
-      });
-      SetHaserror(true)
-      SetFocused(false)
-      Setrenderkey(renderkey + "a")
-    }
-  })
+
   const onSuggectionChange = value => {
   }
   const onClose = value => {
@@ -156,9 +152,20 @@ const Page = (props) => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: values => {
+      if (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ' || !menuclick) {
+        setInitialValues({
+          ...formik.values,
+          companylocation: ''
+        });
+        SetHaserror(true)
+        SetFocused(false)
+        Setrenderkey(renderkey + "a")
+        return;
+      }
+
       setIsLoading(true);
       setLetter("");
-      console.log("submit", values); return;
+      // console.log("submit", values); return;
       axios
         .post("/api/first-Info", values)
         .then((response) => {
@@ -361,7 +368,7 @@ const Page = (props) => {
                       Company Location
                     </div>
 
-                    {haserror ? (<div className="location-error">This Field is required</div>) : ''}
+                    {haserror ? (<div className="location-error">Invalid address</div>) : ''}
                   </GeoapifyContext>
                 </div>
               </Stack>
