@@ -71,7 +71,7 @@ export const TopNav = (props) => {
           direction="row"
           spacing={2}
         >
-          <Tooltip title="Settings">
+          <Tooltip title="Settings" >
             <Box
               sx={{
                 backgroundColor: 'background.paper',
@@ -91,6 +91,7 @@ export const TopNav = (props) => {
                   color: 'primary.contrastText',
                   p: '4px'
                 }}
+                className='custom-setting'
                 onClick={() => { document.getElementsByClassName('realtooltip')[0].click() }}
               >
                 <SvgIcon>

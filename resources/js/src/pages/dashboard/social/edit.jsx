@@ -10,10 +10,13 @@ import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
 import { useSettings } from '@/hooks/use-settings';
 import { useNavigate } from 'react-router-dom';
 // import TextField from '../../../frontendpage/TextfieldStyle';
+import { alpha } from '@mui/material/styles';
+import Camera01Icon from '@untitled-ui/icons-react/build/esm/Camera01';
+
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
 import '@geoapify/geocoder-autocomplete/styles/minimal.css';
-import '../../auth/Auth/Form.css';
-
+import './Form.css';
+import { makeStyles } from '@material-ui/core';
 import $ from 'jquery';
 import {
     Avatar,
@@ -32,7 +35,8 @@ import {
     TextField,
     Switch,
     Tooltip,
-    Typography
+    Typography,
+    useMediaQuery
 } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
 import { socialApi } from '@/api/social';
@@ -50,7 +54,6 @@ import { getBrandProfile, getUserProfile } from '@/actions';
 import { useDispatch, connect } from "react-redux";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
 
 const names = [
     { label: 'Acne and Skin Care', value: 'Acne and Skin Care' },
@@ -83,6 +86,9 @@ const names = [
 ];
 
 const Page = (props) => {
+    // $(".custom-setting")[0].click();
+
+
     const email = JSON.parse(localStorage.getItem('email'));
     const [focused, SetFocused] = useState(false);
     const [haserror, SetHaserror] = useState(false);
@@ -109,10 +115,6 @@ const Page = (props) => {
             .string()
             .max(255)
             .required('This field is required'),
-        companylocation: Yup
-            .string()
-            .max(255)
-            .required('This field is required'),
         budget: Yup
             .string()
             .max(255)
@@ -127,7 +129,6 @@ const Page = (props) => {
             .required('This field is required'),
         aboutbusiness: Yup
             .string()
-            // .max(255)
             .required('This field is required'),
     })
     const [initialValues, setInitialValues] = useState({
@@ -164,6 +165,16 @@ const Page = (props) => {
         enableReinitialize: true,
         validationSchema,
         onSubmit: values => {
+            if (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ' || !menuclick) {
+                setInitialValues({
+                    ...formik.values,
+                    companylocation: ''
+                });
+                SetHaserror(true)
+                SetFocused(false)
+                Setrenderkey(renderkey + "a")
+                return;
+            }
             values.nichecategory = currentSelection;
             axios
                 .post("/api/edit-profile", values)
@@ -223,9 +234,42 @@ const Page = (props) => {
         setKind("avatar")
         uploadDialog.handleOpen()
     }
+    // const smUp = useMediaQuery((theme) => { console.log(theme) });
+    const onloadelement = () => {
+        alert("dsf")
+    }
     useEffect(() => {
 
+
+        let input = document.getElementsByClassName('geoapify-autocomplete-input')[0];
+        if (clickonce && initialValues.companylocation === '') {
+            input.setAttribute('required', '');
+            SetHaserror(true)
+        }
+        if (!initialValues.companylocation && clickonce) SetHaserror(true)
+        else SetHaserror(false)
+        if (focused) SetHaserror(false)
+
         if (renderedonce < 5 && userinfo) {
+            const paletteMode = JSON.parse(localStorage.getItem('app.settings')).paletteMode;
+            // console.log(JSON.parse(localStorage.getItem('app.settings')).paletteMode);   
+            if ($('.geoapify-autocomplete-input').length > 0) {
+                if (paletteMode == 'dark') {
+                    $('.geoapify-autocomplete-input').addClass("custom-multiselect");
+                    $('.geoapify-close-button').addClass("custom-close");
+
+                    // $('.geoapify-autocomplete-items').addClass("custom-items");
+                    // $('.secondary-part').addClass("custom-secondary");
+                }
+                if (paletteMode == 'light') {
+                    $('.geoapify-autocomplete-input').removeClass("custom-multiselect");
+                    $('.geoapify-close-button').removeClass("custom-close");
+
+                    // $('.geoapify-autocomplete-items').removeClass("custom-items");
+                    // $('.secondary-part').removeClass("custom-secondary");
+                }
+
+            }
             if (userinfo) {
                 let tmpArr = [];
                 userinfo.niches.map(niche => {
@@ -263,7 +307,15 @@ const Page = (props) => {
             document.getElementsByClassName('geoapify-autocomplete-input')[0].value = userinfo ? userinfo.companylocation : ''
             // if (userinfo.companylocation) document.getElementsByClassName('geoapify-autocomplete-input')[0].click();
         }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => onSelectMode(e.matches ? 'dark' : 'light'));
     });
+    const onSelectMode = (mode) => {
+        setMode(mode)
+        if (mode === 'dark')
+            alert("dark")
+        else
+            alert("remove dark")
+    }
     const onPlaceSelect = value => {
         Setmenuclick(true)
         if (value != null) {
@@ -390,16 +442,66 @@ const Page = (props) => {
                             className="custom-avatar"
                             spacing={2}
                         >
-                            <Avatar
-                                onClick={avatarClick}
-                                src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+
+                            <Box
                                 sx={{
+                                    borderRadius: '50%',
                                     height: 140,
-                                    width: 140
+                                    width: 140,
+                                    position: 'relative'
                                 }}
-                                style={{ cursor: 'pointer' }}
                             >
-                            </Avatar>
+                                <Box
+                                    onClick={avatarClick}
+                                    sx={{
+                                        alignItems: 'center',
+                                        backgroundColor: (theme) => alpha(theme.palette.neutral[700], 0.5),
+                                        borderRadius: '50%',
+                                        color: 'common.white',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        height: '100%',
+                                        justifyContent: 'center',
+                                        left: 0,
+                                        opacity: 0,
+                                        position: 'absolute',
+                                        top: 0,
+                                        width: '100%',
+                                        zIndex: 1,
+                                        '&:hover': {
+                                            opacity: 1
+                                        }
+                                    }}
+                                >
+                                    <Stack
+                                        alignItems="center"
+                                        direction="row"
+                                        spacing={1}
+
+                                    >
+                                        <SvgIcon color="inherit">
+                                            <Camera01Icon />
+                                        </SvgIcon>
+                                        <Typography
+                                            color="inherit"
+                                            variant="subtitle2"
+                                            sx={{ fontWeight: 700 }}
+                                        >
+                                            Select
+                                        </Typography>
+                                    </Stack>
+                                </Box>
+                                <Avatar
+                                    onClick={avatarClick}
+                                    src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+                                    sx={{
+                                        height: 140,
+                                        width: 140
+                                    }}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                </Avatar>
+                            </Box>
                             <div className='brand-info'>
                                 <Typography
                                     color="primary"
@@ -579,7 +681,7 @@ const Page = (props) => {
                                         </Grid>
                                         <Grid
                                             xs={12}
-                                            md={12}
+                                            md={6}
                                         >
                                             <div className='p-2 location-bar' style={{ position: 'relative' }}>
                                                 <GeoapifyContext apiKey="1040c1c2e3e34b3b80b351a587232b75">
@@ -587,10 +689,12 @@ const Page = (props) => {
                                                         key={renderkey}
                                                         onUserInput={onUserInput}
                                                         placeSelect={onPlaceSelect}
+                                                        className="sfsdf"
                                                     />
                                                     <div
+                                                        onLoad={onloadelement}
                                                         onClick={convertInput}
-                                                        className={`${focused || userinfo.companylocation ? 'location-placeholder-top' : 'location-placeholder-general'} ${haserror ? 'location-placeholder-error' : ''}`}
+                                                        className={`${focused || userinfo.companylocation && initialValues.companylocation != "" ? 'location-placeholder-top' : 'location-placeholder-general'} ${haserror ? 'location-placeholder-error' : ''}`}
                                                     >
                                                         Company Location
                                                     </div>
@@ -602,7 +706,7 @@ const Page = (props) => {
                                         {/* niche category */}
                                         <Grid
                                             xs={12}
-                                            md={12}
+                                            md={6}
                                         >
                                             <Grid item xs={12} sx={{ p: 0 }}>
                                                 <MultiSelectAll

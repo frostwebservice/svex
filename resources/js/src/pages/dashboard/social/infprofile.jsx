@@ -33,6 +33,7 @@ import { InfOverview } from '@/sections/dashboard/social/inf-overview';
 import "./profile.css";
 import { getSocialProfile } from '@/actions';
 import { useDispatch, connect } from "react-redux";
+import { useSettings } from '@/hooks/use-settings';
 
 const tabs = [
     { label: 'Overview', value: 'infoverview' }
@@ -111,10 +112,12 @@ const useConnections = (search = '') => {
 };
 
 const Page = (props) => {
+    const settings = useSettings();
+
     // console.log(props);
     const { socialinfo, userinfo } = props;
     const profile = useProfile();
-    const [currentTab, setCurrentTab] = useState('timeline');
+    const [currentTab, setCurrentTab] = useState('infoverview');
     const [status, setStatus] = useState('not_connected');
     const posts = usePosts();
     const [connectionsQuery, setConnectionsQuery] = useState('');
@@ -175,7 +178,7 @@ const Page = (props) => {
                     py: 8
                 }}
             >
-                <Container maxWidth="xl">
+                <Container maxWidth={settings.stretch ? false : 'xl'} >
                     <div>
                         <Box
                             style={{ backgroundImage: `url(${profile.cover})` }}

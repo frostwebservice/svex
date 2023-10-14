@@ -103,7 +103,7 @@ export default function Start(props) {
           <CardContent className="d-flex ">
             <div >
               <Typography className="title largesize" sx={{ pb: 1, textAlign: 'left' }} >
-                Greate News!
+                Great News!
               </Typography>
               <Typography className="title largesize" sx={{ pb: 3, textAlign: 'left' }}>
                 Your Brand has registered

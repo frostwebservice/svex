@@ -86,8 +86,8 @@ const AccountPopover = (props) => {
       open={!!open}
       PaperProps={{ sx: { width: 200 } }}
       {...other}>
-      <Box sx={{ pl: 2, pr: 2, pt: 0.5, pb: 0.5 }}>
-        <Typography variant="body1">
+      <Box sx={{ pl: 2, pr: 2, pt: 2, pb: 2 }}>
+        <Typography variant="body1" style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
           {userinfo ? userinfo.fullname : ''}
         </Typography>
         {/* <Typography
@@ -98,7 +98,7 @@ const AccountPopover = (props) => {
 
         </Typography> */}
       </Box>
-      <Divider />
+      <Divider style={{ borderColor: 'lightgrey' }} />
       <Box sx={{ p: 1 }}>
         <ListItemButton
           // component={RouterLink}
@@ -172,7 +172,7 @@ const AccountPopover = (props) => {
           />
         </ListItemButton>
       </Box>
-      <Divider sx={{ my: '0 !important' }} />
+      <Divider sx={{ my: '0 !important', borderColor: 'lightgrey' }} />
       <Box
         sx={{
           display: 'flex',

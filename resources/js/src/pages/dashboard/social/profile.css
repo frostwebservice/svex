@@ -4,6 +4,10 @@
     left: 50px;
 }
 
+.MuiAvatar-img {
+    object-fit: contain;
+}
+
 .custom-parent {
     position: relative
 }

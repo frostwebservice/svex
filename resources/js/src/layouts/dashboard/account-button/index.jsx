@@ -5,6 +5,7 @@ import { usePopover } from '@/hooks/use-popover';
 import AccountPopover from './account-popover';
 import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
+import "./index.css";
 const AccountButton = (props) => {
   const { userinfo } = props;
   const user = useMockedUser();

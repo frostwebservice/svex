@@ -12,6 +12,7 @@ import {
     ListItemText,
     Stack,
     SvgIcon,
+    Grid,
     Typography
 } from '@mui/material';
 import './social.css'
@@ -23,7 +24,7 @@ const InfAbout = (props) => {
         currentJobTitle,
         email,
         originCity,
-        brandinfo,
+        socialinfo,
         previousJobCompany,
         previousJobTitle,
         profileProgress,
@@ -40,7 +41,7 @@ const InfAbout = (props) => {
                 style={{ borderRadius: 0, boxShadow: 'none' }}
             >
                 <CardHeader
-                    title="About"
+                    title="Biography"
                     className='head-font'
 
                 />
@@ -52,103 +53,169 @@ const InfAbout = (props) => {
                         className='about-content'
                         style={{ borderBottom: '0.5px solid #F2F4F7', paddingBottom: 50 }}
                     >
-                        {brandinfo ? brandinfo.aboutbusiness : ''}
+                        {socialinfo ? socialinfo.biography : ''}
                     </Typography>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={6} sm={6}>
+                            <List disablePadding>
+                                <ListItem
+                                    disableGutters
+                                    divider
+                                >
+                                    <ListItemAvatar>
+                                        <div className='man-icon'></div>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={(
+                                            <Typography variant="subtitle2" className='about-list-font'>
+                                                {socialinfo ? socialinfo.full_name : ''}
+                                            </Typography>
+                                        )}
+                                    />
+                                </ListItem>
+                                <ListItem
+                                    disableGutters
+                                    divider
+                                >
+                                    <ListItemAvatar>
+                                        <div className='homepage-icon'></div>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={(
+                                            <Link
+                                                color="text.primary"
+                                                // color="text.secondary"
+                                                component="a"
+                                                target='_blank'
+                                                sx={{ cursor: 'pointer' }}
+                                                variant="caption"
+                                                className='social-list-font'
+                                                href={socialinfo ? socialinfo.external_url : ''}
+                                            >
+                                                {socialinfo ? socialinfo.external_url.replace(/(^\w+:|^)\/\//, '') : ''}
+                                            </Link>
+                                            // <Typography variant="subtitle2" className='about-list-font'>
+                                            //     {socialinfo ? socialinfo.external_url : ''}
+                                            // </Typography>
+                                        )}
+                                    />
+                                </ListItem>
 
-                    <List disablePadding>
-                        <ListItem
-                            disableGutters
-                            divider
-                        >
-                            <ListItemAvatar>
-                                <div className='url-icon'></div>
-                            </ListItemAvatar>
-                            <ListItemText
-                                disableTypography
-                                primary={(
-                                    <Typography variant="subtitle2" className='about-list-font'>
-                                        {/* {currentJobTitle} */}
-                                        {brandinfo ? brandinfo.companywebsite : ''}
-                                    </Typography>
-                                )}
-                            />
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            divider
-                        >
-                            <ListItemAvatar>
-                                <div className='phone-icon'></div>
-                            </ListItemAvatar>
-                            <ListItemText
-                                disableTypography
-                                primary={(
-                                    <Typography variant="subtitle2" className='about-list-font'>
-                                        {/* {currentJobTitle} */}
-                                        {brandinfo ? brandinfo.phonenumber : ''}
-                                    </Typography>
-                                )}
-                            />
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            divider
-                        >
-                            <ListItemAvatar>
-                                <div className='home-icon'></div>
-                            </ListItemAvatar>
-                            <ListItemText
-                                disableTypography
-                                primary={(
-                                    <Typography variant="subtitle2"
-                                        className='about-list-font'>
-                                        {brandinfo ? brandinfo.companylocation : ''}
-                                        {' '}
-                                        {/* <Link
-                      color="text.primary"
-                      href="#"
-                      variant="subtitle2"
-                    >
-                      {currentCity}
-                    </Link> */}
-                                    </Typography>
-                                )}
+                                <ListItem
+                                    disableGutters
+                                    divider
+                                >
+                                    <ListItemAvatar>
+                                        <div className='phone-icon'></div>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={(
+                                            <Typography variant="subtitle2" className='about-list-font'>
+                                                {socialinfo ? "+" + socialinfo.phone_country_code + socialinfo.phone_number : ''}
+                                            </Typography>
+                                        )}
+                                    />
+                                </ListItem>
 
-                            />
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            divider>
-                            <ListItemAvatar>
-                                <div className='mail-icon'></div>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={(
-                                    <Typography variant="subtitle2" className='about-list-font'>
-                                        {/* {email} */}
-                                        {brandinfo ? brandinfo.email : ''}
-                                    </Typography>
-                                )}
-                            />
-                        </ListItem>
-                        <ListItem
-                            disableGutters
+                                <ListItem
+                                    disableGutters
+                                    divider
+                                >
+                                    <ListItemAvatar>
+                                        <div className='home-icon'></div>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={(
+                                            <Typography variant="subtitle2"
+                                                className='about-list-font'>
+                                                {socialinfo ? socialinfo.city : ''}
+                                                {' '}
+                                            </Typography>
+                                        )}
 
-                        >
-                            <ListItemAvatar>
-                                <div className='connect-icon'></div>
-                            </ListItemAvatar>
-                            <ListItemText
-                                disableTypography
-                                primary={(
-                                    <Typography variant="subtitle2" className='about-list-font'>
-                                        {/* {currentJobTitle} */}
-                                        25-75
-                                    </Typography>
-                                )}
-                            />
-                        </ListItem>
-                    </List>
+                                    />
+                                </ListItem>
+                            </List>
+                        </Grid>
+                        <Grid item xs={12} md={6} sm={6}>
+                            <List disablePadding>
+                                <ListItem
+                                    disableGutters
+                                    divider
+                                >
+                                    <ListItemAvatar>
+                                        <div className='global-icon'></div>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={(
+                                            <Typography variant="subtitle2" className='about-list-font'>
+                                                {socialinfo ? "Language: " + socialinfo.language.charAt(0).toUpperCase() + socialinfo.language.slice(1) : ''}
+                                            </Typography>
+                                        )}
+                                    />
+                                </ListItem>
+                                <ListItem
+                                    disableGutters
+                                    divider
+                                >
+                                    <ListItemAvatar>
+                                        <div className='male-icon'></div>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={(
+                                            <Typography variant="subtitle2" className='about-list-font'>
+                                                {socialinfo ? "Gender: " + socialinfo.gender.charAt(0).toUpperCase() + socialinfo.gender.slice(1) : ''}
+                                            </Typography>
+                                        )}
+                                    />
+                                </ListItem>
+
+                                <ListItem
+                                    disableGutters
+                                    divider
+                                >
+                                    <ListItemAvatar>
+                                        <div className='age-icon'></div>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={(
+                                            <Typography variant="subtitle2" className='about-list-font'>
+                                                {socialinfo ? "Age: " + socialinfo.age : ''}
+                                            </Typography>
+                                        )}
+                                    />
+                                </ListItem>
+
+                                <ListItem
+                                    disableGutters
+                                    divider
+                                >
+                                    <ListItemAvatar>
+                                        <div className='ethnicity-icon'></div>
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        disableTypography
+                                        primary={(
+                                            <Typography variant="subtitle2"
+                                                className='about-list-font'>
+                                                {socialinfo ? "Ethnicity: " + socialinfo.ethnicity : ''}
+                                            </Typography>
+                                        )}
+
+                                    />
+                                </ListItem>
+                            </List>
+                        </Grid>
+                    </Grid>
+
+
                 </CardContent>
             </Card>
         </Stack>
@@ -167,6 +234,6 @@ InfAbout.propTypes = {
     quote: PropTypes.string.isRequired
 };
 const mapStateToProps = state => ({
-    brandinfo: state.profile.brandinfo
+    socialinfo: state.profile.socialinfo
 })
 export default connect(mapStateToProps)(InfAbout);

@@ -10,7 +10,8 @@ import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
 
 import { useSettings } from '@/hooks/use-settings';
 import { useNavigate } from 'react-router-dom';
-
+import { alpha } from '@mui/material/styles';
+import Camera01Icon from '@untitled-ui/icons-react/build/esm/Camera01';
 import {
   Avatar,
   Box,
@@ -261,16 +262,66 @@ const Page = (props) => {
                 className="custom-avatar"
                 spacing={2}
               >
-                <Avatar
-                  onClick={avatarClick}
-                  src={brandinfo.avatar ? brandinfo.avatar : `https://ui-avatars.com/api/?name=${brandinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+                <Box
                   sx={{
+                    borderRadius: '50%',
                     height: 140,
-                    width: 140
+                    width: 140,
+                    position: 'relative'
                   }}
-                  style={{ cursor: 'pointer' }}
                 >
-                </Avatar>
+                  <Box
+                    onClick={avatarClick}
+                    sx={{
+                      alignItems: 'center',
+                      backgroundColor: (theme) => alpha(theme.palette.neutral[700], 0.5),
+                      borderRadius: '50%',
+                      color: 'common.white',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      height: '100%',
+                      justifyContent: 'center',
+                      left: 0,
+                      opacity: 0,
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      zIndex: 1,
+                      '&:hover': {
+                        opacity: 1
+                      }
+                    }}
+                  >
+                    <Stack
+                      alignItems="center"
+                      direction="row"
+                      spacing={1}
+
+                    >
+                      <SvgIcon color="inherit">
+                        <Camera01Icon />
+                      </SvgIcon>
+                      <Typography
+                        color="inherit"
+                        variant="subtitle2"
+                        sx={{ fontWeight: 700 }}
+                      >
+                        Select
+                      </Typography>
+                    </Stack>
+                  </Box>
+                  <Avatar
+                    onClick={avatarClick}
+                    src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+                    sx={{
+                      height: 140,
+                      width: 140
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                  </Avatar>
+                </Box>
+
                 <div className='brand-info'>
                   <Typography
                     color="primary"

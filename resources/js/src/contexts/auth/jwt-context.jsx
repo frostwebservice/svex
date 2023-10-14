@@ -74,18 +74,47 @@ export const AuthProvider = (props) => {
   const initialize = useCallback(async () => {
     try {
       const accessToken = window.localStorage.getItem(STORAGE_KEY);
-      // console.log(accessToken);return;
-      if (accessToken) {
-        const user = await authApi.me({ accessToken });
-        // const user = null;
-        dispatch({
-          type: ActionType.INITIALIZE,
-          payload: {
-            isAuthenticated: true,
-            user
+      if (localStorage.getItem('time_token')) {
+        var token = localStorage.getItem('time_token');
+        var tokenObj = JSON.parse(token);
+        if (new Date().getTime() - tokenObj.time >= tokenObj.expire) {
+          localStorage.removeItem('email')
+
+          localStorage.removeItem('time_token')
+          dispatch({
+            type: ActionType.INITIALIZE,
+            payload: {
+              isAuthenticated: false,
+              user: null
+            }
+          });
+        }
+        else {
+          let obj = {
+            time: new Date().getTime(),
+            value: "email",
+            expire: 3000000,
           }
-        });
+          // You can only store strings
+          let objStr = JSON.stringify(obj);
+          localStorage.setItem("time_token", objStr);
+          const user = await authApi.me({ accessToken });
+          // const user = null;
+          dispatch({
+            type: ActionType.INITIALIZE,
+            payload: {
+              isAuthenticated: true,
+              user
+            }
+          });
+        }
+
+
+
       } else {
+        // alert('localStorage has expired');
+        localStorage.removeItem('email')
+
         dispatch({
           type: ActionType.INITIALIZE,
           payload: {
@@ -94,6 +123,25 @@ export const AuthProvider = (props) => {
           }
         });
       }
+      // if (accessToken) {
+      //   const user = await authApi.me({ accessToken });
+      //   // const user = null;
+      //   dispatch({
+      //     type: ActionType.INITIALIZE,
+      //     payload: {
+      //       isAuthenticated: true,
+      //       user
+      //     }
+      //   });
+      // } else {
+      //   dispatch({
+      //     type: ActionType.INITIALIZE,
+      //     payload: {
+      //       isAuthenticated: false,
+      //       user: null
+      //     }
+      //   });
+      // }
     } catch (err) {
       console.error(err);
       dispatch({
@@ -119,6 +167,15 @@ export const AuthProvider = (props) => {
     console.log(api_token);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(api_token));
     window.localStorage.setItem("email", JSON.stringify(userinfo.email));
+    let obj = {
+      time: new Date().getTime(),
+      value: "email",
+      expire: 3000000,
+    }
+    // You can only store strings
+    let objStr = JSON.stringify(obj);
+    localStorage.setItem("time_token", objStr);
+    // window.localStorage.setItem("time_token", JSON.stringify(userinfo.email));
     // window.localStorage.setItem("user", userinfo)
     dispatch({
       type: ActionType.SIGN_IN,

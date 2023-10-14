@@ -109,7 +109,7 @@ class AuthApi {
 
   me(request) {
     const { accessToken } = request;
-    console.log(request);
+    // console.log(request);
     return new Promise((resolve, reject) => {
       resolve({
         id: null,

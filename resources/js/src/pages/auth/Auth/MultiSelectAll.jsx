@@ -11,7 +11,7 @@ import {
     Button
 } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
-
+import "./multiselect.css";
 const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
 
     const [selectedOptions, setSelectedOptions] = useState(value);

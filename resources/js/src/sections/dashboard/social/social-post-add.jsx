@@ -41,7 +41,13 @@ const SocialPostAdd = (props) => {
               divider
             >
               <ListItemAvatar className='social-icons'>
-                <div className='facebook-icon'></div>
+                <a
+                  href={"https://" + (brandinfo ? (brandinfo.facebook.split("/").length > 1 ? brandinfo.facebook : 'www.facebook.com/' + brandinfo.facebook) : '')}
+                  target='_blank'
+                >
+                  <div className='facebook-icon' style={{ cursor: 'pointer' }} ></div>
+
+                </a>
               </ListItemAvatar>
               <ListItemText
                 primary={(
@@ -52,9 +58,9 @@ const SocialPostAdd = (props) => {
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
-                    href={"https://" + (brandinfo ? (brandinfo.facebook.split("/").length > 1 ? brandinfo.facebook : 'www.instagram.com/' + brandinfo.facebook) : '')}
+                    href={"https://" + (brandinfo ? (brandinfo.facebook.split("/").length > 1 ? brandinfo.facebook : 'www.facebook.com/' + brandinfo.facebook) : '')}
                   >
-                    {brandinfo ? (brandinfo.facebook.split("/").length > 1 ? brandinfo.facebook : 'www.instagram.com/' + brandinfo.facebook) : ''}
+                    {brandinfo ? (brandinfo.facebook.split("/").length > 1 ? brandinfo.facebook : 'www.facebook.com/' + brandinfo.facebook) : ''}
 
                   </Link>
                 )}
@@ -68,7 +74,13 @@ const SocialPostAdd = (props) => {
               divider
             >
               <ListItemAvatar className='social-icons'>
-                <div className='instagram-icon'></div>
+                <a
+                  href={"https://" + (brandinfo ? (brandinfo.instagram.split("/").length > 1 ? brandinfo.instagram : 'www.instagram.com/' + brandinfo.instagram) : '')}
+                  target='_blank'
+                >
+                  <div className='instagram-icon' style={{ cursor: 'pointer' }} ></div>
+
+                </a>
               </ListItemAvatar>
               <ListItemText
                 primary={(
@@ -94,7 +106,13 @@ const SocialPostAdd = (props) => {
               divider
             >
               <ListItemAvatar className='social-icons'>
-                <div className='tiktok-icon'></div>
+                <a
+                  href={"https://" + (brandinfo ? (brandinfo.tiktok.split("/").length > 1 ? brandinfo.tiktok : 'www.tiktok.com/' + brandinfo.tiktok) : '')}
+                  target='_blank'
+                >
+                  <div className='tiktok-icon' style={{ cursor: 'pointer' }} ></div>
+
+                </a>
               </ListItemAvatar>
               <ListItemText
                 primary={(
@@ -105,10 +123,10 @@ const SocialPostAdd = (props) => {
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
-                    href={"https://" + (brandinfo ? (brandinfo.tiktok.split("/").length > 1 ? brandinfo.tiktok : 'www.instagram.com/' + brandinfo.tiktok) : '')}
+                    href={"https://" + (brandinfo ? (brandinfo.tiktok.split("/").length > 1 ? brandinfo.tiktok : 'www.tiktok.com/' + brandinfo.tiktok) : '')}
 
                   >
-                    {(brandinfo ? (brandinfo.tiktok.split("/").length > 1 ? brandinfo.tiktok : 'www.instagram.com/' + brandinfo.tiktok) : '')}
+                    {(brandinfo ? (brandinfo.tiktok.split("/").length > 1 ? brandinfo.tiktok : 'www.tiktok.com/' + brandinfo.tiktok) : '')}
                   </Link>
                 )}
               />
@@ -121,7 +139,13 @@ const SocialPostAdd = (props) => {
               divider
             >
               <ListItemAvatar className='social-icons'>
-                <div className='youtube-icon'></div>
+                <a
+                  href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/' + brandinfo.youtube) : '')}
+                  target='_blank'
+                >
+                  <div className='youtube-icon' style={{ cursor: 'pointer' }} ></div>
+
+                </a>
               </ListItemAvatar>
               <ListItemText
                 primary={(
@@ -132,10 +156,10 @@ const SocialPostAdd = (props) => {
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
-                    href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.instagram.com/' + brandinfo.youtube) : '')}
+                    href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/' + brandinfo.youtube) : '')}
 
                   >
-                    {(brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.instagram.com/' + brandinfo.youtube) : '')}
+                    {(brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/' + brandinfo.youtube) : '')}
                   </Link>
                 )}
               />
@@ -148,7 +172,13 @@ const SocialPostAdd = (props) => {
               divider
             >
               <ListItemAvatar className='social-icons'>
-                <div className='twitter-icon'></div>
+                <a
+                  href={"https://" + (brandinfo ? (brandinfo.twitter.split("/").length > 1 ? brandinfo.twitter : 'www.twitter.com/' + brandinfo.twitter) : '')}
+                  target='_blank'
+                >
+                  <div className='twitter-icon' style={{ cursor: 'pointer' }} ></div>
+
+                </a>
               </ListItemAvatar>
               <ListItemText
                 primary={(
@@ -159,10 +189,10 @@ const SocialPostAdd = (props) => {
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
-                    href={"https://" + (brandinfo ? (brandinfo.twitter.split("/").length > 1 ? brandinfo.twitter : 'www.instagram.com/' + brandinfo.twitter) : '')}
+                    href={"https://" + (brandinfo ? (brandinfo.twitter.split("/").length > 1 ? brandinfo.twitter : 'www.twitter.com/' + brandinfo.twitter) : '')}
 
                   >
-                    {(brandinfo ? (brandinfo.twitter.split("/").length > 1 ? brandinfo.twitter : 'www.instagram.com/' + brandinfo.twitter) : '')}
+                    {(brandinfo ? (brandinfo.twitter.split("/").length > 1 ? brandinfo.twitter : 'www.twitter.com/' + brandinfo.twitter) : '')}
                   </Link>
                 )}
               />
@@ -173,8 +203,14 @@ const SocialPostAdd = (props) => {
             <ListItem
               disableGutters
             >
-              <ListItemAvatar className='social-icons'>
-                <div className='pinterest-icon'></div>
+              <ListItemAvatar className='social-icons' >
+                <a
+                  href={"https://" + (brandinfo ? (brandinfo.pinterest.split("/").length > 1 ? brandinfo.pinterest : 'www.pinterest.com/' + brandinfo.pinterest) : '')}
+                  target='_blank'
+                >
+                  <div className='pinterest-icon' style={{ cursor: 'pointer' }} ></div>
+
+                </a>
               </ListItemAvatar>
               <ListItemText
                 primary={(
@@ -185,10 +221,10 @@ const SocialPostAdd = (props) => {
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
-                    href={"https://" + (brandinfo ? (brandinfo.pinterest.split("/").length > 1 ? brandinfo.pinterest : 'www.instagram.com/' + brandinfo.pinterest) : '')}
+                    href={"https://" + (brandinfo ? (brandinfo.pinterest.split("/").length > 1 ? brandinfo.pinterest : 'www.pinterest.com/' + brandinfo.pinterest) : '')}
 
                   >
-                    {(brandinfo ? (brandinfo.pinterest.split("/").length > 1 ? brandinfo.pinterest : 'www.instagram.com/' + brandinfo.pinterest) : '')}
+                    {(brandinfo ? (brandinfo.pinterest.split("/").length > 1 ? brandinfo.pinterest : 'www.pinterest.com/' + brandinfo.pinterest) : '')}
                   </Link>
                 )}
               />

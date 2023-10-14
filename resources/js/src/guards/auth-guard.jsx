@@ -22,9 +22,11 @@ export const AuthGuard = (props) => {
   const navigate = useNavigate();
 
   const check = useCallback(() => {
+
     if (!isAuthenticated) {
       const searchParams = new URLSearchParams({ returnTo: window.location.href }).toString();
       const href = loginPaths[issuer] + `?${searchParams}`;
+      // alert("sdf")
       navigate("/auth/auth/SignIn");
     } else {
       setChecked(true);

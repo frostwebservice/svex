@@ -9,6 +9,8 @@ import AccountGeneralSettings from '@/sections/dashboard/account/account-general
 import { AccountNotificationsSettings } from '@/sections/dashboard/account/account-notifications-settings';
 import { AccountTeamSettings } from '@/sections/dashboard/account/account-team-settings';
 import { AccountSecuritySettings } from '@/sections/dashboard/account/account-security-settings';
+import "./account.css";
+
 const now = new Date();
 
 const tabs = [

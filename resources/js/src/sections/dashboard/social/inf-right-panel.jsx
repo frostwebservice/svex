@@ -17,50 +17,47 @@ import { connect } from 'react-redux';
 const InfRightPanel = (props) => {
     const user = useMockedUser();
     const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-    const { brandinfo } = props;
-    const renderNiches = () => {
-        console.log(brandinfo);
-        if (!brandinfo.niches) return;
-        const nicheView = brandinfo.niches.map((niche) =>
-            <div className='profile-niche' key={niche.id}>{niche.niche}</div>
-        )
-        return nicheView
-    }
+    const { socialinfo } = props;
+
     return (
         <Card style={{ borderRadius: 0, boxShadow: 'none', borderLeft: '0.5px solid #F2F4F7', paddingLeft: 60, paddingRight: 0 }}>
             <CardHeader title="Niche" className='head-font' />
             <CardContent style={{ padding: 0 }}>
-                {renderNiches()}
+                {
+                    (socialinfo && socialinfo.category_niche) ? (< div className='profile-niche' key={socialinfo.category_niche} > {socialinfo.category_niche}</div >) : ("")
+
+                }
             </CardContent>
             <CardHeader title="Social media links" className='head-font' />
             <CardContent>
                 <List disablePadding>
-                    {brandinfo ? (brandinfo.facebook ? (
-
+                    {socialinfo ? (
                         <ListItem
                             disableGutters
                             divider
                         >
-
                             <ListItemAvatar className='social-icons'>
                                 <div className='facebook-icon'></div>
                             </ListItemAvatar>
                             <ListItemText
                                 primary={(
                                     <Link
+                                        color="text.primary"
                                         // color="text.secondary"
+                                        component="a"
+                                        target='_blank'
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
+                                        href={"https://" + 'www.facebook.com/' + socialinfo.username}
                                     >
-                                        {brandinfo ? brandinfo.facebook : ''}
+                                        {'www.facebook.com/' + socialinfo.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
-                    ) : '') : ''}
-
-                    {brandinfo ? (brandinfo.instagram ? (
+                    ) : ''}
+                    {socialinfo ? (
                         <ListItem
                             disableGutters
                             divider
@@ -71,19 +68,22 @@ const InfRightPanel = (props) => {
                             <ListItemText
                                 primary={(
                                     <Link
+                                        color="text.primary"
                                         // color="text.secondary"
+                                        component="a"
+                                        target='_blank'
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
+                                        href={"https://" + 'www.instagram.com/' + socialinfo.username}
                                     >
-                                        {brandinfo ? brandinfo.instagram : ''}
+                                        {'www.instagram.com/' + socialinfo.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
-                    ) : '') : ''}
-                    {brandinfo ? (brandinfo.tiktok ? (
-
+                    ) : ''}
+                    {socialinfo ? (
                         <ListItem
                             disableGutters
                             divider
@@ -94,19 +94,22 @@ const InfRightPanel = (props) => {
                             <ListItemText
                                 primary={(
                                     <Link
+                                        color="text.primary"
                                         // color="text.secondary"
+                                        component="a"
+                                        target='_blank'
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
+                                        href={"https://" + 'www.tiktok.com/' + socialinfo.username}
                                     >
-                                        {brandinfo ? brandinfo.tiktok : ''}
+                                        {'www.tiktok.com/' + socialinfo.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
-                    ) : '') : ''}
-                    {brandinfo ? (brandinfo.youtube ? (
-
+                    ) : ''}
+                    {socialinfo ? (
                         <ListItem
                             disableGutters
                             divider
@@ -117,19 +120,22 @@ const InfRightPanel = (props) => {
                             <ListItemText
                                 primary={(
                                     <Link
+                                        color="text.primary"
                                         // color="text.secondary"
+                                        component="a"
+                                        target='_blank'
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
+                                        href={"https://" + 'www.youtube.com/' + socialinfo.username}
                                     >
-                                        {brandinfo ? brandinfo.youtube : ''}
+                                        {'www.youtube.com/' + socialinfo.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
-                    ) : '') : ''}
-                    {brandinfo ? (brandinfo.twitter ? (
-
+                    ) : ''}
+                    {socialinfo ? (
                         <ListItem
                             disableGutters
                             divider
@@ -140,21 +146,25 @@ const InfRightPanel = (props) => {
                             <ListItemText
                                 primary={(
                                     <Link
+                                        color="text.primary"
                                         // color="text.secondary"
+                                        component="a"
+                                        target='_blank'
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
+                                        href={"https://" + 'www.twitter.com/' + socialinfo.username}
                                     >
-                                        {brandinfo ? brandinfo.twitter : ''}
+                                        {'www.twitter.com/' + socialinfo.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
-                    ) : '') : ''}
-                    {brandinfo ? (brandinfo.pinterest ? (
-
+                    ) : ''}
+                    {socialinfo ? (
                         <ListItem
                             disableGutters
+                            divider
                         >
                             <ListItemAvatar className='social-icons'>
                                 <div className='pinterest-icon'></div>
@@ -162,18 +172,21 @@ const InfRightPanel = (props) => {
                             <ListItemText
                                 primary={(
                                     <Link
+                                        color="text.primary"
                                         // color="text.secondary"
+                                        component="a"
+                                        target='_blank'
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
+                                        href={"https://" + 'www.pinterest.com/' + socialinfo.username}
                                     >
-                                        {brandinfo ? brandinfo.pinterest : ''}
-
+                                        {'www.pinterest.com/' + socialinfo.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
-                    ) : '') : ''}
+                    ) : ''}
                 </List>
 
             </CardContent>
@@ -182,6 +195,6 @@ const InfRightPanel = (props) => {
     );
 };
 const mapStateToProps = state => ({
-    brandinfo: state.profile.brandinfo
+    socialinfo: state.profile.socialinfo
 });
 export default connect(mapStateToProps)(InfRightPanel);
