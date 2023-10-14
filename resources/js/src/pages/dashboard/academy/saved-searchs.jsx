@@ -56,20 +56,35 @@ const SavedSearchs = () => {
                     <Typography variant="h4" sx={{ mt: 10, mb: 7, fontSize: '32px' }}>
                         Saved Searchs
                     </Typography>
-                    <Card>
+                    <Card sx={{ my: 4 }}>
                         <InstagramSave />
-                        <TiktokSave />
-                        <YoutubeSave />
-                        <TwitterSave />
-                        <PinterestSave />
-                        <LinkedinSave />
-
                     </Card>
+                    <Card sx={{ my: 4 }}>
+
+                        <TiktokSave />
+                    </Card>
+                    <Card sx={{ my: 4 }}>
+
+                        <YoutubeSave />
+                    </Card>
+                    <Card sx={{ my: 4 }}>
+
+                        <TwitterSave />
+                    </Card >
+                    <Card sx={{ my: 4 }}>
+
+                        <PinterestSave />
+                    </Card >
+                    <Card sx={{ my: 4 }}>
+
+                        <LinkedinSave />
+                    </Card >
 
 
-                </Container>
 
-            </Box>
+                </Container >
+
+            </Box >
         </>
     );
 };
