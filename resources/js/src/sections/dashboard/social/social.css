@@ -163,5 +163,17 @@
 }
 
 .stat-card {
-    margin-top: 50px
+    margin-top: 20px;
+    margin-right: 50px;
+    display: flex;
+    align-items: center;
+    /* height: 100%; */
+}
+
+.custom-grid {
+    display: inline-grid;
+}
+
+.custom-typo {
+    max-width: 165px;
 }

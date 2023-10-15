@@ -203,6 +203,7 @@ export const AuthProvider = (props) => {
 
     window.localStorage.removeItem(STORAGE_KEY);
     window.localStorage.removeItem("email");
+    window.localStorage.removeItem("time_token");
     dispatch({ type: ActionType.SIGN_OUT });
   }, [dispatch]);
 
