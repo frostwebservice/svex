@@ -163,8 +163,9 @@
 }
 
 .stat-card {
-    margin-top: 20px;
-    margin-right: 50px;
+    /* margin-top: 20px;
+    margin-right: 50px; */
+    margin: 10px;
     display: flex;
     align-items: center;
     /* height: 100%; */
@@ -174,6 +175,28 @@
     display: inline-grid;
 }
 
-.custom-typo {
-    max-width: 165px;
+@media screen and (min-width:650px) {
+    .custom-typo {
+        max-width: 165px;
+    }
+}
+
+.normal-letter {
+    color: #BA63FF;
+}
+
+.veryhigh-letter {
+    color: #08DCA9;
+}
+
+.macro-letter {
+    color: #008EAD
+}
+
+.high-letter {
+    color: #008EAD
+}
+
+.low-letter {
+    color: #FFB84C
 }
