@@ -32,7 +32,7 @@
     margin-right: 12px;
 }
 
-@media screen and (max-width:820px) {
+@media screen and (max-width:1560px) {
 
     .button-bar {
         margin-top: 100px !important;
@@ -44,8 +44,22 @@
     margin-bottom: 0px !important;
 }
 
+.custom-reach {
+    border: 1px solid #2970FF;
+    border-radius: 6px;
+}
+
+.reach-arrow {
+    background-image: url('/assets/stats/reach-arrow.png');
+    width: 32px;
+    height: 20px;
+    background-size: cover;
+    margin-left: 5px
+}
+
 .fav-btn-alone {
     margin-bottom: 0px !important;
+    margin-left: 0px !important;
     padding: 0;
     background-color: none;
 }
@@ -60,7 +74,7 @@
 
     .fav-btn {
         font-size: 18px !important;
-        width: 162px !important;
+        /* width: 162px !important; */
         height: 54px !important;
     }
 

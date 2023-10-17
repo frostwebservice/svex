@@ -3,20 +3,26 @@ import { Stack, Unstable_Grid2 as Grid, Box } from '@mui/material';
 import InfRightPanel from './inf-right-panel';
 import { SocialPostCard } from './social-post-card';
 import InfAbout from './inf-about';
-import InfStat from './inf-stat';
+import InfStatIg from './inf-stat-ig';
 import { useState, useCallback } from 'react';
 import { Tab, Tabs, Card, CardHeader } from '@mui/material';
 export const InfOverview = (props) => {
     const handleTabsChange = useCallback((event, value) => {
         setCurrentTab(value);
     }, []);
-    const [currentTab, setCurrentTab] = useState('instagramStatistics');
+    const [currentTab, setCurrentTab] = useState('');
 
     const { posts = [], profile, ...other } = props;
     const [stat, SetStat] = useState('instagram')
-    const tabs = [
-        { label: 'Instagram Statistics', value: 'instagramStatistics' }
-    ];
+    var tabs = []
+    if (window.location.pathname.split("/")[3]) {
+        tabs = [
+            { label: window.location.pathname.split("/")[3].charAt(0).toUpperCase() + window.location.pathname.split("/")[3].slice(1) + ' Statistics', value: window.location.pathname.split("/")[3] }
+        ];
+        if (currentTab != window.location.pathname.split("/")[3]) setCurrentTab(window.location.pathname.split("/")[3])
+    }
+
+
     return (
         <>
             <div {...other} style={{ borderBottom: '1px solid #F2F4F7' }}>
@@ -70,10 +76,8 @@ export const InfOverview = (props) => {
                 ))}
             </Tabs>
             <Box>
-                {currentTab === 'instagramStatistics' && (
-                    <InfStat
-                        stat="instagram"
-                    />
+                {currentTab == 'instagram' && (
+                    <InfStatIg />
                 )}
             </Box>
         </>

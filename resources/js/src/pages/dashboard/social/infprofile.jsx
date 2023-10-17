@@ -6,7 +6,6 @@ import UserPlus02Icon from '@untitled-ui/icons-react/build/esm/UserPlus02';
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import { useNavigate } from 'react-router-dom';
-
 import {
     Avatar,
     Box,
@@ -18,6 +17,7 @@ import {
     SvgIcon,
     Tab,
     Tabs,
+    Grid,
     Tooltip,
     Typography
 } from '@mui/material';
@@ -38,7 +38,22 @@ import { useSettings } from '@/hooks/use-settings';
 const tabs = [
     { label: 'Overview', value: 'infoverview' }
 ];
-
+const ranges = [
+    { divider: 1e18, suffix: 'E' },
+    { divider: 1e15, suffix: 'P' },
+    { divider: 1e12, suffix: 'T' },
+    { divider: 1e9, suffix: 'G' },
+    { divider: 1e6, suffix: 'M' },
+    { divider: 1e3, suffix: 'K' }
+];
+const formatNumber = n => {
+    for (var i = 0; i < ranges.length; i++) {
+        if (n >= ranges[i].divider) {
+            return (n / ranges[i].divider).toString() + ranges[i].suffix;
+        }
+    }
+    return n.toString();
+}
 const useProfile = () => {
     const isMounted = useMounted();
     const [profile, setProfile] = useState(null);
@@ -212,28 +227,48 @@ const Page = (props) => {
                                 spacing={2}
                             >
                                 <Avatar
-                                    src={profile.avatar}
+                                    src={socialinfo && socialinfo.profile_pic_url_hd ? socialinfo.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${socialinfo && socialinfo.full_name ? socialinfo.full_name : ""}&background=2970FF&color=fff&rounded=true`}
                                     sx={{
                                         height: 140,
                                         width: 140
                                     }}
                                 />
                                 <div className='brand-info'>
-                                    <Typography
-                                        color="primary"
-                                        variant="h6"
-                                        style={{ fontSize: 22 }}
-                                    >
-                                        {socialinfo ? socialinfo.username : ''}
-                                    </Typography>
-                                    <Typography
-                                        color="text.secondary"
-                                        className='font-inter'
-                                        variant="subtitle2"
-                                        style={{ fontSize: 12, fontWeight: 600, marginTop: 4 }}
-                                    >
-                                        Social Media Influencer
-                                    </Typography>
+                                    <Grid container>
+                                        <Grid item sm={7}>
+                                            <Typography
+                                                color="primary"
+                                                variant="h6"
+                                                style={{ fontSize: 22 }}
+                                            >
+                                                {socialinfo ? socialinfo.username : ''}
+                                            </Typography>
+                                            <Typography
+                                                color="text.secondary"
+                                                className='font-inter'
+                                                variant="subtitle2"
+                                                style={{ fontSize: 12, fontWeight: 600, marginTop: 4 }}
+                                            >
+                                                {socialinfo ? socialinfo.full_name : ''}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item sm={5}>
+                                            <div className='custom-reach'>
+                                                <Grid container>
+                                                    <Grid item sx={{ color: '#2970FF', fontSize: '11px', fontWeight: 300, pl: 1, pr: 1, pt: 0.5, pb: 0.5 }}>
+                                                        <div>Reach</div>
+                                                        <div style={{ fontSize: '16px', fontWeight: 700 }}>
+                                                            {socialinfo && socialinfo.follower_count ? formatNumber(socialinfo.follower_count) : '0'}
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item style={{ display: 'flex', alignItems: 'center', margin: '0 auto' }}>
+                                                        <div className='reach-arrow'></div>
+                                                    </Grid>
+                                                </Grid>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+
                                     <Typography
                                         color="text.secondary"
                                         className='font-inter location-pointer'
@@ -277,6 +312,7 @@ const Page = (props) => {
                                                 startIcon={(
                                                     <SvgIcon
                                                         sx={{
+                                                            transform: 'scale(1.8)',
                                                             color: 'error.main',
                                                             '& path': {
                                                                 fill: (theme) => theme.palette.error.main,
@@ -290,13 +326,23 @@ const Page = (props) => {
                                             >
                                             </Button>
                                             <Button
+                                                // size="small"
+                                                className='fav-btn-alone'
+                                                // sx={{ ml: 0 }}
+                                                startIcon={(
+                                                    <img src="/assets/stats/users.png" />
+
+                                                )}
+                                            >
+                                            </Button>
+                                            <Button
                                                 onClick={handleInvite}
                                                 size="small"
                                                 className='fav-btn'
                                                 startIcon={(
-                                                    <SvgIcon>
-                                                        <HeartIcon />
-                                                    </SvgIcon>
+                                                    <>
+                                                        <img src="/assets/icons/invite.svg" />
+                                                    </>
                                                 )}
                                                 variant="outlined"
                                             >
@@ -322,10 +368,10 @@ const Page = (props) => {
                                         <>
                                             <Button
                                                 onClick={handleLike}
-                                                // size="small"
+
                                                 className='fav-btn-alone'
                                                 startIcon={(
-                                                    <SvgIcon>
+                                                    <SvgIcon sx={{ transform: 'scale(1.8)' }}>
                                                         <HeartIcon />
                                                     </SvgIcon>
                                                 )}
@@ -333,13 +379,21 @@ const Page = (props) => {
 
                                             </Button>
                                             <Button
+                                                // size="small"
+                                                className='fav-btn-alone'
+                                                startIcon={(
+                                                    <img src="/assets/stats/users.png" />
+                                                )}
+                                            >
+                                            </Button>
+                                            <Button
                                                 onClick={handleInvite}
                                                 size="small"
                                                 className='fav-btn'
                                                 startIcon={(
-                                                    <SvgIcon>
-                                                        <HeartIcon />
-                                                    </SvgIcon>
+                                                    <>
+                                                        <img src="/assets/icons/invite.svg" />
+                                                    </>
                                                 )}
                                                 variant="outlined"
                                             >
