@@ -89,6 +89,7 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
+
                 <div style={{ fontWeight: 700 }}>To</div>
                 <Box sx={{ flexGrow: 1 }}>
                     <TextField
@@ -96,6 +97,44 @@ export const InstagramSearch = () => {
                         fullWidth
                         label="Followers"
                         name="followers_to"
+                        select
+                        SelectProps={{ native: true }}
+                    >
+                        {platformOptions.map((option) => (
+                            <option
+                                key={option}
+                                value={option}
+                            >
+                                {option}
+                            </option>
+                        ))}
+                    </TextField>
+                </Box>
+                <Box sx={{ flexGrow: 1 }}>
+                    <TextField
+                        defaultValue="web"
+                        fullWidth
+                        label="Age"
+                        name="age"
+                        select
+                        SelectProps={{ native: true }}
+                    >
+                        {platformOptions.map((option) => (
+                            <option
+                                key={option}
+                                value={option}
+                            >
+                                {option}
+                            </option>
+                        ))}
+                    </TextField>
+                </Box>
+                <Box sx={{ flexGrow: 1 }}>
+                    <TextField
+                        defaultValue="web"
+                        fullWidth
+                        label="Gender"
+                        name="gender"
                         select
                         SelectProps={{ native: true }}
                     >
