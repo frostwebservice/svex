@@ -148,6 +148,44 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
+                <Box sx={{ flexGrow: 1 }}>
+                    <TextField
+                        defaultValue="web"
+                        fullWidth
+                        label="Language"
+                        name="language"
+                        select
+                        SelectProps={{ native: true }}
+                    >
+                        {platformOptions.map((option) => (
+                            <option
+                                key={option}
+                                value={option}
+                            >
+                                {option}
+                            </option>
+                        ))}
+                    </TextField>
+                </Box>
+                <Box sx={{ flexGrow: 1 }}>
+                    <TextField
+                        defaultValue="web"
+                        fullWidth
+                        label="Engagement rate"
+                        name="engagement rate"
+                        select
+                        SelectProps={{ native: true }}
+                    >
+                        {platformOptions.map((option) => (
+                            <option
+                                key={option}
+                                value={option}
+                            >
+                                {option}
+                            </option>
+                        ))}
+                    </TextField>
+                </Box>
                 <div>
                     <DatePicker
                         inputFormat="dd/MM/yyyy"
