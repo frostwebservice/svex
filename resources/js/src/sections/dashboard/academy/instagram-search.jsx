@@ -205,6 +205,25 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
+                    <TextField
+                        defaultValue="web"
+                        fullWidth
+                        label="Avg comments range"
+                        name="avg_comments"
+                        select
+                        SelectProps={{ native: true }}
+                    >
+                        {platformOptions.map((option) => (
+                            <option
+                                key={option}
+                                value={option}
+                            >
+                                {option}
+                            </option>
+                        ))}
+                    </TextField>
+                </Box>
                 <div>
                     <DatePicker
                         inputFormat="dd/MM/yyyy"
