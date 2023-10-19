@@ -14,7 +14,7 @@ export const InstagramSearch = () => {
                 gap={1}
                 sx={{ p: 3 }}
             >
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue=""
                         fullWidth
@@ -23,7 +23,7 @@ export const InstagramSearch = () => {
                         placeholder="Keywords"
                     />
                 </Box>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue=""
                         fullWidth
@@ -32,7 +32,7 @@ export const InstagramSearch = () => {
                         placeholder="Hashtags"
                     />
                 </Box>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue="web"
                         fullWidth
@@ -51,7 +51,7 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue="web"
                         fullWidth
@@ -70,7 +70,7 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue="web"
                         fullWidth
@@ -91,7 +91,7 @@ export const InstagramSearch = () => {
                 </Box>
 
                 <div style={{ fontWeight: 700 }}>To</div>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue="web"
                         fullWidth
@@ -110,7 +110,7 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue="web"
                         fullWidth
@@ -129,7 +129,7 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue="web"
                         fullWidth
@@ -148,7 +148,7 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue="web"
                         fullWidth
@@ -167,7 +167,7 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
                     <TextField
                         defaultValue="web"
                         fullWidth
