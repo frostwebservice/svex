@@ -172,7 +172,26 @@ export const InstagramSearch = () => {
                         defaultValue="web"
                         fullWidth
                         label="Engagement rate"
-                        name="engagement rate"
+                        name="engagement"
+                        select
+                        SelectProps={{ native: true }}
+                    >
+                        {platformOptions.map((option) => (
+                            <option
+                                key={option}
+                                value={option}
+                            >
+                                {option}
+                            </option>
+                        ))}
+                    </TextField>
+                </Box>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
+                    <TextField
+                        defaultValue="web"
+                        fullWidth
+                        label="Avg likes range"
+                        name="avg_likes"
                         select
                         SelectProps={{ native: true }}
                     >
