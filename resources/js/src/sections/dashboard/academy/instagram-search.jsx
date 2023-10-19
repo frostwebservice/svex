@@ -224,6 +224,24 @@ export const InstagramSearch = () => {
                         ))}
                     </TextField>
                 </Box>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
+                    <TextField
+                        defaultValue=""
+                        fullWidth
+                        label="Search"
+                        name="keywords"
+                        placeholder="Keywords"
+                    />
+                </Box>
+                <Box sx={{ flexGrow: 1, width: 170 }}>
+                    <TextField
+                        defaultValue=""
+                        fullWidth
+                        label="Search"
+                        name="hashtags"
+                        placeholder="Hashtags"
+                    />
+                </Box>
                 <div>
                     <DatePicker
                         inputFormat="dd/MM/yyyy"
