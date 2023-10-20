@@ -397,11 +397,14 @@ const AccountGeneralSettings = (props) => {
                   key={timezonekey}
                   alignItems="center"
                   direction="row"
+
+                  className="custom-parent"
                   spacing={2}
                 >
                   <TimezoneSelect
                     label="Sdf"
                     labelStyle="altName"
+
                     displayValue='UTC'
                     value={selectedTimezone}
                     onChange={(e) => { console.log(e); setSelectedTimezone(e.value); tmpTimezone = e.value; }}
