@@ -229,8 +229,8 @@ export const InstagramSearch = () => {
                         defaultValue=""
                         fullWidth
                         label="Search"
-                        name="keywords"
-                        placeholder="Keywords"
+                        name="username"
+                        placeholder="Username"
                     />
                 </Box>
                 <Box sx={{ flexGrow: 1, width: 170 }}>
@@ -238,8 +238,8 @@ export const InstagramSearch = () => {
                         defaultValue=""
                         fullWidth
                         label="Search"
-                        name="hashtags"
-                        placeholder="Hashtags"
+                        name="url"
+                        placeholder="URL"
                     />
                 </Box>
                 <div>
