@@ -321,7 +321,7 @@ a {
 }
 
 .MuiAutocomplete-root {
-    padding: 2px !important;
+    /* padding: 2px !important; */
 }
 
 .cancel-button {

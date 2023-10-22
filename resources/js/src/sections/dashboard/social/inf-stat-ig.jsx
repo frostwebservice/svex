@@ -132,7 +132,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Followers Count
@@ -234,7 +236,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Following Count
@@ -296,7 +300,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Average Likes
@@ -400,7 +406,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Average Comments
@@ -501,7 +509,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Engagement Rate
@@ -601,7 +611,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Like/Comment Ratio
@@ -701,7 +713,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Like Spread
@@ -802,7 +816,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Average Post Interval
@@ -902,7 +918,9 @@ const InfStatIg = (props) => {
                                         sx={{ pl: 6 }}
                                         primary={(
                                             <Typography
-                                                sx={{ fontWeight: 400, fontSize: '16px', color: '#9D9D9D' }}
+                                                color="text.stat"
+
+                                                sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
                                                 Reels Count
