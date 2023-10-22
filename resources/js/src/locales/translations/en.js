@@ -50,7 +50,7 @@ export const en = {
   [tokens.nav.verifyCode]: 'Verify Code',
 
   [tokens.nav.usermanage]: 'User Manage',
-  [tokens.nav.manage]: 'Manage a Job',
+  [tokens.nav.manage]: 'Manage Jobs',
   [tokens.nav.history]: 'Jobs History',
   [tokens.nav.createjob]: 'Create a Job',
 

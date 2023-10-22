@@ -66,14 +66,14 @@ export const JobShareStep = (props) => {
     <Stack
       spacing={3}
       {...other}>
-      
+
       <Stack spacing={3}
-        sx={{
-            width: '44.6rem'
-        }}
+        // sx={{
+        //     width: '44.6rem'
+        // }}
         direction='row'
       >
-      <TextField
+        <TextField
           fullWidth
           select
           label="Favourite"
@@ -89,7 +89,7 @@ export const JobShareStep = (props) => {
             </option>
           ))}
         </TextField>
-      <TextField
+        <TextField
           fullWidth
           select
           label="Outreach Groups"
@@ -97,7 +97,7 @@ export const JobShareStep = (props) => {
           SelectProps={{
             native: true,
           }}
-          
+
           variant="filled"
         >
           {currencies.map((option) => (
@@ -106,10 +106,10 @@ export const JobShareStep = (props) => {
             </option>
           ))}
         </TextField>
-     
+
       </Stack>
-    
-      
+
+
       <Stack
         alignItems="center"
         direction="row"

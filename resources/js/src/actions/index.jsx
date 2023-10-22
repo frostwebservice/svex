@@ -31,3 +31,14 @@ export const getSocialProfile = (userdata) => dispatch => {
         .catch(err => console.log(err));
 
 }
+export const getBillingInfo = (email) => dispatch => {
+    let payload = {};
+    axios
+        .post("/api/get_billing_info", email)
+        .then(res => dispatch({
+            type: 'GET_BILLING_INFO',
+            payload: res.data
+        }))
+        .catch(err => console.log(err));
+
+}

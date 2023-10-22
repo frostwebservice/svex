@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon, Typography, TextField} from '@mui/material';
+import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon, Typography, TextField } from '@mui/material';
 // import Radio from '@mui/material/Radio';
 // import RadioGroup from '@mui/material/RadioGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
@@ -28,7 +28,7 @@ const currencies = [
     value: 'Pinterest',
     label: 'Pinterest',
   },
- 
+
 ];
 
 const categoryOptions = [
@@ -64,74 +64,78 @@ export const JobCompensationStep = (props) => {
   return (
     <Stack
       spacing={3}
-      sx={{ width: '44.6rem'}}
+      // sx={{ width: '44.6rem'}}
       {...other}>
-      
 
-     
-          <Stack direction="row">
-            <Stack sx={{width: '22.3rem'}} >
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
+
+
+      <Stack direction="row">
+        <Stack sx={{ width: '22.3rem' }} >
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+            <Card
+              spacing={3}
+              sx={{
+                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+                borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+              }}
             >
-             <Card 
-                spacing={3}
-                sx={{ width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                      borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-                }}
-                > 
-                <FormControlLabel value="paid" control={<Radio />} label="Paid" />
-              </Card>
-             <Card 
-                spacing={3}
-                sx={{ width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                      borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-                }}
-                > 
-               
-                <FormControlLabel value="barter" control={<Radio />} label="Barter" />
-                
-              </Card>
-             <Card 
-                spacing={3}
-                sx={{ width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                      borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-                }}
-                > 
-              
-                <FormControlLabel value="Revenueshare" control={<Radio />} label="Revenue share" />
-                
-              </Card>
-             <Card 
-                spacing={3}
-                sx={{ width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                      borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-                }}
-                > 
-               
-                <FormControlLabel value="custom" control={<Radio />} label="Custom" />
-              </Card>
-            </RadioGroup>
-            </Stack>
-            <Stack sx={{width: '334px'}} spacing={2}>
-            <TextField
-                  sx={{height: '4rem'}}
-                    inputProps={{
-                      style: {
-                       
-                        fontSize: "18px"
-                      },
-                    }}
-                  select
-                  label="Rudget"
-                  fullWidth
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="filled"
+              <FormControlLabel value="paid" control={<Radio />} label="Paid" />
+            </Card>
+            <Card
+              spacing={3}
+              sx={{
+                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+                borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+              }}
             >
+
+              <FormControlLabel value="barter" control={<Radio />} label="Barter" />
+
+            </Card>
+            <Card
+              spacing={3}
+              sx={{
+                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+                borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+              }}
+            >
+
+              <FormControlLabel value="Revenueshare" control={<Radio />} label="Revenue share" />
+
+            </Card>
+            <Card
+              spacing={3}
+              sx={{
+                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+                borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+              }}
+            >
+
+              <FormControlLabel value="custom" control={<Radio />} label="Custom" />
+            </Card>
+          </RadioGroup>
+        </Stack>
+        <Stack sx={{ width: '334px' }} spacing={2}>
+          <TextField
+            sx={{ height: '4rem' }}
+            inputProps={{
+              style: {
+
+                fontSize: "18px"
+              },
+            }}
+            select
+            label="Rudget"
+            fullWidth
+            SelectProps={{
+              native: true,
+            }}
+            variant="filled"
+          >
             {currencies.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -139,49 +143,49 @@ export const JobCompensationStep = (props) => {
             ))}
           </TextField>
           <TextField
-          sx={{height: '4rem'}}
-          fullWidth
-          label="Job Title"
-          name="jobTitle"
-          placeholder="Discribe your job in brief"
+            sx={{ height: '4rem' }}
+            fullWidth
+            label="Job Title"
+            name="jobTitle"
+            placeholder="Discribe your job in brief"
             inputProps={{
-                      style: {
-                       
-                        fontSize: "18px"
-                      },
-                    }}
-        />
-        <TextField
-          sx={{height: '4rem'}}
-          fullWidth
-          label="Job Title"
-          name="jobTitle"
-          placeholder="Discribe your job in brief"
+              style: {
+
+                fontSize: "18px"
+              },
+            }}
+          />
+          <TextField
+            sx={{ height: '4rem' }}
+            fullWidth
+            label="Job Title"
+            name="jobTitle"
+            placeholder="Discribe your job in brief"
             inputProps={{
-                      style: {
-                        
-                        fontSize: "18px"
-                      },
-                    }}
-        />
-        <TextField
-          sx={{height: '4rem'}}
-          fullWidth
-          label="Job Title"
-          name="jobTitle"
-          placeholder="Discribe your job in brief"
+              style: {
+
+                fontSize: "18px"
+              },
+            }}
+          />
+          <TextField
+            sx={{ height: '4rem' }}
+            fullWidth
+            label="Job Title"
+            name="jobTitle"
+            placeholder="Discribe your job in brief"
             inputProps={{
-                      style: {
-                        
-                        fontSize: "18px"
-                      },
-                    }}
-        />
-            </Stack>
-          </Stack>
-     
-  
-          <Stack
+              style: {
+
+                fontSize: "18px"
+              },
+            }}
+          />
+        </Stack>
+      </Stack>
+
+
+      <Stack
         alignItems="center"
         direction="row"
         spacing={2}
@@ -205,7 +209,7 @@ export const JobCompensationStep = (props) => {
         </Button>
       </Stack>
     </Stack>
-   
+
   );
 };
 

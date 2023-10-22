@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\BillingInfo;
 use App\Models\Niche;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -156,6 +157,36 @@ class UserController extends Controller
         $brand['niches'] = $niches;
         return json_encode($brand);
     }
+    public function getBillingInfo(Request $request)
+    {
+        $user_email = $request->email;
+
+        $arr = array(
+            "email" => $user_email,
+            "billing_name" => "",
+            "card_number" => "",
+            "country" => "",
+            "zip_code" => ""
+        );
+        $cnt = BillingInfo::where("email", $user_email)->count();
+        if ($cnt == 0) {
+            $info = BillingInfo::create($arr);
+        }
+        $info = BillingInfo::where("email", $user_email)->first();
+        return response()->json(["status" => $this->status_code, "success" => true, "message" => "Get data successfully", "data" => $info]);
+    }
+    public function updateBillingInfo(Request $request)
+    {
+        $value = $request->value;
+        $arr = array(
+            "billing_name" => $value['billing_name'],
+            "card_number" =>   $value['card_number'],
+            "country" =>      $value['country'],
+            "zip_code" =>      $value['zip_code']
+        );
+        $status = BillingInfo::where("email", $request->user_email)->update($arr);
+        return response()->json(["status" => $this->status_code, "success" => true, "message" => "Get data successfully", "data" => $status]);
+    }
     public function getUserInfo(Request $request)
     {
         $email = $request->email;
@@ -163,6 +194,70 @@ class UserController extends Controller
         $niches = User::where("email", $email)->first()->niches;
         $user['niches'] = $niches;
         return json_encode($user);
+    }
+    public function getNotifysettings(Request $request)
+    {
+        $user_email = $request->user_email;
+        $count = DB::table('notify_settings')->where('user_email', $user_email)->count();
+
+        if ($count == 0) {
+            $arr  =  array(
+                "user_email"           =>          $user_email,
+                "app_message"              =>          0,
+                "app_job"              =>          0,
+                "app_signup"              =>          0,
+                "app_add"              =>          0,
+                "app_membership"              =>          0,
+                "mail_message"           =>         0,
+                "mail_job"           =>         0,
+                "mail_signup"           =>         0,
+                "mail_add"           =>         0,
+                "mail_membership"           =>         0
+            );
+
+            $flag  =  DB::table('notify_settings')->insert($arr);
+            $notifysettings = DB::table('notify_settings')->where('user_email', $user_email)->first();
+        } else {
+            $notifysettings = DB::table('notify_settings')->where('user_email', $user_email)->first();
+        }
+        return response()->json(["status" => $this->status_code, "success" => true, "message" => "Get data successfully", "data" => $notifysettings]);
+    }
+    public function updateNotifysettings(Request $request)
+    {
+
+        $user_email = $request->user_email;
+        $notifysettings = $request->notifysettings;
+        $count = DB::table('notify_settings')->where('user_email', $user_email)->count();
+
+
+        $arr  =  array(
+            "app_message"              =>          $notifysettings["app_message"],
+            "app_job"              =>          $notifysettings["app_job"],
+            "app_signup"              =>          $notifysettings["app_signup"],
+            "app_add"              =>          $notifysettings["app_add"],
+            "app_membership"              =>          $notifysettings["app_membership"],
+            "mail_message"           =>         $notifysettings["mail_message"],
+            "mail_job"           =>        $notifysettings["mail_job"],
+            "mail_signup"           =>        $notifysettings["mail_signup"],
+            "mail_add"           =>         $notifysettings["mail_add"],
+            "mail_membership"           =>         $notifysettings["mail_membership"]
+        );
+
+        $flag  =  DB::table('notify_settings')->where("user_email", $user_email)->update($arr);
+
+
+        return response()->json(["status" => $this->status_code, "success" => true, "message" => "Get data successfully", "data" => $flag]);
+    }
+    public function updateGeneralinfo(Request $request)
+    {
+        $user_email = $request->user_email;
+        $kind = $request->kind;
+        $value = $request->value;
+        $arr = array(
+            $kind => $value
+        );
+        User::where("email", $user_email)->update($arr);
+        return response()->json(["status" => "success", "success" => true, "message" => "Success to save"]);
     }
     public function getSocialProfile(Request $request)
     {

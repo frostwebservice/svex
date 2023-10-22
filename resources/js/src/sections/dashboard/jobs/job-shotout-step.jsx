@@ -35,57 +35,60 @@ export const JobShotoutStep = (props) => {
   }, []);
 
   return (
-    <Stack sx={{width: '44.6rem'}}
+    <Stack
       spacing={3}
       {...other}>
-       <TextField
-          fullWidth
-          // sx={{ width: '344px'}}
-          label="Business URL"
-          name="jobTitle"
-          placeholder="e.g Salesforce Analyst"
-        />
-      <Stack  direction="row">
+      <TextField
+        fullWidth
+        // sx={{ width: '344px'}}
+        label="Business URL"
+        name="jobTitle"
+        placeholder="e.g Salesforce Analyst"
+      />
+      <Stack direction="row">
         <Stack spacing={3}>
-      
-        <Card  sx={{ width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                      borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-                }}>
-          <Button>
-          <img src={Avatar}/>
-          </Button>
-          <Typography ml={2}>
-              Click to upload or drag your 
-                  brand images
-          </Typography>
-        </Card>
-        <Card  sx={{ width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                      borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-                }}>
-          <Button>
-          <img src={Avatar}/>
-          </Button>
-          <Typography ml={2}>
-              Click to upload or drag your 
-                  brand images
-          </Typography>
-        </Card>
-        </Stack>
-        <Stack spacing={3}>
-       
-         <Card  sx={{ width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                      borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-                }}>
-           <Button>
-          <img src={Avatar}/>
-          </Button>
-          <Typography ml={2}>
-              Click to upload or drag your 
-                  brand images
-          </Typography>
+
+          <Card sx={{
+            width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+            borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+          }}>
+            <Button>
+              <img src={Avatar} />
+            </Button>
+            <Typography ml={2}>
+              Click to upload or drag your
+              brand images
+            </Typography>
+          </Card>
+          <Card sx={{
+            width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+            borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+          }}>
+            <Button>
+              <img src={Avatar} />
+            </Button>
+            <Typography ml={2}>
+              Click to upload or drag your
+              brand images
+            </Typography>
           </Card>
         </Stack>
-        
+        <Stack spacing={3}>
+
+          <Card sx={{
+            width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+            borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+          }}>
+            <Button>
+              <img src={Avatar} />
+            </Button>
+            <Typography ml={2}>
+              Click to upload or drag your
+              brand images
+            </Typography>
+          </Card>
+        </Stack>
+
         <Stack
           alignItems="center"
           direction="row"
@@ -102,8 +105,8 @@ export const JobShotoutStep = (props) => {
           ))}
         </Stack>
       </Stack>
-      
-  
+
+
       <Stack
         alignItems="center"
         direction="row"

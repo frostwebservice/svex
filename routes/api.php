@@ -35,3 +35,8 @@ Route::post('get_user_info', [App\Http\Controllers\UserController::class, 'getUs
 Route::post('get_social_profile', [App\Http\Controllers\UserController::class, 'getSocialProfile']);
 Route::post('upload_cover', [App\Http\Controllers\UserController::class, 'uploadCover']);
 Route::post('edit-profile', [App\Http\Controllers\UserController::class, 'editProfile']);
+Route::post('get_notifysettings', [App\Http\Controllers\UserController::class, 'getNotifysettings']);
+Route::post('update_notifysettings', [App\Http\Controllers\UserController::class, 'updateNotifysettings']);
+Route::post('update_generalinfo', [App\Http\Controllers\UserController::class, 'updateGeneralinfo']);
+Route::post('get_billing_info', [App\Http\Controllers\UserController::class, 'getBillingInfo']);
+Route::post('update_billing_info', [App\Http\Controllers\UserController::class, 'updateBillingInfo']);

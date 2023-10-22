@@ -65,114 +65,112 @@ export const JobExclusionStep = (props) => {
 
   return (
     <Stack
-     
       spacing={3}
       {...other}>
-      
-      <Stack 
-            direction='row'
-            sx={{width: '44.6rem'}}
-            spacing={3}
+      <Stack
+        direction='row'
+        // sx={{width: '44.6rem'}}
+        spacing={3}
       >
         <Stack spacing={3}
-        sx={{width: '22.3rem'}}
+          sx={{ width: '50%' }}
         >
-        <TextField
-          fullWidth
-          select
-          label="Total Reach"
-          // defaultValue="EUR"
-          SelectProps={{
-            native: true,
-          }}
-          variant="filled"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-      <TextField
-          fullWidth
-          select
-          label="Location"
-          // defaultValue="EUR"
-          SelectProps={{
-            native: true,
-          }}
-          
-          variant="filled"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-      <TextField
-          fullWidth
-          select
-          label="Gender"
-          // defaultValue="EUR"
-          SelectProps={{
-            native: true,
-          }}
-         
-          variant="filled"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
+          <TextField
+            fullWidth
+            select
+            label="Total Reach"
+            // defaultValue="EUR"
+            SelectProps={{
+              native: true,
+            }}
+            variant="filled"
+          >
+            {currencies.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            fullWidth
+            select
+            label="Location"
+            // defaultValue="EUR"
+            SelectProps={{
+              native: true,
+            }}
+
+            variant="filled"
+          >
+            {currencies.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            fullWidth
+            select
+            label="Gender"
+            // defaultValue="EUR"
+            SelectProps={{
+              native: true,
+            }}
+
+            variant="filled"
+          >
+            {currencies.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
         </Stack>
-        <Stack 
-         sx={{width: '22.3rem'}}
-        spacing={3}>
-        <TextField
-          fullWidth
-          select
-          label="Age Range"
-          // defaultValue="EUR"
-          SelectProps={{
-            native: true,
-          }}
-          
-          variant="filled"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-      <TextField
-          fullWidth
-          select
-          label="Engagement Rate"
-          // defaultValue="EUR"
-          SelectProps={{
-            native: true,
-          }}
-          
-          variant="filled"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
+        <Stack
+          sx={{ width: '50%' }}
+          spacing={3}>
+          <TextField
+            fullWidth
+            select
+            label="Age Range"
+            // defaultValue="EUR"
+            SelectProps={{
+              native: true,
+            }}
+
+            variant="filled"
+          >
+            {currencies.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+          <TextField
+            fullWidth
+            select
+            label="Engagement Rate"
+            // defaultValue="EUR"
+            SelectProps={{
+              native: true,
+            }}
+
+            variant="filled"
+          >
+            {currencies.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
         </Stack>
-     
-      
-       
-        
+
+
+
+
       </Stack>
-    
-      
+
+
       <Stack
         alignItems="center"
         direction="row"

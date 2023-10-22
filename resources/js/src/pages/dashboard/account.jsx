@@ -4,7 +4,7 @@ import { Box, Container, Divider, Stack, Tab, Tabs, Typography } from '@mui/mate
 import { Seo } from '@/components/seo';
 import { useMockedUser } from '@/hooks/use-mocked-user';
 import { usePageView } from '@/hooks/use-page-view';
-import { AccountBillingSettings } from '@/sections/dashboard/account/account-billing-settings';
+import AccountBillingSettings from '@/sections/dashboard/account/account-billing-settings';
 import AccountGeneralSettings from '@/sections/dashboard/account/account-general-settings';
 import { AccountNotificationsSettings } from '@/sections/dashboard/account/account-notifications-settings';
 import { AccountTeamSettings } from '@/sections/dashboard/account/account-team-settings';

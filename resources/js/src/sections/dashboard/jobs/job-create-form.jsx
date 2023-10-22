@@ -145,7 +145,7 @@ export const JobCreateForm = () => {
     >
       {steps.map((step, index) => {
         const isCurrentStep = ((activeStep === index) || (review === 1));
-        { console.log(isCurrentStep) }
+        // { console.log(isCurrentStep) }
         return (
           <Step key={step.label}>
             <StepLabel StepIconComponent={StepIcon}>

@@ -1,3 +1,51 @@
 .MuiAvatar-img {
     object-fit: contain;
 }
+
+#react-select-2-listbox {
+    z-index: 10000 !important;
+    position: relative;
+}
+
+.css-1nmdiq5-menu {
+    z-index: 10000 !important;
+    position: relative;
+
+}
+
+.dark-menu {
+    background-color: #111927;
+    color: white !important;
+
+}
+
+.css-13cymwt-control {
+    height: 55.13px !important;
+    border-radius: 8px;
+    border-color: #E5E7EB;
+}
+
+/* .css-t3ipsp-control {
+    background-color: #111927;
+
+} */
+
+.css-b62m3t-container {
+    width: -webkit-fill-available;
+
+}
+
+.css-art2ul-ValueContainer2 {
+    height: 55.13px;
+}
+
+.darkTimezone {
+    background-color: #111927;
+    border: 1px solid #2D3748 !important;
+    color: white !important;
+}
+
+.darkColor {
+    /* color: #A0AEC0; */
+    color: white;
+}

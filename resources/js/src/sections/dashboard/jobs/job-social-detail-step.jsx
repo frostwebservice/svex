@@ -40,20 +40,20 @@ export const JobSocialDetailStep = (props) => {
 
 
   return (
-    <Stack sx={{width: '44.6rem'}}
+    <Stack
       spacing={3}
       {...other}>
-      
+
       <Stack spacing={3}>
-      <TextField
-          
+        <TextField
+
           select
           label="Instagram"
           // defaultValue="EUR"
           SelectProps={{
             native: true,
           }}
-         
+
           variant="filled"
         >
           {currencies.map((option) => (
@@ -66,49 +66,49 @@ export const JobSocialDetailStep = (props) => {
           fullWidth
           label="Instagram"
           name="instagram"
-          // placeholder="e.g Salesforce Analyst"
+        // placeholder="e.g Salesforce Analyst"
         />
         <TextField
           fullWidth
           label="Tik Toc"
           name="tiktoc"
-          // placeholder="e.g Salesforce Analyst"
+        // placeholder="e.g Salesforce Analyst"
         />
         <TextField
           fullWidth
           label="You Tube"
           name="youtube"
-          // placeholder="e.g Salesforce Analyst"
+        // placeholder="e.g Salesforce Analyst"
         />
         <TextField
           fullWidth
           label="Twitter"
           name="twitter"
-          // placeholder="e.g Salesforce Analyst"
+        // placeholder="e.g Salesforce Analyst"
         />
         <TextField
           fullWidth
           label="Pinterest"
           name="pinterest"
-          // placeholder="e.g Salesforce Analyst"
+        // placeholder="e.g Salesforce Analyst"
         />
         <TextField
           fullWidth
           label="LinkedIn"
           name="linkedin"
-          // placeholder="e.g Salesforce Analyst"
+        // placeholder="e.g Salesforce Analyst"
         />
         <TextField
           fullWidth
           label="Blog/Website"
           name="blog&website"
-          // placeholder="e.g Salesforce Analyst"
+        // placeholder="e.g Salesforce Analyst"
         />
-       
-    
+
+
       </Stack>
-    
-      
+
+
       <Stack
         alignItems="center"
         direction="row"

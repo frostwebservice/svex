@@ -22,7 +22,7 @@ const Page = () => {
         >
           <Grid
             xs={12}
-            sm={4}
+            md={4}
             sx={{
               backgroundImage: 'url(/assets/people-talking.png)',
               backgroundPosition: 'center',
@@ -46,7 +46,7 @@ const Page = () => {
             }}
           >
             <Stack
-              maxWidth="sm"
+              // maxWidth="sm"
               spacing={3}
             >
               <Typography variant="h4">

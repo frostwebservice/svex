@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import Camera01Icon from '@untitled-ui/icons-react/build/esm/Camera01';
 import User01Icon from '@untitled-ui/icons-react/build/esm/User01';
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import { connect, useDispatch } from 'react-redux'
+import TimezoneSelect from 'react-timezone-select'
+import { useTheme } from '@mui/material/styles';
 
 import {
   Avatar,
@@ -22,20 +24,74 @@ import { alpha } from '@mui/material/styles';
 import "./account.css";
 import { useDialog } from '@/hooks/use-dialog';
 import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
+import { useAuth } from '@/hooks/use-auth';
 import { getBrandProfile, getUserProfile } from '@/actions';
-
+import { useNavigate } from 'react-router-dom';
+import $ from 'jquery'
+var tmpFirst = "";
+var tmpLast = "";
+var tmpEmail = "";
+var tmpTimezone = "";
+var once = false;
+var coloronce = false;
 const AccountGeneralSettings = (props) => {
+  const theme = useTheme();
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const uploadDialog = useDialog();
-
+  const auth = useAuth();
   const { avatar, userinfo } = props;
-  const [email, setEmail] = useState("frostwebservice.com");
-  const [first, setFirst] = useState("Felix");
-  const [last, setLast] = useState("Jin");
+  const [email, setEmail] = useState(userinfo.email ? userinfo.email : "");
+  const [first, setFirst] = useState(userinfo.firstname ? userinfo.firstname : "");
+  const [last, setLast] = useState(userinfo.lastname ? userinfo.lastname : "");
   const [editemail, setEditemail] = useState(false);
   const [editfirst, setEditfirst] = useState(false);
   const [editlast, setEditlast] = useState(false);
   const [edittimezone, setEdittimezone] = useState(false);
+  const [timezonekey, setTimezonekey] = useState("")
+  const [selectedTimezone, setSelectedTimezone] = useState(userinfo.timezone ? userinfo.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone)
+  setTimeout(() => {
+
+    if (theme.palette.mode === 'dark') {
+      $(".css-13cymwt-control").addClass("darkTimezone");
+      $(".css-t3ipsp-controll").addClass("darkTimezone");
+
+      $(".css-1nmdiq5-menu ").addClass("dark-menu");
+      $(".css-1dimb5e-singleValue").addClass("darkColor")
+      if (!coloronce) {
+        setTimezonekey(timezonekey + "a")
+        coloronce = true
+      }
+    }
+    else {
+      $(".css-1nmdiq5-menu ").removeClass("dark-menu");
+      $(".css-t3ipsp-controll").removeClass("darkTimezone");
+
+      $(".css-13cymwt-control").removeClass("darkTimezone");
+      $(".css-1dimb5e-singleValue").removeClass("darkColor")
+
+    }
+  }, 100);
+
+  console.log(editfirst)
+  if (!once) {
+    if (userinfo.email && userinfo.email != tmpEmail) {
+      tmpEmail = userinfo.email;
+      once = true;
+    }
+    if (userinfo.firstname && userinfo.firstname != tmpFirst) {
+      tmpFirst = userinfo.firstname;
+      once = true;
+    }
+    if (userinfo.lastname && userinfo.lastname != tmpLast) {
+      tmpLast = userinfo.lastname;
+      once = true;
+    }
+    if (userinfo.timezone && userinfo.timezone != tmpTimezone) {
+      tmpTimezone = userinfo.timezone;
+      once = true;
+    }
+  }
   const sortOptions = [
     {
       label: 'Toronto,Canada',
@@ -46,17 +102,51 @@ const AccountGeneralSettings = (props) => {
       value: '2'
     }
   ];
-  const handleemail = useCallback(() => {
+  const handleemail = useCallback((status) => {
     setEditemail((prevState) => !prevState);
+    if (!status) return;
+
+    axios.post('/api/update_generalinfo', { kind: "email", value: tmpEmail, user_email: JSON.parse(localStorage.getItem('email')) })
+      .then(response => {
+        auth.signOut();
+        navigate("/auth/auth/SignIn")
+      })
+      .catch(error => {
+        console.error('Error getting Notify Settings', error);
+      })
   }, []);
-  const handlefirst = useCallback(() => {
+  const handlefirst = useCallback((status) => {
     setEditfirst((prevState) => !prevState);
+    if (!status) return;
+    axios.post('/api/update_generalinfo', { kind: "firstname", value: tmpFirst, user_email: JSON.parse(localStorage.getItem('email')) })
+      .then(response => {
+      })
+      .catch(error => {
+        console.error('Error getting Notify Settings', error);
+      })
+
   }, []);
-  const handlelast = useCallback(() => {
+  const handlelast = useCallback((status) => {
     setEditlast((prevState) => !prevState);
+    if (!status) return;
+
+    axios.post('/api/update_generalinfo', { kind: "lastname", value: tmpLast, user_email: JSON.parse(localStorage.getItem('email')) })
+      .then(response => {
+      })
+      .catch(error => {
+        console.error('Error getting Notify Settings', error);
+      })
   }, []);
-  const handletimezone = useCallback(() => {
+  const handletimezone = useCallback((status) => {
     setEdittimezone((prevState) => !prevState);
+    if (!status) return;
+
+    axios.post('/api/update_generalinfo', { kind: "timezone", value: tmpTimezone, user_email: JSON.parse(localStorage.getItem('email')) })
+      .then(response => {
+      })
+      .catch(error => {
+        console.error('Error getting Notify Settings', error);
+      })
   }, []);
   const avatarUpload = () => {
     uploadDialog.handleOpen()
@@ -185,9 +275,11 @@ const AccountGeneralSettings = (props) => {
                   spacing={2}
                 >
                   <TextField
-                    defaultValue={first}
+                    value={first}
                     disabled={!editfirst}
+                    placeholder='Your First Name'
                     label="First Name"
+                    onChange={(e) => { setFirst(e.target.value); tmpFirst = e.target.value }}
                     sx={{
                       flexGrow: 1,
                       ...(!editfirst && {
@@ -200,7 +292,7 @@ const AccountGeneralSettings = (props) => {
                   <Button
                     color="inherit"
                     size="small"
-                    onClick={handlefirst}
+                    onClick={() => handlefirst(editfirst)}
                   >
                     {editfirst ? "Save" : "Edit"}
                   </Button>
@@ -211,8 +303,10 @@ const AccountGeneralSettings = (props) => {
                   spacing={2}
                 >
                   <TextField
-                    defaultValue={last}
+                    value={last}
+                    onChange={(e) => { setLast(e.target.value); tmpLast = e.target.value }}
                     label="Last Name"
+                    placeholder='Your Last Name'
                     disabled={!editlast}
                     sx={{
                       flexGrow: 1,
@@ -226,7 +320,8 @@ const AccountGeneralSettings = (props) => {
                   <Button
                     color="inherit"
                     size="small"
-                    onClick={handlelast}
+                    onClick={() => handlelast(editlast)}
+
                   >
                     {editlast ? "Save" : "Edit"}
 
@@ -239,8 +334,10 @@ const AccountGeneralSettings = (props) => {
                   spacing={2}
                 >
                   <TextField
-                    defaultValue={email}
+                    value={email}
                     disabled={!editemail}
+                    onChange={(e) => { setEmail(e.target.value); tmpEmail = e.target.value }}
+                    placeholder='Your Email Address'
                     label="Email Address"
                     required
                     sx={{
@@ -255,7 +352,7 @@ const AccountGeneralSettings = (props) => {
                   <Button
                     color="inherit"
                     size="small"
-                    onClick={handleemail}
+                    onClick={() => handleemail(editemail)}
                   >
                     {editemail ? "Save" : "Edit"}
 
@@ -266,13 +363,10 @@ const AccountGeneralSettings = (props) => {
                   direction="row"
                   spacing={2}
                 >
-                  <TextField
-                    label="Timezone"
-                    name="timezone"
-                    disabled={!edittimezone}
-                    // onChange={handleSortChange}
-                    select
-                    SelectProps={{ native: true }}
+                  <TimezoneSelect
+                    key={timezonekey}
+                    value={selectedTimezone}
+                    onChange={(e) => { console.log(e); setSelectedTimezone(e.value); tmpTimezone = e.value }}
                     sx={{
                       flexGrow: 1,
                       ...(!edittimezone && {
@@ -281,28 +375,20 @@ const AccountGeneralSettings = (props) => {
                         }
                       })
                     }}
-                  // value={sortDir}
-                  >
-                    {sortOptions.map((option) => (
-                      <option
-                        key={option.value}
-                        value={option.value}
-                      >
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
+                    disabled={true}
+
+                  />
                   <Button
                     color="inherit"
                     size="small"
-                    onClick={handletimezone}
+                    onClick={() => handletimezone(edittimezone)}
                   >
                     {edittimezone ? "Save" : "Edit"}
 
                   </Button>
                 </Stack>
 
-                <Stack
+                {/* <Stack
                   alignItems="right"
                   direction="row"
                   spacing={2}
@@ -317,7 +403,7 @@ const AccountGeneralSettings = (props) => {
                     <span className="ml-2"> Save Changes </span>
 
                   </Button>
-                </Stack>
+                </Stack> */}
 
               </Stack>
             </Grid>
