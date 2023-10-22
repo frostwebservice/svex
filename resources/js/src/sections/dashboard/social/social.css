@@ -33,6 +33,19 @@
     min-width: 40px !important;
 }
 
+.bullet-img {
+    width: 11px;
+    height: 11px;
+    background-image: url('./images/bullet.png');
+    background-repeat: no-repeat;
+    margin-top: 5px;
+}
+
+.custom-sub-panel {
+    margin-left: 5px;
+    min-width: 115px;
+}
+
 .facebook-icon {
     width: 22px;
     height: 22px;
@@ -175,9 +188,35 @@
     display: inline-grid;
 }
 
-@media screen and (min-width:650px) {
-    .custom-typo {
-        max-width: 165px;
+
+
+@media screen and (min-width:1642px) {
+    .custom-grid {
+        max-width: 33.33% !important;
+    }
+}
+
+@media screen and (min-width: 1258px) and (max-width: 1642px) {
+    .custom-grid {
+        max-width: 50% !important;
+    }
+}
+
+@media screen and (min-width: 1240px) and (max-width: 1257px) {
+    .custom-grid {
+        max-width: 100% !important;
+    }
+}
+
+@media screen and (min-width: 972px) and (max-width: 1239px) {
+    .custom-grid {
+        max-width: 50% !important;
+    }
+}
+
+@media screen and (max-width:972px) {
+    .custom-grid {
+        max-width: 100% !important;
     }
 }
 

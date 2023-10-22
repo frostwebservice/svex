@@ -16,6 +16,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 const InfStatIg = (props) => {
+    const show_percentage = (value) => {
+
+        return Number(value) <= 1 ? Number(value).toFixed(2) + '%' : Number(value).toFixed(1) + '%'
+    }
     const ranges = [
         { divider: 1e18, suffix: 'E' },
         { divider: 1e15, suffix: 'P' },
@@ -27,7 +31,7 @@ const InfStatIg = (props) => {
     const formatNumber = n => {
         for (var i = 0; i < ranges.length; i++) {
             if (n >= ranges[i].divider) {
-                return (n / ranges[i].divider).toString() + ranges[i].suffix;
+                return Number(n / ranges[i].divider).toFixed(1).toString() + ranges[i].suffix;
             }
         }
         return n.toString();
@@ -93,11 +97,11 @@ const InfStatIg = (props) => {
             {...other}>
             <Grid container spacing={3}
             >
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -108,10 +112,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'
@@ -136,6 +140,7 @@ const InfStatIg = (props) => {
                                         )}
                                         secondary={(
                                             <>
+
                                                 <Typography
                                                     color="text.secondary"
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
@@ -149,9 +154,18 @@ const InfStatIg = (props) => {
                                                     variant="body1"
                                                     className={`custom-typo ${show_follower_color}`}
                                                 >
-                                                    &#x2022; {socialinfo && socialinfo.follower_count ? getShowing(socialinfo.follower_count, "follower") : ''}
+                                                    <Grid container>
+                                                        <Grid item xs={1} md={1} sm={1}
+                                                            className='bullet-img'
+                                                        >
+                                                        </Grid>
+                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
+                                                            {socialinfo && socialinfo.follower_count ? getShowing(socialinfo.follower_count, "follower") : ''}
+                                                        </Grid>
+
+                                                    </Grid>
                                                 </Typography>
-                                                <Accordion sx={{ boxShadow: 'none' }}>
+                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
                                                     <AccordionSummary
                                                         expandIcon={<ExpandMoreIcon />}
                                                         aria-controls="panel1a-content"
@@ -171,7 +185,7 @@ const InfStatIg = (props) => {
                                                             {socialinfo && socialinfo.follower_count ? socialinfo.follower_count : '0'} follwers
                                                         </Typography>
                                                     </AccordionDetails>
-                                                </Accordion>
+                                                </Accordion> */}
 
                                             </>
                                         )}
@@ -185,11 +199,11 @@ const InfStatIg = (props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -200,10 +214,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'
@@ -247,11 +261,11 @@ const InfStatIg = (props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -262,10 +276,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'
@@ -295,7 +309,8 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_like ? (Number(socialinfo.avg_like) / Number(socialinfo.follower_count) * 100).toFixed(0) : 0}%
+                                                    {socialinfo && socialinfo.avg_like ? show_percentage(Number(socialinfo.avg_like) / Number(socialinfo.follower_count) * 100) : '0%'}
+
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -303,9 +318,20 @@ const InfStatIg = (props) => {
                                                     variant="body1"
                                                     className={`custom-typo ${show_likes_color}`}
                                                 >
-                                                    &#x2022;{socialinfo && socialinfo.avg_like ? getShowing(Number(socialinfo.avg_like) / Number(socialinfo.follower_count) * 100, "avg_like") : ''}
+                                                    <Grid container>
+                                                        <Grid item xs={1} md={1} sm={1}
+                                                            className='bullet-img'
+                                                        >
+
+                                                        </Grid>
+                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
+                                                            {socialinfo && socialinfo.avg_like ? getShowing(Number(socialinfo.avg_like) / Number(socialinfo.follower_count) * 100, "avg_like") : ''}
+                                                        </Grid>
+
+                                                    </Grid>
+
                                                 </Typography>
-                                                <Accordion sx={{ boxShadow: 'none' }}>
+                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
                                                     <AccordionSummary
                                                         expandIcon={<ExpandMoreIcon />}
                                                         aria-controls="panel1a-content"
@@ -325,7 +351,7 @@ const InfStatIg = (props) => {
                                                             Average {socialinfo && socialinfo.avg_like ? socialinfo.avg_like : 0} likes per post
                                                         </Typography>
                                                     </AccordionDetails>
-                                                </Accordion>
+                                                </Accordion> */}
 
                                             </>
                                         )}
@@ -339,11 +365,11 @@ const InfStatIg = (props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -354,10 +380,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'
@@ -387,7 +413,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_comment ? (Number(socialinfo.avg_comment) / Number(socialinfo.follower_count) * 100).toFixed(0) : 0}%
+                                                    {socialinfo && socialinfo.avg_comment ? show_percentage(Number(socialinfo.avg_comment) / Number(socialinfo.follower_count) * 100) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -395,9 +421,18 @@ const InfStatIg = (props) => {
                                                     variant="body1"
                                                     className={`custom-typo ${show_comments_color}`}
                                                 >
-                                                    &#x2022;{socialinfo && socialinfo.avg_comment ? getShowing(Number(socialinfo.avg_comment) / Number(socialinfo.follower_count) * 100, "average_comment") : ''}
+                                                    <Grid container>
+                                                        <Grid item xs={1} md={1} sm={1}
+                                                            className='bullet-img'
+                                                        >
+                                                        </Grid>
+                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
+                                                            {socialinfo && socialinfo.avg_comment ? getShowing(Number(socialinfo.avg_comment) / Number(socialinfo.follower_count) * 100, "average_comment") : ''}
+
+                                                        </Grid>
+                                                    </Grid>
                                                 </Typography>
-                                                <Accordion sx={{ boxShadow: 'none' }}>
+                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
                                                     <AccordionSummary
                                                         expandIcon={<ExpandMoreIcon />}
                                                         aria-controls="panel1a-content"
@@ -417,7 +452,7 @@ const InfStatIg = (props) => {
                                                             Average {socialinfo && socialinfo.avg_comment ? socialinfo.avg_comment : 0} comments per post
                                                         </Typography>
                                                     </AccordionDetails>
-                                                </Accordion>
+                                                </Accordion> */}
 
                                             </>
                                         )}
@@ -431,11 +466,11 @@ const InfStatIg = (props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -446,10 +481,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'
@@ -479,7 +514,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.engagement_rate ? Number(socialinfo.engagement_rate).toFixed(0) : 0}%
+                                                    {socialinfo && socialinfo.engagement_rate ? show_percentage(socialinfo.engagement_rate) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -487,9 +522,17 @@ const InfStatIg = (props) => {
                                                     variant="body1"
                                                     className={`custom-typo ${show_engagement_color}`}
                                                 >
-                                                    &#x2022;{socialinfo && socialinfo.engagement_rate ? getShowing(socialinfo.engagement_rate, "engagement_rate") : ''}
+                                                    <Grid container>
+                                                        <Grid item xs={1} md={1} sm={1}
+                                                            className='bullet-img'
+                                                        >
+                                                        </Grid>
+                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
+                                                            {socialinfo && socialinfo.engagement_rate ? getShowing(socialinfo.engagement_rate, "engagement_rate") : ''}
+                                                        </Grid>
+                                                    </Grid>
                                                 </Typography>
-                                                <Accordion sx={{ boxShadow: 'none' }}>
+                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
                                                     <AccordionSummary
                                                         expandIcon={<ExpandMoreIcon />}
                                                         aria-controls="panel1a-content"
@@ -509,7 +552,7 @@ const InfStatIg = (props) => {
                                                             {socialinfo && socialinfo.engagement_rate ? socialinfo.engagement_rate : 0}%
                                                         </Typography>
                                                     </AccordionDetails>
-                                                </Accordion>
+                                                </Accordion> */}
 
                                             </>
                                         )}
@@ -523,11 +566,11 @@ const InfStatIg = (props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -538,10 +581,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'
@@ -571,7 +614,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.lc_ratio ? Number(socialinfo.lc_ratio).toFixed(0) : 0}%
+                                                    {socialinfo && socialinfo.lc_ratio ? show_percentage(socialinfo.lc_ratio) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -579,9 +622,17 @@ const InfStatIg = (props) => {
                                                     variant="body1"
                                                     className={`custom-typo ${show_lc_color}`}
                                                 >
-                                                    &#x2022;{socialinfo && socialinfo.lc_ratio ? getShowing(socialinfo.lc_ratio, "lc_ratio") : ''}
+                                                    <Grid container>
+                                                        <Grid item xs={1} md={1} sm={1}
+                                                            className='bullet-img'
+                                                        >
+                                                        </Grid>
+                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
+                                                            {socialinfo && socialinfo.lc_ratio ? getShowing(socialinfo.lc_ratio, "lc_ratio") : ''}
+                                                        </Grid>
+                                                    </Grid>
                                                 </Typography>
-                                                <Accordion sx={{ boxShadow: 'none' }}>
+                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
                                                     <AccordionSummary
                                                         expandIcon={<ExpandMoreIcon />}
                                                         aria-controls="panel1a-content"
@@ -601,7 +652,7 @@ const InfStatIg = (props) => {
                                                             {socialinfo && socialinfo.lc_ratio ? socialinfo.lc_ratio : 0}%
                                                         </Typography>
                                                     </AccordionDetails>
-                                                </Accordion>
+                                                </Accordion> */}
 
                                             </>
                                         )}
@@ -615,11 +666,11 @@ const InfStatIg = (props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -630,10 +681,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'
@@ -663,7 +714,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.likes_spread ? Number(socialinfo.likes_spread).toFixed(0) : 0}%
+                                                    {socialinfo && socialinfo.likes_spread ? show_percentage(socialinfo.likes_spread) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -671,9 +722,17 @@ const InfStatIg = (props) => {
                                                     variant="body1"
                                                     className={`custom-typo ${show_spread_color}`}
                                                 >
-                                                    &#x2022;{socialinfo && socialinfo.likes_spread ? getShowing(socialinfo.likes_spread, "like_spread") : ''}
+                                                    <Grid container>
+                                                        <Grid item xs={1} md={1} sm={1}
+                                                            className='bullet-img'
+                                                        >
+                                                        </Grid>
+                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
+                                                            {socialinfo && socialinfo.likes_spread ? getShowing(socialinfo.likes_spread, "like_spread") : ''}
+                                                        </Grid>
+                                                    </Grid>
                                                 </Typography>
-                                                <Accordion sx={{ boxShadow: 'none' }}>
+                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
                                                     <AccordionSummary
                                                         expandIcon={<ExpandMoreIcon />}
                                                         aria-controls="panel1a-content"
@@ -694,7 +753,7 @@ const InfStatIg = (props) => {
 
                                                         </Typography>
                                                     </AccordionDetails>
-                                                </Accordion>
+                                                </Accordion> */}
 
                                             </>
                                         )}
@@ -708,11 +767,11 @@ const InfStatIg = (props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -723,10 +782,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'
@@ -756,7 +815,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_post_interval ? Number(socialinfo.avg_post_interval).toFixed(1) : 0}%
+                                                    {socialinfo && socialinfo.avg_post_interval ? show_percentage(socialinfo.avg_post_interval) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -764,9 +823,17 @@ const InfStatIg = (props) => {
                                                     variant="body1"
                                                     className={`custom-typo ${show_interval_color}`}
                                                 >
-                                                    &#x2022;{socialinfo && socialinfo.avg_post_interval ? getShowing(socialinfo.avg_post_interval, "post_interval") : ''}
+                                                    <Grid container>
+                                                        <Grid item xs={1} md={1} sm={1}
+                                                            className='bullet-img'
+                                                        >
+                                                        </Grid>
+                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
+                                                            {socialinfo && socialinfo.avg_post_interval ? getShowing(socialinfo.avg_post_interval, "post_interval") : ''}
+                                                        </Grid>
+                                                    </Grid>
                                                 </Typography>
-                                                <Accordion sx={{ boxShadow: 'none' }}>
+                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
                                                     <AccordionSummary
                                                         expandIcon={<ExpandMoreIcon />}
                                                         aria-controls="panel1a-content"
@@ -786,7 +853,7 @@ const InfStatIg = (props) => {
                                                             {socialinfo && socialinfo.avg_post_interval ? socialinfo.avg_post_interval : 0}%
                                                         </Typography>
                                                     </AccordionDetails>
-                                                </Accordion>
+                                                </Accordion> */}
 
                                             </>
                                         )}
@@ -800,11 +867,11 @@ const InfStatIg = (props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sm={12}
+                <Grid item xs={12} sm={12}
                     className='custom-grid'
                 >
                     <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
@@ -815,10 +882,10 @@ const InfStatIg = (props) => {
                                             sx={{
                                                 alignItems: 'center',
                                                 display: 'flex',
-                                                height: 100,
+                                                // height: 100,
                                                 justifyContent: 'center',
                                                 overflow: 'hidden',
-                                                width: 100,
+                                                // width: 100,
                                                 '& img': {
                                                     width: '100%',
                                                     height: 'auto'

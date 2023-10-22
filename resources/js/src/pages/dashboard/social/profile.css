@@ -35,7 +35,23 @@
 @media screen and (max-width:1560px) {
 
     .button-bar {
-        margin-top: 100px !important;
+        margin-top: 120px !important;
+    }
+
+}
+
+@media screen and (max-width:1615px) {
+
+    .inf-button-bar {
+        margin-top: 120px !important;
+    }
+
+}
+
+@media screen and (max-width:482px) {
+
+    .inf-button-bar {
+        margin-top: 170px !important;
     }
 
 }
@@ -68,7 +84,7 @@
 
     .social-btn {
         font-size: 18px !important;
-        width: 215px !important;
+        /* width: 215px !important; */
         height: 54px !important;
     }
 

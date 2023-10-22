@@ -12,6 +12,7 @@ import {
     Button,
     Container,
     Divider,
+    ButtonBase,
     IconButton,
     Stack,
     SvgIcon,
@@ -49,7 +50,7 @@ const ranges = [
 const formatNumber = n => {
     for (var i = 0; i < ranges.length; i++) {
         if (n >= ranges[i].divider) {
-            return (n / ranges[i].divider).toString() + ranges[i].suffix;
+            return Number(n / ranges[i].divider).toFixed(1).toString() + ranges[i].suffix;
         }
     }
     return n.toString();
@@ -226,20 +227,34 @@ const Page = (props) => {
                                 className="custom-avatar"
                                 spacing={2}
                             >
-                                <Avatar
-                                    src={socialinfo && socialinfo.profile_pic_url_hd ? socialinfo.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${socialinfo && socialinfo.full_name ? socialinfo.full_name : ""}&background=2970FF&color=fff&rounded=true`}
+                                <Box
+                                    component={ButtonBase}
                                     sx={{
+                                        alignItems: 'center',
+                                        display: 'flex',
+                                        borderWidth: 2,
+                                        borderStyle: 'solid',
+                                        borderColor: 'divider',
                                         height: 140,
-                                        width: 140
+                                        width: 140,
+                                        borderRadius: '50%'
                                     }}
-                                />
+                                >
+                                    <Avatar
+                                        src={socialinfo && socialinfo.profile_pic_url_hd ? socialinfo.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${socialinfo && socialinfo.full_name ? socialinfo.full_name : ""}&background=2970FF&color=fff&rounded=true`}
+                                        sx={{
+                                            height: 130,
+                                            width: 130
+                                        }}
+                                    />
+                                </Box>
                                 <div className='brand-info'>
                                     <Grid container>
-                                        <Grid item sm={7}>
+                                        <Grid item sm={7} xs={7}>
                                             <Typography
                                                 color="primary"
                                                 variant="h6"
-                                                style={{ fontSize: 22 }}
+                                                style={{ fontSize: 22, wordWrap: 'break-word' }}
                                             >
                                                 {socialinfo ? socialinfo.username : ''}
                                             </Typography>
@@ -252,7 +267,7 @@ const Page = (props) => {
                                                 {socialinfo ? socialinfo.full_name : ''}
                                             </Typography>
                                         </Grid>
-                                        <Grid item sm={5}>
+                                        <Grid item sm={5} xs={5}>
                                             <div className='custom-reach'>
                                                 <Grid container>
                                                     <Grid item sx={{ color: '#2970FF', fontSize: '11px', fontWeight: 300, pl: 1, pr: 1, pt: 0.5, pb: 0.5 }}>
@@ -295,7 +310,7 @@ const Page = (props) => {
                                 alignItems="center"
                                 direction="row"
                                 spacing={2}
-                                className='button-bar'
+                                className='inf-button-bar'
                                 sx={{
                                     display: {
                                         md: 'block',

@@ -156,10 +156,10 @@ const SocialPostAdd = (props) => {
                     sx={{ cursor: 'pointer' }}
                     variant="caption"
                     className='social-list-font'
-                    href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/' + brandinfo.youtube) : '')}
+                    href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/@' + brandinfo.youtube) : '')}
 
                   >
-                    {(brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/' + brandinfo.youtube) : '')}
+                    {(brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/@' + brandinfo.youtube) : '')}
                   </Link>
                 )}
               />

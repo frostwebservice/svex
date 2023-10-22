@@ -127,9 +127,9 @@ const InfRightPanel = (props) => {
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
-                                        href={"https://" + 'www.youtube.com/' + socialinfo.username}
+                                        href={"https://" + 'www.youtube.com/@' + socialinfo.username}
                                     >
-                                        {'www.youtube.com/' + socialinfo.username}
+                                        {'www.youtube.com/@' + socialinfo.username}
                                     </Link>
                                 )}
                             />

@@ -53,7 +53,7 @@ const InfAbout = (props) => {
                         className='about-content'
                         style={{ borderBottom: '0.5px solid #F2F4F7', paddingBottom: 50 }}
                     >
-                        {socialinfo ? socialinfo.biography : ''}
+                        {socialinfo ? socialinfo.biography.replace(/[\.,?!]/g, '') : ''}
                     </Typography>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={6} sm={6}>

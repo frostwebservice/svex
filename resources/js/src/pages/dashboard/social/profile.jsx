@@ -20,6 +20,7 @@ import {
   Divider,
   IconButton,
   Stack,
+  ButtonBase,
   SvgIcon,
   Tab,
   Tabs,
@@ -310,16 +311,30 @@ const Page = (props) => {
                       </Typography>
                     </Stack>
                   </Box>
-                  <Avatar
-                    onClick={avatarClick}
-                    src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+                  <Box
+                    component={ButtonBase}
                     sx={{
+                      alignItems: 'center',
+                      display: 'flex',
+                      borderWidth: 2,
+                      borderStyle: 'solid',
+                      borderColor: 'divider',
                       height: 140,
-                      width: 140
+                      width: 140,
+                      borderRadius: '50%'
                     }}
-                    style={{ cursor: 'pointer' }}
                   >
-                  </Avatar>
+                    <Avatar
+                      onClick={avatarClick}
+                      src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+                      sx={{
+                        height: 130,
+                        width: 130
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
+                    </Avatar>
+                  </Box>
                 </Box>
 
                 <div className='brand-info'>
