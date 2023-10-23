@@ -19,6 +19,7 @@ import {
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
+var once = false;
 import { Scrollbar } from '@/components/scrollbar';
 
 export const AccountSecuritySettings = (props) => {
@@ -28,6 +29,23 @@ export const AccountSecuritySettings = (props) => {
   const handleEdit = useCallback(() => {
     setIsEditing((prevState) => !prevState);
   }, []);
+  const email = JSON.parse(localStorage.getItem('email'));
+
+  const [histories, setHistory] = useState([]);
+  if (!once) {
+    axios
+      .post("/api/login_history", { email })
+      .then((response) => {
+
+        if (response.data.status === 200) {
+          setHistory(response.data.data)
+        }
+
+      });
+    once = true
+  }
+
+
 
   return (
     <Stack spacing={4}>
@@ -239,17 +257,17 @@ export const AccountSecuritySettings = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {loginEvents.map((event) => {
-                const createdAt = format(event.createdAt, 'HH:mm a MM/dd/yyyy');
+              {histories.map((history) => {
+                const createdAt = history.created_at.substring(11, 19) + " " + history.created_at.substring(0, 10)
 
                 return (
                   <TableRow
-                    key={event.id}
+                    key={history.id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell>
                       <Typography variant="subtitle2">
-                        {event.type}
+                        {history.type}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -259,10 +277,10 @@ export const AccountSecuritySettings = (props) => {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      {event.ip}
+                      {history.ip_address}
                     </TableCell>
                     <TableCell>
-                      {event.userAgent}
+                      {history.browser_info + "," + history.os_info}
                     </TableCell>
                   </TableRow>
                 );

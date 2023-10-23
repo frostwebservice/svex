@@ -52,6 +52,7 @@ const Page = () => {
   const [initialValues, setInitialValues] = useState({
     email: "",
     password: "",
+    type: "Credential login"
   });
   const navigate = useNavigate();
 
@@ -68,6 +69,7 @@ const Page = () => {
 
           if (response.data.status === 200) {
             setInitialValues({
+              ...initialValues,
               email: "",
               password: "",
               // submit:null,
@@ -128,8 +130,12 @@ const Page = () => {
             <SvgIcon sx={{ mr: 1 }}>
               <ArrowLeftIcon />
             </SvgIcon>
-            <Typography variant="body1"
-              sx={{ color: 'rgba(0, 0, 0, 0.87)' }}>
+            <Typography
+              color="text.primary"
+
+              variant="body1"
+            // sx={{ color: 'rgba(0, 0, 0, 0.87)' }}
+            >
               Dashboard
             </Typography>
           </Link>

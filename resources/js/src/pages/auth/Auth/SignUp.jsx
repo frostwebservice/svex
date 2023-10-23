@@ -155,7 +155,7 @@ const Page = () => {
             </Typography>
           </Link>
         </Box>
-        <Typography color='black'
+        <Typography color='text.primary'
           className="title largesize my-4"
           variant="h4" >
           Brand account creation
