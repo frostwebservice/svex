@@ -137,7 +137,9 @@ const Page = () => {
                 onChange={handleTabsChange}
                 scrollButtons="auto"
                 textColor="primary"
-                sx={{ p: 3 }}
+                sx={{
+                  p: 3
+                }}
                 value={currentTab}
                 variant="scrollable"
               >

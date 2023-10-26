@@ -1,3 +1,7 @@
 .MuiInputLabel-root {
     font-size: 11px !important;
 }
+
+.MuiTabs-scroller {
+    border-bottom: 1px solid #F2F4F7;
+}
