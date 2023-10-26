@@ -4,7 +4,10 @@ import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import {
   Box,
   Button,
+  Tabs,
+  Tab,
   Container,
+  Card,
   Stack,
   SvgIcon,
   InputAdornment,
@@ -21,7 +24,7 @@ import { AcademyFind } from '@/sections/dashboard/academy/academy-find';
 import { CourseCard } from '@/sections/dashboard/academy/course-card';
 import { CourseSearch } from '@/sections/dashboard/academy/course-search';
 import "./inf_finder.css"
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 const sortOptions = [
   {
     label: 'Last update (newest)',
@@ -75,6 +78,11 @@ const Page = () => {
   const courses = useCourses();
 
   usePageView();
+
+  const handleTabsChange = useCallback((event, value) => {
+    setCurrentTab(value);
+  }, []);
+
   const handleSortChange = useCallback((event) => {
     // const [sortBy, sortDir] = event.target.value.split('|');
 
@@ -83,6 +91,16 @@ const Page = () => {
     //   sortDir
     // });
   }, []);
+  const tabs = [
+    { label: "Instagram", value: "instagram" },
+    { label: "Tiktok", value: "tiktok" },
+    { label: "Youtube", value: "youtube" },
+    { label: "Twitter", value: "twitter" },
+    { label: "Pinterest", value: "pinterest" },
+    { label: "Linkedin", value: "linkedin" },
+  ]
+  const [currentTab, setCurrentTab] = useState("instagram");
+
   return (
     <>
       <Seo title="Dashboard: Academy Dashboard" />
@@ -90,6 +108,7 @@ const Page = () => {
         component="main"
         sx={{ flexGrow: 1 }}
       >
+
         <Box
           sx={{
             backgroundColor: 'primary.darkest',
@@ -112,55 +131,98 @@ const Page = () => {
             >
               Easily search and filter for influencers that fit your brand’s needs.
             </Typography>
-            <CourseSearch />
+            <Card>
+              <Tabs
+                indicatorColor="primary"
+                onChange={handleTabsChange}
+                scrollButtons="auto"
+                textColor="primary"
+                sx={{ p: 3 }}
+                value={currentTab}
+                variant="scrollable"
+              >
+                {tabs.map((tab) => (
+                  <Tab
+                    className='custom-tab'
+                    sx={{ fontSize: 18 }}
+                    key={tab.value}
+                    label={tab.label}
+                    value={tab.value}
+                  />
+                ))}
+              </Tabs>
+              <Box>
+                {currentTab == 'instagram' && (
+                  <CourseSearch />
+                )}
+                {/* {currentTab == 'youtube' && (
+                <InfStatYt total={total} />
+              )}
+              {currentTab == 'tiktok' && (
+                <InfStatTt total={total} />
+              )}
+              {currentTab == 'twitter' && (
+                <InfStatTw total={total} />
+              )}
+              {currentTab == 'pinterest' && (
+                <InfStatPt total={total} />
+              )}
+              {currentTab == 'linkedin' && (
+                <InfStatPt total={total} />
+              )} */}
+              </Box>
+            </Card>
+
+
           </Container>
         </Box>
-        <div>sdf</div>
-        <Stack
-          alignItems="center"
-          direction="row"
-          flexWrap="wrap"
-          spacing={3}
-          sx={{ p: 3 }}
-        >
-          <Box
-            component="form"
-            // onSubmit={handleQueryChange}
-            sx={{ flexGrow: 1 }}
+        <Container maxWidth={settings.stretch ? false : 'xl'} >
+          <div>sdf</div>
+          <Stack
+            alignItems="center"
+            direction="row"
+            flexWrap="wrap"
+            spacing={3}
+            sx={{ p: 3 }}
           >
-            <OutlinedInput
-              defaultValue=""
-              fullWidth
-              // inputProps={{ ref: queryRef }}
-              placeholder="Search customers"
-              startAdornment={(
-                <InputAdornment position="start">
-                  <SvgIcon>
-                    <SearchMdIcon />
-                  </SvgIcon>
-                </InputAdornment>
-              )}
-            />
-          </Box>
-          <TextField
-            label="Sort By"
-            name="sort"
-            onChange={handleSortChange}
-            select
-            SelectProps={{ native: true }}
-          // value={`${sortBy}|${sortDir}`}
-          >
-            {sortOptions.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-              >
-                {option.label}
-              </option>
-            ))}
-          </TextField>
-        </Stack>
-        {/* <Box sx={{ py: '64px' }}>
+            <Box
+              component="form"
+              // onSubmit={handleQueryChange}
+              sx={{ flexGrow: 1 }}
+            >
+              <OutlinedInput
+                defaultValue=""
+                fullWidth
+                // inputProps={{ ref: queryRef }}
+                placeholder="Search customers"
+                startAdornment={(
+                  <InputAdornment position="start">
+                    <SvgIcon>
+                      <SearchMdIcon />
+                    </SvgIcon>
+                  </InputAdornment>
+                )}
+              />
+            </Box>
+            <TextField
+              label="Sort By"
+              name="sort"
+              onChange={handleSortChange}
+              select
+              SelectProps={{ native: true }}
+            // value={`${sortBy}|${sortDir}`}
+            >
+              {sortOptions.map((option) => (
+                <option
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </option>
+              ))}
+            </TextField>
+          </Stack>
+          {/* <Box sx={{ py: '64px' }}>
           <Container maxWidth={settings.stretch ? false : 'xl'}>
             <Grid
               container
@@ -230,6 +292,7 @@ const Page = () => {
             </Grid>
           </Container>
         </Box> */}
+        </Container>
       </Box>
     </>
   );

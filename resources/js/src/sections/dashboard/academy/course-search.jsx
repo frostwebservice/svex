@@ -6,7 +6,7 @@ const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
 
 export const CourseSearch = () => {
   return (
-    <Card>
+    <>
       <Stack
         alignItems="center"
         direction="row"
@@ -72,6 +72,6 @@ export const CourseSearch = () => {
           Search
         </Button>
       </Stack>
-    </Card>
+    </>
   );
 };
