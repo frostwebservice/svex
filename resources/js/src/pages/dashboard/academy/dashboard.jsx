@@ -22,7 +22,7 @@ import { useSettings } from '@/hooks/use-settings';
 import { AcademyDailyProgress } from '@/sections/dashboard/academy/academy-daily-progress';
 import { AcademyFind } from '@/sections/dashboard/academy/academy-find';
 import { CourseCard } from '@/sections/dashboard/academy/course-card';
-import { CourseSearch } from '@/sections/dashboard/academy/course-search';
+import { InstagramSearch } from '@/sections/dashboard/academy/instagram-search';
 import "./inf_finder.css"
 import { useCallback, useState } from 'react'
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -187,7 +187,7 @@ const Page = () => {
               </Tabs>
               <Box>
                 {currentTab == 'instagram' && (
-                  <CourseSearch />
+                  <InstagramSearch />
                 )}
                 {/* {currentTab == 'youtube' && (
                 <InfStatYt total={total} />
