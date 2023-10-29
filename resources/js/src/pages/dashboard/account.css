@@ -37,8 +37,57 @@
     color: white !important;
 }
 
+.css-1dimb5e-singleValue {
+    font-size: 14px !important;
+    padding-top: 14px !important;
+}
+
+.css-olqui2-singleValue {
+    font-size: 14px !important;
+    padding-top: 14px !important;
+}
+
+.css-1yo1jo6-MuiStack-root {
+    position: relative;
+}
 
 .css-13cymwt-control {
+    height: 55.13px !important;
+    border-radius: 8px;
+    border-color: #E5E7EB;
+    background-color: var(--bg-secondary);
+}
+
+.custom-timezone {
+    border-color: #2D3748 !important;
+
+}
+
+.timezone-label {
+    position: absolute;
+    top: 2px;
+    left: -5px;
+}
+
+.custom-timezone-light {
+    border-color: #E5E7EB !important;
+}
+
+.css-16xfy0z-control {
+    height: 55.13px !important;
+    border-radius: 8px;
+    border-color: #E5E7EB;
+    background-color: var(--bg-secondary);
+}
+
+.css-13cymwt-control:hover {
+    height: 55.13px !important;
+    border-radius: 8px;
+    border-color: #E5E7EB;
+    background-color: var(--bg-secondary);
+}
+
+.css-16xfy0z-control:hover {
     height: 55.13px !important;
     border-radius: 8px;
     border-color: #E5E7EB;
@@ -78,9 +127,7 @@
     color: var(--text-primary);
 }
 
-.css-16xfy0z-control {
-    background-color: white;
-}
+
 
 .MuiInputLabel-root {
     font-size: 11px !important;

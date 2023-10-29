@@ -1,10 +1,8 @@
 .save-btn {
-    width: 202px !important;
-    position: absolute;
-    right: 101px;
-    margin-top: 80px;
+    margin-right: 0;
+
 }
 
 .save-btn-container {
-    position: relative
+    justify-content: right;
 }

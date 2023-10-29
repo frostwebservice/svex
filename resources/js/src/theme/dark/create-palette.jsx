@@ -29,7 +29,8 @@ export const createPalette = (config) => {
       primary: '#EDF2F7',
       secondary: '#A0AEC0',
       disabled: 'rgba(255, 255, 255, 0.48)',
-      stat: '#FFF'
+      stat: '#FFF',
+      timezone: '#FF0',
     },
     warning
   };

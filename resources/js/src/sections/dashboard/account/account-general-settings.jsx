@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Camera01Icon from '@untitled-ui/icons-react/build/esm/Camera01';
 import User01Icon from '@untitled-ui/icons-react/build/esm/User01';
-import { useCallback, useState, useRef, useEffect } from "react";
+import { useCallback, useState, useRef, useEffect, useReducer } from "react";
 import { connect, useDispatch } from 'react-redux'
 import TimezoneSelect from 'react-timezone-select'
 import { useTheme } from '@mui/material/styles';
@@ -40,6 +40,7 @@ var coloronce = false;
 
 const AccountGeneralSettings = (props) => {
   const theme = useTheme();
+  const [_, forceUpdate] = useReducer(x => x + 1, 0);
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const uploadDialog = useDialog();
@@ -57,9 +58,20 @@ const AccountGeneralSettings = (props) => {
   const [edittimezone, setEdittimezone] = useState(false);
   const [timezonekey, setTimezonekey] = useState("")
 
-  setTimeout(() => {
-
-  }, 50);
+  // setInterval(() => {
+  //   if (theme.palette.mode == "dark") {
+  //     $('.css-16xfy0z-control').removeClass("custom-timezone-light");
+  //     $('.css-13cymwt-control').removeClass("custom-timezone-light");
+  //     $('.css-16xfy0z-control').addClass("custom-timezone");
+  //     $('.css-13cymwt-control').addClass("custom-timezone");
+  //   }
+  //   else {
+  //     $('.css-16xfy0z-control').removeClass("custom-timezone");
+  //     $('.css-13cymwt-control').removeClass("custom-timezone");
+  //     $('.css-16xfy0z-control').addClass("custom-timezone-light");
+  //     $('.css-13cymwt-control').addClass("custom-timezone-light");
+  //   }
+  // }, 5);
   if (!once) {
     if (userinfo.email && userinfo.email != tmpEmail) {
       tmpEmail = userinfo.email;
@@ -130,9 +142,27 @@ const AccountGeneralSettings = (props) => {
       setLast(tmpLast);
       setSelectedTimezone(tmpTimezone)
     }
-
+    if (theme.palette.mode == "dark") {
+      $('.css-16xfy0z-control').addClass("custom-timezone");
+      $('.css-13cymwt-control').addClass("custom-timezone");
+    }
+    else {
+      $('.css-16xfy0z-control').removeClass("custom-timezone");
+      $('.css-13cymwt-control').removeClass("custom-timezone");
+    }
   });
-
+  const renderColor = () => {
+    // if (theme.palette.mode == "dark") {
+    //   $('.css-16xfy0z-control').addClass("custom-timezone");
+    //   $('.css-13cymwt-control').addClass("custom-timezone");
+    // }
+    // else {
+    //   $('.css-16xfy0z-control').removeClass("custom-timezone");
+    //   $('.css-13cymwt-control').removeClass("custom-timezone");
+    // }
+    // setTimezonekey("a")
+    forceUpdate();
+  }
   const saveChange = () => {
     let value = {
       user_email: JSON.parse(localStorage.getItem('email')),
@@ -359,15 +389,17 @@ const AccountGeneralSettings = (props) => {
                   </Button>
                 </Stack>
                 <Stack
+                  key={timezonekey}
                   alignItems="center"
                   direction="row"
                   spacing={2}
                 >
                   <TimezoneSelect
                     label="Sdf"
-                    key={timezonekey}
+                    labelStyle="altName"
+                    displayValue='UTC'
                     value={selectedTimezone}
-                    onChange={(e) => { console.log(e); setSelectedTimezone(e.value); tmpTimezone = e.value }}
+                    onChange={(e) => { console.log(e); setSelectedTimezone(e.value); tmpTimezone = e.value; }}
                     sx={{
                       flexGrow: 1,
                       ...(!edittimezone && {
@@ -379,6 +411,12 @@ const AccountGeneralSettings = (props) => {
                     isDisabled={disableTimezone}
 
                   />
+                  <Typography className='timezone-label'
+                    sx={{
+                      fontSize: 11,
+                      color: (theme) => theme.palette.mode == "dark" ? '#6C737F' : '#6C737F'
+                    }}
+                  >Timezone</Typography>
                   <Button
                     color="inherit"
                     size="small"
@@ -389,31 +427,33 @@ const AccountGeneralSettings = (props) => {
                   </Button>
                 </Stack>
 
-                <Stack
-                  alignItems="right"
-                  direction="row"
-                // spacing={2}
-                >
-                  <Button
-                    size="small"
-                    type="button"
-                    color="primary"
-                    variant="contained"
-                    className="title-inter w-75 smallsize save-btn"
-                    sx={{ mr: 3 }}
 
-                    onClick={saveChange}
-                  >
-                    <span className="ml-2"> Save Changes </span>
-
-                  </Button>
-                </Stack>
 
               </Stack>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
+      <Stack
+        alignItems="right"
+        direction="row"
+        className="save-btn-container"
+      // spacing={2}
+      >
+        <Button
+          size="small"
+          type="button"
+          color="primary"
+          variant="contained"
+          className="title-inter smallsize save-btn"
+          sx={{ py: 1, fontSize: 18, px: 5 }}
+
+          onClick={saveChange}
+        >
+          <span className="ml-2"> Save Changes </span>
+
+        </Button>
+      </Stack>
       <FileUploader
         onClose={uploadDialog.handleClose}
         open={uploadDialog.open}
