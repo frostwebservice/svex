@@ -40,3 +40,4 @@ Route::post('update_notifysettings', [App\Http\Controllers\UserController::class
 Route::post('update_generalinfo', [App\Http\Controllers\UserController::class, 'updateGeneralinfo']);
 Route::post('get_billing_info', [App\Http\Controllers\UserController::class, 'getBillingInfo']);
 Route::post('update_billing_info', [App\Http\Controllers\UserController::class, 'updateBillingInfo']);
+Route::post('login_history', [App\Http\Controllers\UserController::class, 'loginHistory']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\BillingInfo;
+use App\Models\LoginHistory;
 use App\Models\Niche;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -489,6 +490,69 @@ class UserController extends Controller
                 $api_token = Str::random(60);
                 $user->api_token = $api_token;
                 $user->save();
+                //login history 
+
+                $user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+                $os_platform =   "Bilinmeyen İşletim Sistemi";
+                $os_array =   array(
+                    '/windows nt 10/i'      =>  'Windows 10',
+                    '/windows nt 6.3/i'     =>  'Windows 8.1',
+                    '/windows nt 6.2/i'     =>  'Windows 8',
+                    '/windows nt 6.1/i'     =>  'Windows 7',
+                    '/windows nt 6.0/i'     =>  'Windows Vista',
+                    '/windows nt 5.2/i'     =>  'Windows Server 2003/XP x64',
+                    '/windows nt 5.1/i'     =>  'Windows XP',
+                    '/windows xp/i'         =>  'Windows XP',
+                    '/windows nt 5.0/i'     =>  'Windows 2000',
+                    '/windows me/i'         =>  'Windows ME',
+                    '/win98/i'              =>  'Windows 98',
+                    '/win95/i'              =>  'Windows 95',
+                    '/win16/i'              =>  'Windows 3.11',
+                    '/macintosh|mac os x/i' =>  'Mac OS X',
+                    '/mac_powerpc/i'        =>  'Mac OS 9',
+                    '/linux/i'              =>  'Linux',
+                    '/ubuntu/i'             =>  'Ubuntu',
+                    '/iphone/i'             =>  'iPhone',
+                    '/ipod/i'               =>  'iPod',
+                    '/ipad/i'               =>  'iPad',
+                    '/android/i'            =>  'Android',
+                    '/blackberry/i'         =>  'BlackBerry',
+                    '/webos/i'              =>  'Mobile'
+                );
+
+                foreach ($os_array as $regex => $value) {
+                    if (preg_match($regex, $user_agent)) {
+                        $os_platform = $value;
+                    }
+                }
+                $browser_array  = array(
+                    '/msie/i'       =>  'Internet Explorer',
+                    '/firefox/i'    =>  'Firefox',
+                    '/safari/i'     =>  'Safari',
+                    '/chrome/i'     =>  'Chrome',
+                    '/edge/i'       =>  'Edge',
+                    '/opera/i'      =>  'Opera',
+                    '/netscape/i'   =>  'Netscape',
+                    '/maxthon/i'    =>  'Maxthon',
+                    '/konqueror/i'  =>  'Konqueror',
+                    '/mobile/i'     =>  'Handheld Browser'
+                );
+
+                foreach ($browser_array as $regex => $value) {
+                    if (preg_match($regex, $user_agent)) {
+                        $browser = $value;
+                    }
+                }
+                $history = array(
+                    "user_email" => $request->email,
+                    "type" => $request->type,
+                    "ip_address" => $_SERVER['REMOTE_ADDR'],
+                    "browser_info" => $browser,
+                    "os_info" => $os_platform
+                );
+
+                $historyInsert = LoginHistory::create($history);
                 return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => $user]);
             } else {
                 return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
@@ -497,7 +561,12 @@ class UserController extends Controller
             return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Email doesn't exist."]);
         }
     }
-
+    public function loginHistory(Request $request)
+    {
+        $email = $request->email;
+        $histories = loginHistory::where("user_email", $email)->orderByDesc('id')->limit(3)->get();
+        return response()->json(["status" => $this->status_code, "success" => true, "message" => "getting successfully", "data" => $histories]);
+    }
     // ------------------ [ User Detail ] ---------------------
     public function userDetail($email)
     {
