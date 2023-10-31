@@ -6,6 +6,7 @@ import InfAbout from './inf-about';
 import InfStatIg from './inf-stat-ig';
 import InfStatYt from './inf-stat-yt';
 import InfStatTt from './inf-stat-tt';
+import InfStatTw from './inf-stat-tw';
 import { useState, useCallback } from 'react';
 import { Tab, Tabs, Card, CardHeader } from '@mui/material';
 export const InfOverview = (props) => {
@@ -86,6 +87,9 @@ export const InfOverview = (props) => {
                 )}
                 {currentTab == 'tiktok' && (
                     <InfStatTt />
+                )}
+                {currentTab == 'twitter' && (
+                    <InfStatTw />
                 )}
             </Box>
         </>
