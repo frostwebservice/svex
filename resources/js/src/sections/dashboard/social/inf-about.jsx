@@ -94,7 +94,7 @@ const InfAbout = (props) => {
                                                 className='social-list-font'
                                                 href={socialinfo ? socialinfo.external_url : ''}
                                             >
-                                                {socialinfo ? socialinfo.external_url.replace(/(^\w+:|^)\/\//, '') : ''}
+                                                {socialinfo && socialinfo.external_url ? socialinfo.external_url.replace(/(^\w+:|^)\/\//, '') : ''}
                                             </Link>
                                             // <Typography variant="subtitle2" className='about-list-font'>
                                             //     {socialinfo ? socialinfo.external_url : ''}

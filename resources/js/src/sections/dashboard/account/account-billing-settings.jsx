@@ -57,12 +57,14 @@ const AccountBillingSettings = (props) => {
   const [billing, setBilling] = useState(billinginfo);
   console.log(billing)
   const handleEdit = ((status) => {
+    setBilling(billinginfo);
     setIsEdit((prevState) => !prevState);
     if (!status) return;
-    // console.log("in", billing)
     axios.post('/api/update_billing_info', { value: billing, user_email: JSON.parse(localStorage.getItem('email')) })
       .then(response => {
-        console.log(response)
+        // console.log(response)
+        dispatch(getBillingInfo({ email }));
+
       })
       .catch(error => {
         console.error('Error getting Notify Settings', error);
@@ -444,7 +446,7 @@ AccountBillingSettings.propTypes = {
 };
 const mapStateToProps = state => ({
   userinfo: state.profile.userinfo,
-  billinginfo: state.billinginfo
+  billinginfo: state.billinginfo.billinginfo
 });
 
 export default connect(mapStateToProps)(AccountBillingSettings);

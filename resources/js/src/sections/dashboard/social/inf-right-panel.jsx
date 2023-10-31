@@ -17,16 +17,29 @@ import { connect } from 'react-redux';
 const InfRightPanel = (props) => {
     const user = useMockedUser();
     const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-    const { socialinfo } = props;
-
+    const { socialinfo, statkind } = props;
+    const renderNiche = () => {
+        if (statkind == "instagram") {
+            return (
+                (socialinfo && socialinfo.category_niche) ? (< div className='profile-niche' key={socialinfo.category_niche} > {socialinfo.category_niche}</div >) : (<></>)
+            )
+        }
+        else if (statkind == "youtube") {
+            let niches = (socialinfo && socialinfo.category_niche) ? socialinfo.category_niche : ""
+            niches = niches.replace("[", "").replace("]", "")
+            niches = niches.split(",")
+            console.log(niches)
+            const renderingNiches = niches.map(niche =>
+                <div className='profile-niche' key={niche} > {niche.replace(/"/g, '')}</div >
+            )
+            return renderingNiches
+        }
+    }
     return (
         <Card style={{ borderRadius: 0, boxShadow: 'none', borderLeft: '0.5px solid #F2F4F7', paddingLeft: 60, paddingRight: 0 }}>
             <CardHeader title="Niche" className='head-font' />
             <CardContent style={{ padding: 0 }}>
-                {
-                    (socialinfo && socialinfo.category_niche) ? (< div className='profile-niche' key={socialinfo.category_niche} > {socialinfo.category_niche}</div >) : ("")
-
-                }
+                {renderNiche()}
             </CardContent>
             <CardHeader title="Social media links" className='head-font' />
             <CardContent>

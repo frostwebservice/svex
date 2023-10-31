@@ -6,6 +6,8 @@ const initialState = {
         fullname: "",
         email: "",
         api_token: "",
+        tfaapp: 0,
+        tfasms: 0,
         condition: null,
         phonenumber: null,
         companyname: null,
@@ -37,6 +39,8 @@ const initialState = {
         lastname: null,
         fullname: "",
         email: "",
+        tfaapp: 0,
+        tfasms: 0,
         api_token: "",
         condition: null,
         phonenumber: null,
@@ -63,7 +67,7 @@ const initialState = {
         updated_at: "",
         niches: []
     },
-    userinfo: {
+    socialinfo: {
         id: 0,
         username: "",
         full_name: "",

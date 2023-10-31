@@ -46,10 +46,10 @@ const Page = () => {
       .required('Name is required'),
     password: Yup
       .string()
-      .required('please enter your password')
+      .required('Please enter your password')
       .matches(
         /^(?=.*[a-z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
+        "Must contain 8 characters, one uppercase, one lowercase, one number and one special case character"
       ),
     confirmpassword: Yup
       .string()

@@ -4,6 +4,7 @@ import InfRightPanel from './inf-right-panel';
 import { SocialPostCard } from './social-post-card';
 import InfAbout from './inf-about';
 import InfStatIg from './inf-stat-ig';
+import InfStatYt from './inf-stat-yt';
 import { useState, useCallback } from 'react';
 import { Tab, Tabs, Card, CardHeader } from '@mui/material';
 export const InfOverview = (props) => {
@@ -51,7 +52,7 @@ export const InfOverview = (props) => {
                         xs={12}
                     >
                         <Stack spacing={3}>
-                            <InfRightPanel />
+                            <InfRightPanel statkind={window.location.pathname.split("/")[3]} />
                         </Stack>
                     </Grid>
                 </Grid>
@@ -78,6 +79,9 @@ export const InfOverview = (props) => {
             <Box>
                 {currentTab == 'instagram' && (
                     <InfStatIg />
+                )}
+                {currentTab == 'youtube' && (
+                    <InfStatYt />
                 )}
             </Box>
         </>

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
@@ -19,18 +19,87 @@ import {
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
+import { Alert } from '@mui/material';
+import { connect, useDispatch } from 'react-redux';
+import { getUserProfile } from '@/actions';
+
 var once = false;
 import { Scrollbar } from '@/components/scrollbar';
-
-export const AccountSecuritySettings = (props) => {
+const AccountSecuritySettings = (props) => {
+  const dispatch = useDispatch();
+  const { userinfo } = props
+  const [oldpassword, Setoldpassword] = useState("");
+  const [newpassword, Setnewpassword] = useState("");
+  const [confirmpassword, Setconfirmpassword] = useState("");
   const { loginEvents } = props;
   const [isEditing, setIsEditing] = useState(false);
-
-  const handleEdit = useCallback(() => {
-    setIsEditing((prevState) => !prevState);
-  }, []);
+  const [showAlert, setShowAlert] = useState(false);
   const email = JSON.parse(localStorage.getItem('email'));
+  const sxColorApp = {
+    backgroundColor: userinfo.tfaapp == 0 ? "error.main" : "primary.main"
+  }
+  const sxColorSms = {
+    backgroundColor: userinfo.tfasms == 0 ? "error.main" : "primary.main"
+  }
 
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+  const [message, SetMessage] = useState("")
+  const handleEdit = () => {
+    if (isEditing) {
+      //save changes
+      if (oldpassword == "" || newpassword == "" || confirmpassword == "") {
+        SetMessage("You should input all fields!")
+        setShowAlert(true)
+        return
+      }
+      if (newpassword != confirmpassword) {
+        SetMessage("New password and confirm password not match!")
+        setShowAlert(true)
+
+        return
+      }
+      if (/^(?=.*[a-z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(newpassword)) {
+
+      }
+      else {
+        SetMessage("Must contain 8 characters, one uppercase, one lowercase, one number and one special case character")
+        setShowAlert(true)
+        return
+      }
+      axios
+        .post("/api/reset_account_password", { email, oldpassword, newpassword, confirmpassword })
+        .then((response) => {
+
+          if (response.data.status === 200) {
+            SetMessage("Password reset successfuly.")
+            setShowAlert(true)
+          }
+          else {
+            SetMessage("Old Password Is Wrong!")
+            setShowAlert(true)
+          }
+
+        });
+    }
+    setIsEditing((prevState) => !prevState);
+
+  }
+  const handleApp = () => {
+    axios
+      .post("/api/handle_tfa", { email, "kind": "app" })
+      .then((response) => {
+        dispatch(getUserProfile({ email: email }));
+      });
+  }
+  const handleSms = () => {
+    axios
+      .post("/api/handle_tfa", { email, "kind": "sms" })
+      .then((response) => {
+        dispatch(getUserProfile({ email: email }));
+      });
+  }
   const [histories, setHistory] = useState([]);
   if (!once) {
     axios
@@ -71,13 +140,16 @@ export const AccountSecuritySettings = (props) => {
               <Stack
                 alignItems="center"
                 direction="row"
+                sx={{ mb: 2 }}
                 spacing={3}
               >
                 <TextField
                   disabled={!isEditing}
-                  label="Password"
+                  label="Old Password"
+                  value={oldpassword}
+                  onChange={(e) => { setShowAlert(false); Setoldpassword(e.target.value) }}
                   type="password"
-                  defaultValue="Thebestpasswordever123#"
+                  defaultValue=""
                   sx={{
                     flexGrow: 1,
                     ...(!isEditing && {
@@ -87,10 +159,69 @@ export const AccountSecuritySettings = (props) => {
                     })
                   }}
                 />
+
                 <Button onClick={handleEdit}>
                   {isEditing ? 'Save' : 'Edit'}
                 </Button>
               </Stack>
+              <Stack
+                alignItems="center"
+                direction="row"
+                spacing={3}
+                sx={{ mb: 2 }}
+              >
+                <TextField
+                  disabled={!isEditing}
+                  value={newpassword}
+                  onChange={(e) => { setShowAlert(false); Setnewpassword(e.target.value) }}
+                  label="New Password"
+                  type="password"
+                  defaultValue=""
+                  sx={{
+                    flexGrow: 1,
+                    ...(!isEditing && {
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderStyle: 'dotted'
+                      }
+                    })
+                  }}
+                />
+
+                <Button>
+                  {isEditing ? '' : ''}
+                </Button>
+              </Stack>
+              <Stack
+                alignItems="center"
+                direction="row"
+                spacing={3}
+                sx={{ mb: 2 }}
+              >
+                <TextField
+                  disabled={!isEditing}
+                  onChange={(e) => { setShowAlert(false); Setconfirmpassword(e.target.value) }}
+                  label="Confirm New Password"
+                  value={confirmpassword}
+                  type="password"
+                  defaultValue=""
+                  sx={{
+                    flexGrow: 1,
+                    ...(!isEditing && {
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderStyle: 'dotted'
+                      }
+                    })
+                  }}
+                />
+                <Button>
+                  {isEditing ? '' : ''}
+                </Button>
+              </Stack>
+              {showAlert && (
+                <Alert severity="info" onClose={handleCloseAlert}>
+                  {message}
+                </Alert>
+              )}
             </Grid>
           </Grid>
         </CardContent>
@@ -120,7 +251,7 @@ export const AccountSecuritySettings = (props) => {
                     <Box
                       sx={{
                         '&::before': {
-                          backgroundColor: 'error.main',
+                          ...sxColorApp,
                           borderRadius: '50%',
                           content: '""',
                           display: 'block',
@@ -134,11 +265,11 @@ export const AccountSecuritySettings = (props) => {
                       }}
                     >
                       <Typography
-                        color="error"
+                        color={(userinfo.tfaapp == 0) ? "error" : "primary"}
                         sx={{ pl: 3 }}
                         variant="body2"
                       >
-                        Off
+                        {(userinfo.tfaapp == 0) ? "Off" : "On"}
                       </Typography>
                     </Box>
                   </Box>
@@ -163,8 +294,9 @@ export const AccountSecuritySettings = (props) => {
                         </SvgIcon>
                       )}
                       variant="outlined"
+                      onClick={handleApp}
                     >
-                      Set Up
+                      {(userinfo.tfaapp == 0) ? "Set up" : "Uninstall"}
                     </Button>
                   </Box>
                 </CardContent>
@@ -183,7 +315,7 @@ export const AccountSecuritySettings = (props) => {
                     <Box
                       sx={{
                         '&::before': {
-                          backgroundColor: 'error.main',
+                          ...sxColorSms,
                           borderRadius: '50%',
                           content: '""',
                           display: 'block',
@@ -197,11 +329,13 @@ export const AccountSecuritySettings = (props) => {
                       }}
                     >
                       <Typography
-                        color="error"
+                        color={(userinfo.tfasms == 0) ? "error" : "primary"}
+
                         sx={{ pl: 3 }}
                         variant="body2"
                       >
-                        Off
+                        {userinfo.tfasms === 0 ? "Off" : "On"}
+
                       </Typography>
                     </Box>
                   </Box>
@@ -225,9 +359,11 @@ export const AccountSecuritySettings = (props) => {
                           <ArrowRightIcon />
                         </SvgIcon>
                       )}
+                      onClick={handleSms}
                       variant="outlined"
                     >
-                      Set Up
+                      {(userinfo.tfasms == 0) ? "Set up" : "Uninstall"}
+
                     </Button>
                   </Box>
                 </CardContent>
@@ -258,7 +394,7 @@ export const AccountSecuritySettings = (props) => {
             </TableHead>
             <TableBody>
               {histories.map((history) => {
-                const createdAt = history.created_at.substring(11, 19) + " " + history.created_at.substring(0, 10)
+                const createdAt = ((Number(history.created_at.substring(11, 13)) > 12) ? Number(history.created_at.substring(11, 13)) - 12 : Number(history.created_at.substring(11, 13))) + history.created_at.substring(13, 16) + " " + ((Number(history.created_at.substring(11, 13)) >= 12) ? "PM" : "AM") + " " + history.created_at.substring(0, 10).replace(new RegExp('-', 'g'), '/')
 
                 return (
                   <TableRow
@@ -296,3 +432,8 @@ export const AccountSecuritySettings = (props) => {
 AccountSecuritySettings.propTypes = {
   loginEvents: PropTypes.array.isRequired
 };
+const mapStateToProps = state => ({
+  userinfo: state.profile.userinfo
+});
+export default connect(mapStateToProps)(AccountSecuritySettings);
+

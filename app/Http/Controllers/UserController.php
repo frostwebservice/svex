@@ -74,6 +74,39 @@ class UserController extends Controller
             return response()->json(["status" => "failed", "success" => false, "message" => "Password Reset Failed"]);
         }
     }
+    public function resetAccountPassword(Request $request){
+        $email = $request->email;
+        $old = $request->oldpassword;
+        $new = $request->newpassword;
+        $user = User::where("email",$email)->first();
+        if($user->password == md5($old)){
+            $arr = array("password"=>md5($new));
+            User::where("email",$email)->update($arr);
+            return response()->json(["status" => $this->status_code, "success" => true, "message" => "Password Reset Success", "data" => $user]);
+
+        }
+        else{
+            return response()->json(["status" => "failed", "success" => true, "message" => "Old Password Is Wrong!", "data" => $user]);
+
+        }
+    }
+    public function handleTfa(Request $request){
+        $email = $request->email;
+        $kind = $request->kind;
+        $user = User::where("email",$email)->first();
+        if($kind=="app"){
+            $value = $user->tfaapp;
+            User::where("email",$email)->update(array("tfaapp"=>abs($value-1)));
+            return response()->json(["status" => $this->status_code, "success" => true, "message" => "Setting Success", "data" => $user]);
+
+        }
+        else{
+            $value = $user->tfasms;
+            User::where("email",$email)->update(array("tfasms"=>abs($value-1)));
+            return response()->json(["status" => "failed", "success" => true, "message" => "Setting Success", "data" => $user]);
+
+        }
+    }
     public function sendReset(Request $request)
     {
         $user = User::where("email", $request->email)->first();
@@ -485,6 +518,12 @@ class UserController extends Controller
 
             // if password is correct
             if (!is_null($password_status)) {
+
+                // check password correct
+                if($email_status->password!=md5($request->password)){
+                return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
+
+                }
                 $user = $this->userDetail($request->email);
                 //api_token generate
                 $api_token = Str::random(60);

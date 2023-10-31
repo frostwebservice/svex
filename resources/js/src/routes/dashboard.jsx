@@ -290,7 +290,7 @@ export const dashboardRoutes = [
         path: 'inf',
         children: [
           {
-            path: ':userName',
+            path: ':userEmail',
             element: <SocialInfGlobalPage />
           },
           {

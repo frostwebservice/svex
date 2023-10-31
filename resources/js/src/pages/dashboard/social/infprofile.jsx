@@ -440,7 +440,7 @@ const Page = (props) => {
                         <div className='right-quick'>
                             <div className='quick-font'>Quick links</div>
                             <div className='quick-links'>
-                                <a className=' homepage-icon' href={socialinfo ? socialinfo.external_url : ''} target='_blank'></a>
+                                <a className=' homepage-icon' href={socialinfo && socialinfo.external_url ? socialinfo.external_url : ''} target='_blank'></a>
                                 <a className='instagram-icon quick-link' href='https://www.instagram.com' target='_blank'></a>
                                 <a className='tiktok-icon quick-link' href='https://www.tiktok.com' target='_blank'></a>
                                 <a className='youtube-icon quick-link' href='https://www.youtube.com' target='_blank'></a>
