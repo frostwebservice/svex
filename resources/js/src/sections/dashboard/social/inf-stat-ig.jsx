@@ -37,6 +37,7 @@ const InfStatIg = (props) => {
         return n.toString();
     }
     const [show_follower_color, SetFollowerColor] = useState("normal-letter");
+    const [show_following_color, SetFollowingColor] = useState("normal-letter");
     const [show_interval_color, SetIntervalColor] = useState("normal-letter");
     const [show_spread_color, SetSpreadColor] = useState("normal-letter");
     const [show_lc_color, SetLcColor] = useState("normal-letter");
@@ -53,6 +54,13 @@ const InfStatIg = (props) => {
                 else if (count > 100000 && count <= 500000) { show_follower_color == "normal-letter" ? "" : SetFollowerColor("normal-letter"); return "Mid" }
                 else if (count > 500000 && count <= 2500000) { show_follower_color == "high-letter" ? "" : SetFollowerColor("high-letter"); return "Macro" }
                 else if (count > 2500000) { show_follower_color == "veryhigh-letter" ? "" : SetFollowerColor("veryhigh-letter"); return "Mega" }
+            case "following":
+                if (count <= 2500) { show_following_color == "verylow-letter" ? "" : SetFollowingColor("verylow-letter"); return "Pico" }
+                else if (count > 2500 && count <= 10000) { show_following_color == "verylow-letter" ? "" : SetFollowingColor("verylow-letter"); return "Nano" }
+                else if (count > 10000 && count <= 100000) { show_following_color == "low-letter" ? "" : SetFollowingColor("low-letter"); return "Micro" }
+                else if (count > 100000 && count <= 500000) { show_following_color == "normal-letter" ? "" : SetFollowingColor("normal-letter"); return "Mid" }
+                else if (count > 500000 && count <= 2500000) { show_following_color == "high-letter" ? "" : SetFollowingColor("high-letter"); return "Macro" }
+                else if (count > 2500000) { show_following_color == "veryhigh-letter" ? "" : SetFollowingColor("veryhigh-letter"); return "Mega" }
             case "post_interval":
                 if (count <= 0.1) { show_interval_color == "low-letter" ? "" : SetIntervalColor("low-letter"); return "Low post interval" }
                 else if (count > 0.1 && count <= 0.5) { show_interval_color == "normal-letter" ? "" : SetIntervalColor("normal-letter"); return "Average/Good post interval" }
@@ -246,6 +254,7 @@ const InfStatIg = (props) => {
                                         )}
                                         secondary={(
                                             <>
+
                                                 <Typography
                                                     color="text.secondary"
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
@@ -253,6 +262,29 @@ const InfStatIg = (props) => {
                                                 >
                                                     {socialinfo && socialinfo.following_count ? formatNumber(socialinfo.following_count) : '0'}
                                                 </Typography>
+
+                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
+                                                    <AccordionSummary
+                                                        expandIcon={<ExpandMoreIcon />}
+                                                        aria-controls="panel1a-content"
+                                                        id="panel1a-header"
+                                                        sx={{ padding: 0, width: 'max-content' }}
+                                                    >
+                                                        <Typography
+                                                            color="text.secondary"
+                                                            sx={{ fontSize: '12px', fontWeight: 600, color: '#2970FF' }}
+
+                                                        >
+                                                            Details
+                                                        </Typography>
+                                                    </AccordionSummary>
+                                                    <AccordionDetails>
+                                                        <Typography>
+                                                            {socialinfo && socialinfo.follower_count ? socialinfo.follower_count : '0'} follwers
+                                                        </Typography>
+                                                    </AccordionDetails>
+                                                </Accordion> */}
+
                                             </>
                                         )}
 
@@ -928,19 +960,24 @@ const InfStatIg = (props) => {
                                         )}
                                         secondary={(
                                             <>
+
                                                 <Typography
                                                     color="text.secondary"
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.reel_count ? socialinfo.reel_count : "0"}m
+                                                    {socialinfo && socialinfo.reels ? formatNumber(socialinfo.reels) : '0'}
                                                 </Typography>
+
 
                                             </>
                                         )}
 
                                     />
+
+
                                 </ListItem>
+
                             </List>
                         </CardContent>
                     </Card>

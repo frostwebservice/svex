@@ -15,7 +15,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from 'react';
 import { connect } from 'react-redux';
-const InfStatYt = (props) => {
+const InfStatTt = (props) => {
     const show_percentage = (value) => {
 
         return Number(value) <= 1 ? Number(value).toFixed(2) + '%' : Number(value).toFixed(1) + '%'
@@ -46,10 +46,11 @@ const InfStatYt = (props) => {
     const [show_likes_color, SetLikesColor] = useState("normal-letter");
     const [show_like_dislike_color, SetLikeDislikeColor] = useState("normal-letter");
     const [show_like_view_color, SetLikeViewColor] = useState("normal-letter");
-    const [show_comment_view_color, SetCommentViewColor] = useState("normal-letter");
+    const [show_avg_play_video_color, SetAvgPlayVideoColor] = useState("normal-letter");
+    const [show_avg_share_color, SetAvgShareColor] = useState("normal-letter");
     const [show_avg_views_color, SetAvgViewsColor] = useState("normal-letter");
     const [show_view_subscriber_color, SetViewSubscriberColor] = useState("normal-letter");
-    const [show_comments_color, SetCommentsColor] = useState("normal-letter");
+    const [show_avg_comments_color, SetAvgCommentColor] = useState("normal-letter");
     const getShowing = (count, category) => {
 
         switch (category) {
@@ -98,10 +99,10 @@ const InfStatYt = (props) => {
                 else if (count > 5 && count <= 10) { show_lc_color == "high-letter" ? "" : SetLcColor("high-letter"); return "High balance" }
                 else if (count > 10) { show_lc_color == "veryhigh-letter" ? "" : SetLcColor("veryhigh-letter"); return "Very high balance" }
             case "engagement_rate":
-                if (count <= 0.5) { show_engagement_color == "low-letter" ? "" : SetEngagementColor("low-letter"); return "Low engagement rate" }
-                else if (count > 0.5 && count <= 3) { show_engagement_color == "normal-letter" ? "" : SetEngagementColor("normal-letter"); return "Average/Good engagement rate" }
-                else if (count > 3 && count <= 5.5) { show_engagement_color == "high-letter" ? "" : SetEngagementColor("high-letter"); return "High engagement rate" }
-                else if (count > 5.5) { show_engagement_color == "veryhigh-letter" ? "" : SetEngagementColor("veryhigh-letter"); return "Very high engagement rate" }
+                if (count <= 7) { show_engagement_color == "low-letter" ? "" : SetEngagementColor("low-letter"); return "Low engagement rate" }
+                else if (count > 7 && count <= 12) { show_engagement_color == "normal-letter" ? "" : SetEngagementColor("normal-letter"); return "Average/Good engagement rate" }
+                else if (count > 12 && count <= 17) { show_engagement_color == "high-letter" ? "" : SetEngagementColor("high-letter"); return "High engagement rate" }
+                else if (count > 17) { show_engagement_color == "veryhigh-letter" ? "" : SetEngagementColor("veryhigh-letter"); return "Very high engagement rate" }
             case "avg_like":
                 if (count <= 1) { show_likes_color == "low-letter" ? "" : SetLikesColor("low-letter"); return "Low average likes" }
                 else if (count > 1 && count <= 2) { show_likes_color == "normal-letter" ? "" : SetLikesColor("normal-letter"); return "Average/Good average likes" }
@@ -117,17 +118,21 @@ const InfStatYt = (props) => {
                 else if (count > 1.5 && count <= 3.7) { show_like_view_color == "normal-letter" ? "" : SetLikeViewColor("normal-letter"); return "Average/Good like to view ratio" }
                 else if (count > 3.7 && count <= 8.4) { show_like_view_color == "high-letter" ? "" : SetLikeViewColor("high-letter"); return "High like to view ratio" }
                 else if (count > 8.4) { show_like_view_color == "veryhigh-letter" ? "" : SetLikeViewColor("veryhigh-letter"); return "Very high like to view ratio" }
-
-            case "comment_view_ratio":
-                if (count <= 0.01) { show_comment_view_color == "low-letter" ? "" : SetCommentViewColor("low-letter"); return "Low comment to view ratio" }
-                else if (count > 0.01 && count <= 0.04) { show_comment_view_color == "normal-letter" ? "" : SetCommentViewColor("normal-letter"); return "Average/Good comment to view ratio" }
-                else if (count > 0.04 && count <= 0.16) { show_comment_view_color == "high-letter" ? "" : SetCommentViewColor("high-letter"); return "High comment to view ratio" }
-                else if (count > 0.16) { show_comment_view_color == "veryhigh-letter" ? "" : SetCommentViewColor("veryhigh-letter"); return "Very high comment to view ratio" }
-            case "average_comment":
-                if (count <= 0.3) { show_comments_color == "low-letter" ? "" : SetCommentsColor("low-letter"); return "Low average comments" }
-                else if (count > 0.3 && count <= 1) { show_comments_color == "normal-letter" ? "" : SetCommentsColor("normal-letter"); return "Average/Good average comments" }
-                else if (count > 1 && count <= 3) { show_comments_color == "high-letter" ? "" : SetCommentsColor("high-letter"); return "High average comments" }
-                else if (count > 3) { show_comments_color == "veryhigh-letter" ? "" : SetCommentsColor("veryhigh-letter"); return "Very high average comments" }
+            case "avg_play_video":
+                if (count <= 50) { show_avg_play_video_color == "low-letter" ? "" : SetAvgPlayVideoColor("low-letter"); return "Low average plays" }
+                else if (count > 50 && count <= 60) { show_avg_play_video_color == "normal-letter" ? "" : SetAvgPlayVideoColor("normal-letter"); return "Average/Good average plays" }
+                else if (count > 60 && count <= 70) { show_avg_play_video_color == "high-letter" ? "" : SetAvgPlayVideoColor("high-letter"); return "High average plays" }
+                else if (count > 70) { show_avg_play_video_color == "veryhigh-letter" ? "" : SetAvgPlayVideoColor("veryhigh-letter"); return "Very high average plays" }
+            case "avg_share":
+                if (count <= 50) { show_avg_share_color == "low-letter" ? "" : SetAvgShareColor("low-letter"); return "Low average shares" }
+                else if (count > 50 && count <= 60) { show_avg_share_color == "normal-letter" ? "" : SetAvgShareColor("normal-letter"); return "Average/Good average shares" }
+                else if (count > 60 && count <= 70) { show_avg_share_color == "high-letter" ? "" : SetAvgShareColor("high-letter"); return "High average shares" }
+                else if (count > 70) { show_avg_share_color == "veryhigh-letter" ? "" : SetAvgShareColor("veryhigh-letter"); return "Very high average shares" }
+            case "avg_comments":
+                if (count <= 0.5) { show_avg_comments_color == "low-letter" ? "" : SetAvgCommentColor("low-letter"); return "Low average comments" }
+                else if (count > 0.5 && count <= 1) { show_avg_comments_color == "normal-letter" ? "" : SetAvgCommentColor("normal-letter"); return "Average/Good average comments" }
+                else if (count > 1 && count <= 3) { show_avg_comments_color == "high-letter" ? "" : SetAvgCommentColor("high-letter"); return "High average comments" }
+                else if (count > 3) { show_avg_comments_color == "veryhigh-letter" ? "" : SetAvgCommentColor("veryhigh-letter"); return "Very high average comments" }
             default:
                 return "";
         }
@@ -254,6 +259,7 @@ const InfStatYt = (props) => {
                             <List sx={{ mt: 2 }}>
                                 <ListItem
                                     disableGutters
+                                // key={product.id}
                                 >
                                     <ListItemAvatar sx={{ pr: 2 }}>
                                         <Box
@@ -272,7 +278,7 @@ const InfStatYt = (props) => {
                                         >
                                             <img
                                                 alt="ss"
-                                                src='/assets/stats/avg_view.png'
+                                                src='/assets/stats/following.png'
                                             />
                                         </Box>
                                     </ListItemAvatar>
@@ -285,38 +291,20 @@ const InfStatYt = (props) => {
                                                 sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
-                                                Average Views
+                                                Following Count
                                             </Typography>
                                         )}
                                         secondary={(
                                             <>
+
                                                 <Typography
                                                     color="text.secondary"
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_views ? show_percentage(Number(socialinfo.avg_views) / Number(socialinfo.subscribers) * 100) : '0%'}
-
+                                                    {socialinfo && socialinfo.following_count ? formatNumber(socialinfo.following_count) : '0'}
                                                 </Typography>
-                                                <Typography
-                                                    color="text.secondary"
-                                                    sx={{ mt: 1, fontSize: '14px', color: '#008EAD', fontWeight: 600, wordWrap: 'break-word' }}
-                                                    variant="body1"
-                                                    className={`custom-typo ${show_views_color}`}
-                                                >
-                                                    <Grid container>
-                                                        <Grid item xs={1} md={1} sm={1}
-                                                            className='bullet-img'
-                                                        >
 
-                                                        </Grid>
-                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.avg_views ? getShowing(Number(socialinfo.avg_views) / Number(socialinfo.subscribers) * 100, "avg_views") : ''}
-                                                        </Grid>
-
-                                                    </Grid>
-
-                                                </Typography>
                                                 {/* <Accordion sx={{ boxShadow: 'none' }}>
                                                     <AccordionSummary
                                                         expandIcon={<ExpandMoreIcon />}
@@ -334,7 +322,7 @@ const InfStatYt = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            Average {socialinfo && socialinfo.avg_like ? socialinfo.avg_like : 0} likes per post
+                                                            {socialinfo && socialinfo.follower_count ? socialinfo.follower_count : '0'} follwers
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -401,7 +389,7 @@ const InfStatYt = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_likes ? show_percentage(Number(socialinfo.avg_likes) / Number(socialinfo.subscribers) * 100) : '0%'}
+                                                    {socialinfo && socialinfo.avg_like ? show_percentage(Number(socialinfo.avg_like.replace(/,/g, '')) / Number(socialinfo.subscribers) * 100) : '0%'}
 
                                                 </Typography>
                                                 <Typography
@@ -417,7 +405,7 @@ const InfStatYt = (props) => {
 
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.avg_likes ? getShowing(Number(socialinfo.avg_likes) / Number(socialinfo.subscribers) * 100, "avg_like") : ''}
+                                                            {socialinfo && socialinfo.avg_like ? getShowing(Number(socialinfo.avg_like.replace(/,/g, '')) / Number(socialinfo.subscribers) * 100, "avg_like") : ''}
                                                         </Grid>
 
                                                     </Grid>
@@ -484,7 +472,7 @@ const InfStatYt = (props) => {
                                         >
                                             <img
                                                 alt="ss"
-                                                src='/assets/stats/like_dislike.png'
+                                                src='/assets/stats/chat.png'
                                             />
                                         </Box>
                                     </ListItemAvatar>
@@ -497,7 +485,7 @@ const InfStatYt = (props) => {
                                                 sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
-                                                Like/Dislike Rate
+                                                Average Comments
                                             </Typography>
                                         )}
                                         secondary={(
@@ -507,14 +495,14 @@ const InfStatYt = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_likes ? show_percentage(Number(socialinfo.avg_likes) / Number(socialinfo.avg_dislike) * 100) : '0%'}
+                                                    {socialinfo && socialinfo.avg_comments ? show_percentage(Number(socialinfo.avg_comments) / Number(socialinfo.subscribers) * 100) : '0%'}
 
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
                                                     sx={{ mt: 1, fontSize: '14px', color: '#008EAD', fontWeight: 600, wordWrap: 'break-word' }}
                                                     variant="body1"
-                                                    className={`custom-typo ${show_like_dislike_color}`}
+                                                    className={`custom-typo ${show_avg_comments_color}`}
                                                 >
                                                     <Grid container>
                                                         <Grid item xs={1} md={1} sm={1}
@@ -523,7 +511,7 @@ const InfStatYt = (props) => {
 
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.avg_likes ? getShowing(Number(socialinfo.avg_likes) / Number(socialinfo.avg_dislike) * 100, "like_dislike") : ''}
+                                                            {socialinfo && socialinfo.avg_comments ? getShowing(Number(socialinfo.avg_comments) / Number(socialinfo.subscribers) * 100, "avg_comments") : ''}
                                                         </Grid>
 
                                                     </Grid>
@@ -590,7 +578,7 @@ const InfStatYt = (props) => {
                                         >
                                             <img
                                                 alt="ss"
-                                                src='/assets/stats/like_view.png'
+                                                src='/assets/stats/share.png'
                                             />
                                         </Box>
                                     </ListItemAvatar>
@@ -603,7 +591,7 @@ const InfStatYt = (props) => {
                                                 sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
-                                                Like/View Rate
+                                                Average Shared
                                             </Typography>
                                         )}
                                         secondary={(
@@ -613,13 +601,13 @@ const InfStatYt = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.like_view_ratio ? show_percentage(socialinfo.like_view_ratio) : '0%'}
+                                                    {socialinfo && socialinfo.avg_share ? show_percentage(100 * Number(socialinfo.avg_share.replace(/,/g, '')) / Number(socialinfo.subscribers)) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
                                                     sx={{ mt: 1, fontSize: '14px', color: '#008EAD', fontWeight: 600, wordWrap: 'break-word' }}
                                                     variant="body1"
-                                                    className={`custom-typo ${show_like_view_color}`}
+                                                    className={`custom-typo ${show_avg_share_color}`}
                                                 >
                                                     <Grid container>
                                                         <Grid item xs={1} md={1} sm={1}
@@ -627,7 +615,7 @@ const InfStatYt = (props) => {
                                                         >
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.like_view_ratio ? getShowing(socialinfo.like_view_ratio, "like_view_ratio") : ''}
+                                                            {socialinfo && socialinfo.avg_share ? getShowing(100 * Number(socialinfo.avg_share.replace(/,/g, '')) / Number(socialinfo.subscribers), "avg_share") : ''}
                                                         </Grid>
                                                     </Grid>
                                                 </Typography>
@@ -693,7 +681,7 @@ const InfStatYt = (props) => {
                                         >
                                             <img
                                                 alt="ss"
-                                                src='/assets/stats/comment_view.png'
+                                                src='/assets/stats/play.png'
                                             />
                                         </Box>
                                     </ListItemAvatar>
@@ -706,7 +694,7 @@ const InfStatYt = (props) => {
                                                 sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
-                                                Comment/View Rate
+                                                Average Plays
                                             </Typography>
                                         )}
                                         secondary={(
@@ -716,13 +704,13 @@ const InfStatYt = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.comment_view_ratio ? show_percentage(socialinfo.comment_view_ratio) : '0%'}
+                                                    {socialinfo && socialinfo.avg_play_video ? show_percentage(100 * Number(socialinfo.avg_play_video.replace(/,/g, '')) / Number(socialinfo.subscribers)) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
                                                     sx={{ mt: 1, fontSize: '14px', color: '#008EAD', fontWeight: 600, wordWrap: 'break-word' }}
                                                     variant="body1"
-                                                    className={`custom-typo ${show_comment_view_color}`}
+                                                    className={`custom-typo ${show_avg_play_video_color}`}
                                                 >
                                                     <Grid container>
                                                         <Grid item xs={1} md={1} sm={1}
@@ -730,7 +718,7 @@ const InfStatYt = (props) => {
                                                         >
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.comment_view_ratio ? getShowing(socialinfo.comment_view_ratio, "comment_view_ratio") : ''}
+                                                            {socialinfo && socialinfo.avg_play_video ? getShowing(100 * Number(socialinfo.avg_play_video.replace(/,/g, '')) / Number(socialinfo.subscribers), "avg_play_video") : ''}
                                                         </Grid>
                                                     </Grid>
                                                 </Typography>
@@ -753,111 +741,6 @@ const InfStatYt = (props) => {
                                                         <Typography>
                                                             {socialinfo && socialinfo.likes_spread ? socialinfo.likes_spread : 0}%
 
-                                                        </Typography>
-                                                    </AccordionDetails>
-                                                </Accordion> */}
-
-                                            </>
-                                        )}
-
-                                    />
-
-
-                                </ListItem>
-
-                            </List>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={12}
-                    className='custom-grid'
-                >
-                    <Card className='stat-card'>
-                        <CardContent style={{ paddingTop: 0, paddingBottom: 0, width: '-webkit-fill-available' }}>
-                            <List sx={{ mt: 2 }}>
-                                <ListItem
-                                    disableGutters
-                                >
-                                    <ListItemAvatar sx={{ pr: 2 }}>
-                                        <Box
-                                            sx={{
-                                                alignItems: 'center',
-                                                display: 'flex',
-                                                // height: 100,
-                                                justifyContent: 'center',
-                                                overflow: 'hidden',
-                                                // width: 100,
-                                                '& img': {
-                                                    width: '100%',
-                                                    height: 'auto'
-                                                }
-                                            }}
-                                        >
-                                            <img
-                                                alt="ss"
-                                                src='/assets/stats/vote.png'
-                                            />
-                                        </Box>
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        sx={{ pl: 6 }}
-                                        primary={(
-                                            <Typography
-                                                color="text.stat"
-
-                                                sx={{ fontWeight: 400, fontSize: '16px' }}
-                                                variant="subtitle2"
-                                            >
-                                                View/Subscriber Rate
-                                            </Typography>
-                                        )}
-                                        secondary={(
-                                            <>
-                                                <Typography
-                                                    color="text.secondary"
-                                                    sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
-                                                    variant="body1"
-                                                >
-                                                    {socialinfo && socialinfo.views ? show_percentage(Number(socialinfo.views) / Number(socialinfo.subscribers) * 100) : '0%'}
-
-                                                </Typography>
-                                                <Typography
-                                                    color="text.secondary"
-                                                    sx={{ mt: 1, fontSize: '14px', color: '#008EAD', fontWeight: 600, wordWrap: 'break-word' }}
-                                                    variant="body1"
-                                                    className={`custom-typo ${show_view_subscriber_color}`}
-                                                >
-                                                    <Grid container>
-                                                        <Grid item xs={1} md={1} sm={1}
-                                                            className='bullet-img'
-                                                        >
-
-                                                        </Grid>
-                                                        <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.views ? getShowing(Number(socialinfo.views) / Number(socialinfo.subscribers) * 100, "view_subscriber_ratio") : ''}
-                                                        </Grid>
-
-                                                    </Grid>
-
-                                                </Typography>
-                                                {/* <Accordion sx={{ boxShadow: 'none' }}>
-                                                    <AccordionSummary
-                                                        expandIcon={<ExpandMoreIcon />}
-                                                        aria-controls="panel1a-content"
-                                                        id="panel1a-header"
-                                                        sx={{ padding: 0, width: 'max-content' }}
-                                                    >
-                                                        <Typography
-                                                            color="text.secondary"
-                                                            sx={{ fontSize: '12px', fontWeight: 600, color: '#2970FF' }}
-
-                                                        >
-                                                            Details
-                                                        </Typography>
-                                                    </AccordionSummary>
-                                                    <AccordionDetails>
-                                                        <Typography>
-                                                            Average {socialinfo && socialinfo.avg_like ? socialinfo.avg_like : 0} likes per post
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -1003,7 +886,7 @@ const InfStatYt = (props) => {
                                         >
                                             <img
                                                 alt="ss"
-                                                src='/assets/stats/total_view.png'
+                                                src='/assets/stats/total_like.png'
                                             />
                                         </Box>
                                     </ListItemAvatar>
@@ -1016,7 +899,7 @@ const InfStatYt = (props) => {
                                                 sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
-                                                Total Views
+                                                Total Likes
                                             </Typography>
                                         )}
                                         secondary={(
@@ -1027,7 +910,7 @@ const InfStatYt = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.views ? formatNumber(socialinfo.views) : '0'}
+                                                    {socialinfo && socialinfo.total_likes ? formatNumber(socialinfo.total_likes.replace(/,/g, '')) : '0'}
                                                 </Typography>
 
                                                 {/* <Accordion sx={{ boxShadow: 'none' }}>
@@ -1091,7 +974,7 @@ const InfStatYt = (props) => {
                                         >
                                             <img
                                                 alt="ss"
-                                                src='/assets/stats/media.png'
+                                                src='/assets/stats/media_count.png'
                                             />
                                         </Box>
                                     </ListItemAvatar>
@@ -1104,7 +987,7 @@ const InfStatYt = (props) => {
                                                 sx={{ fontWeight: 400, fontSize: '16px' }}
                                                 variant="subtitle2"
                                             >
-                                                Video Count
+                                                Media Count
                                             </Typography>
                                         )}
                                         secondary={(
@@ -1115,7 +998,7 @@ const InfStatYt = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.videos ? formatNumber(socialinfo.videos) : '0'}
+                                                    {socialinfo && socialinfo.video_count ? formatNumber(socialinfo.video_count) : '0'}
                                                 </Typography>
 
                                                 {/* <Accordion sx={{ boxShadow: 'none' }}>
@@ -1162,4 +1045,4 @@ const InfStatYt = (props) => {
 const mapStateToProps = state => ({
     socialinfo: state.profile.socialinfo
 })
-export default connect(mapStateToProps)(InfStatYt);
+export default connect(mapStateToProps)(InfStatTt);

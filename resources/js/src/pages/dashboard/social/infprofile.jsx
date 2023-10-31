@@ -184,6 +184,31 @@ const Page = (props) => {
     const showConnect = status === 'not_connected';
     const showPending = status === 'pending';
 
+    const showReach = () => {
+        let social_type = window.location.pathname.split("/")[3]
+        if (social_type == "instagram") {
+            return socialinfo && socialinfo.follower_count ? formatNumber(socialinfo.follower_count) : '0'
+        }
+        else if (social_type == "youtube" || social_type == "tiktok") {
+            return socialinfo && socialinfo.subscribers ? formatNumber(socialinfo.subscribers) : '0'
+        }
+    }
+
+    const showExternalUrl = () => {
+        let social_type = window.location.pathname.split("/")[3]
+        if (social_type == "tiktok") {
+            if (socialinfo && socialinfo.external_url == "-") return ''
+            return socialinfo && socialinfo.external_url ? socialinfo.external_url : ''
+
+        }
+        else {
+            return socialinfo && socialinfo.external_url ? socialinfo.external_url : ''
+
+        }
+
+    }
+
+
     return (
         <>
             <Seo title="Dashboard: Social Profile" />
@@ -273,7 +298,7 @@ const Page = (props) => {
                                                     <Grid item sx={{ color: '#2970FF', fontSize: '11px', fontWeight: 300, pl: 1, pr: 1, pt: 0.5, pb: 0.5 }}>
                                                         <div>Reach</div>
                                                         <div style={{ fontSize: '16px', fontWeight: 700 }}>
-                                                            {socialinfo && socialinfo.follower_count ? formatNumber(socialinfo.follower_count) : '0'}
+                                                            {showReach()}
                                                         </div>
                                                     </Grid>
                                                     <Grid item style={{ display: 'flex', alignItems: 'center', margin: '0 auto' }}>
@@ -440,7 +465,7 @@ const Page = (props) => {
                         <div className='right-quick'>
                             <div className='quick-font'>Quick links</div>
                             <div className='quick-links'>
-                                <a className=' homepage-icon' href={socialinfo && socialinfo.external_url ? socialinfo.external_url : ''} target='_blank'></a>
+                                <a className=' homepage-icon' href={showExternalUrl()} target='_blank'></a>
                                 <a className='instagram-icon quick-link' href='https://www.instagram.com' target='_blank'></a>
                                 <a className='tiktok-icon quick-link' href='https://www.tiktok.com' target='_blank'></a>
                                 <a className='youtube-icon quick-link' href='https://www.youtube.com' target='_blank'></a>

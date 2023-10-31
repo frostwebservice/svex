@@ -5,6 +5,7 @@ import { SocialPostCard } from './social-post-card';
 import InfAbout from './inf-about';
 import InfStatIg from './inf-stat-ig';
 import InfStatYt from './inf-stat-yt';
+import InfStatTt from './inf-stat-tt';
 import { useState, useCallback } from 'react';
 import { Tab, Tabs, Card, CardHeader } from '@mui/material';
 export const InfOverview = (props) => {
@@ -82,6 +83,9 @@ export const InfOverview = (props) => {
                 )}
                 {currentTab == 'youtube' && (
                     <InfStatYt />
+                )}
+                {currentTab == 'tiktok' && (
+                    <InfStatTt />
                 )}
             </Box>
         </>

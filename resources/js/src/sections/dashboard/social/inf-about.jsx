@@ -31,7 +31,17 @@ const InfAbout = (props) => {
         quote,
         ...other
     } = props;
+    const showExternalUrl = () => {
+        let social_type = window.location.pathname.split("/")[3]
+        if (social_type == "tiktok") {
+            if (socialinfo && socialinfo.external_url == "-") return ''
+            return socialinfo && socialinfo.external_url ? socialinfo.external_url.replace(/(^\w+:|^)\/\//, '') : ''
+        }
+        else {
+            return socialinfo && socialinfo.external_url ? socialinfo.external_url.replace(/(^\w+:|^)\/\//, '') : ''
+        }
 
+    }
     return (
         <Stack
             spacing={3}
@@ -53,7 +63,7 @@ const InfAbout = (props) => {
                         className='about-content'
                         style={{ borderBottom: '0.5px solid #F2F4F7', paddingBottom: 50 }}
                     >
-                        {socialinfo ? socialinfo.biography.replace(/[\.,?!]/g, '') : ''}
+                        {socialinfo ? socialinfo.biography.replace(/[\.,?!]/g, '').replace(/�/g, "'") : ''}
                     </Typography>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={6} sm={6}>
@@ -94,7 +104,7 @@ const InfAbout = (props) => {
                                                 className='social-list-font'
                                                 href={socialinfo ? socialinfo.external_url : ''}
                                             >
-                                                {socialinfo && socialinfo.external_url ? socialinfo.external_url.replace(/(^\w+:|^)\/\//, '') : ''}
+                                                {showExternalUrl()}
                                             </Link>
                                             // <Typography variant="subtitle2" className='about-list-font'>
                                             //     {socialinfo ? socialinfo.external_url : ''}
@@ -132,7 +142,7 @@ const InfAbout = (props) => {
                                         primary={(
                                             <Typography variant="subtitle2"
                                                 className='about-list-font'>
-                                                {socialinfo ? socialinfo.city : ''}
+                                                {socialinfo ? socialinfo.city + ", " + socialinfo.Country : ''}
                                                 {' '}
                                             </Typography>
                                         )}

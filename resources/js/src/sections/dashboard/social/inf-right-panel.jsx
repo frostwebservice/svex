@@ -19,7 +19,7 @@ const InfRightPanel = (props) => {
     const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
     const { socialinfo, statkind } = props;
     const renderNiche = () => {
-        if (statkind == "instagram") {
+        if (statkind == "instagram" || statkind == "tiktok") {
             return (
                 (socialinfo && socialinfo.category_niche) ? (< div className='profile-niche' key={socialinfo.category_niche} > {socialinfo.category_niche}</div >) : (<></>)
             )
