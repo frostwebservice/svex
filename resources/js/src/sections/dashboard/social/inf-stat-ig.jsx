@@ -96,9 +96,9 @@ const InfStatIg = (props) => {
         }
     }
     const {
-        socialinfo, ...other
+        socialinfo, total, ...other
     } = props;
-
+    let tmp = total == "total" ? socialinfo["instagram"] : socialinfo
     return (
         <Stack
             spacing={3}
@@ -156,7 +156,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.follower_count ? formatNumber(socialinfo.follower_count) : '0'}
+                                                    {tmp && tmp.follower_count ? formatNumber(tmp.follower_count) : '0'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -170,7 +170,7 @@ const InfStatIg = (props) => {
                                                         >
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.follower_count ? getShowing(socialinfo.follower_count, "follower") : ''}
+                                                            {tmp && tmp.follower_count ? getShowing(tmp.follower_count, "follower") : ''}
                                                         </Grid>
 
                                                     </Grid>
@@ -192,7 +192,7 @@ const InfStatIg = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            {socialinfo && socialinfo.follower_count ? socialinfo.follower_count : '0'} follwers
+                                                            {tmp && tmp.follower_count ? tmp.follower_count : '0'} follwers
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -260,7 +260,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.following_count ? formatNumber(socialinfo.following_count) : '0'}
+                                                    {tmp && tmp.following_count ? formatNumber(tmp.following_count) : '0'}
                                                 </Typography>
 
                                                 {/* <Accordion sx={{ boxShadow: 'none' }}>
@@ -280,7 +280,7 @@ const InfStatIg = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            {socialinfo && socialinfo.follower_count ? socialinfo.follower_count : '0'} follwers
+                                                            {tmp && tmp.follower_count ? tmp.follower_count : '0'} follwers
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -347,7 +347,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_like ? show_percentage(Number(socialinfo.avg_like) / Number(socialinfo.follower_count) * 100) : '0%'}
+                                                    {tmp && tmp.avg_like ? show_percentage(Number(tmp.avg_like) / Number(tmp.follower_count) * 100) : '0%'}
 
                                                 </Typography>
                                                 <Typography
@@ -363,7 +363,7 @@ const InfStatIg = (props) => {
 
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.avg_like ? getShowing(Number(socialinfo.avg_like) / Number(socialinfo.follower_count) * 100, "avg_like") : ''}
+                                                            {tmp && tmp.avg_like ? getShowing(Number(tmp.avg_like) / Number(tmp.follower_count) * 100, "avg_like") : ''}
                                                         </Grid>
 
                                                     </Grid>
@@ -386,7 +386,7 @@ const InfStatIg = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            Average {socialinfo && socialinfo.avg_like ? socialinfo.avg_like : 0} likes per post
+                                                            Average {tmp && tmp.avg_like ? tmp.avg_like : 0} likes per post
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -453,7 +453,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_comment ? show_percentage(Number(socialinfo.avg_comment) / Number(socialinfo.follower_count) * 100) : '0%'}
+                                                    {tmp && tmp.avg_comment ? show_percentage(Number(tmp.avg_comment) / Number(tmp.follower_count) * 100) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -467,7 +467,7 @@ const InfStatIg = (props) => {
                                                         >
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.avg_comment ? getShowing(Number(socialinfo.avg_comment) / Number(socialinfo.follower_count) * 100, "average_comment") : ''}
+                                                            {tmp && tmp.avg_comment ? getShowing(Number(tmp.avg_comment) / Number(tmp.follower_count) * 100, "average_comment") : ''}
 
                                                         </Grid>
                                                     </Grid>
@@ -489,7 +489,7 @@ const InfStatIg = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            Average {socialinfo && socialinfo.avg_comment ? socialinfo.avg_comment : 0} comments per post
+                                                            Average {tmp && tmp.avg_comment ? tmp.avg_comment : 0} comments per post
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -556,7 +556,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.engagement_rate ? show_percentage(socialinfo.engagement_rate) : '0%'}
+                                                    {tmp && tmp.engagement_rate ? show_percentage(tmp.engagement_rate) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -570,7 +570,7 @@ const InfStatIg = (props) => {
                                                         >
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.engagement_rate ? getShowing(socialinfo.engagement_rate, "engagement_rate") : ''}
+                                                            {tmp && tmp.engagement_rate ? getShowing(tmp.engagement_rate, "engagement_rate") : ''}
                                                         </Grid>
                                                     </Grid>
                                                 </Typography>
@@ -591,7 +591,7 @@ const InfStatIg = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            {socialinfo && socialinfo.engagement_rate ? socialinfo.engagement_rate : 0}%
+                                                            {tmp && tmp.engagement_rate ? tmp.engagement_rate : 0}%
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -658,7 +658,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.lc_ratio ? show_percentage(socialinfo.lc_ratio) : '0%'}
+                                                    {tmp && tmp.lc_ratio ? show_percentage(tmp.lc_ratio) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -672,7 +672,7 @@ const InfStatIg = (props) => {
                                                         >
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.lc_ratio ? getShowing(socialinfo.lc_ratio, "lc_ratio") : ''}
+                                                            {tmp && tmp.lc_ratio ? getShowing(tmp.lc_ratio, "lc_ratio") : ''}
                                                         </Grid>
                                                     </Grid>
                                                 </Typography>
@@ -693,7 +693,7 @@ const InfStatIg = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            {socialinfo && socialinfo.lc_ratio ? socialinfo.lc_ratio : 0}%
+                                                            {tmp && tmp.lc_ratio ? tmp.lc_ratio : 0}%
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -760,7 +760,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.likes_spread ? show_percentage(socialinfo.likes_spread) : '0%'}
+                                                    {tmp && tmp.likes_spread ? show_percentage(tmp.likes_spread) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -774,7 +774,7 @@ const InfStatIg = (props) => {
                                                         >
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.likes_spread ? getShowing(socialinfo.likes_spread, "like_spread") : ''}
+                                                            {tmp && tmp.likes_spread ? getShowing(tmp.likes_spread, "like_spread") : ''}
                                                         </Grid>
                                                     </Grid>
                                                 </Typography>
@@ -795,7 +795,7 @@ const InfStatIg = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            {socialinfo && socialinfo.likes_spread ? socialinfo.likes_spread : 0}%
+                                                            {tmp && tmp.likes_spread ? tmp.likes_spread : 0}%
 
                                                         </Typography>
                                                     </AccordionDetails>
@@ -863,7 +863,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.avg_post_interval ? show_percentage(socialinfo.avg_post_interval) : '0%'}
+                                                    {tmp && tmp.avg_post_interval ? show_percentage(tmp.avg_post_interval) : '0%'}
                                                 </Typography>
                                                 <Typography
                                                     color="text.secondary"
@@ -877,7 +877,7 @@ const InfStatIg = (props) => {
                                                         >
                                                         </Grid>
                                                         <Grid item xs={10} md={10} sm={10} className='custom-sub-panel'>
-                                                            {socialinfo && socialinfo.avg_post_interval ? getShowing(socialinfo.avg_post_interval, "post_interval") : ''}
+                                                            {tmp && tmp.avg_post_interval ? getShowing(tmp.avg_post_interval, "post_interval") : ''}
                                                         </Grid>
                                                     </Grid>
                                                 </Typography>
@@ -898,7 +898,7 @@ const InfStatIg = (props) => {
                                                     </AccordionSummary>
                                                     <AccordionDetails>
                                                         <Typography>
-                                                            {socialinfo && socialinfo.avg_post_interval ? socialinfo.avg_post_interval : 0}%
+                                                            {tmp && tmp.avg_post_interval ? tmp.avg_post_interval : 0}%
                                                         </Typography>
                                                     </AccordionDetails>
                                                 </Accordion> */}
@@ -966,7 +966,7 @@ const InfStatIg = (props) => {
                                                     sx={{ fontSize: '40px', color: '#4466F2', fontWeight: 700 }}
                                                     variant="body1"
                                                 >
-                                                    {socialinfo && socialinfo.reels ? formatNumber(socialinfo.reels) : '0'}
+                                                    {tmp && tmp.reels ? formatNumber(tmp.reels) : '0'}
                                                 </Typography>
 
 

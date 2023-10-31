@@ -17,15 +17,19 @@ import { connect } from 'react-redux';
 const InfRightPanel = (props) => {
     const user = useMockedUser();
     const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-    const { socialinfo, statkind } = props;
+    const { socialinfo, statkind, total } = props;
+    let tmp = total == "total" ? socialinfo[socialinfo["basic"]] : socialinfo
     const renderNiche = () => {
-        if (statkind == "instagram" || statkind == "tiktok" || statkind == "twitter" || statkind == "pinterest") {
+        let tmpStatKind = statkind
+
+        if (total == "total") tmpStatKind = socialinfo["basic"]
+        if (tmpStatKind == "instagram" || tmpStatKind == "tiktok" || tmpStatKind == "twitter" || tmpStatKind == "pinterest") {
             return (
-                (socialinfo && socialinfo.category_niche) ? (< div className='profile-niche' key={socialinfo.category_niche} > {socialinfo.category_niche}</div >) : (<></>)
+                (tmp && tmp.category_niche) ? (< div className='profile-niche' key={tmp.category_niche} > {tmp.category_niche}</div >) : (<></>)
             )
         }
-        else if (statkind == "youtube") {
-            let niches = (socialinfo && socialinfo.category_niche) ? socialinfo.category_niche : ""
+        else if (tmpStatKind == "youtube") {
+            let niches = (tmp && tmp.category_niche) ? tmp.category_niche : ""
             niches = niches.replace("[", "").replace("]", "")
             niches = niches.split(",")
             console.log(niches)
@@ -44,7 +48,7 @@ const InfRightPanel = (props) => {
             <CardHeader title="Social media links" className='head-font' />
             <CardContent>
                 <List disablePadding>
-                    {socialinfo ? (
+                    {tmp ? (
                         <ListItem
                             disableGutters
                             divider
@@ -62,15 +66,15 @@ const InfRightPanel = (props) => {
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
-                                        href={"https://" + 'www.facebook.com/' + socialinfo.username}
+                                        href={"https://" + 'www.facebook.com/' + tmp.username}
                                     >
-                                        {'www.facebook.com/' + socialinfo.username}
+                                        {'www.facebook.com/' + tmp.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
                     ) : ''}
-                    {socialinfo ? (
+                    {tmp ? (
                         <ListItem
                             disableGutters
                             divider
@@ -88,15 +92,15 @@ const InfRightPanel = (props) => {
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
-                                        href={"https://" + 'www.instagram.com/' + socialinfo.username}
+                                        href={"https://" + 'www.instagram.com/' + tmp.username}
                                     >
-                                        {'www.instagram.com/' + socialinfo.username}
+                                        {'www.instagram.com/' + tmp.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
                     ) : ''}
-                    {socialinfo ? (
+                    {tmp ? (
                         <ListItem
                             disableGutters
                             divider
@@ -114,15 +118,15 @@ const InfRightPanel = (props) => {
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
-                                        href={"https://" + 'www.tiktok.com/' + socialinfo.username}
+                                        href={"https://" + 'www.tiktok.com/' + tmp.username}
                                     >
-                                        {'www.tiktok.com/' + socialinfo.username}
+                                        {'www.tiktok.com/' + tmp.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
                     ) : ''}
-                    {socialinfo ? (
+                    {tmp ? (
                         <ListItem
                             disableGutters
                             divider
@@ -140,15 +144,15 @@ const InfRightPanel = (props) => {
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
-                                        href={"https://" + 'www.youtube.com/@' + socialinfo.username}
+                                        href={"https://" + 'www.youtube.com/@' + tmp.username}
                                     >
-                                        {'www.youtube.com/@' + socialinfo.username}
+                                        {'www.youtube.com/@' + tmp.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
                     ) : ''}
-                    {socialinfo ? (
+                    {tmp ? (
                         <ListItem
                             disableGutters
                             divider
@@ -166,15 +170,15 @@ const InfRightPanel = (props) => {
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
-                                        href={"https://" + 'www.twitter.com/' + socialinfo.username}
+                                        href={"https://" + 'www.twitter.com/' + tmp.username}
                                     >
-                                        {'www.twitter.com/' + socialinfo.username}
+                                        {'www.twitter.com/' + tmp.username}
                                     </Link>
                                 )}
                             />
                         </ListItem>
                     ) : ''}
-                    {socialinfo ? (
+                    {tmp ? (
                         <ListItem
                             disableGutters
                             divider
@@ -192,9 +196,9 @@ const InfRightPanel = (props) => {
                                         sx={{ cursor: 'pointer' }}
                                         variant="caption"
                                         className='social-list-font'
-                                        href={"https://" + 'www.pinterest.com/' + socialinfo.username}
+                                        href={"https://" + 'www.pinterest.com/' + tmp.username}
                                     >
-                                        {'www.pinterest.com/' + socialinfo.username}
+                                        {'www.pinterest.com/' + tmp.username}
                                     </Link>
                                 )}
                             />

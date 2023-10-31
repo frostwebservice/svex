@@ -6,18 +6,19 @@ import UserPlus02Icon from '@untitled-ui/icons-react/build/esm/UserPlus02';
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import { useNavigate } from 'react-router-dom';
-
 import {
     Avatar,
     Box,
     Button,
     Container,
     Divider,
+    ButtonBase,
     IconButton,
     Stack,
     SvgIcon,
     Tab,
     Tabs,
+    Grid,
     Tooltip,
     Typography
 } from '@mui/material';
@@ -29,16 +30,31 @@ import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
 import { SocialConnections } from '@/sections/dashboard/social/social-connections';
-import { SocialTimeline } from '@/sections/dashboard/social/social-timeline';
+import InfOverview from '@/sections/dashboard/social/inf-overview';
 import "./profile.css";
-import { getBrandProfile } from '@/actions';
+import { getSocialProfile } from '@/actions';
 import { useDispatch, connect } from "react-redux";
+import { useSettings } from '@/hooks/use-settings';
 
 const tabs = [
-    { label: 'Overview', value: 'timeline' },
-    { label: 'Jobs Posted', value: 'connections' }
+    { label: 'Overview', value: 'infoverview' }
 ];
-
+const ranges = [
+    { divider: 1e18, suffix: 'E' },
+    { divider: 1e15, suffix: 'P' },
+    { divider: 1e12, suffix: 'T' },
+    { divider: 1e9, suffix: 'G' },
+    { divider: 1e6, suffix: 'M' },
+    { divider: 1e3, suffix: 'K' }
+];
+const formatNumber = n => {
+    for (var i = 0; i < ranges.length; i++) {
+        if (n >= ranges[i].divider) {
+            return Number(n / ranges[i].divider).toFixed(1).toString() + ranges[i].suffix;
+        }
+    }
+    return n.toString();
+}
 const useProfile = () => {
     const isMounted = useMounted();
     const [profile, setProfile] = useState(null);
@@ -66,7 +82,6 @@ const useProfile = () => {
 const usePosts = () => {
     const isMounted = useMounted();
     const [posts, setPosts] = useState([]);
-
     const handlePostsGet = useCallback(async () => {
         try {
             const response = await socialApi.getPosts();
@@ -112,10 +127,12 @@ const useConnections = (search = '') => {
 };
 
 const Page = (props) => {
+    const settings = useSettings();
+
     // console.log(props);
-    const { brandinfo, userinfo } = props;
+    const { socialinfo, userinfo } = props;
     const profile = useProfile();
-    const [currentTab, setCurrentTab] = useState('timeline');
+    const [currentTab, setCurrentTab] = useState('infoverview');
     const [status, setStatus] = useState('not_connected');
     const posts = usePosts();
     const [connectionsQuery, setConnectionsQuery] = useState('');
@@ -123,14 +140,19 @@ const Page = (props) => {
     const [isLiked, setIsLiked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    alert("this is global social page")
-
+    const [selectedStat, SetSelectedStat] = useState(socialinfo["basic"])
+    let tmp = socialinfo[selectedStat]
+    const changeStat = (str) => {
+        SetSelectedStat(str)
+    }
     useEffect(() => {
-        dispatch(getBrandProfile({ brandID: window.location.pathname.split("/")[2].split("-")[2] }));
+        dispatch(getSocialProfile({ infname: window.location.pathname.split("/")[3], socialtype: "total" }));
 
     }, [dispatch])
 
+    const handleInvite = useCallback(() => {
 
+    }, []);
 
     const handleLike = useCallback(() => {
         setIsLiked(true);
@@ -166,6 +188,27 @@ const Page = (props) => {
     const showConnect = status === 'not_connected';
     const showPending = status === 'pending';
 
+    const showReach = () => {
+        let social_type = selectedStat
+        if (social_type == "instagram" || social_type == "twitter" || social_type == "pinterest") {
+            return tmp && tmp.follower_count ? formatNumber(tmp.follower_count) : '0'
+        }
+        else if (social_type == "youtube" || social_type == "tiktok") {
+            return tmp && tmp.subscribers ? formatNumber(tmp.subscribers) : '0'
+        }
+    }
+
+    const showExternalUrl = () => {
+
+        if (selectedStat == "tiktok") {
+            if (tmp && tmp.external_url == "-") return ''
+            return tmp && tmp.external_url ? tmp.external_url : ''
+        }
+        else {
+            return tmp && tmp.external_url ? tmp.external_url : ''
+        }
+    }
+
     return (
         <>
             <Seo title="Dashboard: Social Profile" />
@@ -176,7 +219,7 @@ const Page = (props) => {
                     py: 8
                 }}
             >
-                <Container maxWidth="xl">
+                <Container maxWidth={settings.stretch ? false : 'xl'} >
                     <div>
                         <Box
                             style={{ backgroundImage: `url(${profile.cover})` }}
@@ -194,36 +237,6 @@ const Page = (props) => {
                                 }
                             }}
                         >
-                            {userinfo.id == brandinfo.id ? (
-                                <Button
-                                    startIcon={(
-                                        <SvgIcon>
-                                            <Image01Icon />
-                                        </SvgIcon>
-                                    )}
-                                    sx={{
-                                        backgroundColor: blueGrey[900],
-                                        bottom: {
-                                            lg: 24,
-                                            xs: 'auto'
-                                        },
-                                        color: 'common.white',
-                                        position: 'absolute',
-                                        right: 24,
-                                        top: {
-                                            lg: 'auto',
-                                            xs: 24
-                                        },
-                                        visibility: 'hidden',
-                                        '&:hover': {
-                                            backgroundColor: blueGrey[900]
-                                        }
-                                    }}
-                                    variant="contained"
-                                >
-                                    Change Cover
-                                </Button>
-                            ) : ('')}
 
                         </Box>
                         <Stack
@@ -239,29 +252,63 @@ const Page = (props) => {
                                 className="custom-avatar"
                                 spacing={2}
                             >
-                                <Avatar
-                                    src={profile.avatar}
+                                <Box
+                                    component={ButtonBase}
                                     sx={{
+                                        alignItems: 'center',
+                                        display: 'flex',
+                                        borderWidth: 2,
+                                        borderStyle: 'solid',
+                                        borderColor: 'divider',
                                         height: 140,
-                                        width: 140
+                                        width: 140,
+                                        borderRadius: '50%'
                                     }}
-                                />
+                                >
+                                    <Avatar
+                                        src={tmp && tmp.profile_pic_url_hd ? tmp.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${tmp && tmp.full_name ? tmp.full_name : ""}&background=2970FF&color=fff&rounded=true`}
+                                        sx={{
+                                            height: 130,
+                                            width: 130
+                                        }}
+                                    />
+                                </Box>
                                 <div className='brand-info'>
-                                    <Typography
-                                        color="primary"
-                                        variant="h6"
-                                        style={{ fontSize: 22 }}
-                                    >
-                                        {brandinfo ? brandinfo.fullname : ''}
-                                    </Typography>
-                                    <Typography
-                                        color="text.secondary"
-                                        className='font-inter'
-                                        variant="subtitle2"
-                                        style={{ fontSize: 12, fontWeight: 600, marginTop: 4 }}
-                                    >
-                                        Established since {brandinfo ? brandinfo.companyfounded : ''}
-                                    </Typography>
+                                    <Grid container>
+                                        <Grid item sm={7} xs={7}>
+                                            <Typography
+                                                color="primary"
+                                                variant="h6"
+                                                style={{ fontSize: 22, wordWrap: 'break-word' }}
+                                            >
+                                                {tmp ? tmp.username : ''}
+                                            </Typography>
+                                            <Typography
+                                                color="text.secondary"
+                                                className='font-inter'
+                                                variant="subtitle2"
+                                                style={{ fontSize: 12, fontWeight: 600, marginTop: 4 }}
+                                            >
+                                                {tmp ? tmp.full_name : ''}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item sm={5} xs={5}>
+                                            <div className='custom-reach'>
+                                                <Grid container>
+                                                    <Grid item sx={{ color: '#2970FF', fontSize: '11px', fontWeight: 300, pl: 1, pr: 1, pt: 0.5, pb: 0.5 }}>
+                                                        <div>Reach</div>
+                                                        <div style={{ fontSize: '16px', fontWeight: 700 }}>
+                                                            {showReach()}
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item style={{ display: 'flex', alignItems: 'center', margin: '0 auto' }}>
+                                                        <div className='reach-arrow'></div>
+                                                    </Grid>
+                                                </Grid>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+
                                     <Typography
                                         color="text.secondary"
                                         className='font-inter location-pointer'
@@ -277,128 +324,140 @@ const Page = (props) => {
                                         className='font-inter'
                                         style={{ fontSize: 13 }}
                                     >
-                                        {brandinfo ? brandinfo.companylocation : ''}
+                                        {tmp ? tmp.city + ", " + tmp.Country : ''}
                                     </Typography>
 
                                 </div>
                             </Stack>
                             <Box sx={{ flexGrow: 1 }} />
-                            {(userinfo.id === brandinfo.id) ? (
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    spacing={2}
-                                    className='button-bar'
-                                    sx={{
-                                        display: {
-                                            md: 'block',
-                                            // xs: 'none'
-                                        }
-                                    }}
-                                >
-                                    <Button
-                                        // component={RouterLink}
-                                        // href={paths.dashboard.chat}
-                                        size="small"
-                                        className="social-btn"
-                                        startIcon={(
-                                            <SvgIcon>
-                                                <Edit02Icon />
-                                            </SvgIcon>
-                                        )}
-                                        onClick={() => { navigate('/auth/auth/firstinfos') }}
-                                        variant="contained"
-                                    >
-                                        Edit Profile
-                                    </Button>
-                                </Stack>
-                            ) : (
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    spacing={2}
-                                    className='button-bar'
-                                    sx={{
-                                        display: {
-                                            md: 'block',
-                                            // xs: 'none'
-                                        }
-                                    }}
-                                >
-                                    {isLiked
-                                        ? (
-                                            <>
-                                                <Button
-                                                    onClick={handleUnlike}
-                                                    size="small"
-                                                    className='fav-btn'
-                                                    startIcon={(
-                                                        <SvgIcon
-                                                            sx={{
-                                                                color: 'error.main',
-                                                                '& path': {
-                                                                    fill: (theme) => theme.palette.error.main,
-                                                                    fillOpacity: 1
-                                                                }
-                                                            }}
-                                                        >
-                                                            <HeartIcon />
-                                                        </SvgIcon>
-                                                    )}
-                                                    variant="outlined"
-                                                >
-                                                    Favorite
-                                                </Button>
-                                                <Button
-                                                    component={RouterLink}
-                                                    href={paths.dashboard.chat}
-                                                    size="small"
-                                                    className="social-btn"
-                                                    startIcon={(
-                                                        <SvgIcon>
-                                                            <MessageChatSquareIcon />
-                                                        </SvgIcon>
-                                                    )}
-                                                    variant="contained"
-                                                >
-                                                    Send Message
-                                                </Button>
-                                            </>
-                                        )
-                                        : (
-                                            <>
-                                                <Button
-                                                    onClick={handleLike}
-                                                    size="small"
-                                                    className='fav-btn'
-                                                    startIcon={(
-                                                        <SvgIcon>
-                                                            <HeartIcon />
-                                                        </SvgIcon>
-                                                    )}
-                                                    variant="outlined"
-                                                >
-                                                    Favorite
-                                                </Button>
-                                                <Button
-                                                    component={RouterLink}
-                                                    href={paths.dashboard.chat}
-                                                    size="small"
-                                                    className="social-btn"
-                                                    startIcon={(
-                                                        <SvgIcon>
-                                                            <MessageChatSquareIcon />
-                                                        </SvgIcon>
-                                                    )}
-                                                    variant="contained"
-                                                >
-                                                    Send Message
-                                                </Button>
-                                            </>
 
-                                        )}
-                                </Stack>
-                            )}
+                            <Stack
+                                alignItems="center"
+                                direction="row"
+                                spacing={2}
+                                className='inf-button-bar'
+                                sx={{
+                                    display: {
+                                        md: 'block',
+                                        // xs: 'none'
+                                    }
+                                }}
+                            >
+                                {isLiked
+                                    ? (
+                                        <>
+                                            <Button
+                                                onClick={handleUnlike}
+                                                className='fav-btn=alone'
+                                                startIcon={(
+                                                    <SvgIcon
+                                                        sx={{
+                                                            transform: 'scale(1.8)',
+                                                            color: 'error.main',
+                                                            '& path': {
+                                                                fill: (theme) => theme.palette.error.main,
+                                                                fillOpacity: 1
+                                                            }
+                                                        }}
+                                                    >
+                                                        <HeartIcon />
+                                                    </SvgIcon>
+                                                )}
+                                            >
+                                            </Button>
+                                            <Button
+                                                // size="small"
+                                                className='fav-btn-alone'
+                                                // sx={{ ml: 0 }}
+                                                startIcon={(
+                                                    <img src="/assets/stats/users.png" />
+
+                                                )}
+                                            >
+                                            </Button>
+                                            <Button
+                                                onClick={handleInvite}
+                                                size="small"
+                                                className='fav-btn'
+                                                startIcon={(
+                                                    <>
+                                                        <img src="/assets/icons/invite.svg" />
+                                                    </>
+                                                )}
+                                                variant="outlined"
+                                            >
+                                                Invite To Project
+                                            </Button>
+                                            <Button
+                                                component={RouterLink}
+                                                href={paths.dashboard.chat}
+                                                size="small"
+                                                className="social-btn"
+                                                startIcon={(
+                                                    <SvgIcon>
+                                                        <MessageChatSquareIcon />
+                                                    </SvgIcon>
+                                                )}
+                                                variant="contained"
+                                            >
+                                                Send Message
+                                            </Button>
+                                        </>
+                                    )
+                                    : (
+                                        <>
+                                            <Button
+                                                onClick={handleLike}
+
+                                                className='fav-btn-alone'
+                                                startIcon={(
+                                                    <SvgIcon sx={{ transform: 'scale(1.8)' }}>
+                                                        <HeartIcon />
+                                                    </SvgIcon>
+                                                )}
+                                            >
+
+                                            </Button>
+                                            <Button
+                                                // size="small"
+                                                className='fav-btn-alone'
+                                                startIcon={(
+                                                    <img src="/assets/stats/users.png" />
+                                                )}
+                                            >
+                                            </Button>
+                                            <Button
+                                                onClick={handleInvite}
+                                                size="small"
+                                                className='fav-btn'
+                                                startIcon={(
+                                                    <>
+                                                        <img src="/assets/icons/invite.svg" />
+                                                    </>
+                                                )}
+                                                variant="outlined"
+                                            >
+                                                Invite To Project
+                                            </Button>
+                                            <Button
+                                                component={RouterLink}
+                                                href={paths.dashboard.chat}
+                                                size="small"
+                                                className="social-btn"
+                                                startIcon={(
+                                                    <SvgIcon>
+                                                        <MessageChatSquareIcon />
+                                                    </SvgIcon>
+                                                )}
+                                                variant="contained"
+                                            >
+                                                Send Message
+                                            </Button>
+                                        </>
+
+                                    )}
+                            </Stack>
+
 
                         </Stack>
                     </div>
@@ -406,6 +465,7 @@ const Page = (props) => {
                         <div className='right-quick'>
                             <div className='quick-font'>Quick links</div>
                             <div className='quick-links'>
+                                <a className=' homepage-icon' href={showExternalUrl()} target='_blank'></a>
                                 <a className='instagram-icon quick-link' href='https://www.instagram.com' target='_blank'></a>
                                 <a className='tiktok-icon quick-link' href='https://www.tiktok.com' target='_blank'></a>
                                 <a className='youtube-icon quick-link' href='https://www.youtube.com' target='_blank'></a>
@@ -436,17 +496,12 @@ const Page = (props) => {
                     </Tabs>
                     <Divider />
                     <Box>
-                        {currentTab === 'timeline' && (
-                            <SocialTimeline
+                        {currentTab === 'infoverview' && (
+                            <InfOverview
                                 posts={posts}
                                 profile={profile}
-                            />
-                        )}
-                        {currentTab === 'connections' && (
-                            <SocialConnections
-                                connections={connections}
-                                onQueryChange={handleConnectionsQueryChange}
-                                query={connectionsQuery}
+                                total="total"
+                                changeStat={changeStat}
                             />
                         )}
                     </Box>
@@ -456,7 +511,7 @@ const Page = (props) => {
     );
 };
 const mapStateToProps = state => ({
-    brandinfo: state.profile.brandinfo,
+    socialinfo: state.profile.socialinfo,
     userinfo: state.profile.userinfo,
 });
 

@@ -297,9 +297,43 @@ class UserController extends Controller
     {
         $infname = $request->infname;
         $socialtype = $request->socialtype;
-        $table_name = "influencers_" . $socialtype;
-        $socialinfo = DB::table($table_name)->where('username', $infname)->first();
-        return json_encode($socialinfo);
+        if($socialtype!="total"){
+            $table_name = "influencers_" . $socialtype;
+            $socialinfo = DB::table($table_name)->where('username', $infname)->first();
+            return json_encode($socialinfo);
+        }
+        else{
+            $total = array(
+                "instagram" => array(),
+                "youtube" => array(),
+                "tiktok" => array(),
+                "twitter" => array(),
+                "pinterest" => array(),
+                "basic" => ""
+            );
+            $table_name = "influencers_pinterest";
+            $socialinfo = DB::table($table_name)->where('username', $infname)->first();
+            if($socialinfo) $total["basic"] = "pinterest";
+            $total["pinterest"] = $socialinfo;
+            $table_name = "influencers_twitter";
+            $socialinfo = DB::table($table_name)->where('username', $infname)->first();
+            if($socialinfo) $total["basic"] = "twitter";
+            $total["twitter"] = $socialinfo;
+            $table_name = "influencers_tiktok";
+            $socialinfo = DB::table($table_name)->where('username', $infname)->first();
+            if($socialinfo) $total["basic"] = "tiktok";
+            $total["tiktok"] = $socialinfo;
+            $table_name = "influencers_youtube";
+            $socialinfo = DB::table($table_name)->where('username', $infname)->first();
+            if($socialinfo) $total["basic"] = "youtube";
+            $total["youtube"] = $socialinfo;
+            $table_name = "influencers_instagram";
+            $socialinfo = DB::table($table_name)->where('username', $infname)->first();
+            if($socialinfo) $total["basic"] = "instagram";
+            $total["instagram"] = $socialinfo;
+            return json_encode($total);
+        }
+
     }
     public function uploadCover(Request $request)
     {

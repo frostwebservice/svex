@@ -29,16 +29,19 @@ const InfAbout = (props) => {
         previousJobTitle,
         profileProgress,
         quote,
+        total,
         ...other
     } = props;
+    let tmp = total == "total" ? socialinfo[socialinfo["basic"]] : socialinfo
     const showExternalUrl = () => {
+
         let social_type = window.location.pathname.split("/")[3]
         if (social_type == "tiktok") {
-            if (socialinfo && socialinfo.external_url == "-") return ''
-            return socialinfo && socialinfo.external_url ? socialinfo.external_url.replace(/(^\w+:|^)\/\//, '') : ''
+            if (tmp && tmp.external_url == "-") return ''
+            return tmp && tmp.external_url ? tmp.external_url.replace(/(^\w+:|^)\/\//, '') : ''
         }
         else {
-            return socialinfo && socialinfo.external_url ? socialinfo.external_url.replace(/(^\w+:|^)\/\//, '') : ''
+            return tmp && tmp.external_url ? tmp.external_url.replace(/(^\w+:|^)\/\//, '') : ''
         }
 
     }
@@ -63,7 +66,7 @@ const InfAbout = (props) => {
                         className='about-content'
                         style={{ borderBottom: '0.5px solid #F2F4F7', paddingBottom: 50 }}
                     >
-                        {socialinfo ? socialinfo.biography.replace(/[\.,?!]/g, '').replace(/�/g, "'") : ''}
+                        {tmp ? tmp.biography.replace(/[\.,?!]/g, '').replace(/�/g, "'") : ''}
                     </Typography>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={6} sm={6}>
@@ -79,7 +82,7 @@ const InfAbout = (props) => {
                                         disableTypography
                                         primary={(
                                             <Typography variant="subtitle2" className='about-list-font'>
-                                                {socialinfo ? socialinfo.full_name : ''}
+                                                {tmp ? tmp.full_name : ''}
                                             </Typography>
                                         )}
                                     />
@@ -102,7 +105,7 @@ const InfAbout = (props) => {
                                                 sx={{ cursor: 'pointer' }}
                                                 variant="caption"
                                                 className='social-list-font'
-                                                href={socialinfo ? socialinfo.external_url : ''}
+                                                href={tmp ? tmp.external_url : ''}
                                             >
                                                 {showExternalUrl()}
                                             </Link>
@@ -124,7 +127,7 @@ const InfAbout = (props) => {
                                         disableTypography
                                         primary={(
                                             <Typography variant="subtitle2" className='about-list-font'>
-                                                {socialinfo ? "+" + socialinfo.phone_country_code + socialinfo.phone_number : ''}
+                                                {tmp ? "+" + tmp.phone_country_code + tmp.phone_number : ''}
                                             </Typography>
                                         )}
                                     />
@@ -142,7 +145,7 @@ const InfAbout = (props) => {
                                         primary={(
                                             <Typography variant="subtitle2"
                                                 className='about-list-font'>
-                                                {socialinfo ? socialinfo.city + ", " + socialinfo.Country : ''}
+                                                {tmp ? tmp.city + ", " + tmp.Country : ''}
                                                 {' '}
                                             </Typography>
                                         )}
@@ -164,7 +167,7 @@ const InfAbout = (props) => {
                                         disableTypography
                                         primary={(
                                             <Typography variant="subtitle2" className='about-list-font'>
-                                                {socialinfo ? "Language: " + socialinfo.language.charAt(0).toUpperCase() + socialinfo.language.slice(1) : ''}
+                                                {tmp ? "Language: " + tmp.language.charAt(0).toUpperCase() + tmp.language.slice(1) : ''}
                                             </Typography>
                                         )}
                                     />
@@ -180,7 +183,7 @@ const InfAbout = (props) => {
                                         disableTypography
                                         primary={(
                                             <Typography variant="subtitle2" className='about-list-font'>
-                                                {socialinfo ? "Gender: " + socialinfo.gender.charAt(0).toUpperCase() + socialinfo.gender.slice(1) : ''}
+                                                {tmp ? "Gender: " + tmp.gender.charAt(0).toUpperCase() + tmp.gender.slice(1) : ''}
                                             </Typography>
                                         )}
                                     />
@@ -197,7 +200,7 @@ const InfAbout = (props) => {
                                         disableTypography
                                         primary={(
                                             <Typography variant="subtitle2" className='about-list-font'>
-                                                {socialinfo ? "Age: " + socialinfo.age : ''}
+                                                {tmp ? "Age: " + tmp.age : ''}
                                             </Typography>
                                         )}
                                     />
@@ -215,7 +218,7 @@ const InfAbout = (props) => {
                                         primary={(
                                             <Typography variant="subtitle2"
                                                 className='about-list-font'>
-                                                {socialinfo ? "Ethnicity: " + socialinfo.ethnicity : ''}
+                                                {tmp ? "Ethnicity: " + tmp.ethnicity : ''}
                                             </Typography>
                                         )}
 
