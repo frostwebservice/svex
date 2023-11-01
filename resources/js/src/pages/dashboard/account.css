@@ -51,8 +51,11 @@
 } */
 
 .css-b62m3t-container {
-    width: -webkit-fill-available;
+    width: -webkit-fill-available !important;
+}
 
+.css-3iigni-container {
+    width: -webkit-fill-available !important;
 }
 
 .css-art2ul-ValueContainer2 {
@@ -73,5 +76,8 @@
 
 .css-1dimb5e-singleValue {
     color: var(--text-primary);
-    opacity: 0.5
+}
+
+.css-16xfy0z-control {
+    background-color: white;
 }

@@ -48,7 +48,7 @@ const AccountGeneralSettings = (props) => {
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
   const [selectedTimezone, setSelectedTimezone] = useState(userinfo.timezone ? userinfo.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone)
-
+  const [disableTimezone, setDisableTimezone] = useState(true)
   const [editemail, setEditemail] = useState(false);
   const [editfirst, setEditfirst] = useState(false);
   const [editlast, setEditlast] = useState(false);
@@ -105,8 +105,8 @@ const AccountGeneralSettings = (props) => {
   }, []);
   const handletimezone = useCallback((status) => {
     setEdittimezone((prevState) => !prevState);
-    if (!status) $(".css-1dimb5e-singleValue").addClass("opacity-disable")
-    else $(".css-1dimb5e-singleValue").removeClass("opacity-disable")
+    if (!status) setDisableTimezone(false)
+    else setDisableTimezone(true)
 
   }, []);
   $(document).on("click", ".css-b62m3t-container", function (e) {
@@ -373,7 +373,13 @@ const AccountGeneralSettings = (props) => {
                         }
                       })
                     }}
-                    disabled={true}
+                    textFieldProps={{
+                      label: 'Label',
+                      InputLabelProps: {
+                        shrink: true,
+                      },
+                    }}
+                    isDisabled={disableTimezone}
 
                   />
                   <Button
