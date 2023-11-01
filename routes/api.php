@@ -43,3 +43,5 @@ Route::post('update_billing_info', [App\Http\Controllers\UserController::class, 
 Route::post('login_history', [App\Http\Controllers\UserController::class, 'loginHistory']);
 Route::post('reset_account_password', [App\Http\Controllers\UserController::class, 'resetAccountPassword']);
 Route::post('handle_tfa', [App\Http\Controllers\UserController::class, 'handleTfa']);
+Route::post('get_team_info', [App\Http\Controllers\UserController::class, 'getTeamInfo']);
+Route::post('send_invite_email', [App\Http\Controllers\UserController::class, 'sendInviteEmail']);

@@ -5,24 +5,44 @@
 #react-select-2-listbox {
     z-index: 10000 !important;
     position: relative;
+    background-color: var(--bg-secondary);
+}
+
+[id^='react-select-2-option-']:hover {
+
+    background-color: #0d6efd;
+}
+
+.css-t3ipsp-control {
+    background-color: var(--bg-secondary);
+
+}
+
+.opacity-disable {
+    opacity: 1 !important;
 }
 
 .css-1nmdiq5-menu {
     z-index: 10000 !important;
     position: relative;
+    background-color: var(--bg-secondary);
 
+    &:hover {
+        background-color: var(--bg-primary);
+    }
 }
 
 .dark-menu {
     background-color: #111927;
     color: white !important;
-
 }
+
 
 .css-13cymwt-control {
     height: 55.13px !important;
     border-radius: 8px;
     border-color: #E5E7EB;
+    background-color: var(--bg-secondary);
 }
 
 /* .css-t3ipsp-control {
@@ -39,13 +59,19 @@
     height: 55.13px;
 }
 
+/* 
 .darkTimezone {
     background-color: #111927;
     border: 1px solid #2D3748 !important;
     color: white !important;
-}
+} */
 
 .darkColor {
     /* color: #A0AEC0; */
     color: white;
+}
+
+.css-1dimb5e-singleValue {
+    color: var(--text-primary);
+    opacity: 0.5
 }

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Camera01Icon from '@untitled-ui/icons-react/build/esm/Camera01';
 import User01Icon from '@untitled-ui/icons-react/build/esm/User01';
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { connect, useDispatch } from 'react-redux'
 import TimezoneSelect from 'react-timezone-select'
 import { useTheme } from '@mui/material/styles';
@@ -27,6 +27,7 @@ import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
 import { useAuth } from '@/hooks/use-auth';
 import { getBrandProfile, getUserProfile } from '@/actions';
 import { useNavigate } from 'react-router-dom';
+
 import $ from 'jquery'
 var tmpFirst = "";
 var tmpLast = "";
@@ -34,6 +35,7 @@ var tmpEmail = "";
 var tmpTimezone = "";
 var once = false;
 var coloronce = false;
+
 const AccountGeneralSettings = (props) => {
   const theme = useTheme();
   const navigate = useNavigate()
@@ -41,55 +43,37 @@ const AccountGeneralSettings = (props) => {
   const uploadDialog = useDialog();
   const auth = useAuth();
   const { avatar, userinfo } = props;
-  const [email, setEmail] = useState(userinfo.email ? userinfo.email : "");
-  const [first, setFirst] = useState(userinfo.firstname ? userinfo.firstname : "");
-  const [last, setLast] = useState(userinfo.lastname ? userinfo.lastname : "");
+
+  const [email, setEmail] = useState("");
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [selectedTimezone, setSelectedTimezone] = useState(userinfo.timezone ? userinfo.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone)
+
   const [editemail, setEditemail] = useState(false);
   const [editfirst, setEditfirst] = useState(false);
   const [editlast, setEditlast] = useState(false);
   const [edittimezone, setEdittimezone] = useState(false);
   const [timezonekey, setTimezonekey] = useState("")
-  const [selectedTimezone, setSelectedTimezone] = useState(userinfo.timezone ? userinfo.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone)
+
   setTimeout(() => {
 
-    if (theme.palette.mode === 'dark') {
-      $(".css-13cymwt-control").addClass("darkTimezone");
-      $(".css-t3ipsp-controll").addClass("darkTimezone");
-
-      $(".css-1nmdiq5-menu ").addClass("dark-menu");
-      $(".css-1dimb5e-singleValue").addClass("darkColor")
-      if (!coloronce) {
-        setTimezonekey(timezonekey + "a")
-        coloronce = true
-      }
-    }
-    else {
-      $(".css-1nmdiq5-menu ").removeClass("dark-menu");
-      $(".css-t3ipsp-controll").removeClass("darkTimezone");
-
-      $(".css-13cymwt-control").removeClass("darkTimezone");
-      $(".css-1dimb5e-singleValue").removeClass("darkColor")
-
-    }
-  }, 100);
-
-  console.log(editfirst)
+  }, 50);
   if (!once) {
     if (userinfo.email && userinfo.email != tmpEmail) {
       tmpEmail = userinfo.email;
-      once = true;
+      // once = true;
     }
     if (userinfo.firstname && userinfo.firstname != tmpFirst) {
       tmpFirst = userinfo.firstname;
-      once = true;
+      // once = true;
     }
     if (userinfo.lastname && userinfo.lastname != tmpLast) {
       tmpLast = userinfo.lastname;
-      once = true;
+      // once = true;
     }
     if (userinfo.timezone && userinfo.timezone != tmpTimezone) {
       tmpTimezone = userinfo.timezone;
-      once = true;
+      // once = true;
     }
   }
   const sortOptions = [
@@ -106,62 +90,76 @@ const AccountGeneralSettings = (props) => {
     setEditemail((prevState) => !prevState);
     if (!status) return;
 
-    axios.post('/api/update_generalinfo', { kind: "email", value: tmpEmail, user_email: JSON.parse(localStorage.getItem('email')) })
-      .then(response => {
-        auth.signOut();
-        navigate("/auth/auth/SignIn")
-      })
-      .catch(error => {
-        console.error('Error getting Notify Settings', error);
-      })
   }, []);
   const handlefirst = useCallback((status) => {
     setEditfirst((prevState) => !prevState);
     if (!status) return;
-    axios.post('/api/update_generalinfo', { kind: "firstname", value: tmpFirst, user_email: JSON.parse(localStorage.getItem('email')) })
-      .then(response => {
-      })
-      .catch(error => {
-        console.error('Error getting Notify Settings', error);
-      })
+
 
   }, []);
   const handlelast = useCallback((status) => {
     setEditlast((prevState) => !prevState);
     if (!status) return;
 
-    axios.post('/api/update_generalinfo', { kind: "lastname", value: tmpLast, user_email: JSON.parse(localStorage.getItem('email')) })
-      .then(response => {
-      })
-      .catch(error => {
-        console.error('Error getting Notify Settings', error);
-      })
+
   }, []);
   const handletimezone = useCallback((status) => {
     setEdittimezone((prevState) => !prevState);
-    if (!status) return;
+    if (!status) $(".css-1dimb5e-singleValue").addClass("opacity-disable")
+    else $(".css-1dimb5e-singleValue").removeClass("opacity-disable")
 
-    axios.post('/api/update_generalinfo', { kind: "timezone", value: tmpTimezone, user_email: JSON.parse(localStorage.getItem('email')) })
-      .then(response => {
-      })
-      .catch(error => {
-        console.error('Error getting Notify Settings', error);
-      })
   }, []);
+  $(document).on("click", ".css-b62m3t-container", function (e) {
+    e.preventDefault()
+  })
   const avatarUpload = () => {
     uploadDialog.handleOpen()
   }
   const [key, setKey] = useState("")
   const onUpgrade = () => {
-    // dispatch(getBrandProfile({ brandID: window.location.pathname.split("/")[2].split("-")[2] }));
     dispatch(getUserProfile({ email: JSON.parse(localStorage.getItem('email')) }));
 
     setKey(key + "a")
   }
-  // const handleSortChange = useCallback((event) => {
-  //   const sortDir = event.target.value;
-  //   onSortChange?.(sortDir);
-  // }, [onSortChange]);
+  useEffect(() => {
+    if (first == "") {
+      setEmail(tmpEmail);
+      setFirst(tmpFirst);
+      setLast(tmpLast);
+      setSelectedTimezone(tmpTimezone)
+    }
+
+  });
+
+  const saveChange = () => {
+    let value = {
+      user_email: JSON.parse(localStorage.getItem('email')),
+      email: email,
+      firstname: first,
+      lastname: last,
+      timezone: selectedTimezone
+    }
+
+    axios.post('/api/update_generalinfo', value)
+      .then(response => {
+        if (response.data.status == "failed") {
+          alert("Email is already exist! Please input another email address.")
+        }
+        else {
+          if (response.data.message == "changed") {
+            dispatch(getUserProfile({ email: JSON.parse(localStorage.getItem('email')) }))
+            auth.signOut();
+            navigate("/auth/auth/SignIn")
+
+          }
+        }
+        console.log(response.data.message)
+
+      })
+      .catch(error => {
+        console.error('Error getting Notify Settings', error);
+      })
+  }
   return (
     <Stack
       spacing={4}
@@ -279,7 +277,7 @@ const AccountGeneralSettings = (props) => {
                     disabled={!editfirst}
                     placeholder='Your First Name'
                     label="First Name"
-                    onChange={(e) => { setFirst(e.target.value); tmpFirst = e.target.value }}
+                    onChange={(e) => { tmpFirst = e.target.value; setFirst(e.target.value); }}
                     sx={{
                       flexGrow: 1,
                       ...(!editfirst && {
@@ -294,7 +292,7 @@ const AccountGeneralSettings = (props) => {
                     size="small"
                     onClick={() => handlefirst(editfirst)}
                   >
-                    {editfirst ? "Save" : "Edit"}
+                    {editfirst ? "Done" : "Edit"}
                   </Button>
                 </Stack>
                 <Stack
@@ -323,7 +321,7 @@ const AccountGeneralSettings = (props) => {
                     onClick={() => handlelast(editlast)}
 
                   >
-                    {editlast ? "Save" : "Edit"}
+                    {editlast ? "Done" : "Edit"}
 
                   </Button>
                 </Stack>
@@ -354,7 +352,7 @@ const AccountGeneralSettings = (props) => {
                     size="small"
                     onClick={() => handleemail(editemail)}
                   >
-                    {editemail ? "Save" : "Edit"}
+                    {editemail ? "Done" : "Edit"}
 
                   </Button>
                 </Stack>
@@ -383,15 +381,15 @@ const AccountGeneralSettings = (props) => {
                     size="small"
                     onClick={() => handletimezone(edittimezone)}
                   >
-                    {edittimezone ? "Save" : "Edit"}
+                    {edittimezone ? "Done" : "Edit"}
 
                   </Button>
                 </Stack>
 
-                {/* <Stack
+                <Stack
                   alignItems="right"
                   direction="row"
-                  spacing={2}
+                // spacing={2}
                 >
                   <Button
                     size="small"
@@ -399,11 +397,14 @@ const AccountGeneralSettings = (props) => {
                     color="primary"
                     variant="contained"
                     className="title-inter w-75 smallsize save-btn"
+                    sx={{ mr: 3 }}
+
+                    onClick={saveChange}
                   >
                     <span className="ml-2"> Save Changes </span>
 
                   </Button>
-                </Stack> */}
+                </Stack>
 
               </Stack>
             </Grid>

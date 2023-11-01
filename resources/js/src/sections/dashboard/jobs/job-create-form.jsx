@@ -110,7 +110,7 @@ export const JobCreateForm = () => {
         content: (
           <JobShareStep
             onBack={handleBack}
-            onNext={handleReview}
+            onNext={handleNext}
           />
         )
       },
@@ -147,7 +147,9 @@ export const JobCreateForm = () => {
         const isCurrentStep = ((activeStep === index) || (review === 1));
         // { console.log(isCurrentStep) }
         return (
-          <Step key={step.label}>
+          <Step key={step.label}
+
+          >
             <StepLabel StepIconComponent={StepIcon}>
               <Typography
                 sx={{ ml: 2 }}
