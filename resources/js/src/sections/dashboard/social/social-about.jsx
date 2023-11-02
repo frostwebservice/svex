@@ -12,10 +12,15 @@ import {
   ListItemText,
   Stack,
   SvgIcon,
+  Tooltip,
   Typography
 } from '@mui/material';
 import './social.css'
 import { connect } from 'react-redux'
+
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
+
 const SocialAbout = (props) => {
   const {
     currentCity,
@@ -61,7 +66,10 @@ const SocialAbout = (props) => {
               divider
             >
               <ListItemAvatar>
-                <div className='url-icon'></div>
+                <Tooltip title="Company Website">
+
+                  <div className='url-icon'></div>
+                </Tooltip>
               </ListItemAvatar>
               <ListItemText
                 disableTypography
@@ -78,7 +86,10 @@ const SocialAbout = (props) => {
               divider
             >
               <ListItemAvatar>
-                <div className='phone-icon'></div>
+                <Tooltip title="Phone Number">
+
+                  <div className='phone-icon'></div>
+                </Tooltip>
               </ListItemAvatar>
               <ListItemText
                 disableTypography
@@ -95,7 +106,10 @@ const SocialAbout = (props) => {
               divider
             >
               <ListItemAvatar>
-                <div className='home-icon'></div>
+                <Tooltip title="Company Location">
+
+                  <div className='home-icon'></div>
+                </Tooltip>
               </ListItemAvatar>
               <ListItemText
                 disableTypography
@@ -120,7 +134,10 @@ const SocialAbout = (props) => {
               disableGutters
               divider>
               <ListItemAvatar>
-                <div className='mail-icon'></div>
+                <Tooltip title="Email Address">
+
+                  <div className='mail-icon'></div>
+                </Tooltip>
               </ListItemAvatar>
               <ListItemText
                 primary={(
@@ -133,19 +150,50 @@ const SocialAbout = (props) => {
             </ListItem>
             <ListItem
               disableGutters
+              divider
 
             >
               <ListItemAvatar>
-                <div className='connect-icon'></div>
+                <Tooltip title="Budget">
+
+                  <SvgIcon>
+                    <AttachMoneyIcon style={{ opacity: '0.6' }} />
+                  </SvgIcon>
+                </Tooltip>
               </ListItemAvatar>
               <ListItemText
                 disableTypography
                 primary={(
                   <Typography variant="subtitle2" className='about-list-font'>
                     {/* {currentJobTitle} */}
-                    25-75
+                    {brandinfo ? brandinfo.budget : ''}
+
                   </Typography>
                 )}
+              />
+            </ListItem>
+            <ListItem
+              disableGutters
+              divider
+            >
+              <ListItemAvatar>
+                <Tooltip title="Company Size">
+                  <SvgIcon style={{ opacity: '0.6' }}>
+                    <BusinessOutlinedIcon />
+                  </SvgIcon>
+                </Tooltip>
+
+              </ListItemAvatar>
+              <ListItemText
+                disableTypography
+                primary={(
+                  <Typography variant="subtitle2"
+                    className='about-list-font'>
+                    {brandinfo ? brandinfo.companysize : ''}
+
+                  </Typography>
+                )}
+
               />
             </ListItem>
           </List>

@@ -81,3 +81,7 @@
 .css-16xfy0z-control {
     background-color: white;
 }
+
+.MuiInputLabel-root {
+    font-size: 11px !important;
+}

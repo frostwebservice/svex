@@ -36,7 +36,7 @@ export const OverviewDoneTasks = (props) => {
             color="text.primary"
             variant="h4"
           >
-            {amount}
+            {amount}sdfsadfsdfsdfsdfsdfsdf
           </Typography>
         </Box>
       </Stack>

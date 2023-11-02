@@ -165,16 +165,17 @@ const Page = (props) => {
         enableReinitialize: true,
         validationSchema,
         onSubmit: values => {
-            if (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ' || !menuclick) {
-                setInitialValues({
-                    ...formik.values,
-                    companylocation: ''
-                });
-                SetHaserror(true)
-                SetFocused(false)
-                Setrenderkey(renderkey + "a")
-                return;
-            }
+            // console.log(initialValues.companylocation)
+            // if (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ' || !menuclick) {
+            //     setInitialValues({
+            //         ...formik.values,
+            //         companylocation: ''
+            //     });
+            //     SetHaserror(true)
+            //     SetFocused(false)
+            //     Setrenderkey(renderkey + "a")
+            //     return;
+            // }
             values.nichecategory = currentSelection;
             axios
                 .post("/api/edit-profile", values)
@@ -200,6 +201,8 @@ const Page = (props) => {
                             linkedin: "",
                             blogurl: ""
                         })
+                        dispatch(getUserProfile({ email: JSON.parse(localStorage.getItem('email')) }));
+
                         navigate('/profile/' + userinfo.firstname + "-" + userinfo.lastname + "-" + userinfo.id)
                     }
                     if (response.data.status === "failed") {
@@ -460,13 +463,13 @@ const Page = (props) => {
                                         color: 'common.white',
                                         cursor: 'pointer',
                                         display: 'flex',
-                                        height: '100%',
+                                        height: '23%',
+                                        width: '23%',
                                         justifyContent: 'center',
-                                        left: 0,
-                                        opacity: 0,
+                                        right: "5px",
+                                        bottom: "15px",
+                                        opacity: 0.7,
                                         position: 'absolute',
-                                        top: 0,
-                                        width: '100%',
                                         zIndex: 1,
                                         '&:hover': {
                                             opacity: 1
@@ -482,13 +485,13 @@ const Page = (props) => {
                                         <SvgIcon color="inherit">
                                             <Camera01Icon />
                                         </SvgIcon>
-                                        <Typography
-                                            color="inherit"
-                                            variant="subtitle2"
-                                            sx={{ fontWeight: 700 }}
-                                        >
-                                            Select
-                                        </Typography>
+                                        {/* <Typography
+                        color="inherit"
+                        variant="subtitle2"
+                        sx={{ fontWeight: 700 }}
+                      >
+                        Select
+                      </Typography> */}
                                     </Stack>
                                 </Box>
                                 <Box

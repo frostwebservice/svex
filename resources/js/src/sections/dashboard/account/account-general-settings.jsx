@@ -18,6 +18,8 @@ import {
   Switch,
   TextField,
   Typography,
+  OutlinedInput,
+  InputLabel,
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
@@ -362,6 +364,7 @@ const AccountGeneralSettings = (props) => {
                   spacing={2}
                 >
                   <TimezoneSelect
+                    label="Sdf"
                     key={timezonekey}
                     value={selectedTimezone}
                     onChange={(e) => { console.log(e); setSelectedTimezone(e.value); tmpTimezone = e.value }}
@@ -372,12 +375,6 @@ const AccountGeneralSettings = (props) => {
                           borderStyle: 'dotted'
                         }
                       })
-                    }}
-                    textFieldProps={{
-                      label: 'Label',
-                      InputLabelProps: {
-                        shrink: true,
-                      },
                     }}
                     isDisabled={disableTimezone}
 

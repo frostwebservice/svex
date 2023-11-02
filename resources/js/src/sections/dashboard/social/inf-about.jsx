@@ -10,6 +10,7 @@ import {
     ListItem,
     ListItemAvatar,
     ListItemText,
+    Tooltip,
     Stack,
     SvgIcon,
     Grid,
@@ -76,7 +77,10 @@ const InfAbout = (props) => {
                                     divider
                                 >
                                     <ListItemAvatar>
-                                        <div className='man-icon'></div>
+                                        <Tooltip title="Full Name">
+
+                                            <div className='man-icon'></div>
+                                        </Tooltip>
                                     </ListItemAvatar>
                                     <ListItemText
                                         disableTypography
@@ -92,7 +96,10 @@ const InfAbout = (props) => {
                                     divider
                                 >
                                     <ListItemAvatar>
-                                        <div className='homepage-icon'></div>
+                                        <Tooltip title="Website Url">
+
+                                            <div className='homepage-icon'></div>
+                                        </Tooltip>
                                     </ListItemAvatar>
                                     <ListItemText
                                         disableTypography
@@ -121,7 +128,10 @@ const InfAbout = (props) => {
                                     divider
                                 >
                                     <ListItemAvatar>
-                                        <div className='phone-icon'></div>
+                                        <Tooltip title="Phone Number">
+
+                                            <div className='phone-icon'></div>
+                                        </Tooltip>
                                     </ListItemAvatar>
                                     <ListItemText
                                         disableTypography
@@ -138,7 +148,10 @@ const InfAbout = (props) => {
                                     divider
                                 >
                                     <ListItemAvatar>
-                                        <div className='home-icon'></div>
+                                        <Tooltip title="Location">
+
+                                            <div className='home-icon'></div>
+                                        </Tooltip>
                                     </ListItemAvatar>
                                     <ListItemText
                                         disableTypography

@@ -1,10 +1,15 @@
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+
 import {
   Box,
   Button,
   Container,
   Stack,
   SvgIcon,
+  InputAdornment,
+  OutlinedInput,
+  TextField,
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
@@ -15,7 +20,26 @@ import { AcademyDailyProgress } from '@/sections/dashboard/academy/academy-daily
 import { AcademyFind } from '@/sections/dashboard/academy/academy-find';
 import { CourseCard } from '@/sections/dashboard/academy/course-card';
 import { CourseSearch } from '@/sections/dashboard/academy/course-search';
-
+import "./inf_finder.css"
+import { useCallback } from 'react'
+const sortOptions = [
+  {
+    label: 'Last update (newest)',
+    value: 'updatedAt|desc'
+  },
+  {
+    label: 'Last update (oldest)',
+    value: 'updatedAt|asc'
+  },
+  {
+    label: 'Total orders (highest)',
+    value: 'totalOrders|desc'
+  },
+  {
+    label: 'Total orders (lowest)',
+    value: 'totalOrders|asc'
+  }
+];
 const useCourses = () => {
   return [
     {
@@ -45,12 +69,20 @@ const useCourses = () => {
   ];
 };
 
+// }, [onSortChange]);
 const Page = () => {
   const settings = useSettings();
   const courses = useCourses();
 
   usePageView();
+  const handleSortChange = useCallback((event) => {
+    // const [sortBy, sortDir] = event.target.value.split('|');
 
+    // onSortChange?.({
+    //   sortBy,
+    //   sortDir
+    // });
+  }, []);
   return (
     <>
       <Seo title="Dashboard: Academy Dashboard" />
@@ -69,19 +101,66 @@ const Page = () => {
             <Typography
               color="inherit"
               variant="h5"
+              style={{ fontSize: 32, textAlign: 'center' }}
             >
-              Find unparalleled knowledge
+              Connect with the Best Social Media Influencers!
             </Typography>
             <Typography
               color="inherit"
               sx={{ mt: 1, mb: 6 }}
+              style={{ fontSize: 18, textAlign: 'center' }}
             >
-              Learn from the top-tier creatives and leading experts in AI
+              Easily search and filter for influencers that fit your brand’s needs.
             </Typography>
             <CourseSearch />
           </Container>
         </Box>
-        <Box sx={{ py: '64px' }}>
+        <div>sdf</div>
+        <Stack
+          alignItems="center"
+          direction="row"
+          flexWrap="wrap"
+          spacing={3}
+          sx={{ p: 3 }}
+        >
+          <Box
+            component="form"
+            // onSubmit={handleQueryChange}
+            sx={{ flexGrow: 1 }}
+          >
+            <OutlinedInput
+              defaultValue=""
+              fullWidth
+              // inputProps={{ ref: queryRef }}
+              placeholder="Search customers"
+              startAdornment={(
+                <InputAdornment position="start">
+                  <SvgIcon>
+                    <SearchMdIcon />
+                  </SvgIcon>
+                </InputAdornment>
+              )}
+            />
+          </Box>
+          <TextField
+            label="Sort By"
+            name="sort"
+            onChange={handleSortChange}
+            select
+            SelectProps={{ native: true }}
+          // value={`${sortBy}|${sortDir}`}
+          >
+            {sortOptions.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+        </Stack>
+        {/* <Box sx={{ py: '64px' }}>
           <Container maxWidth={settings.stretch ? false : 'xl'}>
             <Grid
               container
@@ -150,7 +229,7 @@ const Page = () => {
               ))}
             </Grid>
           </Container>
-        </Box>
+        </Box> */}
       </Box>
     </>
   );

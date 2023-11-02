@@ -50,7 +50,7 @@ const ranges = [
 const formatNumber = n => {
     for (var i = 0; i < ranges.length; i++) {
         if (n >= ranges[i].divider) {
-            return Number(n / ranges[i].divider).toFixed(1).toString() + ranges[i].suffix;
+            return Number(n / ranges[i].divider).toFixed(1).toString().replace(".0", "") + ranges[i].suffix;
         }
     }
     return n.toString();
@@ -465,12 +465,58 @@ const Page = (props) => {
                         <div className='right-quick'>
                             <div className='quick-font'>Quick links</div>
                             <div className='quick-links'>
-                                <a className=' homepage-icon' href={showExternalUrl()} target='_blank'></a>
-                                <a className='instagram-icon quick-link' href='https://www.instagram.com' target='_blank'></a>
-                                <a className='tiktok-icon quick-link' href='https://www.tiktok.com' target='_blank'></a>
-                                <a className='youtube-icon quick-link' href='https://www.youtube.com' target='_blank'></a>
-                                <a className='twitter-icon quick-link' href='https://www.twitter.com' target='_blank'></a>
-                                <a className='pinterest-icon quick-link' href='https://www.pinterest' target='_blank'></a>
+                                {socialinfo && socialinfo.username ? (
+                                    <a className='facebook-icon quick-link'
+                                        href={"https://" + (socialinfo ? (socialinfo.username.split("/").length > 1 ? socialinfo.username : 'www.facebook.com/' + socialinfo.username) : '')}
+                                        target='_blank'
+                                    >
+                                    </a>
+                                ) : (
+                                    <a className='facebook-icon quick-link' href='https://www.facebook.com' target='_blank'></a>
+                                )}
+                                {socialinfo && socialinfo.username ? (
+                                    <a className='instagram-icon quick-link'
+                                        href={"https://" + (socialinfo ? (socialinfo.username.split("/").length > 1 ? socialinfo.username : 'www.instagram.com/' + socialinfo.username) : '')}
+                                        target='_blank'
+                                    >
+                                    </a>
+                                ) : (
+                                    <a className='instagram-icon quick-link' href='https://www.instagram.com' target='_blank'></a>
+                                )}
+                                {socialinfo && socialinfo.username ? (
+                                    <a className='tiktok-icon quick-link'
+                                        href={"https://" + (socialinfo ? (socialinfo.username.split("/").length > 1 ? socialinfo.username : 'www.tiktok.com/' + socialinfo.username) : '')}
+                                        target='_blank'
+                                    ></a>
+                                ) : (
+                                    <a className='tiktok-icon quick-link' href='https://www.tiktok.com' target='_blank'></a>
+                                )}
+                                {socialinfo && socialinfo.username ? (
+                                    <a className='youtube-icon quick-link'
+                                        href={"https://" + (socialinfo ? (socialinfo.username.split("/").length > 1 ? socialinfo.username : 'www.youtube.com/@' + socialinfo.username) : '')}
+                                        target='_blank'
+                                    ></a>
+                                ) : (
+                                    <a className='youtube-icon quick-link' href='https://www.youtube.com' target='_blank'></a>
+                                )}
+                                {socialinfo && socialinfo.username ? (
+                                    <a a className='twitter-icon quick-link'
+                                        href={"https://" + (socialinfo ? (socialinfo.username.split("/").length > 1 ? socialinfo.username : 'www.twitter.com/' + socialinfo.username) : '')}
+                                        target='_blank'
+                                    >
+                                    </a>
+                                ) : (
+                                    <a className='twitter-icon quick-link' href='https://www.twitter.com' target='_blank'></a>
+                                )}
+                                {socialinfo && socialinfo.username ? (
+                                    <a className='pinterest-icon quick-link'
+                                        href={"https://" + (socialinfo ? (socialinfo.username.split("/").length > 1 ? socialinfo.username : 'www.pinterest.com/' + socialinfo.username) : '')}
+                                        target='_blank'
+                                    >
+                                    </a>
+                                ) : (
+                                    <a className='pinterest-icon quick-link' href='https://www.pinterest' target='_blank'></a>
+                                )}
                             </div>
                         </div>
 

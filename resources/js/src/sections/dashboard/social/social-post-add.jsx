@@ -140,7 +140,7 @@ const SocialPostAdd = (props) => {
             >
               <ListItemAvatar className='social-icons'>
                 <a
-                  href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/' + brandinfo.youtube) : '')}
+                  href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/@' + brandinfo.youtube) : '')}
                   target='_blank'
                 >
                   <div className='youtube-icon' style={{ cursor: 'pointer' }} ></div>

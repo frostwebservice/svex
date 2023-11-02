@@ -50,7 +50,7 @@ const ranges = [
 const formatNumber = n => {
     for (var i = 0; i < ranges.length; i++) {
         if (n >= ranges[i].divider) {
-            return Number(n / ranges[i].divider).toFixed(1).toString() + ranges[i].suffix;
+            return Number(n / ranges[i].divider).toFixed(1).toString().replace(".0", "") + ranges[i].suffix;
         }
     }
     return n.toString();
@@ -190,14 +190,24 @@ const Page = (props) => {
 
     const showReach = () => {
         let social_type = selectedStat
-        if (social_type == "instagram" || social_type == "twitter" || social_type == "pinterest") {
-            return tmp && tmp.follower_count ? formatNumber(tmp.follower_count) : '0'
-        }
-        else if (social_type == "youtube" || social_type == "tiktok") {
-            return tmp && tmp.subscribers ? formatNumber(tmp.subscribers) : '0'
-        }
-    }
+        let total_number = (socialinfo && socialinfo["instagram"] ? socialinfo["instagram"].follower_count : 0)
+            + (socialinfo && socialinfo["pinterest"] ? socialinfo["pinterest"].follower_count : 0)
+            + (socialinfo && socialinfo["tiktok"] ? socialinfo["tiktok"].follower_count : 0)
+            + (socialinfo && socialinfo["twitter"] ? socialinfo["twitter"].follower_count : 0)
+            + (socialinfo && socialinfo["youtube"] ? socialinfo["youtube"].subscribers : 0)
+        return formatNumber(total_number)
 
+
+    }
+    const showTooltipReach = () => {
+        let txt = ""
+        txt += "Instagram followers: " + (socialinfo && socialinfo["instagram"] ? formatNumber(socialinfo["instagram"].follower_count) : 0) + '\n'
+            + "Tiktok followers: " + (socialinfo && socialinfo["tiktok"] ? formatNumber(socialinfo["tiktok"].follower_count) : 0) + '\n'
+            + "Youtube followers: " + (socialinfo && socialinfo["youtube"] ? formatNumber(socialinfo["youtube"].subscribers) : 0) + '\n'
+            + "Twitter followers: " + (socialinfo && socialinfo["twitter"] ? formatNumber(socialinfo["twitter"].follower_count) : 0) + '\n'
+            + "Pinterest followers: " + (socialinfo && socialinfo["pinterest"] ? formatNumber(socialinfo["pinterest"].follower_count) : 0) + '\n'
+        return txt
+    }
     const showExternalUrl = () => {
 
         if (selectedStat == "tiktok") {
@@ -293,19 +303,24 @@ const Page = (props) => {
                                             </Typography>
                                         </Grid>
                                         <Grid item sm={5} xs={5}>
-                                            <div className='custom-reach'>
-                                                <Grid container>
-                                                    <Grid item sx={{ color: '#2970FF', fontSize: '11px', fontWeight: 300, pl: 1, pr: 1, pt: 0.5, pb: 0.5 }}>
-                                                        <div>Reach</div>
-                                                        <div style={{ fontSize: '16px', fontWeight: 700 }}>
-                                                            {showReach()}
-                                                        </div>
+                                            <Tooltip title={
+                                                <div style={{ whiteSpace: 'pre-line' }}>{showTooltipReach()}</div>
+
+                                            }>
+                                                <div className='custom-reach'>
+                                                    <Grid container>
+                                                        <Grid item sx={{ color: '#2970FF', fontSize: '11px', fontWeight: 300, pl: 1, pr: 1, pt: 0.5, pb: 0.5 }}>
+                                                            <div>Reach</div>
+                                                            <div style={{ fontSize: '16px', fontWeight: 700 }}>
+                                                                {showReach()}
+                                                            </div>
+                                                        </Grid>
+                                                        <Grid item style={{ display: 'flex', alignItems: 'center', margin: '0 auto' }}>
+                                                            <div className='reach-arrow'></div>
+                                                        </Grid>
                                                     </Grid>
-                                                    <Grid item style={{ display: 'flex', alignItems: 'center', margin: '0 auto' }}>
-                                                        <div className='reach-arrow'></div>
-                                                    </Grid>
-                                                </Grid>
-                                            </div>
+                                                </div>
+                                            </Tooltip>
                                         </Grid>
                                     </Grid>
 

@@ -42,8 +42,8 @@
 }
 
 .custom-sub-panel {
-    margin-left: 5px;
-    min-width: 115px;
+    padding-left: 5px;
+    /* min-width: 115px; */
 }
 
 .facebook-icon {
@@ -190,7 +190,7 @@
 
 
 
-@media screen and (min-width:1642px) {
+/* @media screen and (min-width:1642px) {
     .custom-grid {
         max-width: 33.33% !important;
     }
@@ -218,6 +218,24 @@
     .custom-grid {
         max-width: 100% !important;
     }
+} */
+@media screen and (min-width: 546px) and (max-width: 1000px) {
+    .custom-grid {
+        width: 50% !important;
+    }
+
+}
+
+@media screen and (max-width:545px) {
+    .custom-img {
+        width: 84px !important
+    }
+}
+
+@media screen and (max-width:462px) {
+    .custom-img {
+        width: 100% !important
+    }
 }
 
 .normal-letter {
@@ -239,6 +257,7 @@
 .low-letter {
     color: #FFB84C
 }
+
 .verylow-letter {
     color: #FF6853
 }

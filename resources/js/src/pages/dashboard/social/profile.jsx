@@ -280,13 +280,13 @@ const Page = (props) => {
                       color: 'common.white',
                       cursor: 'pointer',
                       display: 'flex',
-                      height: '100%',
+                      height: '23%',
+                      width: '23%',
                       justifyContent: 'center',
-                      left: 0,
-                      opacity: 0,
+                      right: "5px",
+                      bottom: "15px",
+                      opacity: 0.7,
                       position: 'absolute',
-                      top: 0,
-                      width: '100%',
                       zIndex: 1,
                       '&:hover': {
                         opacity: 1
@@ -302,13 +302,13 @@ const Page = (props) => {
                       <SvgIcon color="inherit">
                         <Camera01Icon />
                       </SvgIcon>
-                      <Typography
+                      {/* <Typography
                         color="inherit"
                         variant="subtitle2"
                         sx={{ fontWeight: 700 }}
                       >
                         Select
-                      </Typography>
+                      </Typography> */}
                     </Stack>
                   </Box>
                   <Box
@@ -497,11 +497,58 @@ const Page = (props) => {
             <div className='right-quick'>
               <div className='quick-font'>Quick links</div>
               <div className='quick-links'>
-                <a className='instagram-icon quick-link' href='https://www.instagram.com' target='_blank'></a>
-                <a className='tiktok-icon quick-link' href='https://www.tiktok.com' target='_blank'></a>
-                <a className='youtube-icon quick-link' href='https://www.youtube.com' target='_blank'></a>
-                <a className='twitter-icon quick-link' href='https://www.twitter.com' target='_blank'></a>
-                <a className='pinterest-icon quick-link' href='https://www.pinterest' target='_blank'></a>
+                {brandinfo && brandinfo.facebook ? (
+                  <a className='facebook-icon quick-link'
+                    href={"https://" + (brandinfo ? (brandinfo.facebook.split("/").length > 1 ? brandinfo.facebook : 'www.facebook.com/' + brandinfo.facebook) : '')}
+                    target='_blank'
+                  >
+                  </a>
+                ) : (
+                  <a className='facebook-icon quick-link' href='https://www.facebook.com' target='_blank'></a>
+                )}
+                {brandinfo && brandinfo.instagram ? (
+                  <a className='instagram-icon quick-link'
+                    href={"https://" + (brandinfo ? (brandinfo.instagram.split("/").length > 1 ? brandinfo.instagram : 'www.instagram.com/' + brandinfo.instagram) : '')}
+                    target='_blank'
+                  >
+                  </a>
+                ) : (
+                  <a className='instagram-icon quick-link' href='https://www.instagram.com' target='_blank'></a>
+                )}
+                {brandinfo && brandinfo.tiktok ? (
+                  <a className='tiktok-icon quick-link'
+                    href={"https://" + (brandinfo ? (brandinfo.tiktok.split("/").length > 1 ? brandinfo.tiktok : 'www.tiktok.com/' + brandinfo.tiktok) : '')}
+                    target='_blank'
+                  ></a>
+                ) : (
+                  <a className='tiktok-icon quick-link' href='https://www.tiktok.com' target='_blank'></a>
+                )}
+                {brandinfo && brandinfo.youtube ? (
+                  <a className='youtube-icon quick-link'
+                    href={"https://" + (brandinfo ? (brandinfo.youtube.split("/").length > 1 ? brandinfo.youtube : 'www.youtube.com/@' + brandinfo.youtube) : '')}
+                    target='_blank'
+                  ></a>
+                ) : (
+                  <a className='youtube-icon quick-link' href='https://www.youtube.com' target='_blank'></a>
+                )}
+                {brandinfo && brandinfo.twitter ? (
+                  <a a className='twitter-icon quick-link'
+                    href={"https://" + (brandinfo ? (brandinfo.twitter.split("/").length > 1 ? brandinfo.twitter : 'www.twitter.com/' + brandinfo.twitter) : '')}
+                    target='_blank'
+                  >
+                  </a>
+                ) : (
+                  <a className='twitter-icon quick-link' href='https://www.twitter.com' target='_blank'></a>
+                )}
+                {brandinfo && brandinfo.pinterest ? (
+                  <a className='pinterest-icon quick-link'
+                    href={"https://" + (brandinfo ? (brandinfo.pinterest.split("/").length > 1 ? brandinfo.pinterest : 'www.pinterest.com/' + brandinfo.pinterest) : '')}
+                    target='_blank'
+                  >
+                  </a>
+                ) : (
+                  <a className='pinterest-icon quick-link' href='https://www.pinterest' target='_blank'></a>
+                )}
               </div>
             </div>
 
