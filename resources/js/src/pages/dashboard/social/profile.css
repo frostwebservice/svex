@@ -35,7 +35,7 @@
     margin-right: 12px;
 }
 
-@media screen and (max-width:1560px) {
+@media screen and (max-width:666px) {
 
     .button-bar {
         margin-top: 120px !important;
@@ -49,6 +49,32 @@
         margin-top: 120px !important;
     }
 
+}
+
+@media screen and (max-width:596px) {
+
+    .button-bar {
+        margin-top: 240px !important;
+        width: -webkit-fill-available;
+        margin-left: 0px !important
+    }
+
+    .social-btn {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width:596px) {
+
+    .button-bar {
+        margin-top: 0;
+        width: auto;
+        margin-left: 16px !important
+    }
+
+    .social-btn {
+        width: auto;
+    }
 }
 
 @media screen and (max-width:596px) {

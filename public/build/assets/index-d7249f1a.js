@@ -1,0 +1,1 @@
+import{d as e}from"./deep-copy-ee95be26.js";import{p as r,c as o,a as t,f as i}from"./social-post-card-c46a034f.js";class n{getProfile(s){return Promise.resolve(e(r))}getConnections(s){return Promise.resolve(e(o))}getPosts(s){return Promise.resolve(e(t))}getFeed(s){return Promise.resolve(e(i))}}const c=new n;export{c as s};
