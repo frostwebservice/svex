@@ -242,7 +242,7 @@ export const InstagramSearch = () => {
                         placeholder="URL"
                     />
                 </Box>
-                <div>
+                {/* <div>
                     <DatePicker
                         inputFormat="dd/MM/yyyy"
                         label="From"
@@ -259,7 +259,7 @@ export const InstagramSearch = () => {
                         renderInput={(inputProps) => <TextField {...inputProps} />}
                         value={new Date()}
                     />
-                </div>
+                </div> */}
                 <Button
                     size="large"
                     startIcon={(
