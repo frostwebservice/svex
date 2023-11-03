@@ -285,7 +285,7 @@ const Page = (props) => {
                                 </Box>
                                 <div className='brand-info'>
                                     <Grid container>
-                                        <Grid item sm={7} xs={7}>
+                                        <Grid item sm={7} xs={12}>
                                             <Typography
                                                 color="primary"
                                                 variant="h6"
@@ -302,7 +302,7 @@ const Page = (props) => {
                                                 {tmp ? tmp.full_name : ''}
                                             </Typography>
                                         </Grid>
-                                        <Grid item sm={5} xs={5}>
+                                        <Grid item sm={5} xs={12}>
                                             <Tooltip title={
                                                 <div style={{ whiteSpace: 'pre-line' }}>{showTooltipReach()}</div>
 
@@ -393,7 +393,7 @@ const Page = (props) => {
                                             <Button
                                                 onClick={handleInvite}
                                                 size="small"
-                                                className='fav-btn'
+                                                className='fav-btn small-button'
                                                 startIcon={(
                                                     <>
                                                         <img src="/assets/icons/invite.svg" />
@@ -407,7 +407,7 @@ const Page = (props) => {
                                                 component={RouterLink}
                                                 href={paths.dashboard.chat}
                                                 size="small"
-                                                className="social-btn"
+                                                className="social-btn small-button"
                                                 startIcon={(
                                                     <SvgIcon>
                                                         <MessageChatSquareIcon />
@@ -444,7 +444,7 @@ const Page = (props) => {
                                             <Button
                                                 onClick={handleInvite}
                                                 size="small"
-                                                className='fav-btn'
+                                                className='fav-btn small-button'
                                                 startIcon={(
                                                     <>
                                                         <img src="/assets/icons/invite.svg" />
@@ -458,7 +458,7 @@ const Page = (props) => {
                                                 component={RouterLink}
                                                 href={paths.dashboard.chat}
                                                 size="small"
-                                                className="social-btn"
+                                                className="social-btn small-button"
                                                 startIcon={(
                                                     <SvgIcon>
                                                         <MessageChatSquareIcon />

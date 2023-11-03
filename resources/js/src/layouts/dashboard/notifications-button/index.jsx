@@ -39,7 +39,7 @@ export const NotificationsButton = () => {
   const { handleRemoveOne, handleMarkAllAsRead, notifications, unread } = useNotifications();
 
   return (
-    <>
+    <div className='small-show'>
       <Tooltip title="Notifications">
         <IconButton
           ref={popover.anchorRef}
@@ -63,6 +63,6 @@ export const NotificationsButton = () => {
         onRemoveOne={handleRemoveOne}
         open={popover.open}
       />
-    </>
+    </div>
   );
 };

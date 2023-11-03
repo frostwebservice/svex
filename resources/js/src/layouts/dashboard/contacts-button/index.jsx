@@ -51,7 +51,7 @@ export const ContactsButton = () => {
   const contacts = useContacts();
 
   return (
-    <>
+    <div className='small-show'>
       <Tooltip title="Contacts">
         <IconButton
           onClick={popover.handleOpen}
@@ -68,6 +68,6 @@ export const ContactsButton = () => {
         onClose={popover.handleClose}
         open={popover.open}
       />
-    </>
+    </div>
   );
 };

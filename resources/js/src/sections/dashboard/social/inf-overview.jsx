@@ -79,6 +79,7 @@ const InfOverview = (props) => {
                             profileProgress={profile.profileProgress}
                             quote={profile.quote}
                             total={total}
+                            currentTab={currentTab}
                         />
                     </Grid>
                     <Grid
@@ -86,7 +87,7 @@ const InfOverview = (props) => {
                         xs={12}
                     >
                         <Stack spacing={3}>
-                            <InfRightPanel total={total} statkind={window.location.pathname.split("/")[3]} />
+                            <InfRightPanel total={total} statkind={window.location.pathname.split("/")[3]} currentTab={currentTab} />
                         </Stack>
                     </Grid>
                 </Grid>

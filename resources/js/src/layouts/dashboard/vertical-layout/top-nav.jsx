@@ -14,6 +14,7 @@ const TOP_NAV_HEIGHT = 64;
 const SIDE_NAV_WIDTH = 280;
 import { useDispatch } from "react-redux";
 import { useEffect } from 'react';
+import "../top.css"
 export const TopNav = (props) => {
   const { onMobileNavOpen, ...other } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
@@ -71,7 +72,9 @@ export const TopNav = (props) => {
           direction="row"
           spacing={2}
         >
-          <Tooltip title="Settings" >
+          <Tooltip title="Settings"
+            className="small-show"
+          >
             <Box
               sx={{
                 backgroundColor: 'background.paper',

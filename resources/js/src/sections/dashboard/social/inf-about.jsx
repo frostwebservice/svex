@@ -30,10 +30,11 @@ const InfAbout = (props) => {
         previousJobTitle,
         profileProgress,
         quote,
+        currentTab,
         total,
         ...other
     } = props;
-    let tmp = total == "total" ? socialinfo[socialinfo["basic"]] : socialinfo
+    let tmp = total == "total" ? socialinfo[currentTab] : socialinfo
     const showExternalUrl = () => {
 
         let social_type = window.location.pathname.split("/")[3]

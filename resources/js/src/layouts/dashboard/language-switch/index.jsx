@@ -16,7 +16,7 @@ export const LanguageSwitch = () => {
   const flag = languages[i18n.language];
 
   return (
-    <>
+    <div className="small-show">
       <Tooltip title="Language">
         <IconButton
           onClick={popover.handleOpen}
@@ -39,6 +39,6 @@ export const LanguageSwitch = () => {
         onClose={popover.handleClose}
         open={popover.open}
       />
-    </>
+    </div>
   );
 };

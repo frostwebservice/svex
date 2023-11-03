@@ -26,6 +26,7 @@
 
 .social-list-font {
     font-size: 16px !important;
+    word-wrap: break-word;
     /* color: black; */
 }
 
@@ -229,6 +230,20 @@
 @media screen and (max-width:545px) {
     .custom-img {
         width: 84px !important
+    }
+}
+
+.custom-right-card {
+    border-radius: 0;
+    box-shadow: 'none';
+    border-left: '0.5px solid #F2F4F7';
+    padding-left: 60;
+    padding-right: 0;
+}
+
+@media screen and (max-width:400px) {
+    .custom-right-card {
+        padding-left: 0;
     }
 }
 

@@ -17,12 +17,12 @@ import { connect } from 'react-redux';
 const InfRightPanel = (props) => {
     const user = useMockedUser();
     const smUp = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-    const { socialinfo, statkind, total } = props;
-    let tmp = total == "total" ? socialinfo[socialinfo["basic"]] : socialinfo
+    const { socialinfo, statkind, total, currentTab } = props;
+    let tmp = total == "total" ? socialinfo[currentTab] : socialinfo
     const renderNiche = () => {
         let tmpStatKind = statkind
 
-        if (total == "total") tmpStatKind = socialinfo["basic"]
+        if (total == "total") tmpStatKind = currentTab
         if (tmpStatKind == "instagram" || tmpStatKind == "tiktok" || tmpStatKind == "twitter" || tmpStatKind == "pinterest") {
             return (
                 (tmp && tmp.category_niche) ? (< div className='profile-niche' key={tmp.category_niche} > {tmp.category_niche}</div >) : (<></>)
@@ -32,7 +32,6 @@ const InfRightPanel = (props) => {
             let niches = (tmp && tmp.category_niche) ? tmp.category_niche : ""
             niches = niches.replace("[", "").replace("]", "")
             niches = niches.split(",")
-            console.log(niches)
             const renderingNiches = niches.map(niche =>
                 <div className='profile-niche' key={niche} > {niche.replace(/"/g, '')}</div >
             )
@@ -40,7 +39,7 @@ const InfRightPanel = (props) => {
         }
     }
     return (
-        <Card style={{ borderRadius: 0, boxShadow: 'none', borderLeft: '0.5px solid #F2F4F7', paddingLeft: 60, paddingRight: 0 }}>
+        <Card className="custom-right-card">
             <CardHeader title="Niche" className='head-font' />
             <CardContent style={{ padding: 0 }}>
                 {renderNiche()}
