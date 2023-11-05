@@ -44,34 +44,7 @@ const sortOptions = [
     value: 'totalOrders|asc'
   }
 ];
-const useCourses = () => {
-  return [
-    {
-      id: 'c3a2b7331eef8329e2a87c79',
-      description: 'Introductory course for design and framework basics',
-      duration: '78 hours',
-      media: '/assets/courses/course-1.png',
-      progress: 23,
-      title: 'React and Redux Tutorial'
-    },
-    {
-      id: '3f02f696f869ecd1c68e95a3',
-      description: 'Introductory course for design and framework basics',
-      duration: '14 hours',
-      media: '/assets/courses/course-2.png',
-      progress: 52,
-      title: 'React and Express Tutorial'
-    },
-    {
-      id: 'f6e76a6474038384cd9e032b',
-      description: 'Introductory course for design and framework basics',
-      duration: '21 hours',
-      media: '/assets/courses/course-3.png',
-      progress: 90,
-      title: 'React Crash Course: Beginner'
-    }
-  ];
-};
+
 const companies = [
   {
     id: 'FR-58F46',
