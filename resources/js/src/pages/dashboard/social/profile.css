@@ -77,6 +77,10 @@
     }
 }
 
+.custom-reach {
+    width: 130px;
+}
+
 @media screen and (max-width:596px) {
 
     .brand-info {
@@ -84,9 +88,7 @@
         max-width: 200px;
     }
 
-    .custom-reach {
-        width: 130px;
-    }
+
 
 }
 
@@ -105,6 +107,13 @@
 
     .inf-button-bar {
         margin-top: 350px !important;
+        display: grid !important;
+        width: -webkit-fill-available;
+    }
+
+    .right-btn {
+        margin-bottom: 15px !important;
+        margin-left: 0px !important;
     }
 }
 
@@ -121,12 +130,18 @@
 
     .inf-button-bar {
         margin-top: 230px !important;
+        display: grid !important;
+        width: -webkit-fill-available;
     }
 
+    .right-btn {
+        margin-bottom: 15px !important;
+        margin-left: 0px !important;
+    }
 }
 
 .fav-btn {
-    margin-bottom: 0px !important;
+    margin-bottom: 0px;
 }
 
 .custom-reach {
@@ -143,7 +158,7 @@
 }
 
 .fav-btn-alone {
-    margin-bottom: 0px !important;
+    margin-bottom: 0px;
     margin-left: 0px !important;
     padding: 0;
     background-color: none;
@@ -202,7 +217,8 @@
 .quick-link {
     width: 20px !important;
     height: 20px !important;
-    margin-right: 15px;
+    margin-left: 8px;
+    margin-right: 8px;
     display: inline-block;
     background-size: cover;
 }

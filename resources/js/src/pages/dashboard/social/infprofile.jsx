@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
+import MessageChatSquareIcon from '@untitled-ui/icons-react/build/esm/MessageChatSquare';
 import DotsHorizontalIcon from '@untitled-ui/icons-react/build/esm/DotsHorizontal';
 import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
 import UserPlus02Icon from '@untitled-ui/icons-react/build/esm/UserPlus02';
-import MessageChatSquareIcon from '@untitled-ui/icons-react/build/esm/MessageChatSquare';
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import { useNavigate } from 'react-router-dom';
@@ -343,12 +343,13 @@ const Page = (props) => {
                                     }
                                 }}
                             >
+
                                 {isLiked
                                     ? (
                                         <>
                                             <Button
                                                 onClick={handleUnlike}
-                                                className='fav-btn=alone'
+                                                className='fav-btn-alone right-btn'
                                                 startIcon={(
                                                     <SvgIcon
                                                         sx={{
@@ -367,7 +368,7 @@ const Page = (props) => {
                                             </Button>
                                             <Button
                                                 // size="small"
-                                                className='fav-btn-alone'
+                                                className='fav-btn-alone right-btn'
                                                 // sx={{ ml: 0 }}
                                                 startIcon={(
                                                     <img src="/assets/stats/users.png" />
@@ -378,7 +379,7 @@ const Page = (props) => {
                                             <Button
                                                 onClick={handleInvite}
                                                 size="small"
-                                                className='fav-btn'
+                                                className='fav-btn right-btn'
                                                 startIcon={(
                                                     <>
                                                         <img src="/assets/icons/invite.svg" />
@@ -392,7 +393,7 @@ const Page = (props) => {
                                                 component={RouterLink}
                                                 href={paths.dashboard.chat}
                                                 size="small"
-                                                className="social-btn"
+                                                className="social-btn right-btn"
                                                 startIcon={(
                                                     <SvgIcon>
                                                         <MessageChatSquareIcon />
@@ -409,7 +410,7 @@ const Page = (props) => {
                                             <Button
                                                 onClick={handleLike}
 
-                                                className='fav-btn-alone'
+                                                className='fav-btn-alone right-btn'
                                                 startIcon={(
                                                     <SvgIcon sx={{ transform: 'scale(1.8)' }}>
                                                         <HeartIcon />
@@ -420,7 +421,7 @@ const Page = (props) => {
                                             </Button>
                                             <Button
                                                 // size="small"
-                                                className='fav-btn-alone'
+                                                className='fav-btn-alone right-btn'
                                                 startIcon={(
                                                     <img src="/assets/stats/users.png" />
                                                 )}
@@ -429,7 +430,7 @@ const Page = (props) => {
                                             <Button
                                                 onClick={handleInvite}
                                                 size="small"
-                                                className='fav-btn'
+                                                className='fav-btn right-btn'
                                                 startIcon={(
                                                     <>
                                                         <img src="/assets/icons/invite.svg" />
@@ -443,7 +444,7 @@ const Page = (props) => {
                                                 component={RouterLink}
                                                 href={paths.dashboard.chat}
                                                 size="small"
-                                                className="social-btn"
+                                                className="social-btn right-btn"
                                                 startIcon={(
                                                     <SvgIcon>
                                                         <MessageChatSquareIcon />
