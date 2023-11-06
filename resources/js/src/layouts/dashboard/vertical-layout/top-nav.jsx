@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Menu01Icon from '@untitled-ui/icons-react/build/esm/Menu01';
-import { Box, IconButton, Stack, SvgIcon, useMediaQuery } from '@mui/material';
+import { Box, IconButton, Stack, SvgIcon, useMediaQuery, Button } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import AccountButton from '../account-button';
 import { ContactsButton } from '../contacts-button';
@@ -15,6 +15,9 @@ const SIDE_NAV_WIDTH = 280;
 import { useDispatch } from "react-redux";
 import { useEffect } from 'react';
 import "../top.css"
+import { RouterLink } from '@/components/router-link';
+import { paths } from '@/paths';
+
 export const TopNav = (props) => {
   const { onMobileNavOpen, ...other } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
@@ -103,9 +106,25 @@ export const TopNav = (props) => {
               </ButtonBase>
             </Box>
           </Tooltip>
+          <Box
+
+          >
+            <Button
+              // onClick={() => { alert("click") }}
+              component={RouterLink}
+              href={paths.dashboard.mail}
+              startIcon={(
+                <>
+                  <img src="/assets/icons/mail.png" />
+                </>
+              )}
+
+            >
+            </Button>
+          </Box>
           <LanguageSwitch />
           <NotificationsButton />
-          <ContactsButton />
+          {/* <ContactsButton /> */}
           <AccountButton />
         </Stack>
       </Stack>

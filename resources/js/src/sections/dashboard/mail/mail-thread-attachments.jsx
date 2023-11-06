@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import Download01Icon from '@untitled-ui/icons-react/build/esm/Download01';
 import { Avatar, Button, Stack, SvgIcon, Typography } from '@mui/material';
+import Attachment01Icon from '@untitled-ui/icons-react/build/esm/Attachment01';
 
 export const MailThreadAttachments = (props) => {
   const { attachments = [] } = props;
@@ -31,19 +32,25 @@ export const MailThreadAttachments = (props) => {
             }}
           >
             {attachment.type === 'image' && (
+              // <Avatar
+              //   src={attachment.url}
+              //   variant="rounded"
+              // />
               <Avatar
-                src={attachment.url}
                 variant="rounded"
-              />
+                sx={{ backgroundColor: 'primary.light', borderRadius: '50%' }}
+              >
+                <Attachment01Icon />
+
+              </Avatar>
             )}
             {attachment.type === 'file' && (
               <Avatar
                 variant="rounded"
-                sx={{ backgroundColor: 'primary.light' }}
+                sx={{ backgroundColor: 'primary.light', borderRadius: '50%' }}
               >
-                <Typography variant="overline">
-                  PDF
-                </Typography>
+                <Attachment01Icon />
+
               </Avatar>
             )}
             <div>
@@ -65,12 +72,7 @@ export const MailThreadAttachments = (props) => {
       </Stack>
       <div>
         <Button
-          color="inherit"
-          startIcon={(
-            <SvgIcon>
-              <Download01Icon />
-            </SvgIcon>
-          )}
+          color="primary"
           size="small"
         >
           Download all

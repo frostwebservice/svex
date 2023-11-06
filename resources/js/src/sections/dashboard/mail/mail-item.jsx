@@ -97,7 +97,7 @@ export const MailItem = (props) => {
             </SvgIcon>
           </IconButton>
         </Tooltip>
-        <Tooltip title="Important">
+        {/* <Tooltip title="Important">
           <IconButton>
             <SvgIcon
               sx={{
@@ -113,7 +113,7 @@ export const MailItem = (props) => {
               <BookmarkIcon />
             </SvgIcon>
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
       </Box>
       <Box
         component={RouterLink}

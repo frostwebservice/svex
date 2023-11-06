@@ -28,8 +28,8 @@ const useEmails = (currentLabelId) => {
   const { emails } = useSelector((state) => state.mail);
 
   useEffect(() => {
-      dispatch(thunks.getEmails({ label: currentLabelId }));
-    },
+    dispatch(thunks.getEmails({ label: currentLabelId }));
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentLabelId]);
 
@@ -77,8 +77,10 @@ const useSelectionModel = (emailIds) => {
 };
 
 export const MailList = (props) => {
+
   const { currentLabelId, onSidebarToggle, ...other } = props;
   const emails = useEmails(currentLabelId);
+  const labels = useSelector((state) => state.mail.labels);
   const {
     handleDeselectAll,
     handleDeselectOne,
@@ -98,7 +100,6 @@ export const MailList = (props) => {
   const selectedAll = selected.length === emails.allIds.length;
   const selectedSome = selected.length > 0 && selected.length < emails.allIds.length;
   const hasEmails = emails.allIds.length > 0;
-
   return (
     <Stack
       sx={{
@@ -119,61 +120,20 @@ export const MailList = (props) => {
               <Menu01Icon />
             </SvgIcon>
           </IconButton>
-        </div>
-        <Stack
-          alignItems="center"
-          direction="row"
-          spacing={1}
-        >
-          <OutlinedInput
-            fullWidth
-            placeholder="Search email"
-            size="small"
-            startAdornment={(
-              <InputAdornment position="start">
-                <SvgIcon>
-                  <SearchMdIcon />
-                </SvgIcon>
-              </InputAdornment>
-            )}
-            sx={{ width: 200 }}
-          />
-          <Typography
-            color="text.secondary"
-            sx={{
-              display: {
-                xs: 'none',
-                md: 'block'
-              },
-              mx: 2,
-              whiteSpace: 'nowrap'
-            }}
-            variant="body2"
-          >
-            1 - {emails.allIds.length} of {emails.allIds.length}
+          <Typography sx={{ display: "inline", fontSize: 18, fontWeight: 700 }}>
+            {
+              currentLabelId == undefined ? "Inbox" : (
+                labels.map((label) => {
+                  if (label.id == currentLabelId) return label.name;
+                })
+              )
+
+
+            }
           </Typography>
-          <Tooltip title="Next page">
-            <IconButton>
-              <SvgIcon>
-                <ChevronLeftIcon />
-              </SvgIcon>
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Previous page">
-            <IconButton>
-              <SvgIcon>
-                <ChevronRightIcon />
-              </SvgIcon>
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Refresh">
-            <IconButton>
-              <SvgIcon>
-                <RefreshCcw02Icon />
-              </SvgIcon>
-            </IconButton>
-          </Tooltip>
-        </Stack>
+        </div>
+
+
       </Stack>
       <Divider />
       {hasEmails
@@ -201,13 +161,67 @@ export const MailList = (props) => {
                 Select all
               </Typography>
               <Box sx={{ flexGrow: 1 }} />
-              <Tooltip title="More options">
+              <Stack
+                alignItems="center"
+                direction="row"
+                spacing={1}
+              >
+                <OutlinedInput
+                  fullWidth
+                  placeholder="Search email"
+                  size="small"
+                  startAdornment={(
+                    <InputAdornment position="start">
+                      <SvgIcon>
+                        <SearchMdIcon />
+                      </SvgIcon>
+                    </InputAdornment>
+                  )}
+                  sx={{ width: 200 }}
+                />
+                <Typography
+                  color="text.secondary"
+                  sx={{
+                    display: {
+                      xs: 'none',
+                      md: 'block'
+                    },
+                    mx: 2,
+                    whiteSpace: 'nowrap'
+                  }}
+                  variant="body2"
+                >
+                  1 - {emails.allIds.length} of {emails.allIds.length}
+                </Typography>
+                <Tooltip title="Next page">
+                  <IconButton>
+                    <SvgIcon>
+                      <ChevronLeftIcon />
+                    </SvgIcon>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Previous page">
+                  <IconButton>
+                    <SvgIcon>
+                      <ChevronRightIcon />
+                    </SvgIcon>
+                  </IconButton>
+                </Tooltip>
+                {/* <Tooltip title="Refresh">
+            <IconButton>
+              <SvgIcon>
+                <RefreshCcw02Icon />
+              </SvgIcon>
+            </IconButton>
+          </Tooltip> */}
+              </Stack>
+              {/* <Tooltip title="More options">
                 <IconButton>
                   <SvgIcon>
                     <DotsHorizontalIcon />
                   </SvgIcon>
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
             </Box>
             <div>
               {emails.allIds.map((emailId) => {

@@ -29,7 +29,7 @@ export const MailThreadReply = (props) => {
           direction="row"
           spacing={2}
         >
-          <Avatar src={user.avatar} />
+          {/* <Avatar src={user.avatar} /> */}
           <Box sx={{ flexGrow: 1 }}>
             <TextField
               fullWidth
@@ -37,7 +37,7 @@ export const MailThreadReply = (props) => {
               minRows={3}
               multiline
               onChange={handleMessageChange}
-              placeholder="Leave a message"
+              placeholder="Type your replay"
               value={message}
               variant="outlined"
             />
@@ -86,7 +86,7 @@ export const MailThreadReply = (props) => {
               </Stack>
               <div>
                 <Button variant="contained">
-                  Reply
+                  Send Email
                 </Button>
               </div>
             </Stack>

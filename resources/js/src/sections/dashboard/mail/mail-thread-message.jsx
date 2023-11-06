@@ -1,12 +1,12 @@
 import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
-
+import "./mail.css";
 const MarkdownWrapper = styled('div')(({ theme }) => ({
   color: theme.palette.text.primary,
   fontFamily: theme.typography.body1.fontFamily,
   '& > p': {
-    fontSize: theme.typography.body1.fontSize,
+    fontSize: 14,
     lineHeight: theme.typography.body1.lineHeight,
     marginBottom: theme.spacing(2)
   }

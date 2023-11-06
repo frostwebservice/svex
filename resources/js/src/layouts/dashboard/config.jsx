@@ -82,6 +82,39 @@ export const useSections = () => {
             ]
           },
           {
+            title: t(tokens.nav.mail),
+            path: paths.dashboard.mail,
+            icon: (
+              <SvgIcon fontSize="small">
+                <Mail03Icon />
+              </SvgIcon>
+            )
+          },
+          {
+            title: t(tokens.nav.jobList),
+            path: paths.dashboard.jobs.index,
+            icon: (
+              <SvgIcon fontSize="small">
+                <Building04Icon />
+              </SvgIcon>
+            ),
+            items: [
+              {
+                title: t(tokens.nav.createjob),
+                path: paths.dashboard.jobs.create
+              },
+              {
+                title: t(tokens.nav.manage),
+                path: paths.dashboard.jobs.index
+              },
+              {
+                title: t(tokens.nav.history),
+                path: paths.dashboard.jobs.companies.details
+              }
+
+            ]
+          },
+          {
             title: t(tokens.nav.analytics),
             path: paths.dashboard.analytics,
             icon: (
@@ -244,30 +277,7 @@ export const useSections = () => {
             ]
           },
 
-          {
-            title: t(tokens.nav.jobList),
-            path: paths.dashboard.jobs.index,
-            icon: (
-              <SvgIcon fontSize="small">
-                <Building04Icon />
-              </SvgIcon>
-            ),
-            items: [
-              {
-                title: t(tokens.nav.createjob),
-                path: paths.dashboard.jobs.create
-              },
-              {
-                title: t(tokens.nav.manage),
-                path: paths.dashboard.jobs.index
-              },
-              {
-                title: t(tokens.nav.history),
-                path: paths.dashboard.jobs.companies.details
-              }
 
-            ]
-          },
           {
             title: t(tokens.nav.socialMedia),
             path: paths.dashboard.social.index,
@@ -328,15 +338,7 @@ export const useSections = () => {
               </SvgIcon>
             )
           },
-          {
-            title: t(tokens.nav.mail),
-            path: paths.dashboard.mail,
-            icon: (
-              <SvgIcon fontSize="small">
-                <Mail03Icon />
-              </SvgIcon>
-            )
-          },
+
           {
             title: t(tokens.nav.chat),
             path: paths.dashboard.chat,

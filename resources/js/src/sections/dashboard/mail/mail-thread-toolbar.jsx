@@ -13,6 +13,7 @@ import {
   InputAdornment,
   Link,
   OutlinedInput,
+  Chip,
   Stack,
   SvgIcon,
   Tooltip,
@@ -23,9 +24,10 @@ import ReplyIcon from '@mui/icons-material/Reply';
 import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 import { RouterLink } from '@/components/router-link';
 import { getInitials } from '@/utils/get-initials';
+import Menu01Icon from '@untitled-ui/icons-react/build/esm/Menu01';
 
 export const MailThreadToolbar = (props) => {
-  const { backHref, createdAt, from, to } = props;
+  const { backHref, createdAt, from, to, onSidebarToggle, currentLabelId } = props;
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
   const formattedCreatedAt = format(createdAt, 'MMMM d yyyy, h:mm:ss a');
 
@@ -39,18 +41,24 @@ export const MailThreadToolbar = (props) => {
         sx={{ p: 2 }}
       >
         <div>
-          <Tooltip title="Back">
-            <IconButton
-              component={RouterLink}
-              href={backHref}
-            >
-              <SvgIcon>
-                <ArrowLeftIcon />
-              </SvgIcon>
-            </IconButton>
-          </Tooltip>
+          <IconButton onClick={onSidebarToggle}>
+            <SvgIcon>
+              <Menu01Icon />
+            </SvgIcon>
+          </IconButton>
+          <Typography sx={{ display: "inline", fontSize: 18, fontWeight: 700 }}>
+            {
+              currentLabelId == undefined ? "Inbox" : (
+                labels.map((label) => {
+                  if (label.id == currentLabelId) return label.name;
+                })
+              )
+
+
+            }
+          </Typography>
         </div>
-        <Stack
+        {/* <Stack
           alignItems="center"
           direction="row"
           spacing={1}
@@ -82,7 +90,7 @@ export const MailThreadToolbar = (props) => {
               </SvgIcon>
             </IconButton>
           </Tooltip>
-        </Stack>
+        </Stack> */}
       </Stack>
       <Divider />
       <Stack
@@ -136,15 +144,7 @@ export const MailThreadToolbar = (props) => {
                 </Link>
               ))}
             </Typography>
-            {formattedCreatedAt && (
-              <Typography
-                color="text.secondary"
-                noWrap
-                variant="caption"
-              >
-                {formattedCreatedAt}
-              </Typography>
-            )}
+
           </div>
         </Stack>
         <Stack
@@ -154,36 +154,34 @@ export const MailThreadToolbar = (props) => {
         >
           {mdUp && (
             <>
+              <Chip label="Business" color="info" style={{ backgroundColor: 'lightblue', color: "#0E7090" }} />
+              <Chip label="Work" color="info" style={{ backgroundColor: 'lightblue', color: "#0E7090" }} />
+              {formattedCreatedAt && (
+                <Typography
+                  color="text.secondary"
+                  noWrap
+                  variant="caption"
+                >
+                  {formattedCreatedAt}
+                </Typography>
+              )}
               <Tooltip title="Reply">
                 <IconButton>
-                  <SvgIcon>
-                    <ReplyIcon />
-                  </SvgIcon>
+                  <img src="/assets/icons/left.png" width={15} height={15} />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Reply all">
                 <IconButton>
-                  <SvgIcon>
-                    <ReplyAllIcon />
-                  </SvgIcon>
+                  <img src="/assets/icons/dleft.png" width={15} height={15} />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Delete">
                 <IconButton>
-                  <SvgIcon>
-                    <Trash02Icon />
-                  </SvgIcon>
+                  <img src="/assets/icons/trash.png" width={15} height={15} />
                 </IconButton>
               </Tooltip>
             </>
           )}
-          <Tooltip title="More options">
-            <IconButton>
-              <SvgIcon>
-                <DotsHorizontalIcon />
-              </SvgIcon>
-            </IconButton>
-          </Tooltip>
         </Stack>
       </Stack>
     </div>

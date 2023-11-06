@@ -14,10 +14,10 @@ const useEmail = (emailId) => {
   const email = useSelector((state) => state.mail.emails.byId[emailId]);
 
   useEffect(() => {
-      dispatch(thunks.getEmail({
-        emailId
-      }));
-    },
+    dispatch(thunks.getEmail({
+      emailId
+    }));
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [emailId]);
 
@@ -25,7 +25,7 @@ const useEmail = (emailId) => {
 };
 
 export const MailThread = (props) => {
-  const { emailId, currentLabelId } = props;
+  const { emailId, currentLabelId, onSidebarToggle } = props;
   const email = useEmail(emailId);
 
   if (!email) {
@@ -50,7 +50,10 @@ export const MailThread = (props) => {
       <MailThreadToolbar
         backHref={backHref}
         createdAt={email.createdAt}
+        currentLabelId={currentLabelId}
         from={email.from}
+        onSidebarToggle={onSidebarToggle}
+
         to={email.to}
       />
       <Box
