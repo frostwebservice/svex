@@ -8,6 +8,8 @@ import Link01Icon from '@untitled-ui/icons-react/build/esm/Link01';
 import FaceSmileIcon from '@untitled-ui/icons-react/build/esm/FaceSmile';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 import { makeStyles } from '@material-ui/core';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import {
   Backdrop,
   Box,
@@ -118,30 +120,86 @@ export const MailComposer = (props) => {
             </SvgIcon>
           </IconButton>
         </Box>
-        <Input
-          disableUnderline
-          fullWidth
-          onChange={handleToChange}
-          placeholder="To"
-          sx={{
-            p: 1,
-            borderBottom: 1,
-            borderColor: 'divider'
-          }}
-          value={to}
-        />
-        <Input
-          disableUnderline
-          fullWidth
-          onChange={handleSubjectChange}
-          placeholder="Subject"
-          sx={{
-            p: 1,
-            borderBottom: 1,
-            borderColor: 'divider'
-          }}
-          value={subject}
-        />
+        <Stack
+          alignItems="center"
+          direction="row"
+          justifyContent="space-between"
+        // spacing={3}
+        // sx={{ p: 2 }}
+        >
+          <Stack
+            alignItems="center"
+            direction="row"
+            spacing={1}
+          >
+            <Typography sx={{ mx: 2 }}>To</Typography>
+            <Input
+              disableUnderline
+              fullWidth
+              onChange={handleToChange}
+              // placeholder="To"
+              sx={{
+                pt: 0.5,
+                borderBottom: 1,
+                borderColor: 'divider'
+              }}
+              value={to}
+            />
+          </Stack>
+          <Stack
+            alignItems="center"
+            direction="row"
+            spacing={1}
+          >
+            <Typography sx={{ mx: 2, fontWeight: 600, fontSize: 16 }}>Outreach Group</Typography>
+
+            <FormControlLabel
+              sx={{
+                display: 'block',
+              }}
+              style={{ marginRight: 20 }}
+              control={
+                <Switch
+                  checked={true}
+                  // onChange={() => setLoading(!loading)}
+                  name="loading"
+                  color="primary"
+                />
+              }
+            // label="Loading"
+            />
+
+          </Stack>
+        </Stack>
+        <Stack
+          alignItems="center"
+          direction="row"
+          justifyContent="space-between"
+        // spacing={3}
+        // sx={{ p: 2 }}
+        >
+          <Stack
+            alignItems="center"
+            direction="row"
+            spacing={1}
+          >
+            <Typography sx={{ mx: 2 }}>Subject</Typography>
+            <Input
+              disableUnderline
+              fullWidth
+              onChange={handleSubjectChange}
+              // placeholder="Subject"
+              sx={{
+                pt: 0.5,
+                borderBottom: 1,
+                borderColor: 'divider'
+              }}
+              value={subject}
+            />
+          </Stack>
+        </Stack>
+
+
         <QuillEditor
           onChange={onMessageChange}
           placeholder="Type your text"
