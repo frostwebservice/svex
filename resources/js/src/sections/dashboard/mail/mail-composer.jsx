@@ -4,6 +4,8 @@ import Attachment01Icon from '@untitled-ui/icons-react/build/esm/Attachment01';
 import Expand01Icon from '@untitled-ui/icons-react/build/esm/Expand01';
 import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
 import Minimize01Icon from '@untitled-ui/icons-react/build/esm/Minimize01';
+import Link01Icon from '@untitled-ui/icons-react/build/esm/Link01';
+import FaceSmileIcon from '@untitled-ui/icons-react/build/esm/FaceSmile';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 import {
   Backdrop,
@@ -13,6 +15,7 @@ import {
   IconButton,
   Input,
   Paper,
+  TextField,
   Portal,
   Stack,
   SvgIcon,
@@ -86,7 +89,7 @@ export const MailComposer = (props) => {
           }}
         >
           <Typography variant="h6">
-            New Message
+            New Email
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           {maximize
@@ -134,14 +137,36 @@ export const MailComposer = (props) => {
           }}
           value={subject}
         />
-        <QuillEditor
+        {/* <QuillEditor
           onChange={onMessageChange}
-          placeholder="Leave a message"
+          placeholder="Type your text"
           sx={{
             border: 'none',
             flexGrow: 1
           }}
           value={message}
+        /> */}
+        <TextField
+          // label="Bio"
+          // className="title-inter "
+          // label='Type your text'
+          placeholder='Type your text'
+          name="aboutbusiness"
+          variant="filled"
+          multiline
+          sx={{
+            border: 'none',
+            flexGrow: 1,
+            // p: 2
+          }}
+          inputProps={{
+            style: {
+              // height: "110px",
+            }
+          }}
+          fullWidth
+          style={{ marginTop: 11 }}
+        // helperText="Type your text"
         />
         <Divider />
         <Stack
@@ -170,10 +195,22 @@ export const MailComposer = (props) => {
                 </SvgIcon>
               </IconButton>
             </Tooltip>
+
+            <IconButton>
+              <SvgIcon>
+                <Link01Icon />
+              </SvgIcon>
+            </IconButton>
+            <IconButton>
+              <SvgIcon>
+                <FaceSmileIcon />
+              </SvgIcon>
+            </IconButton>
+
           </Stack>
           <div>
             <Button variant="contained">
-              Send
+              Send Email
             </Button>
           </div>
         </Stack>

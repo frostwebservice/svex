@@ -337,7 +337,8 @@ const Page = (props) => {
                   // onClick={onbioClick}
                   value={formik.values.aboutbusiness}
                   helperText="Describe your influencer marketing goals and ambitions using SocialVex"
-                /></div>
+                />
+              </div>
 
               <div className="row d-flex justify-content-end pt-4 px-1 title-inter ">
 
