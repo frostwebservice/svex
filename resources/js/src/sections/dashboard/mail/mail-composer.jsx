@@ -61,27 +61,27 @@ export const MailComposer = (props) => {
       <Backdrop open={maximize} />
       <Paper
         sx={{
-          bottom: 0,
+          bottom: (theme) => `calc((${theme.spacing(20)})/3)`,
           display: 'flex',
           flexDirection: 'column',
-          margin: 3,
-          maxHeight: (theme) => `calc(100% - ${theme.spacing(6)})`,
-          maxWidth: (theme) => `calc(100% - ${theme.spacing(6)})`,
-          minHeight: 500,
+          // margin: '30px auto',
+          height: (theme) => `calc(100% - ${theme.spacing(20)})`,
+          width: (theme) => `calc(100% - ${theme.spacing(40)})`,
+          // minHeight: 500,
           outline: 'none',
           position: 'fixed',
-          right: 0,
-          width: 600,
+          right: (theme) => `calc((${theme.spacing(40)}) / 2)`,
+          // width: 600,
           zIndex: 1400,
           overflow: 'hidden',
-          ...(maximize && {
-            borderRadius: 0,
-            height: '100%',
-            margin: 0,
-            maxHeight: '100%',
-            maxWidth: '100%',
-            width: '100%'
-          })
+          // ...(maximize && {
+          //   borderRadius: 0,
+          //   height: '100%',
+          //   margin: 0,
+          //   maxHeight: '100%',
+          //   maxWidth: '100%',
+          //   width: '100%'
+          // })
         }}
         elevation={12}
       >
@@ -97,7 +97,7 @@ export const MailComposer = (props) => {
             New Email
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          {maximize
+          {/* {maximize
             ? (
               <IconButton onClick={onMinimize}>
                 <SvgIcon>
@@ -111,7 +111,7 @@ export const MailComposer = (props) => {
                   <Expand01Icon />
                 </SvgIcon>
               </IconButton>
-            )}
+            )} */}
           <IconButton onClick={onClose}>
             <SvgIcon>
               <XIcon />
@@ -142,7 +142,7 @@ export const MailComposer = (props) => {
           }}
           value={subject}
         />
-        {/* <QuillEditor
+        <QuillEditor
           onChange={onMessageChange}
           placeholder="Type your text"
           sx={{
@@ -150,16 +150,19 @@ export const MailComposer = (props) => {
             flexGrow: 1
           }}
           value={message}
-        /> */}
-        <TextField
+        />
+        {/* <TextField
           // label="Bio"
           // className="title-inter "
           // label='Type your text'
+          // size="medium"
           placeholder='Type your text'
           name="aboutbusiness"
-          disableUnderline={false}
+          autoComplete='message '
+          // disableUnderline={false}
           variant="outlined"
           multiline
+          id="message"
           classes={{ notchedOutline: classes.input }}
           className={classes.textField}
           sx={{
@@ -169,14 +172,15 @@ export const MailComposer = (props) => {
           }}
           inputProps={{
             style: {
-              // height: "110px",
+              padding: 0,
+              maxHeight: (theme) => `calc(100% - ${theme.spacing(20)})`,
             },
             classes: { notchedOutline: classes.noBorder }
           }}
           fullWidth
           style={{ marginTop: 11 }}
         // helperText="Type your text"
-        />
+        /> */}
         <Divider />
         <Stack
           alignItems="center"
@@ -224,7 +228,7 @@ export const MailComposer = (props) => {
           </div>
         </Stack>
       </Paper>
-    </Portal>
+    </Portal >
   );
 };
 

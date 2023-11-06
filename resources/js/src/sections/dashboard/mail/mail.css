@@ -3,7 +3,12 @@
 }
 
 
+
 .MuiOutlinedInput-notchedOutline {
     border: none !important;
-    box-shadow: none;
+    box-shadow: none !important;
+}
+
+.ql-toolbar {
+    display: none;
 }

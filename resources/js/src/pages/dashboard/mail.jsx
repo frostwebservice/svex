@@ -199,7 +199,7 @@ const Page = () => {
         maximize={composer.isFullScreen}
         message={composer.message}
         onClose={composer.handleClose}
-        onMaximize={composer.handleMaximize}
+        // onMaximize={composer.handleMaximize}
         onMessageChange={composer.handleMessageChange}
         onMinimize={composer.handleMinimize}
         onSubjectChange={composer.handleSubjectChange}
