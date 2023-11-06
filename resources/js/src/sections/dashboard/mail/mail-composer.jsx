@@ -7,6 +7,7 @@ import Minimize01Icon from '@untitled-ui/icons-react/build/esm/Minimize01';
 import Link01Icon from '@untitled-ui/icons-react/build/esm/Link01';
 import FaceSmileIcon from '@untitled-ui/icons-react/build/esm/FaceSmile';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
+import { makeStyles } from '@material-ui/core';
 import {
   Backdrop,
   Box,
@@ -23,7 +24,11 @@ import {
   Typography
 } from '@mui/material';
 import { QuillEditor } from '@/components/quill-editor';
-
+const useStyles = makeStyles(() => ({
+  noBorder: {
+    border: "none",
+  },
+}));
 export const MailComposer = (props) => {
   const {
     maximize = false,
@@ -38,7 +43,7 @@ export const MailComposer = (props) => {
     subject = '',
     to = ''
   } = props;
-
+  const classes = useStyles();
   const handleSubjectChange = useCallback((event) => {
     onSubjectChange?.(event.target.value);
   }, [onSubjectChange]);
@@ -152,8 +157,11 @@ export const MailComposer = (props) => {
           // label='Type your text'
           placeholder='Type your text'
           name="aboutbusiness"
-          variant="filled"
+          disableUnderline={false}
+          variant="outlined"
           multiline
+          classes={{ notchedOutline: classes.input }}
+          className={classes.textField}
           sx={{
             border: 'none',
             flexGrow: 1,
@@ -162,7 +170,8 @@ export const MailComposer = (props) => {
           inputProps={{
             style: {
               // height: "110px",
-            }
+            },
+            classes: { notchedOutline: classes.noBorder }
           }}
           fullWidth
           style={{ marginTop: 11 }}

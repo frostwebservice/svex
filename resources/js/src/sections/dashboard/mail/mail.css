@@ -1,3 +1,9 @@
 .MuiTypography-h3 {
     font-size: 18px !important;
 }
+
+
+.MuiOutlinedInput-notchedOutline {
+    border: none !important;
+    box-shadow: none;
+}
