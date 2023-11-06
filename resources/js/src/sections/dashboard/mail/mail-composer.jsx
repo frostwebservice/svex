@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Attachment01Icon from '@untitled-ui/icons-react/build/esm/Attachment01';
 import Expand01Icon from '@untitled-ui/icons-react/build/esm/Expand01';
@@ -31,6 +31,8 @@ const useStyles = makeStyles(() => ({
     border: "none",
   },
 }));
+const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
+
 export const MailComposer = (props) => {
   const {
     maximize = false,
@@ -45,6 +47,7 @@ export const MailComposer = (props) => {
     subject = '',
     to = ''
   } = props;
+  const [isOutreach, SetIsOutreach] = useState(false)
   const classes = useStyles();
   const handleSubjectChange = useCallback((event) => {
     onSubjectChange?.(event.target.value);
@@ -133,18 +136,41 @@ export const MailComposer = (props) => {
             spacing={1}
           >
             <Typography sx={{ mx: 2 }}>To</Typography>
-            <Input
-              disableUnderline
-              fullWidth
-              onChange={handleToChange}
-              // placeholder="To"
-              sx={{
-                pt: 0.5,
-                borderBottom: 1,
-                borderColor: 'divider'
-              }}
-              value={to}
-            />
+            {isOutreach == true ? (
+              <TextField
+                defaultValue="web"
+                sx={{ height: 53.13 }}
+                label="Saved Searchs"
+                name="saved_searchs"
+                fullWidth
+                style={{ minWidth: 200 }}
+                select
+                SelectProps={{ native: true }}
+              >
+                {platformOptions.map((option) => (
+                  <option
+                    key={option}
+                    value={option}
+                  >
+                    {option}
+                  </option>
+                ))}
+              </TextField>
+            ) : (
+              <Input
+                disableUnderline
+                fullWidth
+                onChange={handleToChange}
+                placeholder="Input Address To"
+                sx={{
+                  pt: 0.5,
+                  borderBottom: 1,
+                  borderColor: 'divider'
+                }}
+                value={to}
+              />
+            )}
+
           </Stack>
           <Stack
             alignItems="center"
@@ -160,8 +186,8 @@ export const MailComposer = (props) => {
               style={{ marginRight: 20 }}
               control={
                 <Switch
-                  checked={true}
-                  // onChange={() => setLoading(!loading)}
+                  checked={isOutreach}
+                  onChange={() => SetIsOutreach(!isOutreach)}
                   name="loading"
                   color="primary"
                 />
@@ -188,7 +214,7 @@ export const MailComposer = (props) => {
               disableUnderline
               fullWidth
               onChange={handleSubjectChange}
-              // placeholder="Subject"
+              placeholder="Input Subject"
               sx={{
                 pt: 0.5,
                 borderBottom: 1,
