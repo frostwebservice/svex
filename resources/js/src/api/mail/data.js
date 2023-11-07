@@ -21,39 +21,53 @@ export const labels = [
     unreadCount: 0
   },
   {
-    id: 'drafts',
-    name: 'Drafts',
+    id: 'favorites',
+    name: 'Favorites',
     totalCount: 0,
     type: 'system',
     unreadCount: 0
   },
+  // {
+  //   id: 'trash',
+  //   name: 'Trash',
+  //   totalCount: 1,
+  //   type: 'system',
+  //   unreadCount: 0
+  // },
+  // {
+  //   id: 'spam',
+  //   name: 'Spam',
+  //   totalCount: 0,
+  //   type: 'system',
+  //   unreadCount: 0
+  // },
+  // {
+  //   id: 'important',
+  //   name: 'Important',
+  //   totalCount: 1,
+  //   type: 'system',
+  //   unreadCount: 0
+  // },
+  // {
+  //   id: 'starred',
+  //   name: 'Starred',
+  //   totalCount: 1,
+  //   type: 'system',
+  //   unreadCount: 1
+  // },
   {
-    id: 'trash',
-    name: 'Trash',
-    totalCount: 1,
-    type: 'system',
-    unreadCount: 0
-  },
-  {
-    id: 'spam',
-    name: 'Spam',
-    totalCount: 0,
-    type: 'system',
-    unreadCount: 0
-  },
-  {
-    id: 'important',
-    name: 'Important',
-    totalCount: 1,
-    type: 'system',
-    unreadCount: 0
-  },
-  {
-    id: 'starred',
-    name: 'Starred',
-    totalCount: 1,
-    type: 'system',
+    id: 'template1',
+    name: 'Template A',
+    totalCount: 2,
+    type: 'template',
     unreadCount: 1
+  },
+  {
+    id: 'template2',
+    name: 'Template B',
+    totalCount: 1,
+    type: 'template',
+    unreadCount: 0
   },
   {
     id: 'work',
@@ -206,6 +220,31 @@ Dear Anika, Your flight is coming up soon. Please don’t forget to check in for
 My market leading client has another fantastic opportunity for an experienced Software Developer to join them on a heavily remote basis
     `,
     subject: 'Possible candidates for the position',
+    to: [
+      {
+        avatar: '/assets/avatars/avatar-anika-visser.png',
+        email: 'anika.visser@devias.io',
+        name: 'Anika Visser'
+      }
+    ]
+  },
+  {
+    id: '5e86bcb9fee1ec12453fa13p',
+    createdAt: now.getTime(),
+    folder: 'template1',
+    from: {
+      avatar: '/assets/avatars/avatar-penjani-inyene.png',
+      email: 'penjani.inyene@devias.io',
+      name: 'Penjani Inyene'
+    },
+    isImportant: false,
+    isStarred: false,
+    isUnread: false,
+    labelIds: ['business'],
+    message: `
+Dear Anika, Your flight is coming up soon. Please don’t forget to check in for your scheduled flight.
+    `,
+    subject: 'Flight reminder',
     to: [
       {
         avatar: '/assets/avatars/avatar-anika-visser.png',

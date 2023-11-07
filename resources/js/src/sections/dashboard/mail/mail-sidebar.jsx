@@ -21,13 +21,18 @@ import { MailLabel } from './mail-label';
 const groupLabels = (labels) => {
   const groups = {
     system: [],
-    custom: []
+    template: [],
+    custom: [],
+
   };
 
   labels.forEach((label) => {
     if (label.type === 'system') {
       groups.system.push(label);
-    } else {
+    } else if (label.type === 'template') {
+      groups.template.push(label);
+    }
+    else {
       groups.custom.push(label);
     }
   });
@@ -103,6 +108,16 @@ export const MailSidebar = (props) => {
       >
         {Object.keys(groupedLabels).map((type) => (
           <Fragment key={type}>
+            {type === 'template' && (
+              <ListSubheader disableSticky={true}>
+                <Typography
+                  color="text.secondary"
+                  variant="overline"
+                >
+                  Templates
+                </Typography>
+              </ListSubheader>
+            )}
             {type === 'custom' && (
               <ListSubheader disableSticky={true}>
                 <Typography
@@ -116,7 +131,6 @@ export const MailSidebar = (props) => {
             <List disablePadding>
               {groupedLabels[type].map((label) => {
                 const isActive = currentLabelId === label.id;
-
                 return (
                   <MailLabel
                     active={isActive}

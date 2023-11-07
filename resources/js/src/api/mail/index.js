@@ -34,6 +34,9 @@ class MailApi {
             case 'inbox':
               filteredEmails = clonedEmails.filter((email) => email.folder === 'inbox');
               break;
+            case 'template1':
+              filteredEmails = clonedEmails.filter((email) => email.folder === 'template1');
+              break;
             case 'all':
               filteredEmails = [...clonedEmails];
               break;

@@ -25,11 +25,13 @@ import ReplyAllIcon from '@mui/icons-material/ReplyAll';
 import { RouterLink } from '@/components/router-link';
 import { getInitials } from '@/utils/get-initials';
 import Menu01Icon from '@untitled-ui/icons-react/build/esm/Menu01';
+import { useDispatch, useSelector } from '@/store';
 
 export const MailThreadToolbar = (props) => {
   const { backHref, createdAt, from, to, onSidebarToggle, currentLabelId } = props;
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
   const formattedCreatedAt = format(createdAt, 'MMMM d yyyy, h:mm:ss a');
+  const labels = useSelector((state) => state.mail.labels);
 
   return (
     <div>

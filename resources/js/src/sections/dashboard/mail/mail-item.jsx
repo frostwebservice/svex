@@ -4,6 +4,8 @@ import { format } from 'date-fns';
 import Attachment01Icon from '@untitled-ui/icons-react/build/esm/Attachment01';
 import BookmarkIcon from '@untitled-ui/icons-react/build/esm/Bookmark';
 import Star01Icon from '@untitled-ui/icons-react/build/esm/Star01';
+import { useSearchParams } from '@/hooks/use-search-params';
+
 import {
   Avatar,
   Box,
@@ -16,9 +18,12 @@ import {
 } from '@mui/material';
 import { RouterLink } from '@/components/router-link';
 import { getInitials } from '@/utils/get-initials';
+// import { create } from '@mui/material/styles/createTransitions';
 
 export const MailItem = (props) => {
   const { email, onDeselect, onSelect, selected, href, ...other } = props;
+  const searchParams = useSearchParams();
+  const currentLabelId = searchParams.get('label') || undefined;
 
   const handleSelectToggle = useCallback((event) => {
     if (event.target.checked) {
@@ -27,8 +32,9 @@ export const MailItem = (props) => {
       onDeselect?.();
     }
   }, [onSelect, onDeselect]);
-
-  const createdAt = format(email.createdAt, 'dd MMM');
+  console.log(email.createdAt)
+  const createdAt = format(email.createdAt, 'MMM dd');
+  const templateCreatedAt = format(email.createdAt, 'MMM dd, hh:mm aa');
   const hasAnyAttachments = !!(email.attachments && email.attachments.length > 0);
   const hasManyAttachments = !!(email.attachments && email.attachments.length > 1);
 
@@ -125,7 +131,7 @@ export const MailItem = (props) => {
           flexGrow: 1,
           flexWrap: {
             xs: 'wrap',
-            md: 'nowrap'
+            md: 'wrap'
           },
           minWidth: 1,
           textDecoration: 'none'
@@ -157,7 +163,7 @@ export const MailItem = (props) => {
         </Box>
         <Box
           sx={{
-            flexGrow: 1,
+            // flexGrow: 1,
             ml: {
               xs: 0,
               md: 2
@@ -167,10 +173,11 @@ export const MailItem = (props) => {
               md: 0
             },
             overflow: 'hidden',
-            width: {
-              xs: '100%',
-              md: 'auto'
-            }
+            // width: {
+            //   xs: '100%',
+            //   md: 'auto'
+            // }
+            width: 'fit-content'
           }}
         >
           <Box
@@ -204,7 +211,7 @@ export const MailItem = (props) => {
             </Typography>
           </Box>
           {hasAnyAttachments && (
-            <Box sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1, maxWidth: 800 }}>
               <Chip
                 icon={(
                   <SvgIcon>
@@ -224,21 +231,27 @@ export const MailItem = (props) => {
             </Box>
           )}
         </Box>
-        <Typography
-          color="text.secondary"
-          variant="caption"
-          sx={{
-            display: 'block',
-            textAlign: {
-              xs: 'left',
-              md: 'right'
-            },
-            whiteSpace: 'nowrap',
-            width: 100
-          }}
-        >
-          {createdAt}
-        </Typography>
+        <Box>
+          <Typography
+            color="text.secondary"
+            variant="caption"
+            alignItems="center"
+            sx={{
+              display: 'block',
+              textAlign: {
+                xs: 'left',
+                md: 'right'
+              },
+              whiteSpace: 'nowrap',
+              width: '100%'
+            }}
+          >
+            {currentLabelId && currentLabelId.search("template") >= 0 ? "Last used-" + templateCreatedAt : createdAt}
+            {/* {createdAt} */}
+          </Typography>
+        </Box>
+
+
       </Box>
     </Box>
   );

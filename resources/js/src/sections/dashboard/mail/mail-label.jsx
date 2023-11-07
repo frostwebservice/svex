@@ -8,6 +8,8 @@ import Send01Icon from '@untitled-ui/icons-react/build/esm/Send01';
 import Star01Icon from '@untitled-ui/icons-react/build/esm/Star01';
 import Tag01Icon from '@untitled-ui/icons-react/build/esm/Tag01';
 import Trash02Icon from '@untitled-ui/icons-react/build/esm/Trash02';
+import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
+
 import { Box, ButtonBase, ListItem, SvgIcon, Typography } from '@mui/material';
 
 const systemLabelIcons = {
@@ -18,7 +20,8 @@ const systemLabelIcons = {
   drafts: <Mail04Icon />,
   spam: <AlertCircleIcon />,
   starred: <Star01Icon />,
-  important: <BookmarkIcon />
+  important: <BookmarkIcon />,
+  favorites: <HeartIcon />
 };
 
 const getIcon = (label) => {
