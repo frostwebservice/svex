@@ -122,8 +122,8 @@ export const MailItem = (props) => {
         </Tooltip> */}
       </Box>
       <Box
-        // component={RouterLink}
-        // href={href}
+        component={RouterLink}
+        href={href}
 
         sx={{
           alignItems: 'center',

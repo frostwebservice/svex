@@ -68,10 +68,10 @@ const useComposer = () => {
   }, []);
 
   const handleMessageChange = useCallback((message) => {
-    setState((prevState) => ({
-      ...prevState,
-      message
-    }));
+    // setState((prevState) => ({
+    //   ...prevState,
+    //   message
+    // }));
   }, []);
 
   const handleSubjectChange = useCallback((subject) => {

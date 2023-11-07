@@ -32,7 +32,21 @@ const useStyles = makeStyles(() => ({
     },
 }));
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
+const templateString = `Dear [Influencer's Name],
 
+I hope this email finds you well.I have been following your work as an influential figure in [your niche], and I am truly impressed by the value you provide to your audience.Your expertise and unique perspective have inspired me.
+
+I am reaching out today because I believe there is a great opportunity for us to collaborate and create something meaningful together.As someone who shares a passion for [your niche], I believe our combined efforts can have a significant impact on our respective audiences.
+I have an idea for a collaboration that I believe will be mutually beneficial.Here's a brief overview:
+[Provide a concise description of your collaboration idea.Highlight the value it will bring to both your audience and the influencer's audience. Be specific about the type of collaboration, such as a joint blog post, podcast interview, video series, or any other creative concept.]
+I truly admire your work and believe that your insights and expertise would greatly enhance the collaboration.Your unique perspective would undoubtedly resonate with our shared audience.
+
+I understand that you are likely approached by numerous individuals, so I want to assure you that I am committed to making this collaboration as seamless and valuable as possible.I am open to discussing any ideas or modifications you may have to ensure it aligns with your goals and values.
+If you are interested in exploring this collaboration further, I would be delighted to schedule a call or have a more detailed discussion via email.Please let me know your availability, and I will be happy to accommodate your schedule.
+    Thank you for considering this opportunity.I look forward to the possibility of working together and creating something exceptional that will benefit both our audiences.
+
+Warm regards,
+    [Your Name][Your Email Address][Your Website or Social Media Handles][Contact Number(Optional)]`
 export const TemplateComposer = (props) => {
     const {
         maximize = false,
@@ -99,131 +113,61 @@ export const TemplateComposer = (props) => {
                     }}
                 >
                     <Typography variant="h6">
-                        New Email
+                        Default Template
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
-                    {/* {maximize
-            ? (
-              <IconButton onClick={onMinimize}>
-                <SvgIcon>
-                  <Minimize01Icon />
-                </SvgIcon>
-              </IconButton>
-            )
-            : (
-              <IconButton onClick={onMaximize}>
-                <SvgIcon>
-                  <Expand01Icon />
-                </SvgIcon>
-              </IconButton>
-            )} */}
+
                     <IconButton onClick={onClose}>
                         <SvgIcon>
                             <XIcon />
                         </SvgIcon>
                     </IconButton>
                 </Box>
+
                 <Stack
                     alignItems="center"
                     direction="row"
-                    justifyContent="space-between"
-                // spacing={3}
-                // sx={{ p: 2 }}
+                    spacing={1}
                 >
-                    <Stack
-                        alignItems="center"
-                        direction="row"
-                        spacing={1}
-                    >
-                        <Typography sx={{ mx: 2 }}>To</Typography>
-                        {isOutreach == true ? (
-                            <TextField
-                                defaultValue="web"
-                                sx={{ height: 53.13 }}
-                                label="Saved Searchs"
-                                name="saved_searchs"
-                                fullWidth
-                                style={{ minWidth: 200 }}
-                                select
-                                SelectProps={{ native: true }}
-                            >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
-                            </TextField>
-                        ) : (
-                            <Input
-                                disableUnderline
-                                fullWidth
-                                onChange={handleToChange}
-                                placeholder="Input Address To"
-                                sx={{
-                                    pt: 0.5,
-                                    borderBottom: 1,
-                                    borderColor: 'divider'
-                                }}
-                                value={to}
-                            />
-                        )}
+                    <Typography sx={{ mx: 2 }}>To</Typography>
 
-                    </Stack>
-                    <Stack
-                        alignItems="center"
-                        direction="row"
-                        spacing={1}
-                    >
-                        <Typography sx={{ mx: 2, fontWeight: 600, fontSize: 16 }}>Outreach Group</Typography>
+                    <Input
+                        disableUnderline
+                        fullWidth
+                        onChange={handleToChange}
+                        // placeholder="Input Address To"
+                        sx={{
+                            pt: 0.5,
+                            borderBottom: 1,
+                            borderColor: 'divider'
+                        }}
+                        value={to}
+                    />
 
-                        <FormControlLabel
-                            sx={{
-                                display: 'block',
-                            }}
-                            style={{ marginRight: 20 }}
-                            control={
-                                <Switch
-                                    checked={isOutreach}
-                                    onChange={() => SetIsOutreach(!isOutreach)}
-                                    name="loading"
-                                    color="primary"
-                                />
-                            }
-                        // label="Loading"
-                        />
-
-                    </Stack>
                 </Stack>
+
                 <Stack
                     alignItems="center"
                     direction="row"
-                    justifyContent="space-between"
-                // spacing={3}
-                // sx={{ p: 2 }}
+                    spacing={1}
                 >
-                    <Stack
-                        alignItems="center"
-                        direction="row"
-                        spacing={1}
-                    >
-                        <Typography sx={{ mx: 2 }}>Subject</Typography>
-                        <Input
-                            disableUnderline
-                            fullWidth
-                            onChange={handleSubjectChange}
-                            placeholder="Input Subject"
-                            sx={{
-                                pt: 0.5,
-                                borderBottom: 1,
-                                borderColor: 'divider'
-                            }}
-                            value={subject}
-                        />
-                    </Stack>
+                    <Typography sx={{ mx: 2 }}>Subject</Typography>
+                    <Input
+                        disableUnderline
+                        // fullWidth
+                        onChange={handleSubjectChange}
+                        placeholder="Input Subject"
+                        sx={{
+                            pt: 0.5,
+                            borderBottom: 1,
+                            borderColor: 'divider',
+                            width: '-webkit-fill-available',
+                            fontSize: 18
+                        }}
+                        value=" Instagram Influencer for a shopping brand - The Rock"
+                    />
                 </Stack>
+
 
 
                 <QuillEditor
@@ -233,7 +177,7 @@ export const TemplateComposer = (props) => {
                         border: 'none',
                         flexGrow: 1
                     }}
-                    value={message}
+                    value={templateString}
                 />
                 {/* <TextField
           // label="Bio"
@@ -307,7 +251,7 @@ export const TemplateComposer = (props) => {
                     </Stack>
                     <div>
                         <Button variant="contained">
-                            Send Email
+                            Save Template
                         </Button>
                     </div>
                 </Stack>

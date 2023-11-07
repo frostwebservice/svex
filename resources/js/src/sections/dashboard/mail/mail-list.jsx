@@ -6,6 +6,9 @@ import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
 import Menu01Icon from '@untitled-ui/icons-react/build/esm/Menu01';
 import RefreshCcw02Icon from '@untitled-ui/icons-react/build/esm/RefreshCcw02';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
+import { useSearchParams } from '@/hooks/use-search-params';
+import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
+
 import {
   Box,
   Checkbox,
@@ -15,6 +18,7 @@ import {
   OutlinedInput,
   Stack,
   SvgIcon,
+  Button,
   Tooltip,
   Typography
 } from '@mui/material';
@@ -22,6 +26,7 @@ import { paths } from '@/paths';
 import { useDispatch, useSelector } from '@/store';
 import { thunks } from '@/thunks/mail';
 import { MailItem } from './mail-item';
+import { TemplateItem } from './template-item';
 
 const useEmails = (currentLabelId) => {
   const dispatch = useDispatch();
@@ -81,6 +86,9 @@ export const MailList = (props) => {
   const { currentLabelId, onSidebarToggle, onCompose, ...other } = props;
   const emails = useEmails(currentLabelId);
   const labels = useSelector((state) => state.mail.labels);
+  // const searchParams = useSearchParams();
+  // const currentLabelId = searchParams.get('label') || undefined;
+
   const {
     handleDeselectAll,
     handleDeselectOne,
@@ -166,6 +174,21 @@ export const MailList = (props) => {
                 direction="row"
                 spacing={1}
               >
+                {currentLabelId && currentLabelId.search("template") >= 0 ? (
+                  <Button
+                    // fullWidth
+                    onClick={onCompose}
+                    startIcon={(
+                      <SvgIcon>
+                        <PlusIcon />
+                      </SvgIcon>
+                    )}
+                    // sx={{ mt: 2 }}
+                    variant="contained"
+                  >
+                    New Template
+                  </Button>
+                ) : ("")}
                 <OutlinedInput
                   fullWidth
                   placeholder="Search email"
@@ -231,8 +254,10 @@ export const MailList = (props) => {
                   ? paths.dashboard.mail + `?emailId=${emailId}&label=${currentLabelId}`
                   : paths.dashboard.mail + `?emailId=${emailId}`;
 
-                return (
-                  <MailItem
+
+
+                return currentLabelId && currentLabelId.search("template") >= 0 ? (
+                  <TemplateItem
                     email={emails.byId[emailId]}
                     href={href}
                     onCompose={onCompose}
@@ -241,9 +266,22 @@ export const MailList = (props) => {
                     onDeselect={() => handleDeselectOne(emailId)}
                     onSelect={() => handleSelectOne(emailId)}
                     selected={isSelected}
-
                   />
-                );
+                ) : (
+                  <MailItem
+                    email={emails.byId[emailId]}
+                    href={href}
+                    onCompose={onCompose}
+                    // onClick={onCompose}
+                    key={emailId}
+                    onDeselect={() => handleDeselectOne(emailId)}
+                    onSelect={() => handleSelectOne(emailId)}
+                    selected={isSelected}
+                  />
+                )
+
+
+
               })}
             </div>
           </>
