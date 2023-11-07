@@ -32,7 +32,6 @@ export const MailItem = (props) => {
       onDeselect?.();
     }
   }, [onSelect, onDeselect]);
-  console.log(email.createdAt)
   const createdAt = format(email.createdAt, 'MMM dd');
   const templateCreatedAt = format(email.createdAt, 'MMM dd, hh:mm aa');
   const hasAnyAttachments = !!(email.attachments && email.attachments.length > 0);

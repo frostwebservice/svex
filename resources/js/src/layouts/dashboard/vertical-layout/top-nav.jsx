@@ -60,6 +60,7 @@ export const TopNav = (props) => {
           alignItems="center"
           direction="row"
           spacing={2}
+          sx={{ ml: 8 }}
         >
           {!lgUp && (
             <IconButton onClick={onMobileNavOpen}>

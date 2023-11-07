@@ -194,16 +194,27 @@ const Page = () => {
       <Box
         component="main"
         sx={{ flexGrow: 1 }}
+        style={{
+        }}
       >
 
         <Box
           sx={{
             backgroundColor: 'primary.darkest',
             color: 'primary.contrastText',
-            py: '120px'
+            position: 'relative',
+            marginBottom: '90px'
           }}
         >
-          <Container maxWidth="xl">
+
+
+          <Container
+            maxWidth={settings.stretch ? false : 'xl'}
+            style={{
+              position: 'inherit',
+              bottom: "-76px"
+            }}
+          >
             <Typography
               color="inherit"
               variant="h5"
