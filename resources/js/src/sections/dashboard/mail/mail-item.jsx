@@ -21,7 +21,7 @@ import { getInitials } from '@/utils/get-initials';
 // import { create } from '@mui/material/styles/createTransitions';
 
 export const MailItem = (props) => {
-  const { email, onDeselect, onSelect, selected, href, ...other } = props;
+  const { email, onDeselect, onSelect, onCompose, selected, href, ...other } = props;
   const searchParams = useSearchParams();
   const currentLabelId = searchParams.get('label') || undefined;
 
@@ -122,8 +122,9 @@ export const MailItem = (props) => {
         </Tooltip> */}
       </Box>
       <Box
-        component={RouterLink}
-        href={href}
+        // component={RouterLink}
+        // href={href}
+
         sx={{
           alignItems: 'center',
           cursor: 'pointer',
@@ -138,6 +139,8 @@ export const MailItem = (props) => {
         }}
       >
         <Box
+          // onClick={onCompose}
+
           sx={{
             alignItems: 'center',
             display: 'flex'

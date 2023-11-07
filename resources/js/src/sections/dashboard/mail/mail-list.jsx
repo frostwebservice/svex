@@ -78,7 +78,7 @@ const useSelectionModel = (emailIds) => {
 
 export const MailList = (props) => {
 
-  const { currentLabelId, onSidebarToggle, ...other } = props;
+  const { currentLabelId, onSidebarToggle, onCompose, ...other } = props;
   const emails = useEmails(currentLabelId);
   const labels = useSelector((state) => state.mail.labels);
   const {
@@ -235,10 +235,13 @@ export const MailList = (props) => {
                   <MailItem
                     email={emails.byId[emailId]}
                     href={href}
+                    onCompose={onCompose}
+                    onClick={onCompose}
                     key={emailId}
                     onDeselect={() => handleDeselectOne(emailId)}
                     onSelect={() => handleSelectOne(emailId)}
                     selected={isSelected}
+
                   />
                 );
               })}

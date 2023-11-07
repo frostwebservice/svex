@@ -4,6 +4,7 @@ import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import { useSearchParams } from '@/hooks/use-search-params';
 import { MailComposer } from '@/sections/dashboard/mail/mail-composer';
+import { TemplateComposer } from '@/sections/dashboard/mail/template-composer';
 import { MailThread } from '@/sections/dashboard/mail/mail-thread';
 import { MailContainer } from '@/sections/dashboard/mail/mail-container';
 import { MailList } from '@/sections/dashboard/mail/mail-list';
@@ -139,6 +140,7 @@ const Page = () => {
   const currentLabelId = searchParams.get('label') || undefined;
   const labels = useLabels();
   const composer = useComposer();
+  const tcomposer = useComposer();
   const sidebar = useSidebar();
 
   usePageView();
@@ -190,6 +192,8 @@ const Page = () => {
               <MailList
                 currentLabelId={currentLabelId}
                 onSidebarToggle={sidebar.handleToggle}
+                onCompose={tcomposer.handleOpen}
+
               />
             )}
           </MailContainer>
@@ -207,6 +211,19 @@ const Page = () => {
         open={composer.isOpen}
         subject={composer.subject}
         to={composer.to}
+      />
+      <TemplateComposer
+        maximize={tcomposer.isFullScreen}
+        message={tcomposer.message}
+        onClose={tcomposer.handleClose}
+        // onMaximize={tcomposer.handleMaximize}
+        onMessageChange={tcomposer.handleMessageChange}
+        onMinimize={tcomposer.handleMinimize}
+        onSubjectChange={tcomposer.handleSubjectChange}
+        onToChange={tcomposer.handleToChange}
+        open={tcomposer.isOpen}
+        subject={tcomposer.subject}
+        to={tcomposer.to}
       />
     </>
   );
