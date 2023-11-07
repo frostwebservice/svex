@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
-const templateString = `Dear [Influencer's Name],
+const templateString = `<pre>Dear [Influencer's Name],
 
 I hope this email finds you well.I have been following your work as an influential figure in [your niche], and I am truly impressed by the value you provide to your audience.Your expertise and unique perspective have inspired me.
 
@@ -46,7 +46,7 @@ If you are interested in exploring this collaboration further, I would be deligh
     Thank you for considering this opportunity.I look forward to the possibility of working together and creating something exceptional that will benefit both our audiences.
 
 Warm regards,
-    [Your Name][Your Email Address][Your Website or Social Media Handles][Contact Number(Optional)]`
+    [Your Name][Your Email Address][Your Website or Social Media Handles][Contact Number(Optional)]</pre>`
 export const TemplateComposer = (props) => {
     const {
         maximize = false,
