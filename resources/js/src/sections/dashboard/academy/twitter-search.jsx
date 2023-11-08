@@ -50,7 +50,9 @@ const TwitterSearch = (props) => {
                         avg_comments: search.avg_comments == null ? "" : search.avg_comments,
                         total_favorites: search.total_favorites == null ? "" : search.total_favorites,
                         username: search.username == null ? "" : search.username,
-                        url: search.url == null ? "" : search.url
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
 
                     })
                     return;

@@ -52,7 +52,9 @@ const TiktokSearch = (props) => {
                         avg_comments: search.avg_comments == null ? "" : search.avg_comments,
                         total_likes: search.total_likes == null ? "" : search.total_likes,
                         username: search.username == null ? "" : search.username,
-                        url: search.url == null ? "" : search.url
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
                     })
                     return;
                 }

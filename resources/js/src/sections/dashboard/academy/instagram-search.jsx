@@ -30,7 +30,7 @@ const InstagramSearch = (props) => {
             });
     }
     const runSearch = () => {
-        console.log(selectedSearch)
+        console.log(searchs)
         if (selectedSearch > 0) {
             searchs.map((search) => {
                 if (search.id == selectedSearch) {
@@ -49,7 +49,9 @@ const InstagramSearch = (props) => {
                         avg_likes: search.avg_likes == null ? "" : search.avg_likes,
                         avg_comments: search.avg_comments == null ? "" : search.avg_comments,
                         username: search.username == null ? "" : search.username,
-                        url: search.url == null ? "" : search.url
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
 
                     })
                     return;

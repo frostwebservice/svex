@@ -50,7 +50,9 @@ const LinkedinSearch = (props) => {
                         industry: search.industry == null ? "" : search.industry,
                         skills: search.skills == null ? "" : search.skills,
                         username: search.username == null ? "" : search.username,
-                        url: search.url == null ? "" : search.url
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
 
                     })
                     return;
