@@ -178,7 +178,6 @@ const Page = () => {
   ]
   const [currentTab, setCurrentTab] = useState("instagram");
   const renderLabel = (type) => {
-    console.log(type)
     if (type == "Instagram") return (<><InstagramIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
     if (type == "Youtube") return (<><YoutubeIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
     if (type == "Tiktok") return (<><TiktokIcon color={currentTab == "tiktok" ? "#2970FF" : "grey"} style={{ display: "inline-block" }} /> <span>{type}</span></>);

@@ -3,10 +3,43 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
 import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useState } from 'react';
+import { categoryOptions, locationOptions, followersOptions, ageOptions, genderOptions, languageOptions, engagementOptions, connectionsOptions, industryOptions, skillsOptions } from './data'
 
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
 
 export const LinkedinSearch = () => {
+    const [searchParams, setSearchParams] = useState(
+        {
+            tab: "linkedin",
+            keywords: "",
+            category: "",
+            location: "",
+            followers_from: "",
+            followers_to: "",
+            age: "",
+            gender: "",
+            language: "",
+            engagement: "",
+            connections: "",
+            industry: "",
+            skills: "",
+            username: "",
+            url: "",
+            hasPhone: true,
+            verified: true
+        }
+    )
+    const onSearch = () => {
+        axios
+            .post("/api/search_infs", { searchParams })
+            .then((response) => {
+                console.log(response)
+                if (response.data.status === 200) {
+
+                }
+            });
+    }
     return (
         <>
             <Stack
@@ -23,7 +56,8 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={searchParams.keywords}
+                                onChange={(e) => setSearchParams({ ...searchParams, keywords: e.target.value })}
                                 fullWidth
                                 label="Search"
                                 name="keywords"
@@ -37,14 +71,15 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.category}
+                                onChange={(e) => setSearchParams({ ...searchParams, category: e.target.value })}
                                 fullWidth
                                 label="Category"
                                 name="category"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {categoryOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -60,14 +95,15 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.location}
+                                onChange={(e) => setSearchParams({ ...searchParams, location: e.target.value })}
                                 fullWidth
                                 label="Location"
                                 name="location"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {locationOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -83,14 +119,15 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.language}
+                                onChange={(e) => setSearchParams({ ...searchParams, language: e.target.value })}
                                 fullWidth
                                 label="Language"
                                 name="language"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {languageOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -106,14 +143,15 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.followers_from}
+                                onChange={(e) => setSearchParams({ ...searchParams, followers_from: e.target.value })}
                                 fullWidth
                                 label="Followers"
                                 name="followers_from"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {followersOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -137,14 +175,15 @@ export const LinkedinSearch = () => {
                                 , alignItems: 'center', mr: 5
                             }}>To</span>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.followers_to}
+                                onChange={(e) => setSearchParams({ ...searchParams, followers_to: e.target.value })}
                                 fullWidth
                                 label="Followers"
                                 name="followers_to"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {followersOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -155,20 +194,68 @@ export const LinkedinSearch = () => {
                             </TextField>
                         </Box>
                     </Grid>
-
                     <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.age}
+                                onChange={(e) => setSearchParams({ ...searchParams, age: e.target.value })}
+                                fullWidth
+                                label="Age"
+                                name="age"
+                                select
+                                SelectProps={{ native: true }}
+                            >
+                                {ageOptions.map((option) => (
+                                    <option
+                                        key={option}
+                                        value={option}
+                                    >
+                                        {option}
+                                    </option>
+                                ))}
+                            </TextField>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} md={2} sm={4}
+                        className='custom-grid'
+                    >
+                        <Box sx={{ flexGrow: 1 }}>
+                            <TextField
+                                value={searchParams.gender}
+                                onChange={(e) => setSearchParams({ ...searchParams, gender: e.target.value })}
+                                fullWidth
+                                label="Gender"
+                                name="gender"
+                                select
+                                SelectProps={{ native: true }}
+                            >
+                                {genderOptions.map((option) => (
+                                    <option
+                                        key={option}
+                                        value={option}
+                                    >
+                                        {option}
+                                    </option>
+                                ))}
+                            </TextField>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} md={2} sm={4}
+                        className='custom-grid'
+                    >
+                        <Box sx={{ flexGrow: 1 }}>
+                            <TextField
+                                value={searchParams.engagement}
+                                onChange={(e) => setSearchParams({ ...searchParams, engagement: e.target.value })}
                                 fullWidth
                                 label="Engagement rate"
                                 name="engagement"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {engagementOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -184,14 +271,15 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.connections}
+                                onChange={(e) => setSearchParams({ ...searchParams, connections: e.target.value })}
                                 fullWidth
                                 label="Connections"
                                 name="connections"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {connectionsOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -207,14 +295,15 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.industry}
+                                onChange={(e) => setSearchParams({ ...searchParams, industry: e.target.value })}
                                 fullWidth
                                 label="Industry"
                                 name="industry"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {industryOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -230,14 +319,15 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue="web"
+                                value={searchParams.skills}
+                                onChange={(e) => setSearchParams({ ...searchParams, skills: e.target.value })}
                                 fullWidth
                                 label="Skills"
                                 name="Skills"
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {skillsOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -253,7 +343,8 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={searchParams.username}
+                                onChange={(e) => setSearchParams({ ...searchParams, username: e.target.value })}
                                 fullWidth
                                 label="Search"
                                 name="username"
@@ -267,7 +358,8 @@ export const LinkedinSearch = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={searchParams.url}
+                                onChange={(e) => setSearchParams({ ...searchParams, url: e.target.value })}
                                 fullWidth
                                 label="Search"
                                 name="url"
@@ -280,8 +372,8 @@ export const LinkedinSearch = () => {
                 <FormGroup>
                     <Box sx={{ flexGrow: 1 }}>
 
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Has Phone number" />
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Is Verified" />
+                        <FormControlLabel control={<Checkbox value={searchParams.hasPhone} onChange={(e) => setSearchParams({ ...searchParams, hasPhone: !searchParams.hasPhone })} checked={searchParams.hasPhone == 1 ? true : false} />} label="Has Phone number" />
+                        <FormControlLabel control={<Checkbox value={searchParams.verified} onChange={(e) => setSearchParams({ ...searchParams, verified: !searchParams.verified })} checked={searchParams.verified == 1 ? true : false} />} label="Is Verified" />
                     </Box>
                 </FormGroup>
 
@@ -302,6 +394,7 @@ export const LinkedinSearch = () => {
                                         <SearchMdIcon />
                                     </SvgIcon>
                                 )}
+                                onClick={onSearch}
                                 variant="contained"
                             >
                                 Search
