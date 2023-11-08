@@ -3,14 +3,63 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
 import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { categoryOptions, locationOptions, followersOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions, totallikesOptions } from './data'
+import { useDispatch, connect } from "react-redux";
+import { getSearchs } from '@/actions';
+const PinterestSearch = (props) => {
+    const { searchs } = props
+    const email = JSON.parse(localStorage.getItem('email'));
+    const [selectedSearch, setSelectedSearch] = useState("");
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getSearchs({ email: email }));
 
-const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
+    }, [dispatch])
+    const [savedSearchs, setSavedSearchs] = useState(searchs);
+    const saveSearch = () => {
+        let values = searchParams
+        values["email"] = email;
+        axios
+            .post("/api/save_search", { values })
+            .then((response) => {
+                if (response.data.status === 200) {
+                    dispatch(getSearchs({ email: email }));
 
-export const PinterestSearch = () => {
+                }
+            });
+    }
+    const runSearch = () => {
+        console.log(selectedSearch)
+        if (selectedSearch > 0) {
+            searchs.map((search) => {
+                if (search.id == selectedSearch) {
+                    setSearchParams({
+                        ...searchParams,
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        category: search.category == null ? "" : search.category,
+                        location: search.location == null ? "" : search.location,
+                        followers_from: search.followers_from == null ? "" : search.followers_from,
+                        followers_to: search.followers_to == null ? "" : search.followers_to,
+                        age: search.age == null ? "" : search.age,
+                        gender: search.gender == null ? "" : search.gender,
+                        language: search.lanugage == null ? "" : search.language,
+                        engagement: search.engagement == null ? "" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "" : search.total_likes,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url
+
+                    })
+                    return;
+                }
+            })
+        }
+    }
     const [searchParams, setSearchParams] = useState(
         {
+            email: "",
             tab: "pinterest",
             keywords: "",
             category: "",
@@ -413,7 +462,8 @@ export const PinterestSearch = () => {
                                         <BookmarkBorderIcon />
                                     </SvgIcon>
                                 )}
-                                variant="contained"
+                                onClick={saveSearch}
+                                variant="outlined"
                             >
                                 Save this Search
                             </Button>
@@ -425,7 +475,8 @@ export const PinterestSearch = () => {
                             className='custom-grid1'
                         >
                             <TextField
-                                defaultValue="web"
+                                value={selectedSearch}
+                                onChange={(e) => setSelectedSearch(e.target.value)}
                                 // fullWidth
                                 sx={{ height: 53.13 }}
                                 label="Saved Searchs"
@@ -434,14 +485,25 @@ export const PinterestSearch = () => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
+                                <option
+                                    key="0"
+                                    value=""
+                                >
+
+                                </option>
+                                {searchs && searchs.map((option) => {
+                                    if (option["tab"] == "pinterest")
+                                        return (
+                                            <option
+                                                key={option["id"]}
+                                                value={option["id"]}
+                                            >
+                                                {option["tab"].charAt(0).toUpperCase() + option["tab"].slice(1) + " Influencers"}
+                                            </option>
+                                        )
+                                }
+
+                                )}
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={2} sm={3}
@@ -453,6 +515,7 @@ export const PinterestSearch = () => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ height: 53.13 }}
+                                onClick={runSearch}
                             >
                                 Run this Search
                             </Button>
@@ -468,3 +531,7 @@ export const PinterestSearch = () => {
         </>
     );
 };
+const mapStateToProps = state => ({
+    searchs: state.searchs.searchs
+})
+export default connect(mapStateToProps)(PinterestSearch);

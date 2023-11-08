@@ -3,14 +3,64 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
 import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { categoryOptions, locationOptions, followersOptions, ageOptions, genderOptions, languageOptions, engagementOptions, connectionsOptions, industryOptions, skillsOptions } from './data'
 
-const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
+import { useDispatch, connect } from "react-redux";
+import { getSearchs } from '@/actions';
+const LinkedinSearch = (props) => {
+    const { searchs } = props
+    const email = JSON.parse(localStorage.getItem('email'));
+    const [selectedSearch, setSelectedSearch] = useState("");
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getSearchs({ email: email }));
 
-export const LinkedinSearch = () => {
+    }, [dispatch])
+    const [savedSearchs, setSavedSearchs] = useState(searchs);
+    const saveSearch = () => {
+        let values = searchParams
+        values["email"] = email;
+        axios
+            .post("/api/save_search", { values })
+            .then((response) => {
+                if (response.data.status === 200) {
+                    dispatch(getSearchs({ email: email }));
+
+                }
+            });
+    }
+    const runSearch = () => {
+        console.log(selectedSearch)
+        if (selectedSearch > 0) {
+            searchs.map((search) => {
+                if (search.id == selectedSearch) {
+                    setSearchParams({
+                        ...searchParams,
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        category: search.category == null ? "" : search.category,
+                        location: search.location == null ? "" : search.location,
+                        followers_from: search.followers_from == null ? "" : search.followers_from,
+                        followers_to: search.followers_to == null ? "" : search.followers_to,
+                        age: search.age == null ? "" : search.age,
+                        gender: search.gender == null ? "" : search.gender,
+                        language: search.lanugage == null ? "" : search.language,
+                        engagement: search.engagement == null ? "" : search.engagement,
+                        connections: search.connections == null ? "" : search.connections,
+                        industry: search.industry == null ? "" : search.industry,
+                        skills: search.skills == null ? "" : search.skills,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url
+
+                    })
+                    return;
+                }
+            })
+        }
+    }
     const [searchParams, setSearchParams] = useState(
         {
+            email: "",
             tab: "linkedin",
             keywords: "",
             category: "",
@@ -413,7 +463,8 @@ export const LinkedinSearch = () => {
                                         <BookmarkBorderIcon />
                                     </SvgIcon>
                                 )}
-                                variant="contained"
+                                variant="outlined"
+                                onClick={saveSearch}
                             >
                                 Save this Search
                             </Button>
@@ -425,7 +476,8 @@ export const LinkedinSearch = () => {
                             className='custom-grid1'
                         >
                             <TextField
-                                defaultValue="web"
+                                value={selectedSearch}
+                                onChange={(e) => setSelectedSearch(e.target.value)}
                                 // fullWidth
                                 sx={{ height: 53.13 }}
                                 label="Saved Searchs"
@@ -434,14 +486,25 @@ export const LinkedinSearch = () => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
-                                    <option
-                                        key={option}
-                                        value={option}
-                                    >
-                                        {option}
-                                    </option>
-                                ))}
+                                <option
+                                    key="0"
+                                    value=""
+                                >
+
+                                </option>
+                                {searchs && searchs.map((option) => {
+                                    if (option["tab"] == "linkedin")
+                                        return (
+                                            <option
+                                                key={option["id"]}
+                                                value={option["id"]}
+                                            >
+                                                {option["tab"].charAt(0).toUpperCase() + option["tab"].slice(1) + " Influencers"}
+                                            </option>
+                                        )
+                                }
+
+                                )}
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={2} sm={3}
@@ -452,6 +515,7 @@ export const LinkedinSearch = () => {
                                 className="res-btn"
                                 fullWidth
                                 variant="contained"
+                                onClick={runSearch}
                                 sx={{ height: 53.13 }}
                             >
                                 Run this Search
@@ -468,3 +532,7 @@ export const LinkedinSearch = () => {
         </>
     );
 };
+const mapStateToProps = state => ({
+    searchs: state.searchs.searchs
+})
+export default connect(mapStateToProps)(LinkedinSearch);

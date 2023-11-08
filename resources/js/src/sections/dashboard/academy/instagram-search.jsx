@@ -10,12 +10,12 @@ import { getSearchs } from '@/actions';
 const InstagramSearch = (props) => {
     const { searchs } = props
     const email = JSON.parse(localStorage.getItem('email'));
+    const [selectedSearch, setSelectedSearch] = useState("");
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getSearchs({ email: email }));
 
     }, [dispatch])
-    console.log(searchs)
     const [savedSearchs, setSavedSearchs] = useState(searchs);
     const saveSearch = () => {
         let values = searchParams
@@ -24,11 +24,39 @@ const InstagramSearch = (props) => {
             .post("/api/save_search", { values })
             .then((response) => {
                 if (response.data.status === 200) {
+                    dispatch(getSearchs({ email: email }));
 
                 }
             });
     }
+    const runSearch = () => {
+        console.log(selectedSearch)
+        if (selectedSearch > 0) {
+            searchs.map((search) => {
+                if (search.id == selectedSearch) {
+                    setSearchParams({
+                        ...searchParams,
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        hashtags: search.hashtags == null ? "" : search.hashtags,
+                        category: search.category == null ? "" : search.category,
+                        location: search.location == null ? "" : search.location,
+                        followers_from: search.followers_from == null ? "" : search.followers_from,
+                        followers_to: search.followers_to == null ? "" : search.followers_to,
+                        age: search.age == null ? "" : search.age,
+                        gender: search.gender == null ? "" : search.gender,
+                        language: search.lanugage == null ? "" : search.language,
+                        engagement: search.engagement == null ? "" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "" : search.avg_comments,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url
 
+                    })
+                    return;
+                }
+            })
+        }
+    }
     const [searchParams, setSearchParams] = useState(
         {
             email: "",
@@ -427,7 +455,7 @@ const InstagramSearch = (props) => {
                                     </SvgIcon>
                                 )}
                                 onClick={saveSearch}
-                                variant="contained"
+                                variant="outlined"
                             >
                                 Save this Search
                             </Button>
@@ -439,7 +467,8 @@ const InstagramSearch = (props) => {
                             className='custom-grid1'
                         >
                             <TextField
-                                defaultValue=""
+                                value={selectedSearch}
+                                onChange={(e) => setSelectedSearch(e.target.value)}
                                 // fullWidth
                                 sx={{ height: 53.13 }}
                                 label="Saved Searchs"
@@ -454,14 +483,19 @@ const InstagramSearch = (props) => {
                                 >
 
                                 </option>
-                                {searchs && searchs.map((option) => (
-                                    <option
-                                        key={option["id"]}
-                                        value={option["id"]}
-                                    >
-                                        {option["tab"].charAt(0).toUpperCase() + option["tab"].slice(1) + " Influencers"}
-                                    </option>
-                                ))}
+                                {searchs && searchs.map((option) => {
+                                    if (option["tab"] == "instagram")
+                                        return (
+                                            <option
+                                                key={option["id"]}
+                                                value={option["id"]}
+                                            >
+                                                {option["tab"].charAt(0).toUpperCase() + option["tab"].slice(1) + " Influencers"}
+                                            </option>
+                                        )
+                                }
+
+                                )}
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={2} sm={3}
@@ -473,6 +507,7 @@ const InstagramSearch = (props) => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ height: 53.13 }}
+                                onClick={runSearch}
                             >
                                 Run this Search
                             </Button>
