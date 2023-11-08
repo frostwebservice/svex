@@ -32,7 +32,7 @@ const TiktokSearch = (props) => {
             });
     }
     const runSearch = () => {
-        console.log(selectedSearch)
+
         if (selectedSearch > 0) {
             searchs.map((search) => {
                 if (search.id == selectedSearch) {

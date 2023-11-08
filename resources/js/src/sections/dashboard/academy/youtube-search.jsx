@@ -31,7 +31,7 @@ const YoutubeSearch = (props) => {
             });
     }
     const runSearch = () => {
-        console.log(searchs)
+
         if (selectedSearch > 0) {
             searchs.map((search) => {
                 if (search.id == selectedSearch) {
