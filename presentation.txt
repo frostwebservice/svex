@@ -1,0 +1,37 @@
+Hi! Nice to meet you.
+
+Let me introduce myself.
+
+
+I have checked job requirements again.
+This job includes roles such as working on full stack including api endpoints, front end development and database queries.
+and colaborate with a product mindset , understanding user needs, business goals and asking critical questions to resolve concerns.
+adapt to changing business conditions and customer needs, adjusting goals and strategies accordingly.
+finally needs technologies such as php (version 8 with laravel and lumen frameworks), javascript (vue or react) and Git.
+I have been impressed because this job need laravel and react or vue.js frameworks.
+
+I wonder if you know my skills, 
+I have enough experience for web development by several stacks such as MERN,MEAN,MEVN,Laravel,Codeigniter,Django frameworks.
+Important thing is that Laravel is my favorite backend framework and react or vue.js is also my favorite js frameworks for frontend development.
+As you know, Laravel facilitates to write expressive syntax, simplifies database migration and enables database access to multiple users. Laravel has simple authentication system, queuing mechanism and routing process which provides better programming results than other frameworks.
+In your job post, Lumen framework also mentioned.
+Lumen is a lightweight version of the popular PHP web framework, Laravel. It is designed for building fast and efficient microservices and APIs, and has several advantages over using Laravel for these specific use cases.
+
+My last project was also laravel and react project. It was progressive webapp to find and managing influeners something like social vex websites. and it's name is also svex.
+Please check my resume file shared before and my github profile. recent job with laravel and react was fantastic for me.
+
+I think the most important thing is to develop robust backend logics and user familiar and beautiful frontend.
+I am ready for both of these points.
+And I know this job needs about 5 developers in dev team and I favorite team work and collaborating with each other.
+I will provide same timezone with client and will be communicatable always.
+
+I can bring result as soon as possible by the client's deadline.
+My desired budget is about 5000 us dollars
+
+I am new in this freelancer's site but not a new developer.
+
+My LinkedIn account is https://www.linkedin.com/in/felix-jin-422645175/
+
+If you hire me, I will do my best for you and your work.
+
+Thank you.
