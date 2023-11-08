@@ -15,6 +15,7 @@ const InstagramSearch = (props) => {
         dispatch(getSearchs({ email: email }));
 
     }, [dispatch])
+    console.log(searchs)
     const [savedSearchs, setSavedSearchs] = useState(searchs);
     const saveSearch = () => {
         let values = searchParams
@@ -447,12 +448,12 @@ const InstagramSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {platformOptions.map((option) => (
+                                {searchs.map((option) => (
                                     <option
-                                        key={option}
-                                        value={option}
+                                        key={option["id"]}
+                                        value={option["id"]}
                                     >
-                                        {option}
+                                        {option["tab"].charAt(0).toUpperCase() + option["tab"].slice(1) + " Influencers"}
                                     </option>
                                 ))}
                             </TextField>
