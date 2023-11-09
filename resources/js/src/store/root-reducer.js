@@ -6,6 +6,8 @@ import { reducer as mailReducer } from '@/slices/mail';
 import profileReducer from '../reducers/profile';
 import billinginfoReducer from '../reducers/billinginfo';
 import searchReducer from '../reducers/search';
+import onsearchReducer from '../reducers/onsearch';
+import runsaveReducer from '../reducers/runsave.jsx';
 export const rootReducer = combineReducers({
   calendar: calendarReducer,
   chat: chatReducer,
@@ -13,5 +15,7 @@ export const rootReducer = combineReducers({
   mail: mailReducer,
   profile: profileReducer,
   billinginfo: billinginfoReducer,
-  searchs: searchReducer
+  searchs: searchReducer,
+  searchresult: onsearchReducer,
+  runsavestate: runsaveReducer,
 });

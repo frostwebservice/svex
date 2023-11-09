@@ -16,6 +16,7 @@ import {
   Button,
   Divider,
   IconButton,
+  Avatar,
   Input,
   Paper,
   TextField,
@@ -45,7 +46,9 @@ export const MailComposer = (props) => {
     onToChange,
     open = false,
     subject = '',
-    to = ''
+    to = '',
+    toemail = '',
+    avatar = '',
   } = props;
   const [isOutreach, SetIsOutreach] = useState(false)
   const classes = useStyles();
@@ -136,6 +139,13 @@ export const MailComposer = (props) => {
             spacing={1}
           >
             <Typography sx={{ mx: 2 }}>To</Typography>
+            <Avatar
+              src={avatar != "" ? avatar : `https://ui-avatars.com/api/?name=${to ? to : ""}&background=2970FF&color=fff&rounded=true`}
+            // sx={{
+            //   height: 130,
+            //   width: 130
+            // }}
+            />
             {isOutreach == true ? (
               <TextField
                 defaultValue="web"
@@ -170,12 +180,16 @@ export const MailComposer = (props) => {
                 value={to}
               />
             )}
+            <Typography sx={{ mx: 2 }}>{toemail}</Typography>
+
+
 
           </Stack>
           <Stack
             alignItems="center"
             direction="row"
             spacing={1}
+            className="shower-reach"
           >
             <Typography sx={{ mx: 2, fontWeight: 600, fontSize: 16 }}>Outreach Group</Typography>
 
