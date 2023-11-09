@@ -345,6 +345,8 @@ class UserController extends Controller
 			$total["youtube"] = $socialinfo;
 			$table_name = "influencers_instagram";
 			$socialinfo = DB::table($table_name)->where('username', $infname)->first();
+			$count = DB::table("favorites")->where(array("tab" => "instagram", "email" => $request->email, "inf_id" => $socialinfo->id))->count();
+			$socialinfo->liked = $count;
 			if ($socialinfo)
 				$total["basic"] = "instagram";
 			$total["instagram"] = $socialinfo;

@@ -20,7 +20,26 @@ class FinderController extends Controller
     private $status_code = 200;
     public function findWithParams(Request $request)
     {
-        print_r($request->searchParams);
+        // print_r($request->searchParams["username"]);
+        $email = $request->email;
+
+        $tab = $request->searchParams["tab"];
+        if ($tab == "instagram") {
+            $infs = DB::table("influencers_instagram")->where("username", $request->searchParams["username"])->get()->toArray();
+            foreach ($infs as $key => $value) {
+                $count = DB::table("favorites")->where(array("tab" => "instagram", "email" => $email, "inf_id" => $value->id))->count();
+                $infs[$key]->liked = $count;
+            }
+            return json_encode($infs);
+        }
+        if ($tab == "tiktok") {
+            $infs = DB::table("influencers_tiktok")->where("username", $request->searchParams["username"])->get()->toArray();
+            foreach ($infs as $key => $value) {
+                $count = DB::table("favorites")->where(array("tab" => "tiktok", "email" => $email, "inf_id" => $value->id))->count();
+                $infs[$key]->liked = $count;
+            }
+            return json_encode($infs);
+        }
     }
     public function saveSearch(Request $request)
     {
@@ -34,6 +53,22 @@ class FinderController extends Controller
         $searchs = DB::table('searchs')->where('email', $request->email)->get();
         print_r(json_encode($searchs));
     }
+    public function handleLike(Request $request)
+    {
+        $data = array(
+            "email" => $request->email,
+            "tab" => $request->tab,
+            "inf_id" => $request->inf_id
+        );
+        if ($request->liked == "1") {
 
+            $insert = DB::table("favorites")->insert($data);
+        } else if ($request->liked == "0") {
+
+            $delete = DB::table("favorites")->where($data)->delete();
+        }
+        // $searchs = DB::table('searchs')->where('email', $request->email)->get();
+        // print_r(json_encode($searchs));
+    }
 
 }
