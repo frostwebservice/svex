@@ -7,8 +7,9 @@ import { categoryOptions, locationOptions, followersOptions, ageOptions, genderO
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
 import { useDispatch, connect } from "react-redux";
 import { getSearchs } from '@/actions';
+import { doSearch } from '@/actions';
 const InstagramSearch = (props) => {
-    const { searchs } = props
+    const { searchs, runTab } = props
     const email = JSON.parse(localStorage.getItem('email'));
     const [selectedSearch, setSelectedSearch] = useState("");
     const dispatch = useDispatch();
@@ -29,9 +30,11 @@ const InstagramSearch = (props) => {
                 }
             });
     }
+
     const runSearch = () => {
 
         if (selectedSearch > 0) {
+            console.log("running")
             searchs.map((search) => {
                 if (search.id == selectedSearch) {
                     setSearchParams({
@@ -52,11 +55,13 @@ const InstagramSearch = (props) => {
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
                         verified: search.verified == 1 ? true : false
-
                     })
+
                     return;
                 }
             })
+            dispatch(doSearch(email, searchParams));
+
         }
     }
     const [searchParams, setSearchParams] = useState(
@@ -82,16 +87,22 @@ const InstagramSearch = (props) => {
         }
     )
     const onSearch = () => {
-        axios
-            .post("/api/search_infs", { searchParams })
-            .then((response) => {
-                console.log(response)
-                if (response.data.status === 200) {
-
-                }
-            });
+        dispatch(doSearch(email, searchParams));
     }
+    useEffect(() => {
+        if (runTab.runsavestate && runTab.runsavestate.tab == "instagram") {
 
+            setSelectedSearch(runTab.runsavestate.id)
+            runSearch()
+        }
+    }, [runTab])
+
+    // useEffect(() => {
+    //     if (runTab.runsavestate && runTab.runsavestate.tab != "") {
+    //         runSearch()
+    //         runSearch()
+    //     }
+    // }, [selectedSearch])
     return (
         <>
             <Stack
@@ -526,6 +537,7 @@ const InstagramSearch = (props) => {
     );
 };
 const mapStateToProps = state => ({
-    searchs: state.searchs.searchs
+    searchs: state.searchs.searchs,
+    runTab: state.runsavestate
 })
 export default connect(mapStateToProps)(InstagramSearch);

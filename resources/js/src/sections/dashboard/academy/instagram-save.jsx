@@ -5,8 +5,31 @@ import { Typography, Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
+import { doSearch } from '@/actions';
+import { useDispatch, connect } from "react-redux";
+import { useState, useEffect } from 'react'
+import { RouterLink } from '@/components/router-link';
+import { runSavedSearch } from '@/actions'
+import { useNavigate } from 'react-router-dom';
+const InstagramSave = (props) => {
+    const { search } = props
+    const navigate = useNavigate()
+    const [counter, setCounter] = useState(0);
+    const dispatch = useDispatch();
+    const email = JSON.parse(localStorage.getItem('email'))
+    let data = {
+        email: email,
+        searchParams: search
+    }
+    axios
+        .post("/api/search_infs", data)
+        .then(res => setCounter(res.data.length))
+        .catch(err => console.log(err));
+    const dispatchSavedSearch = () => {
 
-export const InstagramSave = () => {
+        dispatch(runSavedSearch("instagram", search.id))
+        navigate("/inf-finder")
+    }
     return (
         <>
             <Stack
@@ -33,7 +56,7 @@ export const InstagramSave = () => {
                                 Search Name
                             </Typography>
                             <Typography sx={{ color: "text.secondary" }} style={{ fontSize: 20 }}>
-                                Influeners with XYZ properties
+                                {search.tab.charAt(0).toUpperCase() + search.tab.slice(1) + " Influencers"}
                             </Typography>
                         </Stack>
                         <Stack
@@ -42,6 +65,9 @@ export const InstagramSave = () => {
                             spacing={2}
                         >
                             <Button
+                                // component={RouterLink}
+                                // href={"/inf_finder"}
+                                onClick={dispatchSavedSearch}
                                 size="large"
                                 fullWidth
                                 variant="contained"
@@ -67,7 +93,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.keywords}
                                 fullWidth
                                 label="Search"
                                 name="keywords"
@@ -85,7 +111,8 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.hashtags}
+
                                 fullWidth
                                 label="Search"
                                 name="hashtags"
@@ -102,7 +129,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.category}
                                 fullWidth
                                 label="Category"
                                 name="category"
@@ -119,7 +146,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.location}
                                 fullWidth
                                 label="Location"
                                 name="location"
@@ -136,7 +163,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.followers_from}
                                 fullWidth
                                 label="Followers"
                                 name="followers_from"
@@ -159,7 +186,7 @@ export const InstagramSave = () => {
                                 , alignItems: 'center', mr: 5
                             }}>To</span>
                             <TextField
-                                defaultValue=""
+                                value={search.followers_to}
                                 fullWidth
                                 label="Followers"
                                 name="followers_to"
@@ -177,7 +204,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.age}
                                 fullWidth
                                 label="Age"
                                 name="age"
@@ -194,7 +221,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.gender}
                                 fullWidth
                                 label="Gender"
                                 name="gender"
@@ -211,7 +238,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.language}
                                 fullWidth
                                 label="Language"
                                 name="language"
@@ -228,7 +255,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.engagement}
                                 fullWidth
                                 label="Engagement rate"
                                 name="engagement"
@@ -245,7 +272,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.avg_likes}
                                 fullWidth
                                 label="Avg likes range"
                                 name="avg_likes"
@@ -262,7 +289,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.avg_comments}
                                 fullWidth
                                 label="Avg comments range"
                                 name="avg_comments"
@@ -279,7 +306,7 @@ export const InstagramSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.username}
                                 fullWidth
                                 label="Search"
                                 name="username"
@@ -297,7 +324,7 @@ export const InstagramSave = () => {
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
                                 readOnly={true}
-                                defaultValue=""
+                                value={search.url}
                                 fullWidth
                                 label="Search"
                                 name="url"
@@ -312,9 +339,8 @@ export const InstagramSave = () => {
                 </Grid>
                 <FormGroup>
                     <Box sx={{ flexGrow: 1 }}>
-
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Has Phone number" />
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Is Verified" />
+                        <FormControlLabel control={<Checkbox value={search.hasPhone} checked={search.hasPhone == 1 ? true : false} />} label="Has Phone number" />
+                        <FormControlLabel control={<Checkbox value={search.verified} checked={search.verified == 1 ? true : false} />} label="Is Verified" />
                     </Box>
                 </FormGroup>
                 <Box sx={{ mt: 3 }}>
@@ -324,10 +350,14 @@ export const InstagramSave = () => {
                 </Box>
                 <Box>
                     <Typography style={{ fontSize: 18, color: "#2970FF" }}>
-                        42
+                        {counter}
                     </Typography>
                 </Box>
             </Stack >
         </>
     );
 };
+const mapStateToProps = state => ({
+    // results: state.searchresult
+})
+export default connect(mapStateToProps)(InstagramSave);  
