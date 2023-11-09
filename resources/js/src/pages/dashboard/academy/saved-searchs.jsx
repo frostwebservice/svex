@@ -24,24 +24,34 @@ import { AcademyDailyProgress } from '@/sections/dashboard/academy/academy-daily
 import { AcademyFind } from '@/sections/dashboard/academy/academy-find';
 import { CourseCard } from '@/sections/dashboard/academy/course-card';
 import "./inf_finder.css"
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YoutubeIcon from '@mui/icons-material/Youtube';
-// import TiktokIcon from '@mui/icons-material/tiktok';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import LinkedinIcon from '@mui/icons-material/Linkedin';
 import { InfCard } from './inf_card';
-import { InstagramSave } from '@/sections/dashboard/academy/instagram-Save';
-import { TiktokSave } from '@/sections/dashboard/academy/tiktok-save';
-import { YoutubeSave } from '@/sections/dashboard/academy/youtube-save';
-import { TwitterSave } from '@/sections/dashboard/academy/twitter-save';
-import { PinterestSave } from '@/sections/dashboard/academy/pinterest-save';
-import { LinkedinSave } from '@/sections/dashboard/academy/linkedin-save';
+import InstagramSave from '@/sections/dashboard/academy/instagram-Save';
+import TiktokSave from '@/sections/dashboard/academy/tiktok-save';
+import YoutubeSave from '@/sections/dashboard/academy/youtube-save';
+import TwitterSave from '@/sections/dashboard/academy/twitter-save';
+import PinterestSave from '@/sections/dashboard/academy/pinterest-save';
+import LinkedinSave from '@/sections/dashboard/academy/linkedin-save';
+import { useDispatch, connect } from "react-redux";
+import { useState, useEffect } from 'react';
+import { getSearchs } from '@/actions';
 
-const SavedSearchs = () => {
+const SavedSearchs = (props) => {
+    const { searchs } = props
     const settings = useSettings();
+    const dispatch = useDispatch()
     usePageView();
+    const email = JSON.parse(localStorage.getItem('email'))
+    useEffect(() => {
+        dispatch(getSearchs({ email: email }));
+
+    }, [dispatch])
+    console.log(searchs)
     return (
         <>
             <Seo title="Dashboard: Saved Searchs" />
@@ -49,39 +59,56 @@ const SavedSearchs = () => {
                 component="main"
                 sx={{ flexGrow: 1 }}
             >
-
-
                 <Container maxWidth={settings.stretch ? false : 'xl'} >
 
                     <Typography variant="h4" sx={{ mt: 10, mb: 7, fontSize: '32px' }}>
                         Saved Searchs
                     </Typography>
-                    <Card sx={{ my: 4 }}>
-                        <InstagramSave />
-                    </Card>
-                    <Card sx={{ my: 4 }}>
+                    {searchs && searchs.map((search) => {
+                        if (search.tab == "instagram") return (
+                            <Card sx={{ my: 4 }}>
+                                <InstagramSave
+                                    search={search}
+                                />
+                            </Card>
+                        )
+                        else if (search.tab == "tiktok") return (
+                            <Card sx={{ my: 4 }}>
+                                <TiktokSave
+                                    search={search}
+                                />
+                            </Card>
+                        )
+                        else if (search.tab == "youtube") return (
+                            <Card sx={{ my: 4 }}>
+                                <YoutubeSave
+                                    search={search}
+                                />
+                            </Card>
+                        )
+                        else if (search.tab == "twitter") return (
+                            <Card sx={{ my: 4 }}>
+                                <TwitterSave
+                                    search={search}
+                                />
+                            </Card >
+                        )
+                        else if (search.tab == "pinterest") return (
+                            <Card sx={{ my: 4 }}>
+                                <PinterestSave
+                                    search={search}
+                                />
+                            </Card >
+                        )
+                        else if (search.tab == "linkedin") return (
+                            <Card sx={{ my: 4 }}>
+                                <LinkedinSave
+                                    search={search}
+                                />
+                            </Card >
+                        )
 
-                        <TiktokSave />
-                    </Card>
-                    <Card sx={{ my: 4 }}>
-
-                        <YoutubeSave />
-                    </Card>
-                    <Card sx={{ my: 4 }}>
-
-                        <TwitterSave />
-                    </Card >
-                    <Card sx={{ my: 4 }}>
-
-                        <PinterestSave />
-                    </Card >
-                    <Card sx={{ my: 4 }}>
-
-                        <LinkedinSave />
-                    </Card >
-
-
-
+                    })}
                 </Container >
 
             </Box >
@@ -89,4 +116,7 @@ const SavedSearchs = () => {
     );
 };
 
-export default SavedSearchs;
+const mapStateToProps = state => ({
+    searchs: state.searchs.searchs
+})
+export default connect(mapStateToProps)(SavedSearchs);

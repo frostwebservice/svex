@@ -203,6 +203,14 @@
 
 }
 
+.shower-reach {
+    display: none;
+}
+
+.ql-toolbar {
+    display: none;
+}
+
 .quick-links {
     margin-top: 10px;
 }

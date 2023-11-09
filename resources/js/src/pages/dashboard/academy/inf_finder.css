@@ -42,6 +42,14 @@
     color: lightgrey
 }
 
+.shower-reach {
+    display: none;
+}
+
+.ql-toolbar {
+    display: none;
+}
+
 @media screen and (max-width: 514px) {
     .right-btn {
         margin-bottom: 15px !important;
