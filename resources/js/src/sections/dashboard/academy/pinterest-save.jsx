@@ -4,9 +4,30 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { Typography, Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
-
-export const PinterestSave = () => {
+import { doSearch } from '@/actions';
+import { useDispatch, connect } from "react-redux";
+import { useState, useEffect } from 'react'
+import { RouterLink } from '@/components/router-link';
+import { runSavedSearch } from '@/actions'
+import { useNavigate } from 'react-router-dom';
+const PinterestSave = (props) => {
+    const { search } = props
+    const navigate = useNavigate()
+    const [counter, setCounter] = useState(0);
+    const dispatch = useDispatch();
+    const email = JSON.parse(localStorage.getItem('email'))
+    let data = {
+        email: email,
+        searchParams: search
+    }
+    axios
+        .post("/api/search_infs", data)
+        .then(res => setCounter(res.data.length))
+        .catch(err => console.log(err));
+    const dispatchSavedSearch = () => {
+        dispatch(runSavedSearch("pinterest", search.id))
+        navigate("/inf-finder")
+    }
     return (
         <>
             <Stack
@@ -33,7 +54,7 @@ export const PinterestSave = () => {
                                 Search Name
                             </Typography>
                             <Typography sx={{ color: "text.secondary" }} style={{ fontSize: 20 }}>
-                                Influeners with XYZ properties
+                                {search.tab.charAt(0).toUpperCase() + search.tab.slice(1) + " Influencers"}
                             </Typography>
                         </Stack>
                         <Stack
@@ -44,6 +65,7 @@ export const PinterestSave = () => {
                             <Button
                                 size="large"
                                 fullWidth
+                                onClick={dispatchSavedSearch}
                                 variant="contained"
                                 sx={{ height: 53.13 }}
                             >
@@ -67,7 +89,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.keywords}
                                 fullWidth
                                 label="Search"
                                 name="keywords"
@@ -84,7 +106,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.category}
                                 fullWidth
                                 label="Category"
                                 name="category"
@@ -101,7 +123,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.location}
                                 fullWidth
                                 label="Location"
                                 name="location"
@@ -118,7 +140,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.language}
                                 fullWidth
                                 label="Language"
                                 name="language"
@@ -135,7 +157,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.followers_from}
                                 fullWidth
                                 label="Followers"
                                 name="followers_from"
@@ -160,7 +182,7 @@ export const PinterestSave = () => {
                                 , alignItems: 'center', mr: 5
                             }}>To</span>
                             <TextField
-                                defaultValue=""
+                                value={search.followers_to}
                                 fullWidth
                                 label="Followers"
                                 name="followers_to"
@@ -178,7 +200,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.engagement}
                                 fullWidth
                                 label="Engagement rate"
                                 name="engagement"
@@ -195,7 +217,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.avg_likes}
                                 fullWidth
                                 label="Avg likes range"
                                 name="avg_likes"
@@ -212,7 +234,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.avg_comments}
                                 fullWidth
                                 label="Avg comments range"
                                 name="avg_comments"
@@ -229,7 +251,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.total_likes_count}
                                 fullWidth
                                 label="Total likes count"
                                 name="total_likes_count"
@@ -246,7 +268,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.username}
                                 fullWidth
                                 label="Search"
                                 name="username"
@@ -263,7 +285,7 @@ export const PinterestSave = () => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                defaultValue=""
+                                value={search.url}
                                 fullWidth
                                 label="Search"
                                 name="url"
@@ -279,8 +301,8 @@ export const PinterestSave = () => {
                 <FormGroup>
                     <Box sx={{ flexGrow: 1 }}>
 
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Has Phone number" />
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Is Verified" />
+                        <FormControlLabel control={<Checkbox value={search.hasPhone} checked={search.hasPhone == 1 ? true : false} />} label="Has Phone number" />
+                        <FormControlLabel control={<Checkbox value={search.verified} checked={search.verified == 1 ? true : false} />} label="Is Verified" />
                     </Box>
                 </FormGroup>
                 <Box sx={{ mt: 3 }}>
@@ -290,10 +312,14 @@ export const PinterestSave = () => {
                 </Box>
                 <Box>
                     <Typography style={{ fontSize: 18, color: "#2970FF" }}>
-                        42
+                        {counter}
                     </Typography>
                 </Box>
             </Stack >
         </>
     );
 };
+const mapStateToProps = state => ({
+    // results: state.searchresult
+})
+export default connect(mapStateToProps)(PinterestSave);

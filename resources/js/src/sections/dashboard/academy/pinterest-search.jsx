@@ -4,11 +4,12 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState, useEffect } from 'react';
+import { doSearch } from '@/actions';
 import { categoryOptions, locationOptions, followersOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions, totallikesOptions } from './data'
 import { useDispatch, connect } from "react-redux";
 import { getSearchs } from '@/actions';
 const PinterestSearch = (props) => {
-    const { searchs } = props
+    const { searchs, runTab } = props
     const email = JSON.parse(localStorage.getItem('email'));
     const [selectedSearch, setSelectedSearch] = useState("");
     const dispatch = useDispatch();
@@ -57,6 +58,7 @@ const PinterestSearch = (props) => {
                     return;
                 }
             })
+            dispatch(doSearch(email, searchParams));
         }
     }
     const [searchParams, setSearchParams] = useState(
@@ -82,15 +84,14 @@ const PinterestSearch = (props) => {
         }
     )
     const onSearch = () => {
-        axios
-            .post("/api/search_infs", { searchParams })
-            .then((response) => {
-                console.log(response)
-                if (response.data.status === 200) {
-
-                }
-            });
+        dispatch(doSearch(email, searchParams));
     }
+    useEffect(() => {
+        if (runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+            setSelectedSearch(runTab.runsavestate.id)
+            runSearch()
+        }
+    }, [runTab])
     return (
         <>
             <Stack
@@ -534,6 +535,7 @@ const PinterestSearch = (props) => {
     );
 };
 const mapStateToProps = state => ({
-    searchs: state.searchs.searchs
+    searchs: state.searchs.searchs,
+    runTab: state.runsavestate
 })
 export default connect(mapStateToProps)(PinterestSearch);

@@ -5,12 +5,12 @@ import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, C
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { categoryOptions, locationOptions, followersOptions, totallikesOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions } from './data'
 import { useState, useEffect } from 'react';
-
+import { doSearch } from '@/actions';
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
 import { useDispatch, connect } from "react-redux";
 import { getSearchs } from '@/actions';
 const TiktokSearch = (props) => {
-    const { searchs } = props
+    const { searchs, runTab } = props
     const email = JSON.parse(localStorage.getItem('email'));
     const [selectedSearch, setSelectedSearch] = useState("");
     const dispatch = useDispatch();
@@ -59,6 +59,7 @@ const TiktokSearch = (props) => {
                     return;
                 }
             })
+            dispatch(doSearch(email, searchParams));
         }
     }
     const [searchParams, setSearchParams] = useState(
@@ -85,15 +86,15 @@ const TiktokSearch = (props) => {
         }
     )
     const onSearch = () => {
-        axios
-            .post("/api/search_infs", { searchParams })
-            .then((response) => {
-                console.log(response)
-                if (response.data.status === 200) {
-
-                }
-            });
+        dispatch(doSearch(email, searchParams));
     }
+    useEffect(() => {
+        if (runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+            setSelectedSearch(runTab.runsavestate.id)
+            runSearch()
+        }
+    }, [runTab])
+
     return (
         <>
             <Stack
@@ -558,6 +559,7 @@ const TiktokSearch = (props) => {
     );
 };
 const mapStateToProps = state => ({
-    searchs: state.searchs.searchs
+    searchs: state.searchs.searchs,
+    runTab: state.runsavestate
 })
 export default connect(mapStateToProps)(TiktokSearch);

@@ -5,11 +5,11 @@ import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, C
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState, useEffect } from 'react';
 import { categoryOptions, locationOptions, followersOptions, ageOptions, genderOptions, languageOptions, engagementOptions, connectionsOptions, industryOptions, skillsOptions } from './data'
-
+import { doSearch } from '@/actions';
 import { useDispatch, connect } from "react-redux";
 import { getSearchs } from '@/actions';
 const LinkedinSearch = (props) => {
-    const { searchs } = props
+    const { searchs, runTab } = props
     const email = JSON.parse(localStorage.getItem('email'));
     const [selectedSearch, setSelectedSearch] = useState("");
     const dispatch = useDispatch();
@@ -58,6 +58,7 @@ const LinkedinSearch = (props) => {
                     return;
                 }
             })
+            dispatch(doSearch(email, searchParams));
         }
     }
     const [searchParams, setSearchParams] = useState(
@@ -83,15 +84,14 @@ const LinkedinSearch = (props) => {
         }
     )
     const onSearch = () => {
-        axios
-            .post("/api/search_infs", { searchParams })
-            .then((response) => {
-                console.log(response)
-                if (response.data.status === 200) {
-
-                }
-            });
+        dispatch(doSearch(email, searchParams));
     }
+    useEffect(() => {
+        if (runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+            setSelectedSearch(runTab.runsavestate.id)
+            runSearch()
+        }
+    }, [runTab])
     return (
         <>
             <Stack
@@ -535,6 +535,7 @@ const LinkedinSearch = (props) => {
     );
 };
 const mapStateToProps = state => ({
-    searchs: state.searchs.searchs
+    searchs: state.searchs.searchs,
+    runTab: state.runsavestate
 })
 export default connect(mapStateToProps)(LinkedinSearch);
