@@ -1,7 +1,4 @@
-import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
-
 import {
   Box,
   Button,
@@ -10,9 +7,7 @@ import {
   Container,
   Card,
   Stack,
-  SvgIcon,
-  InputAdornment,
-  OutlinedInput,
+
   TextField,
   Typography,
   Unstable_Grid2 as Grid
@@ -20,14 +15,10 @@ import {
 import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import { useSettings } from '@/hooks/use-settings';
-import { AcademyDailyProgress } from '@/sections/dashboard/academy/academy-daily-progress';
-import { AcademyFind } from '@/sections/dashboard/academy/academy-find';
-import { CourseCard } from '@/sections/dashboard/academy/course-card';
 import "./inf_finder.css"
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YoutubeIcon from '@mui/icons-material/Youtube';
-// import TiktokIcon from '@mui/icons-material/tiktok';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import LinkedinIcon from '@mui/icons-material/Linkedin';
@@ -38,7 +29,7 @@ import YoutubeSearch from '@/sections/dashboard/academy/youtube-search';
 import TwitterSearch from '@/sections/dashboard/academy/twitter-search';
 import PinterestSearch from '@/sections/dashboard/academy/pinterest-search';
 import LinkedinSearch from '@/sections/dashboard/academy/linkedin-search';
-
+import { connect, useDispatch } from 'react-redux'
 const now = new Date();
 
 const TiktokIcon = ({ color = "#000000" }) => {
@@ -53,106 +44,190 @@ const TiktokIcon = ({ color = "#000000" }) => {
     >
       <path d="M41,4H9C6.243,4,4,6.243,4,9v32c0,2.757,2.243,5,5,5h32c2.757,0,5-2.243,5-5V9C46,6.243,43.757,4,41,4z M37.006,22.323 c-0.227,0.021-0.457,0.035-0.69,0.035c-2.623,0-4.928-1.349-6.269-3.388c0,5.349,0,11.435,0,11.537c0,4.709-3.818,8.527-8.527,8.527 s-8.527-3.818-8.527-8.527s3.818-8.527,8.527-8.527c0.178,0,0.352,0.016,0.527,0.027v4.202c-0.175-0.021-0.347-0.053-0.527-0.053 c-2.404,0-4.352,1.948-4.352,4.352s1.948,4.352,4.352,4.352s4.527-1.894,4.527-4.298c0-0.095,0.042-19.594,0.042-19.594h4.016 c0.378,3.591,3.277,6.425,6.901,6.685V22.323z" />
     </svg>
-
-
   );
 };
-const sortOptions = [
-  {
-    label: 'Last update (newest)',
-    value: 'updatedAt|desc'
-  },
-  {
-    label: 'Last update (oldest)',
-    value: 'updatedAt|asc'
-  },
-  {
-    label: 'Total orders (highest)',
-    value: 'totalOrders|desc'
-  },
-  {
-    label: 'Total orders (lowest)',
-    value: 'totalOrders|asc'
-  }
-];
-const useCourses = () => {
-  return [
-    {
-      id: 'c3a2b7331eef8329e2a87c79',
-      description: 'Introductory course for design and framework basics',
-      duration: '78 hours',
-      media: '/assets/courses/course-1.png',
-      progress: 23,
-      title: 'React and Redux Tutorial'
-    },
-    {
-      id: '3f02f696f869ecd1c68e95a3',
-      description: 'Introductory course for design and framework basics',
-      duration: '14 hours',
-      media: '/assets/courses/course-2.png',
-      progress: 52,
-      title: 'React and Express Tutorial'
-    },
-    {
-      id: 'f6e76a6474038384cd9e032b',
-      description: 'Introductory course for design and framework basics',
-      duration: '21 hours',
-      media: '/assets/courses/course-3.png',
-      progress: 90,
-      title: 'React Crash Course: Beginner'
-    }
-  ];
-};
-const companies = [
-  {
-    id: 'FR-58F46',
-    averageRating: 4.3,
-    employees: '25-50',
-    isVerified: true,
-    jobs: [
-      {
-        id: '52cf72df2a519538d3d8a18d',
-        currency: '$',
-        isRemote: true,
-        publishedAt: subHours(now, 1).getTime(),
-        salaryMax: '600',
-        salaryMin: '400',
-        title: 'Instagram Influencer for a clothing brand who can market our products for a week',
-        jobType: 'Content creation & Shortouts',
-        paymentType: 'paid'
-      }
-    ],
-    logo: '/assets/avatars/brandlogo.png',
-    name: 'Canada Goose',
-    shortDescription: 'Established since 2010'
-  },
-  {
-    id: 'FR-58F45',
-    averageRating: 4.3,
-    employees: '25-50',
-    isVerified: true,
-    jobs: [
-      {
-        id: '52cf72df2a519538d3d8a18d',
-        currency: '$',
-        isRemote: true,
-        publishedAt: subHours(now, 1).getTime(),
-        salaryMax: '600',
-        salaryMin: '400',
-        title: 'Instagram Influencer for a clothing brand who can market our products for a week',
-        jobType: 'Content creation & Shortouts',
-        paymentType: 'paid'
-      }
-    ],
-    logo: '/assets/avatars/brandlogo.png',
-    name: 'Canada Goose',
-    shortDescription: 'Established since 2010'
-  }
-];
-// }, [onSortChange]);
-const Page = () => {
+
+const Page = (props) => {
+  const { results, runTab } = props;
+  const dispatch = useDispatch()
   const settings = useSettings();
-  const courses = useCourses();
+  const [sortOptions, setSortOptions] = useState([]);
+  const [selectedSort, setSelectedSort] = useState("");
+  const [infcounter, setInfcounter] = useState(0)
+  const [infs, setInfs] = useState([])
+
+
+  useEffect(() => {
+    console.log("cled")
+    if (results.searchresults) {
+      let result = results.searchresults
+      if (result.tab == "instagram") {
+        setSortOptions([
+          {
+            label: 'Follower Count(High to Low)',
+            value: 'follower_order'
+          },
+          {
+            label: 'Engagement(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Avg Likes(High to Low)',
+            value: 'avglikes_order'
+          },
+          {
+            label: 'Avg Comments(High to Low)',
+            value: 'avgcomments_order'
+          }
+
+        ])
+        if (sortOptions[0])
+          setSelectedSort(sortOptions[0].value)
+      }
+      else if (result.tab == "tiktok") {
+        setSortOptions([
+          {
+            label: 'Follower Count(High to Low)',
+            value: 'follower_order'
+          },
+          {
+            label: 'Engagement(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Total Likes/Hearts(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Avg Likes(High to Low)',
+            value: 'avglikes_order'
+          },
+          {
+            label: 'Avg Comments(High to Low)',
+            value: 'avgcomments_order'
+          }
+
+        ])
+        if (sortOptions[0])
+          setSelectedSort(sortOptions[0].value)
+      }
+      else if (result.tab == "youtube") {
+        setSortOptions([
+          {
+            label: 'Follower Count(High to Low)',
+            value: 'follower_order'
+          },
+          {
+            label: 'Engagement(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Total Favorites(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Avg Likes(High to Low)',
+            value: 'avglikes_order'
+          },
+          {
+            label: 'Avg Comments(High to Low)',
+            value: 'avgcomments_order'
+          }
+
+        ])
+        if (sortOptions[0])
+          setSelectedSort(sortOptions[0].value)
+      }
+      else if (result.tab == "twitter") {
+        setSortOptions([
+          {
+            label: 'Follower Count(High to Low)',
+            value: 'follower_order'
+          },
+          {
+            label: 'Engagement(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Total Likes/Hearts(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Avg Likes(High to Low)',
+            value: 'avglikes_order'
+          },
+          {
+            label: 'Avg Comments(High to Low)',
+            value: 'avgcomments_order'
+          }
+
+        ])
+        if (sortOptions[0])
+          setSelectedSort(sortOptions[0].value)
+      }
+      else if (result.tab == "pinterest") {
+        setSortOptions([
+          {
+            label: 'Follower Count(High to Low)',
+            value: 'follower_order'
+          },
+          {
+            label: 'Total Favorites(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Total Likes(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Avg Likes(High to Low)',
+            value: 'avglikes_order'
+          },
+          {
+            label: 'Avg Comments(High to Low)',
+            value: 'avgcomments_order'
+          }
+
+        ])
+        if (sortOptions[0])
+          setSelectedSort(sortOptions[0].value)
+      }
+      else if (result.tab == "linkedin") {
+        setSortOptions([
+          {
+            label: 'Follower Count(High to Low)',
+            value: 'follower_order'
+          },
+          {
+            label: 'Connections Count(High to Low)',
+            value: 'follower_order'
+          },
+          {
+            label: 'Engagement(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Total Likes/Hearts(High to Low)',
+            value: 'engagement_order'
+          },
+          {
+            label: 'Avg Likes(High to Low)',
+            value: 'avglikes_order'
+          },
+          {
+            label: 'Avg Comments(High to Low)',
+            value: 'avgcomments_order'
+          }
+
+        ])
+        if (sortOptions[0])
+          setSelectedSort(sortOptions[0].value)
+      }
+      setInfcounter(result.result.length)
+      setInfs(result.result)
+    }
+
+  }, [dispatch, results])
 
   usePageView();
 
@@ -160,14 +235,9 @@ const Page = () => {
     setCurrentTab(value);
   }, []);
 
-  const handleSortChange = useCallback((event) => {
-    // const [sortBy, sortDir] = event.target.value.split('|');
-
-    // onSortChange?.({
-    //   sortBy,
-    //   sortDir
-    // });
-  }, []);
+  const handleSortChange = (value) => {
+    setSelectedSort(value)
+  }
   const tabs = [
     { label: "Instagram", value: "instagram" },
     { label: "Tiktok", value: "tiktok" },
@@ -187,6 +257,14 @@ const Page = () => {
 
 
   }
+  useEffect(() => {
+    console.log(runTab)
+    if (runTab.runsavestate && runTab.runsavestate.tab != "") {
+      setCurrentTab(runTab.runsavestate.tab)
+    }
+  }, [runTab])
+
+
   return (
     <>
       <Seo title="Dashboard: Influencer Finder Tool" />
@@ -298,7 +376,7 @@ const Page = () => {
                 sx={{ mt: 1, fontSize: 28, fontWeight: 700 }}
                 variant="body2"
               >
-                42 Influencers found
+                {infcounter} Influencers found
               </Typography>
             </Box>
             <Box sx={{
@@ -309,9 +387,11 @@ const Page = () => {
                 , alignItems: 'center', mr: 5
               }}>Sort by</span>
               <TextField
+                sx={{ minWidth: '200px' }}
                 label="Sort By"
                 name="sort"
-                onChange={handleSortChange}
+                onChange={(e) => handleSortChange(e.target.value)}
+                value={selectedSort}
                 select
                 SelectProps={{ native: true }}
               // value={`${sortBy}|${sortDir}`}
@@ -329,10 +409,11 @@ const Page = () => {
           </Stack>
           <Box sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
 
-            {companies.map((company) => (
+            {infs.map((inf) => (
               <InfCard
-                key={company.id}
-                company={company}
+                key={inf.id}
+                influencer={inf}
+                currentTab={currentTab}
               />
             ))}
 
@@ -343,4 +424,8 @@ const Page = () => {
   );
 };
 
-export default Page;
+const mapStateToProps = state => ({
+  results: state.searchresult,
+  runTab: state.runsavestate
+})
+export default connect(mapStateToProps)(Page);  

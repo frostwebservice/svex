@@ -52,3 +52,24 @@ export const getSearchs = (email) => dispatch => {
         }))
         .catch(err => console.log(err));
 }
+export const doSearch = (email, searchParams) => dispatch => {
+    let data = {
+        email: email,
+        searchParams: searchParams
+    }
+    let payload = {};
+    axios
+        .post("/api/search_infs", data)
+        .then(res => dispatch({
+            type: 'ON_SEARCH',
+            payload: { result: res.data, tab: searchParams.tab }
+        }))
+        .catch(err => console.log(err));
+}
+export const runSavedSearch = (tab, searchId) => dispatch => {
+
+    dispatch({
+        type: 'RUN_SAVED_SEARCH',
+        payload: { tab: tab, id: searchId }
+    })
+}

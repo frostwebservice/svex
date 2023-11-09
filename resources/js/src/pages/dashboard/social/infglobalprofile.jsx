@@ -35,7 +35,79 @@ import "./profile.css";
 import { getSocialProfile } from '@/actions';
 import { useDispatch, connect } from "react-redux";
 import { useSettings } from '@/hooks/use-settings';
+import { MailComposer } from '@/sections/dashboard/mail/mail-composer';
+const useComposer = () => {
+    const initialState = {
+        isFullScreen: false,
+        isOpen: false,
+        message: '',
+        subject: '',
+        toemail: '',
+        to: ''
+    };
 
+    const [state, setState] = useState(initialState);
+
+    const handleOpen = () => {
+        setState((prevState) => ({
+            ...prevState,
+            isOpen: true
+        }));
+
+    };
+
+    const handleClose = useCallback(() => {
+        setState(initialState);
+    },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []);
+
+    const handleMaximize = useCallback(() => {
+        setState((prevState) => ({
+            ...prevState,
+            isFullScreen: true
+        }));
+    }, []);
+
+    const handleMinimize = useCallback(() => {
+        setState((prevState) => ({
+            ...prevState,
+            isFullScreen: false
+        }));
+    }, []);
+
+    const handleMessageChange = useCallback((message) => {
+        // setState((prevState) => ({
+        //   ...prevState,
+        //   message
+        // }));
+    }, []);
+
+    const handleSubjectChange = useCallback((subject) => {
+        setState((prevState) => ({
+            ...prevState,
+            subject
+        }));
+    }, []);
+
+    const handleToChange = useCallback((to) => {
+        setState((prevState) => ({
+            ...prevState,
+            to
+        }));
+    }, []);
+
+    return {
+        ...state,
+        handleClose,
+        handleMaximize,
+        handleMessageChange,
+        handleMinimize,
+        handleOpen,
+        handleSubjectChange,
+        handleToChange
+    };
+};
 const tabs = [
     { label: 'Overview', value: 'infoverview' }
 ];
@@ -128,7 +200,7 @@ const useConnections = (search = '') => {
 
 const Page = (props) => {
     const settings = useSettings();
-
+    const email = JSON.parse(localStorage.getItem('email'))
     // console.log(props);
     const { socialinfo, userinfo } = props;
     const profile = useProfile();
@@ -137,32 +209,62 @@ const Page = (props) => {
     const posts = usePosts();
     const [connectionsQuery, setConnectionsQuery] = useState('');
     const connections = useConnections(connectionsQuery);
-    const [isLiked, setIsLiked] = useState(false);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [selectedStat, SetSelectedStat] = useState(socialinfo["basic"])
     let tmp = socialinfo[selectedStat]
+    const composer = useComposer();
+    const [isLiked, setIsLiked] = useState(tmp && tmp.liked == "1" ? true : false);
     const changeStat = (str) => {
         SetSelectedStat(str)
     }
     useEffect(() => {
-        dispatch(getSocialProfile({ infname: window.location.pathname.split("/")[3], socialtype: "total" }));
+        dispatch(getSocialProfile({ email: email, infname: window.location.pathname.split("/")[3], socialtype: "total" }));
 
     }, [dispatch])
+    useEffect(() => {
+        setIsLiked(tmp && tmp.liked == "1" ? true : false)
 
+    }, [tmp])
     const handleInvite = useCallback(() => {
 
     }, []);
 
-    const handleLike = useCallback(() => {
+    const handleLike = () => {
         setIsLiked(true);
-        // setLikes((prevLikes) => prevLikes + 1);
-    }, []);
+        let value = {
+            email: JSON.parse(localStorage.getItem('email')),
+            tab: selectedStat,
+            inf_id: tmp && tmp.id ? tmp.id : "",
+            liked: "1"
+        }
+        axios
+            .post("/api/handle_like", value)
+            .then((response) => {
+                if (response.data.status === 200) {
 
-    const handleUnlike = useCallback(() => {
+                }
+            });
+    };
+
+    const handleUnlike = () => {
         setIsLiked(false);
-        // setLikes((prevLikes) => prevLikes - 1);
-    }, []);
+        let value = {
+            email: JSON.parse(localStorage.getItem('email')),
+            tab: selectedStat,
+            inf_id: tmp && tmp.id ? tmp.id : "",
+            liked: "0"
+        }
+        axios
+            .post("/api/handle_like", value)
+            .then((response) => {
+                if (response.data.status === 200) {
+
+                }
+            });
+    };
+
     usePageView();
 
     const handleConnectionAdd = useCallback(() => {
@@ -404,8 +506,8 @@ const Page = (props) => {
                                                 Invite To Project
                                             </Button>
                                             <Button
-                                                component={RouterLink}
-                                                href={paths.dashboard.chat}
+                                                onClick={composer.handleOpen}
+
                                                 size="small"
                                                 className="social-btn small-button"
                                                 startIcon={(
@@ -455,8 +557,8 @@ const Page = (props) => {
                                                 Invite To Project
                                             </Button>
                                             <Button
-                                                component={RouterLink}
-                                                href={paths.dashboard.chat}
+                                                onClick={composer.handleOpen}
+
                                                 size="small"
                                                 className="social-btn small-button"
                                                 startIcon={(
@@ -522,6 +624,20 @@ const Page = (props) => {
                     </Box>
                 </Container >
             </Box >
+            <MailComposer
+                maximize={composer.isFullScreen}
+                message={composer.message}
+                onClose={composer.handleClose}
+                onMessageChange={composer.handleMessageChange}
+                onMinimize={composer.handleMinimize}
+                onSubjectChange={composer.handleSubjectChange}
+                onToChange={composer.handleToChange}
+                open={composer.isOpen}
+                subject={composer.subject}
+                to={tmp && tmp.full_name ? tmp.full_name : ""}
+                avatar={tmp && tmp.profile_pic_url_hd ? tmp.profile_pic_url_hd : ""}
+                toemail={tmp && tmp.public_email ? tmp.public_email : ""}
+            />
         </>
     );
 };
