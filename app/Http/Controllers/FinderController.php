@@ -456,6 +456,227 @@ class FinderController extends Controller
             }
             return $likesinfs;
         }
+        if ($tab == "youtube") {
+            $where = array();
+            if ($params["keywords"] != "") {
+                $where['keywords'] = $params["url"];
+            }
+            if ($params["username"] != "") {
+                $where['username'] = $params["username"];
+            }
+            if ($params["language"] != "All") {
+                $where['language'] = $params["language"];
+            }
+            if ($params["location"] != "All") {
+                $where['Country'] = $params["location"];
+            }
+            if ($params["url"] != "") {
+                $where['external_url'] = $params["url"];
+            }
+            if ($params["verified"] == true) {
+                $where['is_verified'] = "1";
+            }
+            $category = (string) $params["category"];
+            $infs = DB::table("influencers_youtube")->where($where)
+                ->when($params["hasPhone"] == true, function ($query) {
+                    return $query->where("phone_country_code", ">", "0");
+                })
+                ->when($category != "All", function ($query) use ($category) {
+                    return $query->where('category_niche', 'LIKE', '%' . $category . '%');
+                })
+                ->when($params["engagement"] == "< 0.5 %", function ($query) {
+                    return $query->where("engagement_rate", "<", "0.5");
+                })
+                ->when($params["engagement"] == "0.5 % - 3 %", function ($query) {
+                    return $query->whereBetween("engagement_rate", ["0.5", "3"]);
+                })
+                ->when($params["engagement"] == "3 % - 5 %", function ($query) {
+                    return $query->whereBetween("engagement_rate", ["3", "5"]);
+                })
+                ->when($params["engagement"] == "> 5 %", function ($query) {
+                    return $query->where("engagement_rate", ">", "5");
+                })
+                ->when($params["age"] == "Under 18", function ($query) {
+                    return $query->where("age", "<", "18");
+                })
+                ->when($params["age"] == "18 - 24", function ($query) {
+                    return $query->whereBetween("age", ["18", "24"]);
+                })
+                ->when($params["age"] == "25 - 29", function ($query) {
+                    return $query->whereBetween("age", ["25", "29"]);
+                })
+                ->when($params["age"] == "30 - 34", function ($query) {
+                    return $query->whereBetween("age", ["30", "34"]);
+                })
+                ->when($params["age"] == "35 - 39", function ($query) {
+                    return $query->whereBetween("age", ["35", "39"]);
+                })
+                ->when($params["age"] == "40 - 44", function ($query) {
+                    return $query->whereBetween("age", ["40", "44"]);
+                })
+                ->when($params["age"] == "45 - 49", function ($query) {
+                    return $query->whereBetween("age", ["45", "49"]);
+                })
+                ->when($params["age"] == "50 - 54", function ($query) {
+                    return $query->whereBetween("age", ["50", "54"]);
+                })
+                ->when($params["age"] == "55 - 59", function ($query) {
+                    return $query->whereBetween("age", ["55", "59"]);
+                })
+                ->when($params["age"] == "60 - 64", function ($query) {
+                    return $query->whereBetween("age", ["60", "64"]);
+                })
+                ->when($params["age"] == "65 and Over", function ($query) {
+                    return $query->where("age", ">", "64");
+                })
+                ->when($params["gender"] == "Male", function ($query) {
+                    return $query->where("gender", "male");
+                })
+                ->when($params["gender"] == "Female", function ($query) {
+                    return $query->where("gender", "female");
+                })
+                ->when($params["subscribers_from"] == "1K", function ($query) {
+                    return $query->where("subscribers", ">=", "1000");
+                })
+                ->when($params["subscribers_from"] == "5K", function ($query) {
+                    return $query->where("subscribers", ">=", "5000");
+                })
+                ->when($params["subscribers_from"] == "10K", function ($query) {
+                    return $query->where("subscribers", ">=", "10000");
+                })
+                ->when($params["subscribers_from"] == "25K", function ($query) {
+                    return $query->where("subscribers", ">=", "25000");
+                })
+                ->when($params["subscribers_from"] == "50K", function ($query) {
+                    return $query->where("subscribers", ">=", "50000");
+                })
+                ->when($params["subscribers_from"] == "100K", function ($query) {
+                    return $query->where("subscribers", ">=", "100000");
+                })
+                ->when($params["subscribers_from"] == "250K", function ($query) {
+                    return $query->where("subscribers", ">=", "250000");
+                })
+                ->when($params["subscribers_from"] == "500K", function ($query) {
+                    return $query->where("subscribers", ">=", "500000");
+                })
+                ->when($params["subscribers_from"] == "1M", function ($query) {
+                    return $query->where("subscribers", ">=", "1000000");
+                })
+                ->when($params["subscribers_from"] == "5M", function ($query) {
+                    return $query->where("subscribers", ">=", "5000000");
+                })
+                ->when($params["subscribers_from"] == "10M +", function ($query) {
+                    return $query->where("subscribers", ">=", "10000000");
+                })
+                ->when($params["subscribers_to"] == "5K", function ($query) {
+                    return $query->where("subscribers", "<=", "5000");
+                })
+                ->when($params["subscribers_to"] == "10K", function ($query) {
+                    return $query->where("subscribers", "<=", "10000");
+                })
+                ->when($params["subscribers_to"] == "25K", function ($query) {
+                    return $query->where("subscribers", "<=", "25000");
+                })
+                ->when($params["subscribers_to"] == "50K", function ($query) {
+                    return $query->where("subscribers", "<=", "50000");
+                })
+                ->when($params["subscribers_to"] == "100K", function ($query) {
+                    return $query->where("subscribers", "<=", "100000");
+                })
+                ->when($params["subscribers_to"] == "250K", function ($query) {
+                    return $query->where("subscribers", "<=", "250000");
+                })
+                ->when($params["subscribers_to"] == "500K", function ($query) {
+                    return $query->where("subscribers", "<=", "500000");
+                })
+                ->when($params["subscribers_to"] == "1M", function ($query) {
+                    return $query->where("subscribers", "<=", "1000000");
+                })
+                ->when($params["subscribers_to"] == "5M", function ($query) {
+                    return $query->where("subscribers", "<=", "5000000");
+                })
+                ->when($params["subscribers_to"] == "10M +", function ($query) {
+                    return $query->where("subscribers", "<=", "10000000");
+                });
+            $commentsinfs = array();
+            $infs = $infs->get()->toArray();
+            foreach ($infs as $key1 => $inf) {
+                if ($params["avg_comments"] == "All")
+                    array_push($commentsinfs, $inf);
+                else if ($params["avg_comments"] == "< 0.5 %") {
+                    if (100 * (double) $inf->avg_comments / (double) $inf->subscribers < 0.5)
+                        array_push($commentsinfs, $inf);
+                } else if ($params["avg_comments"] == "0.5 % - 1 %") {
+                    if (100 * (double) $inf->avg_comments / (double) $inf->subscribers >= 0.5 && 100 * (double) $inf->avg_comments / (double) $inf->subscribers < 1)
+                        array_push($commentsinfs, $inf);
+                } else if ($params["avg_comments"] == "1 % - 2 %") {
+                    if (100 * (double) $inf->avg_comments / (double) $inf->subscribers >= 1 && 100 * (double) $inf->avg_comments / (double) $inf->subscribers < 2)
+                        array_push($commentsinfs, $inf);
+                } else if ($params["avg_comments"] == "> 2 %") {
+                    if (100 * (double) $inf->avg_comments / (double) $inf->subscribers >= 2)
+                        array_push($commentsinfs, $inf);
+                }
+            }
+            $likesinfs = array();
+            foreach ($commentsinfs as $key => $cominf) {
+                if ($params["avg_likes"] == "All")
+                    array_push($likesinfs, $cominf);
+                if ($params["avg_likes"] == "< 1 %") {
+                    if (100 * (double) $cominf->avg_likes / (double) $cominf->subscribers < 1)
+                        array_push($likesinfs, $cominf);
+                } else if ($params["avg_likes"] == "1 % - 2 %") {
+                    if (100 * (double) $cominf->avg_likes / (double) $cominf->subscribers >= 1 && 100 * (double) $cominf->avg_likes / (double) $cominf->subscribers < 2)
+                        array_push($likesinfs, $cominf);
+                } else if ($params["avg_likes"] == "2 % - 3 %") {
+                    if (100 * (double) $cominf->avg_likes / (double) $cominf->subscribers >= 2 && 100 * (double) $cominf->avg_likes / (double) $cominf->subscribers < 3)
+                        array_push($likesinfs, $cominf);
+                } else if ($params["avg_likes"] == "> 3 %") {
+                    if (100 * (double) $cominf->avg_likes / (double) $cominf->subscribers >= 3)
+                        array_push($likesinfs, $cominf);
+                }
+            }
+            $dislikesinfs = array();
+            foreach ($likesinfs as $key => $likesinf) {
+                if ($params["avg_dislikes"] == "All")
+                    array_push($dislikesinfs, $likesinf);
+                if ($params["avg_dislikes"] == "< 1 %") {
+                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers < 1)
+                        array_push($dislikesinfs, $likesinf);
+                } else if ($params["avg_dislikes"] == "1 % - 2 %") {
+                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers >= 1 && 100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers < 2)
+                        array_push($dislikesinfs, $likesinf);
+                } else if ($params["avg_dislikes"] == "2 % - 3 %") {
+                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers >= 2 && 100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers < 3)
+                        array_push($dislikesinfs, $likesinf);
+                } else if ($params["avg_dislikes"] == "> 3 %") {
+                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers >= 3)
+                        array_push($dislikesinfs, $likesinf);
+                }
+            }
+            $avgviews = array();
+            foreach ($dislikesinfs as $key => $dislikesinf) {
+                if ($params["avg_views"] == "All")
+                    array_push($avgviews, $dislikesinf);
+                if ($params["avg_views"] == "< 50 %") {
+                    if (100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers < 50)
+                        array_push($avgviews, $dislikesinf);
+                } else if ($params["avg_views"] == "50 % - 60 %") {
+                    if (100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers >= 50 && 100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers < 60)
+                        array_push($avgviews, $dislikesinf);
+                } else if ($params["avg_views"] == "60 % - 70 %") {
+                    if (100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers >= 60 && 100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers < 70)
+                        array_push($avgviews, $dislikesinf);
+                } else if ($params["avg_views"] == "> 70 %") {
+                    if (100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers >= 70)
+                        array_push($avgviews, $dislikesinf);
+                }
+            }
+            foreach ($avgviews as $key => $value) {
+                $count = DB::table("favorites")->where(array("tab" => "youtube", "email" => $email, "inf_id" => $value->id))->count();
+                $avgviews[$key]->liked = $count;
+            }
+            return $avgviews;
+        }
 
     }
     public function cvf_convert_object_to_array($data)
