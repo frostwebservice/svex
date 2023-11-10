@@ -93,10 +93,10 @@ const Page = (props) => {
             label: 'Engagement(High to Low)',
             value: 'engagement_order'
           },
-          {
-            label: 'Total Likes/Hearts(High to Low)',
-            value: 'engagement_order'
-          },
+          // {
+          //   label: 'Total Likes/Hearts(High to Low)',
+          //   value: 'totallikes_order'
+          // },
           {
             label: 'Avg Likes(High to Low)',
             value: 'avglikes_order'
@@ -120,10 +120,10 @@ const Page = (props) => {
             label: 'Engagement(High to Low)',
             value: 'engagement_order'
           },
-          {
-            label: 'Total Favorites(High to Low)',
-            value: 'engagement_order'
-          },
+          // {
+          //   label: 'Total Favorites(High to Low)',
+          //   value: 'totalfav_order'
+          // },
           {
             label: 'Avg Likes(High to Low)',
             value: 'avglikes_order'
@@ -147,10 +147,10 @@ const Page = (props) => {
             label: 'Engagement(High to Low)',
             value: 'engagement_order'
           },
-          {
-            label: 'Total Likes/Hearts(High to Low)',
-            value: 'engagement_order'
-          },
+          // {
+          //   label: 'Total Likes/Hearts(High to Low)',
+          //   value: 'totallikes_order'
+          // },
           {
             label: 'Avg Likes(High to Low)',
             value: 'avglikes_order'
@@ -170,14 +170,14 @@ const Page = (props) => {
             label: 'Follower Count(High to Low)',
             value: 'follower_order'
           },
-          {
-            label: 'Total Favorites(High to Low)',
-            value: 'engagement_order'
-          },
-          {
-            label: 'Total Likes(High to Low)',
-            value: 'engagement_order'
-          },
+          // {
+          //   label: 'Total Favorites(High to Low)',
+          //   value: 'totalfav_order'
+          // },
+          // {
+          //   label: 'Total Likes(High to Low)',
+          //   value: 'totallikes_order'
+          // },
           {
             label: 'Avg Likes(High to Low)',
             value: 'avglikes_order'
@@ -205,10 +205,10 @@ const Page = (props) => {
             label: 'Engagement(High to Low)',
             value: 'engagement_order'
           },
-          {
-            label: 'Total Likes/Hearts(High to Low)',
-            value: 'engagement_order'
-          },
+          // {
+          //   label: 'Total Likes/Hearts(High to Low)',
+          //   value: 'totallikes_order'
+          // },
           {
             label: 'Avg Likes(High to Low)',
             value: 'avglikes_order'
