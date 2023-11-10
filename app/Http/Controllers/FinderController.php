@@ -1047,7 +1047,181 @@ class FinderController extends Controller
             }
             return $likesinfs;
         }
-
+        if ($tab == "linkedin") {
+            $where = array();
+            if ($params["keywords"] != "") {
+                $where['keywords'] = $params["url"];
+            }
+            if ($params["username"] != "") {
+                $where['username'] = $params["username"];
+            }
+            if ($params["language"] != "All") {
+                $where['language'] = $params["language"];
+            }
+            if ($params["location"] != "All") {
+                $where['Country'] = $params["location"];
+            }
+            if ($params["url"] != "") {
+                $where['external_url'] = $params["url"];
+            }
+            if ($params["verified"] == true) {
+                $where['is_verified'] = "1";
+            }
+            $category = (string) $params["category"];
+            $industry = (string) $params["industry"];
+            $skill = (string) $params["skills"];
+            $infs = DB::table("influencers_linkedin")->where($where)
+                ->when($params["hasPhone"] == true, function ($query) {
+                    return $query->where("phone_country_code", ">", "0");
+                })
+                ->when($category != "All", function ($query) use ($category) {
+                    return $query->where('category_niche', 'LIKE', '%' . $category . '%');
+                })
+                ->when($industry != "All", function ($query) use ($industry) {
+                    return $query->where('industry', 'LIKE', '%' . $industry . '%');
+                })
+                ->when($skill != "All", function ($query) use ($skill) {
+                    return $query->where('skills', 'LIKE', '%' . $skill . '%');
+                })
+                ->when($params["engagement"] == "< 0.5 %", function ($query) {
+                    return $query->where("engagement_rate", "<", "0.5");
+                })
+                ->when($params["engagement"] == "0.5 % - 0.75 %", function ($query) {
+                    return $query->whereBetween("engagement_rate", ["0.5", "0.75"]);
+                })
+                ->when($params["engagement"] == "0.75 % - 1.25 %", function ($query) {
+                    return $query->whereBetween("engagement_rate", ["0.75", "1.25"]);
+                })
+                ->when($params["engagement"] == "> 1.25 %", function ($query) {
+                    return $query->where("engagement_rate", ">", "1.25");
+                })
+                ->when($params["age"] == "Under 18", function ($query) {
+                    return $query->where("age", "<", "18");
+                })
+                ->when($params["age"] == "18 - 24", function ($query) {
+                    return $query->whereBetween("age", ["18", "24"]);
+                })
+                ->when($params["age"] == "25 - 29", function ($query) {
+                    return $query->whereBetween("age", ["25", "29"]);
+                })
+                ->when($params["age"] == "30 - 34", function ($query) {
+                    return $query->whereBetween("age", ["30", "34"]);
+                })
+                ->when($params["age"] == "35 - 39", function ($query) {
+                    return $query->whereBetween("age", ["35", "39"]);
+                })
+                ->when($params["age"] == "40 - 44", function ($query) {
+                    return $query->whereBetween("age", ["40", "44"]);
+                })
+                ->when($params["age"] == "45 - 49", function ($query) {
+                    return $query->whereBetween("age", ["45", "49"]);
+                })
+                ->when($params["age"] == "50 - 54", function ($query) {
+                    return $query->whereBetween("age", ["50", "54"]);
+                })
+                ->when($params["age"] == "55 - 59", function ($query) {
+                    return $query->whereBetween("age", ["55", "59"]);
+                })
+                ->when($params["age"] == "60 - 64", function ($query) {
+                    return $query->whereBetween("age", ["60", "64"]);
+                })
+                ->when($params["age"] == "65 and Over", function ($query) {
+                    return $query->where("age", ">", "64");
+                })
+                ->when($params["gender"] == "Male", function ($query) {
+                    return $query->where("gender", "male");
+                })
+                ->when($params["gender"] == "Female", function ($query) {
+                    return $query->where("gender", "female");
+                })
+                ->when($params["followers_from"] == "1K", function ($query) {
+                    return $query->where("follower_count", ">=", "1000");
+                })
+                ->when($params["followers_from"] == "5K", function ($query) {
+                    return $query->where("follower_count", ">=", "5000");
+                })
+                ->when($params["followers_from"] == "10K", function ($query) {
+                    return $query->where("follower_count", ">=", "10000");
+                })
+                ->when($params["followers_from"] == "25K", function ($query) {
+                    return $query->where("follower_count", ">=", "25000");
+                })
+                ->when($params["followers_from"] == "50K", function ($query) {
+                    return $query->where("follower_count", ">=", "50000");
+                })
+                ->when($params["followers_from"] == "100K", function ($query) {
+                    return $query->where("follower_count", ">=", "100000");
+                })
+                ->when($params["followers_from"] == "250K", function ($query) {
+                    return $query->where("follower_count", ">=", "250000");
+                })
+                ->when($params["followers_from"] == "500K", function ($query) {
+                    return $query->where("follower_count", ">=", "500000");
+                })
+                ->when($params["followers_from"] == "1M", function ($query) {
+                    return $query->where("follower_count", ">=", "1000000");
+                })
+                ->when($params["followers_from"] == "5M", function ($query) {
+                    return $query->where("follower_count", ">=", "5000000");
+                })
+                ->when($params["followers_from"] == "10M +", function ($query) {
+                    return $query->where("follower_count", ">=", "10000000");
+                })
+                ->when($params["followers_to"] == "5K", function ($query) {
+                    return $query->where("follower_count", "<=", "5000");
+                })
+                ->when($params["followers_to"] == "10K", function ($query) {
+                    return $query->where("follower_count", "<=", "10000");
+                })
+                ->when($params["followers_to"] == "25K", function ($query) {
+                    return $query->where("follower_count", "<=", "25000");
+                })
+                ->when($params["followers_to"] == "50K", function ($query) {
+                    return $query->where("follower_count", "<=", "50000");
+                })
+                ->when($params["followers_to"] == "100K", function ($query) {
+                    return $query->where("follower_count", "<=", "100000");
+                })
+                ->when($params["followers_to"] == "250K", function ($query) {
+                    return $query->where("follower_count", "<=", "250000");
+                })
+                ->when($params["followers_to"] == "500K", function ($query) {
+                    return $query->where("follower_count", "<=", "500000");
+                })
+                ->when($params["followers_to"] == "1M", function ($query) {
+                    return $query->where("follower_count", "<=", "1000000");
+                })
+                ->when($params["followers_to"] == "5M", function ($query) {
+                    return $query->where("follower_count", "<=", "5000000");
+                })
+                ->when($params["followers_to"] == "10M +", function ($query) {
+                    return $query->where("follower_count", "<=", "10000000");
+                });
+            $connectionsinfs = array();
+            $infs = $infs->get()->toArray();
+            foreach ($infs as $key1 => $inf) {
+                if ($params["connections"] == "All")
+                    array_push($connectionsinfs, $inf);
+                else if ($params["connections"] == "< 500") {
+                    if ($inf->connections < "500")
+                        array_push($connectionsinfs, $inf);
+                } else if ($params["connections"] == "500 - 750") {
+                    if ($inf->connections >= "500" && $inf->avg_comment < "750")
+                        array_push($connectionsinfs, $inf);
+                } else if ($params["connections"] == "750 - 1000") {
+                    if ($inf->connections >= "750" && $inf->avg_comment < "1000")
+                        array_push($connectionsinfs, $inf);
+                } else if ($params["connections"] == "> 1000") {
+                    if ($inf->connections >= "1000")
+                        array_push($connectionsinfs, $inf);
+                }
+            }
+            foreach ($connectionsinfs as $key => $value) {
+                $count = DB::table("favorites")->where(array("tab" => "linkedin", "email" => $email, "inf_id" => $value->id))->count();
+                $connectionsinfs[$key]->liked = $count;
+            }
+            return $connectionsinfs;
+        }
     }
     public function cvf_convert_object_to_array($data)
     {
