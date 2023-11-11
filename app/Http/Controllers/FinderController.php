@@ -1047,6 +1047,7 @@ class FinderController extends Controller
             }
             return $likesinfs;
         }
+        
         if ($tab == "linkedin") {
             $where = array();
             if ($params["keywords"] != "") {
