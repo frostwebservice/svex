@@ -8,6 +8,7 @@ import billinginfoReducer from '../reducers/billinginfo';
 import searchReducer from '../reducers/search';
 import onsearchReducer from '../reducers/onsearch';
 import runsaveReducer from '../reducers/runsave.jsx';
+import favReducer from '../reducers/fav.jsx';
 export const rootReducer = combineReducers({
   calendar: calendarReducer,
   chat: chatReducer,
@@ -17,5 +18,5 @@ export const rootReducer = combineReducers({
   billinginfo: billinginfoReducer,
   searchs: searchReducer,
   searchresult: onsearchReducer,
-  runsavestate: runsaveReducer,
+  favs: favReducer,
 });

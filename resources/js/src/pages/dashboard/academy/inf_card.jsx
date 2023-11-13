@@ -12,6 +12,9 @@ import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import { useState, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { MailComposer } from '@/sections/dashboard/mail/mail-composer';
+import { useDispatch } from 'react-redux';
+import { getFavs } from '@/actions';
+
 const useComposer = () => {
     const initialState = {
         isFullScreen: false,
@@ -89,7 +92,7 @@ export const InfCard = (props) => {
     const navigate = useNavigate()
     const [isLiked, setIsLiked] = useState(influencer.liked == 1 ? true : false);
     const composer = useComposer();
-
+    const dispatch = useDispatch()
     useEffect(() => {
         setIsLiked(influencer.liked == 1 ? true : false)
     }, [influencer]);
@@ -121,9 +124,10 @@ export const InfCard = (props) => {
             .post("/api/handle_like", value)
             .then((response) => {
                 if (response.data.status === 200) {
-
+                    dispatch(getFavs({ email: JSON.parse(localStorage.getItem('email')) }));
                 }
             });
+
     };
     const show_percentage = (value) => {
 
@@ -170,7 +174,7 @@ export const InfCard = (props) => {
                             <Avatar
                                 component={RouterLink}
                                 href={paths.dashboard.jobs.companies.details}
-                                src={influencer.profile_pic_url_hd ? influencer.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${influener.full_name ? influencer.full_name : ""}&background=2970FF&color=fff&rounded=true`}
+                                src={influencer.profile_pic_url_hd ? influencer.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${influencer.full_name ? influencer.full_name : ""}&background=2970FF&color=fff&rounded=true`}
 
                                 sx={{ width: 74, height: 74 }}
                             // variant="rounded"
@@ -212,7 +216,7 @@ export const InfCard = (props) => {
                                     <Grid item sx={{ color: '#2970FF', fontSize: '11px', fontWeight: 300, pl: 1, pr: 1, pt: 0.5, pb: 0.5 }}>
                                         <div>Reach</div>
                                         <div style={{ fontSize: '16px', fontWeight: 700 }}>
-                                            {formatNumber(influencer.follower_count)}
+                                            {formatNumber(influencer.follower_count ? influencer.follower_count : influencer.subscribers)}
                                         </div>
                                     </Grid>
                                     <Grid item style={{ display: 'flex', alignItems: 'center', margin: '0 auto' }}>
@@ -331,7 +335,7 @@ export const InfCard = (props) => {
                     <Box sx={{ mt: 2 }}>
                         <CardBottom
                             engagement={show_percentage(influencer.engagement_rate)}
-                            followers={formatNumber(influencer.follower_count)}
+                            followers={formatNumber(influencer.follower_count ? influencer.follower_count : influencer.subscribers)}
                             category={influencer.category_niche}
                         />
                     </Box>

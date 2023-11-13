@@ -51,7 +51,6 @@ const SavedSearchs = (props) => {
         dispatch(getSearchs({ email: email }));
 
     }, [dispatch])
-    console.log(searchs)
     return (
         <>
             <Seo title="Dashboard: Saved Searchs" />

@@ -23,87 +23,58 @@ import { useSettings } from '@/hooks/use-settings';
 import "./inf_finder.css"
 import { useCallback, useState } from 'react'
 import { InfCard } from './inf_card';
+import { useEffect } from 'react';
+import { getFavs } from '@/actions';
+import { useDispatch, connect } from "react-redux";
+
 
 const now = new Date();
 
 const sortOptions = [
   {
-    label: 'Last update (newest)',
-    value: 'updatedAt|desc'
+    label: 'Follower Count(High to Low)',
+    value: 'follower_order'
   },
   {
-    label: 'Last update (oldest)',
-    value: 'updatedAt|asc'
+    label: 'Engagement(High to Low)',
+    value: 'engagement_order'
   },
   {
-    label: 'Total orders (highest)',
-    value: 'totalOrders|desc'
+    label: 'Avg Likes(High to Low)',
+    value: 'avglikes_order'
   },
   {
-    label: 'Total orders (lowest)',
-    value: 'totalOrders|asc'
+    label: 'Avg Comments(High to Low)',
+    value: 'avgcomments_order'
   }
 ];
 
-const companies = [
-  {
-    id: 'FR-58F46',
-    averageRating: 4.3,
-    employees: '25-50',
-    isVerified: true,
-    jobs: [
-      {
-        id: '52cf72df2a519538d3d8a18d',
-        currency: '$',
-        isRemote: true,
-        publishedAt: subHours(now, 1).getTime(),
-        salaryMax: '600',
-        salaryMin: '400',
-        title: 'Instagram Influencer for a clothing brand who can market our products for a week',
-        jobType: 'Content creation & Shortouts',
-        paymentType: 'paid'
-      }
-    ],
-    logo: '/assets/avatars/brandlogo.png',
-    name: 'Canada Goose',
-    shortDescription: 'Established since 2010'
-  },
-  {
-    id: 'FR-58F46',
-    averageRating: 4.3,
-    employees: '25-50',
-    isVerified: true,
-    jobs: [
-      {
-        id: '52cf72df2a519538d3d8a18d',
-        currency: '$',
-        isRemote: true,
-        publishedAt: subHours(now, 1).getTime(),
-        salaryMax: '600',
-        salaryMin: '400',
-        title: 'Instagram Influencer for a clothing brand who can market our products for a week',
-        jobType: 'Content creation & Shortouts',
-        paymentType: 'paid'
-      }
-    ],
-    logo: '/assets/avatars/brandlogo.png',
-    name: 'Canada Goose',
-    shortDescription: 'Established since 2010'
-  }
-];
-const Favinfs = () => {
+const Favinfs = (props) => {
+  const { results, runTab } = props;
+  const [infs, setInfs] = useState([])
+  const dispatch = useDispatch()
   const settings = useSettings();
+  const [counter, setCounter] = useState(0)
+  const [sortOrder, setSortOrder] = useState("follower_order")
   usePageView();
+  const email = JSON.parse(localStorage.getItem('email'));
 
-  const handleSortChange = useCallback((event) => {
-    // const [sortBy, sortDir] = event.target.value.split('|');
+  const handleSortChange = (order) => {
+    setSortOrder(order);
+    console.log(infs)
+  };
+  useEffect(() => {
+    dispatch(getFavs({ email: email }));
 
-    // onSortChange?.({
-    //   sortBy,
-    //   sortDir
-    // });
-  }, []);
+  }, [dispatch])
+  useEffect(() => {
+    if (results.favs) {
+      let result = results.favs
+      setInfs(result)
+      setCounter(result.length)
+    }
 
+  }, [results])
   return (
     <>
       <Seo title="Dashboard: Favorite Influencers" />
@@ -132,7 +103,7 @@ const Favinfs = () => {
                 sx={{ mt: 1, fontSize: 28, fontWeight: 700 }}
                 variant="body2"
               >
-                42 Influencers found
+                {counter} Influencers found
               </Typography>
             </Box>
             <Box sx={{
@@ -145,10 +116,10 @@ const Favinfs = () => {
               <TextField
                 label="Sort By"
                 name="sort"
-                onChange={handleSortChange}
+                onChange={(e) => handleSortChange(e.target.value)}
                 select
                 SelectProps={{ native: true }}
-              // value={`${sortBy}|${sortDir}`}
+                value={sortOrder}
               >
                 {sortOptions.map((option) => (
                   <option
@@ -163,10 +134,12 @@ const Favinfs = () => {
           </Stack>
           <Box sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
 
-            {companies.map((company) => (
+            {infs.map((inf) => (
               <InfCard
-                key={company.id}
-                company={company}
+                key={inf.id}
+                influencer={inf.data[0]}
+                currentTab={inf.tab}
+
               />
             ))}
 
@@ -176,6 +149,8 @@ const Favinfs = () => {
     </>
   );
 };
-
-export default Favinfs;
+const mapStateToProps = state => ({
+  results: state.favs,
+})
+export default connect(mapStateToProps)(Favinfs);
 
