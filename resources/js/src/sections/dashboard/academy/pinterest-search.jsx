@@ -107,10 +107,10 @@ const PinterestSearch = (props) => {
         dispatch(doSearch(email, searchParams));
     }
     useEffect(() => {
-        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "pinterest") {
             setSelectedSearch(runTab.runsavestate.id)
             searchs.map((search) => {
-                if (search.id == selectedSearch) {
+                if (search.id == runTab.runsavestate.id) {
                     let temp = {
                         tab: "pinterest",
                         keywords: search.keywords == null ? "" : search.keywords,

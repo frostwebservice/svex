@@ -112,10 +112,10 @@ const YoutubeSearch = (props) => {
         dispatch(doSearch(email, searchParams));
     }
     useEffect(() => {
-        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "youtube") {
             setSelectedSearch(runTab.runsavestate.id)
             searchs.map((search) => {
-                if (search.id == selectedSearch) {
+                if (search.id == runTab.runsavestate.id) {
                     let temp = {
                         tab: "youtube",
                         keywords: search.keywords == null ? "" : search.keywords,

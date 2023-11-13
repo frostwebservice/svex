@@ -106,10 +106,10 @@ const LinkedinSearch = (props) => {
         dispatch(doSearch(email, searchParams));
     }
     useEffect(() => {
-        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "linkedin") {
             setSelectedSearch(runTab.runsavestate.id)
             searchs.map((search) => {
-                if (search.id == selectedSearch) {
+                if (search.id == runTab.runsavestate.id) {
                     let temp = {
                         tab: "linkedin",
                         keywords: search.keywords == null ? "" : search.keywords,

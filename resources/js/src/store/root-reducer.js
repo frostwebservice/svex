@@ -17,6 +17,7 @@ export const rootReducer = combineReducers({
   profile: profileReducer,
   billinginfo: billinginfoReducer,
   searchs: searchReducer,
+  runsavestate: runsaveReducer,
   searchresult: onsearchReducer,
   favs: favReducer,
 });

@@ -191,7 +191,12 @@ export const InfCard = (props) => {
                                 >
                                     {influencer.username}
                                 </Link>
-                                <div className='verified-image'></div>
+                                {((influencer.is_verified && influencer.is_verified == 1) || (influencer.verified && influencer.verified == 1)) ? (
+                                    <div className='verified-image'></div>
+                                ) : ""
+                                }
+
+
                                 <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
                                     {influencer.full_name}
                                 </Typography>

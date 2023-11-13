@@ -329,7 +329,7 @@ export const ytengagementOptions = [
     "All",
     "< 0.5 %",
     "0.5 % - 3 %",
-    "3 % - 5.5 %",
+    "3 % - 5 %",
     "> 5 %"
 ];
 export const twengagementOptions = [
