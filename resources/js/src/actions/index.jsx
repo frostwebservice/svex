@@ -73,3 +73,13 @@ export const runSavedSearch = (tab, searchId) => dispatch => {
         payload: { tab: tab, id: searchId }
     })
 }
+export const getFavs = (email) => dispatch => {
+    let payload = {};
+    axios
+        .post("/api/get_favs", email)
+        .then(res => dispatch({
+            type: 'GET_FAVS',
+            payload: res.data
+        }))
+        .catch(err => console.log(err));
+}
