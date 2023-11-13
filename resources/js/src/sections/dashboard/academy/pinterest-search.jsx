@@ -5,7 +5,7 @@ import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, C
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState, useEffect } from 'react';
 import { doSearch } from '@/actions';
-import { categoryOptions, locationOptions, followersOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions, totallikesOptions } from './data'
+import { categoryOptions, locationOptions, followersFromOptions, followersToOptions, ageOptions, genderOptions, languageOptions, ptengagementOptions, avglikesOptions, avgcommentsOptions, totallikesOptions } from './data'
 import { useDispatch, connect } from "react-redux";
 import { getSearchs } from '@/actions';
 const PinterestSearch = (props) => {
@@ -35,30 +35,50 @@ const PinterestSearch = (props) => {
         if (selectedSearch > 0) {
             searchs.map((search) => {
                 if (search.id == selectedSearch) {
+                    let temp = {
+                        tab: "pinterest",
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "All" : search.total_likes,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    }
                     setSearchParams({
                         ...searchParams,
                         keywords: search.keywords == null ? "" : search.keywords,
-                        category: search.category == null ? "" : search.category,
-                        location: search.location == null ? "" : search.location,
-                        followers_from: search.followers_from == null ? "" : search.followers_from,
-                        followers_to: search.followers_to == null ? "" : search.followers_to,
-                        age: search.age == null ? "" : search.age,
-                        gender: search.gender == null ? "" : search.gender,
-                        language: search.lanugage == null ? "" : search.language,
-                        engagement: search.engagement == null ? "" : search.engagement,
-                        avg_likes: search.avg_likes == null ? "" : search.avg_likes,
-                        avg_comments: search.avg_comments == null ? "" : search.avg_comments,
-                        total_likes: search.total_likes == null ? "" : search.total_likes,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "All" : search.total_likes,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
                         verified: search.verified == 1 ? true : false
 
                     })
+                    dispatch(doSearch(email, temp));
                     return;
                 }
             })
-            dispatch(doSearch(email, searchParams));
+
         }
     }
     const [searchParams, setSearchParams] = useState(
@@ -66,17 +86,17 @@ const PinterestSearch = (props) => {
             email: "",
             tab: "pinterest",
             keywords: "",
-            category: "",
-            location: "",
-            followers_from: "",
-            followers_to: "",
-            age: "",
-            gender: "",
-            language: "",
-            engagement: "",
-            avg_likes: "",
-            total_likes: "",
-            avg_comments: "",
+            category: "All",
+            location: "All",
+            followers_from: "All",
+            followers_to: "All",
+            age: "All",
+            gender: "All",
+            language: "All",
+            engagement: "All",
+            avg_likes: "All",
+            total_likes: "All",
+            avg_comments: "All",
             username: "",
             url: "",
             hasPhone: true,
@@ -87,9 +107,53 @@ const PinterestSearch = (props) => {
         dispatch(doSearch(email, searchParams));
     }
     useEffect(() => {
-        if (runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
             setSelectedSearch(runTab.runsavestate.id)
-            runSearch()
+            searchs.map((search) => {
+                if (search.id == selectedSearch) {
+                    let temp = {
+                        tab: "pinterest",
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "All" : search.total_likes,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    }
+                    setSearchParams({
+                        ...searchParams,
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "All" : search.total_likes,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+
+                    })
+                    dispatch(doSearch(email, temp));
+                    return;
+                }
+            })
         }
     }, [runTab])
     return (
@@ -203,7 +267,7 @@ const PinterestSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {followersOptions.map((option) => (
+                                {followersFromOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -235,7 +299,7 @@ const PinterestSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {followersOptions.map((option) => (
+                                {followersToOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -307,7 +371,7 @@ const PinterestSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {engagementOptions.map((option) => (
+                                {ptengagementOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -366,7 +430,7 @@ const PinterestSearch = (props) => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={4}
+                    {/* <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -389,7 +453,7 @@ const PinterestSearch = (props) => {
                                 ))}
                             </TextField>
                         </Box>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >

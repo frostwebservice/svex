@@ -3,7 +3,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
 import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { categoryOptions, locationOptions, followersOptions, totallikesOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions } from './data'
+import { categoryOptions, locationOptions, followersFromOptions, followersToOptions, totallikesOptions, ageOptions, genderOptions, languageOptions, ttengagementOptions, avglikesOptions, avgcommentsOptions } from './data'
 import { useState, useEffect } from 'react';
 import { doSearch } from '@/actions';
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
@@ -36,30 +36,51 @@ const TiktokSearch = (props) => {
         if (selectedSearch > 0) {
             searchs.map((search) => {
                 if (search.id == selectedSearch) {
+                    let temp = {
+                        tab: "tiktok",
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        hashtags: search.hashtags == null ? "" : search.hashtags,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "All" : search.total_likes,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    }
                     setSearchParams({
                         ...searchParams,
                         keywords: search.keywords == null ? "" : search.keywords,
                         hashtags: search.hashtags == null ? "" : search.hashtags,
-                        category: search.category == null ? "" : search.category,
-                        location: search.location == null ? "" : search.location,
-                        followers_from: search.followers_from == null ? "" : search.followers_from,
-                        followers_to: search.followers_to == null ? "" : search.followers_to,
-                        age: search.age == null ? "" : search.age,
-                        gender: search.gender == null ? "" : search.gender,
-                        language: search.lanugage == null ? "" : search.language,
-                        engagement: search.engagement == null ? "" : search.engagement,
-                        avg_likes: search.avg_likes == null ? "" : search.avg_likes,
-                        avg_comments: search.avg_comments == null ? "" : search.avg_comments,
-                        total_likes: search.total_likes == null ? "" : search.total_likes,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "All" : search.total_likes,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
                         verified: search.verified == 1 ? true : false
                     })
+                    dispatch(doSearch(email, temp));
+
                     return;
                 }
             })
-            dispatch(doSearch(email, searchParams));
         }
     }
     const [searchParams, setSearchParams] = useState(
@@ -68,17 +89,17 @@ const TiktokSearch = (props) => {
             tab: "tiktok",
             keywords: "",
             hashtags: "",
-            category: "",
-            location: "",
-            followers_from: "",
-            followers_to: "",
-            age: "",
-            gender: "",
-            language: "",
-            engagement: "",
-            avg_likes: "",
-            avg_comments: "",
-            total_likes: "",
+            category: "All",
+            location: "All",
+            followers_from: "All",
+            followers_to: "All",
+            age: "All",
+            gender: "All",
+            language: "All",
+            engagement: "All",
+            avg_likes: "All",
+            avg_comments: "All",
+            total_likes: "All",
             username: "",
             url: "",
             hasPhone: true,
@@ -89,9 +110,55 @@ const TiktokSearch = (props) => {
         dispatch(doSearch(email, searchParams));
     }
     useEffect(() => {
-        if (runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
             setSelectedSearch(runTab.runsavestate.id)
-            runSearch()
+            searchs.map((search) => {
+                if (search.id == runTab.runsavestate.id) {
+                    let temp = {
+                        tab: "tiktok",
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        hashtags: search.hashtags == null ? "" : search.hashtags,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "All" : search.total_likes,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    }
+                    setSearchParams({
+                        ...searchParams,
+                        keywords: search.keywords == null ? "All" : search.keywords,
+                        hashtags: search.hashtags == null ? "All" : search.hashtags,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        total_likes: search.total_likes == null ? "All" : search.total_likes,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    })
+                    dispatch(doSearch(email, temp));
+
+                    return;
+                }
+            })
         }
     }, [runTab])
 
@@ -198,7 +265,7 @@ const TiktokSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {followersOptions.map((option) => (
+                                {followersFromOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -230,7 +297,7 @@ const TiktokSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {followersOptions.map((option) => (
+                                {followersToOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -327,7 +394,7 @@ const TiktokSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {engagementOptions.map((option) => (
+                                {ttengagementOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -386,7 +453,7 @@ const TiktokSearch = (props) => {
                             </TextField>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={4}
+                    {/* <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
                         <Box sx={{ flexGrow: 1 }}>
@@ -409,7 +476,7 @@ const TiktokSearch = (props) => {
                                 ))}
                             </TextField>
                         </Box>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} md={2} sm={4}
                         className='custom-grid'
                     >
