@@ -58,7 +58,6 @@ const Page = (props) => {
 
 
   useEffect(() => {
-    console.log("cled")
     if (results.searchresults) {
       let result = results.searchresults
       if (result.tab == "instagram") {
@@ -258,10 +257,15 @@ const Page = (props) => {
 
   }
   useEffect(() => {
-    console.log(runTab)
-    if (runTab.runsavestate && runTab.runsavestate.tab != "") {
-      setCurrentTab(runTab.runsavestate.tab)
+    if (runTab) {
+      if (runTab.runsavestate) {
+        if (runTab.runsavestate.tab != "") {
+          setCurrentTab(runTab.runsavestate.tab)
+        }
+      }
+
     }
+
   }, [runTab])
 
 
@@ -334,11 +338,9 @@ const Page = (props) => {
                 )}
                 {currentTab == 'youtube' && (
                   <YoutubeSearch />
-
                 )}
                 {currentTab == 'tiktok' && (
                   <TiktokSearch />
-
                 )}
                 {currentTab == 'twitter' && (
                   <TwitterSearch />
