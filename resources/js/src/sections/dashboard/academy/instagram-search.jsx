@@ -3,7 +3,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { useState, useEffect } from 'react';
 import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { categoryOptions, locationOptions, followersOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions } from './data'
+import { categoryOptions, locationOptions, followersFromOptions, followersToOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions } from './data'
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
 import { useDispatch, connect } from "react-redux";
 import { getSearchs } from '@/actions';
@@ -34,35 +34,56 @@ const InstagramSearch = (props) => {
     const runSearch = () => {
 
         if (selectedSearch > 0) {
-            console.log("running")
             searchs.map((search) => {
                 if (search.id == selectedSearch) {
+                    let temp = {
+                        tab: "instagram",
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        hashtags: search.hashtags == null ? "" : search.hashtags,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    }
                     setSearchParams({
                         ...searchParams,
                         keywords: search.keywords == null ? "" : search.keywords,
                         hashtags: search.hashtags == null ? "" : search.hashtags,
-                        category: search.category == null ? "" : search.category,
-                        location: search.location == null ? "" : search.location,
-                        followers_from: search.followers_from == null ? "" : search.followers_from,
-                        followers_to: search.followers_to == null ? "" : search.followers_to,
-                        age: search.age == null ? "" : search.age,
-                        gender: search.gender == null ? "" : search.gender,
-                        language: search.lanugage == null ? "" : search.language,
-                        engagement: search.engagement == null ? "" : search.engagement,
-                        avg_likes: search.avg_likes == null ? "" : search.avg_likes,
-                        avg_comments: search.avg_comments == null ? "" : search.avg_comments,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
                         verified: search.verified == 1 ? true : false
                     })
+                    dispatch(doSearch(email, temp));
 
                     return;
                 }
+
             })
-            dispatch(doSearch(email, searchParams));
+
 
         }
+
     }
     const [searchParams, setSearchParams] = useState(
         {
@@ -70,16 +91,16 @@ const InstagramSearch = (props) => {
             tab: "instagram",
             keywords: "",
             hashtags: "",
-            category: "",
-            location: "",
-            followers_from: "",
-            followers_to: "",
-            age: "",
-            gender: "",
-            language: "",
-            engagement: "",
-            avg_likes: "",
-            avg_comments: "",
+            category: "All",
+            location: "All",
+            followers_from: "All",
+            followers_to: "All",
+            age: "All",
+            gender: "All",
+            language: "All",
+            engagement: "All",
+            avg_likes: "All",
+            avg_comments: "All",
             username: "",
             url: "",
             hasPhone: true,
@@ -90,10 +111,55 @@ const InstagramSearch = (props) => {
         dispatch(doSearch(email, searchParams));
     }
     useEffect(() => {
-        if (runTab.runsavestate && runTab.runsavestate.tab == "instagram") {
+        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "instagram") {
 
             setSelectedSearch(runTab.runsavestate.id)
-            runSearch()
+            searchs.map((search) => {
+                if (search.id == runTab.runsavestate.id) {
+                    let temp = {
+                        tab: "instagram",
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        hashtags: search.hashtags == null ? "" : search.hashtags,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    }
+                    setSearchParams({
+                        ...searchParams,
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        hashtags: search.hashtags == null ? "" : search.hashtags,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
+                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    })
+                    dispatch(doSearch(email, temp));
+
+                    return;
+                }
+
+            })
         }
     }, [runTab])
 
@@ -207,7 +273,7 @@ const InstagramSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {followersOptions.map((option) => (
+                                {followersFromOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -239,7 +305,7 @@ const InstagramSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {followersOptions.map((option) => (
+                                {followersToOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}

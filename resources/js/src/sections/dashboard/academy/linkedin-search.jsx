@@ -4,7 +4,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState, useEffect } from 'react';
-import { categoryOptions, locationOptions, followersOptions, ageOptions, genderOptions, languageOptions, engagementOptions, connectionsOptions, industryOptions, skillsOptions } from './data'
+import { categoryOptions, locationOptions, followersFromOptions, followersToOptions, ageOptions, genderOptions, languageOptions, ptengagementOptions, connectionsOptions, industryOptions, skillsOptions } from './data'
 import { doSearch } from '@/actions';
 import { useDispatch, connect } from "react-redux";
 import { getSearchs } from '@/actions';
@@ -35,30 +35,49 @@ const LinkedinSearch = (props) => {
         if (selectedSearch > 0) {
             searchs.map((search) => {
                 if (search.id == selectedSearch) {
+                    let temp = {
+                        tab: "linkedin",
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        connections: search.connections == null ? "All" : search.connections,
+                        industry: search.industry == null ? "All" : search.industry,
+                        skills: search.skills == null ? "All" : search.skills,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    }
                     setSearchParams({
                         ...searchParams,
                         keywords: search.keywords == null ? "" : search.keywords,
-                        category: search.category == null ? "" : search.category,
-                        location: search.location == null ? "" : search.location,
-                        followers_from: search.followers_from == null ? "" : search.followers_from,
-                        followers_to: search.followers_to == null ? "" : search.followers_to,
-                        age: search.age == null ? "" : search.age,
-                        gender: search.gender == null ? "" : search.gender,
-                        language: search.lanugage == null ? "" : search.language,
-                        engagement: search.engagement == null ? "" : search.engagement,
-                        connections: search.connections == null ? "" : search.connections,
-                        industry: search.industry == null ? "" : search.industry,
-                        skills: search.skills == null ? "" : search.skills,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        connections: search.connections == null ? "All" : search.connections,
+                        industry: search.industry == null ? "All" : search.industry,
+                        skills: search.skills == null ? "All" : search.skills,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
                         verified: search.verified == 1 ? true : false
 
                     })
+                    dispatch(doSearch(email, temp));
                     return;
                 }
             })
-            dispatch(doSearch(email, searchParams));
         }
     }
     const [searchParams, setSearchParams] = useState(
@@ -66,17 +85,17 @@ const LinkedinSearch = (props) => {
             email: "",
             tab: "linkedin",
             keywords: "",
-            category: "",
-            location: "",
-            followers_from: "",
-            followers_to: "",
-            age: "",
-            gender: "",
-            language: "",
-            engagement: "",
-            connections: "",
-            industry: "",
-            skills: "",
+            category: "All",
+            location: "All",
+            followers_from: "All",
+            followers_to: "All",
+            age: "All",
+            gender: "All",
+            language: "All",
+            engagement: "All",
+            connections: "All",
+            industry: "All",
+            skills: "All",
             username: "",
             url: "",
             hasPhone: true,
@@ -87,9 +106,53 @@ const LinkedinSearch = (props) => {
         dispatch(doSearch(email, searchParams));
     }
     useEffect(() => {
-        if (runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
+        if (runTab && runTab.runsavestate && runTab.runsavestate.tab == "tiktok") {
             setSelectedSearch(runTab.runsavestate.id)
-            runSearch()
+            searchs.map((search) => {
+                if (search.id == selectedSearch) {
+                    let temp = {
+                        tab: "linkedin",
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        connections: search.connections == null ? "All" : search.connections,
+                        industry: search.industry == null ? "All" : search.industry,
+                        skills: search.skills == null ? "All" : search.skills,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+                    }
+                    setSearchParams({
+                        ...searchParams,
+                        keywords: search.keywords == null ? "" : search.keywords,
+                        category: search.category == null ? "All" : search.category,
+                        location: search.location == null ? "All" : search.location,
+                        followers_from: search.followers_from == null ? "All" : search.followers_from,
+                        followers_to: search.followers_to == null ? "All" : search.followers_to,
+                        age: search.age == null ? "All" : search.age,
+                        gender: search.gender == null ? "All" : search.gender,
+                        language: search.lanugage == null ? "All" : search.language,
+                        engagement: search.engagement == null ? "All" : search.engagement,
+                        connections: search.connections == null ? "All" : search.connections,
+                        industry: search.industry == null ? "All" : search.industry,
+                        skills: search.skills == null ? "All" : search.skills,
+                        username: search.username == null ? "" : search.username,
+                        url: search.url == null ? "" : search.url,
+                        hasPhone: search.hasPhone == 1 ? true : false,
+                        verified: search.verified == 1 ? true : false
+
+                    })
+                    dispatch(doSearch(email, temp));
+                    return;
+                }
+            })
         }
     }, [runTab])
     return (
@@ -203,7 +266,7 @@ const LinkedinSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {followersOptions.map((option) => (
+                                {followersFromOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -235,7 +298,7 @@ const LinkedinSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {followersOptions.map((option) => (
+                                {followersToOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}
@@ -307,7 +370,7 @@ const LinkedinSearch = (props) => {
                                 select
                                 SelectProps={{ native: true }}
                             >
-                                {engagementOptions.map((option) => (
+                                {ptengagementOptions.map((option) => (
                                     <option
                                         key={option}
                                         value={option}

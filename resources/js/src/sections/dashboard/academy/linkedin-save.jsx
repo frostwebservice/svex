@@ -12,17 +12,13 @@ import { useNavigate } from 'react-router-dom';
 const LinkedinSave = (props) => {
     const { search } = props
     const navigate = useNavigate()
-    const [counter, setCounter] = useState(0);
     const dispatch = useDispatch();
     const email = JSON.parse(localStorage.getItem('email'))
     let data = {
         email: email,
         searchParams: search
     }
-    axios
-        .post("/api/search_infs", data)
-        .then(res => setCounter(res.data.length))
-        .catch(err => console.log(err));
+
     const dispatchSavedSearch = () => {
         dispatch(runSavedSearch("linkedin", search.id))
         navigate("/inf-finder")
@@ -285,7 +281,7 @@ const LinkedinSave = (props) => {
                 </Box>
                 <Box>
                     <Typography style={{ fontSize: 18, color: "#2970FF" }}>
-                        {counter}
+                        {search.counter}
                     </Typography>
                 </Box>
             </Stack >
