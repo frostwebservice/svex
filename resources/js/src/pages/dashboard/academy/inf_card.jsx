@@ -191,7 +191,7 @@ export const InfCard = (props) => {
                                 >
                                     {influencer.username}
                                 </Link>
-                                {((influencer.is_verified && influencer.is_verified == 1) || (influencer.verified && influencer.verified == 1)) ? (
+                                {((influencer.verified && influencer.verified == 1) || (influencer.verified && influencer.verified == 1)) ? (
                                     <div className='verified-image'></div>
                                 ) : ""
                                 }

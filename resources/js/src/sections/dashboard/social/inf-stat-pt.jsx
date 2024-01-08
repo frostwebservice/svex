@@ -77,7 +77,7 @@ const InfStatPt = (props) => {
 				else if (count > 3 && count <= 7) { show_spread_color == "normal-letter" ? "" : SetSpreadColor("normal-letter"); return "Average/Good spread" }
 				else if (count > 7 && count <= 10) { show_spread_color == "high-letter" ? "" : SetSpreadColor("high-letter"); return "High spread" }
 				else if (count > 10) { show_spread_color == "veryhigh-letter" ? "" : SetSpreadColor("veryhigh-letter"); return "Very high spread" }
-			case "avg_saves":
+			case "avg_save":
 				if (count <= 1) { show_avg_save_color == "low-letter" ? "" : SetAvgColor("low-letter"); return "Low average saves" }
 				else if (count > 1 && count <= 5) { show_avg_save_color == "normal-letter" ? "" : SetAvgColor("normal-letter"); return "Average/Good average saves" }
 				else if (count > 5 && count <= 10) { show_avg_save_color == "high-letter" ? "" : SetAvgColor("high-letter"); return "High average saves" }
@@ -352,7 +352,7 @@ const InfStatPt = (props) => {
 												sx={{ fontSize: '2.3em', color: '#4466F2', fontWeight: 700, wordWrap: 'break-word' }}
 												variant="body1"
 											>
-												{tmp && tmp.avg_likes ? show_percentage(Number(tmp.avg_likes) / Number(tmp.follower_count) * 100) : '0%'}
+												{tmp && tmp.avg_like ? show_percentage(Number(tmp.avg_like) / Number(tmp.follower_count) * 100) : '0%'}
 
 											</Typography>
 											<Typography
@@ -368,7 +368,7 @@ const InfStatPt = (props) => {
 
 													</Grid>
 													<Grid item xs={10} md={10} sm={10} className='custom-sub-panel' sx={{ fontSize: "1em" }}>
-														{tmp && tmp.avg_likes ? getShowing(Number(tmp.avg_likes) / Number(tmp.follower_count) * 100, "avg_like") : ''}
+														{tmp && tmp.avg_like ? getShowing(Number(tmp.avg_like) / Number(tmp.follower_count) * 100, "avg_like") : ''}
 													</Grid>
 
 												</Grid>
@@ -663,7 +663,7 @@ const InfStatPt = (props) => {
 												sx={{ fontSize: '2.3em', color: '#4466F2', fontWeight: 700, wordWrap: 'break-word' }}
 												variant="body1"
 											>
-												{tmp && tmp.avg_saves ? Number(tmp.avg_saves).toFixed(0) : '0'}
+												{tmp && tmp.avg_save ? Number(tmp.avg_save).toFixed(0) : '0'}
 											</Typography>
 											<Typography
 												color="text.secondary"
@@ -677,7 +677,7 @@ const InfStatPt = (props) => {
 													>
 													</Grid>
 													<Grid item xs={10} md={10} sm={10} className='custom-sub-panel' sx={{ fontSize: "1em" }}>
-														{tmp && tmp.avg_saves ? getShowing(tmp.avg_saves, "avg_saves") : ''}
+														{tmp && tmp.avg_save ? getShowing(tmp.avg_save, "avg_save") : ''}
 													</Grid>
 												</Grid>
 											</Typography>

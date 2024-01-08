@@ -47,10 +47,10 @@ const YoutubeSearch = (props) => {
                         gender: search.gender == null ? "All" : search.gender,
                         language: search.lanugage == null ? "All" : search.language,
                         engagement: search.engagement == null ? "All" : search.engagement,
-                        avg_views: search.avg_views == null ? "All" : search.avg_views,
-                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
-                        avg_dislikes: search.avg_dislikes == null ? "All" : search.avg_dislikes,
-                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        avg_view: search.avg_view == null ? "All" : search.avg_view,
+                        avg_like: search.avg_like == null ? "All" : search.avg_like,
+                        avg_dislike: search.avg_dislike == null ? "All" : search.avg_dislike,
+                        avg_comment: search.avg_comment == null ? "All" : search.avg_comment,
                         total_likes: search.total_likes == null ? "All" : search.total_likes,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
@@ -68,10 +68,10 @@ const YoutubeSearch = (props) => {
                         gender: search.gender == null ? "All" : search.gender,
                         language: search.lanugage == null ? "All" : search.language,
                         engagement: search.engagement == null ? "All" : search.engagement,
-                        avg_views: search.avg_views == null ? "All" : search.avg_views,
-                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
-                        avg_dislikes: search.avg_dislikes == null ? "All" : search.avg_dislikes,
-                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        avg_view: search.avg_view == null ? "All" : search.avg_view,
+                        avg_like: search.avg_like == null ? "All" : search.avg_like,
+                        avg_dislike: search.avg_dislike == null ? "All" : search.avg_dislike,
+                        avg_comment: search.avg_comment == null ? "All" : search.avg_comment,
                         total_likes: search.total_likes == null ? "All" : search.total_likes,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
@@ -97,10 +97,10 @@ const YoutubeSearch = (props) => {
             engagement: "All",
             age: "All",
             gender: "All",
-            avg_views: "All",
-            avg_likes: "All",
-            avg_dislikes: "All",
-            avg_comments: "All",
+            avg_view: "All",
+            avg_like: "All",
+            avg_dislike: "All",
+            avg_comment: "All",
             total_likes: "All",
             username: "",
             url: "",
@@ -127,10 +127,10 @@ const YoutubeSearch = (props) => {
                         gender: search.gender == null ? "All" : search.gender,
                         language: search.lanugage == null ? "All" : search.language,
                         engagement: search.engagement == null ? "All" : search.engagement,
-                        avg_views: search.avg_views == null ? "All" : search.avg_views,
-                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
-                        avg_dislikes: search.avg_dislikes == null ? "All" : search.avg_dislikes,
-                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        avg_view: search.avg_view == null ? "All" : search.avg_view,
+                        avg_like: search.avg_like == null ? "All" : search.avg_like,
+                        avg_dislike: search.avg_dislike == null ? "All" : search.avg_dislike,
+                        avg_comment: search.avg_comment == null ? "All" : search.avg_comment,
                         total_likes: search.total_likes == null ? "All" : search.total_likes,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
@@ -148,10 +148,10 @@ const YoutubeSearch = (props) => {
                         gender: search.gender == null ? "All" : search.gender,
                         language: search.lanugage == null ? "All" : search.language,
                         engagement: search.engagement == null ? "All" : search.engagement,
-                        avg_views: search.avg_views == null ? "All" : search.avg_views,
-                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
-                        avg_dislikes: search.avg_dislikes == null ? "All" : search.avg_dislikes,
-                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        avg_view: search.avg_view == null ? "All" : search.avg_view,
+                        avg_like: search.avg_like == null ? "All" : search.avg_like,
+                        avg_dislike: search.avg_dislike == null ? "All" : search.avg_dislike,
+                        avg_comment: search.avg_comment == null ? "All" : search.avg_comment,
                         total_likes: search.total_likes == null ? "All" : search.total_likes,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
@@ -395,11 +395,11 @@ const YoutubeSearch = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={searchParams.avg_views}
-                                onChange={(e) => setSearchParams({ ...searchParams, avg_views: e.target.value })}
+                                value={searchParams.avg_view}
+                                onChange={(e) => setSearchParams({ ...searchParams, avg_view: e.target.value })}
                                 fullWidth
                                 label="Avg views"
-                                name="avg_views"
+                                name="avg_view"
                                 select
                                 SelectProps={{ native: true }}
                             >
@@ -419,11 +419,11 @@ const YoutubeSearch = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={searchParams.avg_likes}
-                                onChange={(e) => setSearchParams({ ...searchParams, avg_likes: e.target.value })}
+                                value={searchParams.avg_like}
+                                onChange={(e) => setSearchParams({ ...searchParams, avg_like: e.target.value })}
                                 fullWidth
                                 label="Avg likes range"
-                                name="avg_likes"
+                                name="avg_like"
                                 select
                                 SelectProps={{ native: true }}
                             >
@@ -443,11 +443,11 @@ const YoutubeSearch = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={searchParams.avg_dislikes}
-                                onChange={(e) => setSearchParams({ ...searchParams, avg_dislikes: e.target.value })}
+                                value={searchParams.avg_dislike}
+                                onChange={(e) => setSearchParams({ ...searchParams, avg_dislike: e.target.value })}
                                 fullWidth
                                 label="Avg dislikes range"
-                                name="avg_dislikes"
+                                name="avg_dislike"
                                 select
                                 SelectProps={{ native: true }}
                             >
@@ -467,11 +467,11 @@ const YoutubeSearch = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={searchParams.avg_comments}
-                                onChange={(e) => setSearchParams({ ...searchParams, avg_comments: e.target.value })}
+                                value={searchParams.avg_comment}
+                                onChange={(e) => setSearchParams({ ...searchParams, avg_comment: e.target.value })}
                                 fullWidth
                                 label="Avg comments range"
-                                name="avg_comments"
+                                name="avg_comment"
                                 select
                                 SelectProps={{ native: true }}
                             >

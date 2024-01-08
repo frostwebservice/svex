@@ -26,7 +26,6 @@ const InstagramSearch = (props) => {
             .then((response) => {
                 if (response.data.status === 200) {
                     dispatch(getSearchs({ email: email }));
-
                 }
             });
     }
@@ -48,8 +47,8 @@ const InstagramSearch = (props) => {
                         gender: search.gender == null ? "All" : search.gender,
                         language: search.lanugage == null ? "All" : search.language,
                         engagement: search.engagement == null ? "All" : search.engagement,
-                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
-                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        avg_like: search.avg_like == null ? "All" : search.avg_like,
+                        avg_comment: search.avg_comment == null ? "All" : search.avg_comment,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
@@ -67,8 +66,8 @@ const InstagramSearch = (props) => {
                         gender: search.gender == null ? "All" : search.gender,
                         language: search.lanugage == null ? "All" : search.language,
                         engagement: search.engagement == null ? "All" : search.engagement,
-                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
-                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        avg_like: search.avg_like == null ? "All" : search.avg_like,
+                        avg_comment: search.avg_comment == null ? "All" : search.avg_comment,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
@@ -99,8 +98,8 @@ const InstagramSearch = (props) => {
             gender: "All",
             language: "All",
             engagement: "All",
-            avg_likes: "All",
-            avg_comments: "All",
+            avg_like: "All",
+            avg_comment: "All",
             username: "",
             url: "",
             hasPhone: true,
@@ -128,8 +127,8 @@ const InstagramSearch = (props) => {
                         gender: search.gender == null ? "All" : search.gender,
                         language: search.lanugage == null ? "All" : search.language,
                         engagement: search.engagement == null ? "All" : search.engagement,
-                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
-                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        avg_like: search.avg_like == null ? "All" : search.avg_like,
+                        avg_comment: search.avg_comment == null ? "All" : search.avg_comment,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
@@ -147,8 +146,8 @@ const InstagramSearch = (props) => {
                         gender: search.gender == null ? "All" : search.gender,
                         language: search.lanugage == null ? "All" : search.language,
                         engagement: search.engagement == null ? "All" : search.engagement,
-                        avg_likes: search.avg_likes == null ? "All" : search.avg_likes,
-                        avg_comments: search.avg_comments == null ? "All" : search.avg_comments,
+                        avg_like: search.avg_like == null ? "All" : search.avg_like,
+                        avg_comment: search.avg_comment == null ? "All" : search.avg_comment,
                         username: search.username == null ? "" : search.username,
                         url: search.url == null ? "" : search.url,
                         hasPhone: search.hasPhone == 1 ? true : false,
@@ -418,11 +417,11 @@ const InstagramSearch = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={searchParams.avg_likes}
-                                onChange={(e) => setSearchParams({ ...searchParams, avg_likes: e.target.value })}
+                                value={searchParams.avg_like}
+                                onChange={(e) => setSearchParams({ ...searchParams, avg_like: e.target.value })}
                                 fullWidth
                                 label="Avg likes range"
-                                name="avg_likes"
+                                name="avg_like"
                                 select
                                 SelectProps={{ native: true }}
                             >
@@ -442,11 +441,11 @@ const InstagramSearch = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={searchParams.avg_comments}
-                                onChange={(e) => setSearchParams({ ...searchParams, avg_comments: e.target.value })}
+                                value={searchParams.avg_comment}
+                                onChange={(e) => setSearchParams({ ...searchParams, avg_comment: e.target.value })}
                                 fullWidth
                                 label="Avg comments range"
-                                name="avg_comments"
+                                name="avg_comment"
                                 select
                                 SelectProps={{ native: true }}
                             >

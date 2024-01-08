@@ -55,12 +55,25 @@ const Page = (props) => {
   const [selectedSort, setSelectedSort] = useState("");
   const [infcounter, setInfcounter] = useState(0)
   const [infs, setInfs] = useState([])
-
-
+  const [changedFlag,setchangedFlag]=useState(true)
+  useEffect(()=>{
+    if (sortOptions[0]){
+      setSelectedSort(sortOptions[0].value)
+    }
+  },[sortOptions])
+  useEffect(()=>{
+    if(results.searchresults&&results.searchresults.result.length){
+      let result = results.searchresults
+      setInfs(arrange(result.result,selectedSort))
+    }
+    let nextFlag = !changedFlag
+    setchangedFlag(nextFlag)
+  },[selectedSort])
   useEffect(() => {
     if (results.searchresults) {
       let result = results.searchresults
       if (result.tab == "instagram") {
+       
         setSortOptions([
           {
             label: 'Follower Count(High to Low)',
@@ -80,8 +93,9 @@ const Page = (props) => {
           }
 
         ])
-        if (sortOptions[0])
+        if (sortOptions[0]){
           setSelectedSort(sortOptions[0].value)
+        }
       }
       else if (result.tab == "tiktok") {
         setSortOptions([
@@ -199,7 +213,7 @@ const Page = (props) => {
           },
           {
             label: 'Connections Count(High to Low)',
-            value: 'follower_order'
+            value: 'connections_order'
           },
           {
             label: 'Engagement(High to Low)',
@@ -223,11 +237,24 @@ const Page = (props) => {
           setSelectedSort(sortOptions[0].value)
       }
       setInfcounter(result.result.length)
-      setInfs(result.result)
+   
     }
 
   }, [dispatch, results])
-
+  const arrange = (array,option)=>{
+    // return array
+    console.log(array);
+    if(option=="follower_order")
+      return [...array].sort( (a,b) => b.follower_count - a.follower_count );
+    else if(option=="engagement_order")
+      return [...array].sort( (a,b) => b.engagement_rate - a.engagement_rate );
+    else if(option=="avglikes_order")
+      return [...array].sort( (a,b) => b.avg_like - a.avg_like );
+    else if(option=="avgcomments_order")
+      return [...array].sort( (a,b) => b.avg_comment - a.avg_comment );
+    else if(option=="connections_order")
+      return [...array].sort( (a,b) => b.connections - a.connections );
+  }
   usePageView();
 
   const handleTabsChange = useCallback((event, value) => {
@@ -409,7 +436,7 @@ const Page = (props) => {
               </TextField>
             </Box>
           </Stack>
-          <Box sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
+          <Box key={changedFlag} sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
 
             {infs.map((inf) => (
               <InfCard

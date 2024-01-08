@@ -50,3 +50,5 @@ Route::post('save_search', [App\Http\Controllers\FinderController::class, 'saveS
 Route::post('get_searchs', [App\Http\Controllers\FinderController::class, 'getSearchs']);
 Route::post('get_favs', [App\Http\Controllers\FinderController::class, 'getFavs']);
 Route::post('handle_like', [App\Http\Controllers\FinderController::class, 'handleLike']);
+Route::post('getoutreachs', [App\Http\Controllers\FinderController::class, 'getoutreachs']);
+Route::post('newgroup', [App\Http\Controllers\FinderController::class, 'newgroup']);

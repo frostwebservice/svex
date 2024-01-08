@@ -72,7 +72,7 @@ const initialState = {
         username: "",
         full_name: "",
         biography: "",
-        is_verified: 0,
+        verified: 0,
         is_business: 0,
         public_email: "",
         external_url: "",

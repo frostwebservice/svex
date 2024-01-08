@@ -186,10 +186,10 @@ const Page = (props) => {
 
     const showReach = () => {
         let social_type = window.location.pathname.split("/")[3]
-        if (social_type == "instagram" || social_type == "twitter" || social_type == "pinterest") {
+        if (social_type == "instagram" || social_type == "twitter" || social_type == "pinterest" || social_type == "youtube") {
             return socialinfo && socialinfo.follower_count ? formatNumber(socialinfo.follower_count) : '0'
         }
-        else if (social_type == "youtube" || social_type == "tiktok") {
+        else if (social_type == "tiktok") {
             return socialinfo && socialinfo.subscribers ? formatNumber(socialinfo.subscribers) : '0'
         }
     }

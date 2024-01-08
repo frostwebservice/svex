@@ -48,9 +48,9 @@ const InfStatTt = (props) => {
 	const [show_like_view_color, SetLikeViewColor] = useState("normal-letter");
 	const [show_avg_play_video_color, SetAvgPlayVideoColor] = useState("normal-letter");
 	const [show_avg_share_color, SetAvgShareColor] = useState("normal-letter");
-	const [show_avg_views_color, SetAvgViewsColor] = useState("normal-letter");
+	const [show_avg_view_color, SetAvgViewsColor] = useState("normal-letter");
 	const [show_view_subscriber_color, SetViewSubscriberColor] = useState("normal-letter");
-	const [show_avg_comments_color, SetAvgCommentColor] = useState("normal-letter");
+	const [show_avg_comment_color, SetAvgCommentColor] = useState("normal-letter");
 	const getShowing = (count, category) => {
 
 		switch (category) {
@@ -72,11 +72,11 @@ const InfStatTt = (props) => {
 				else if (count > 25000 && count <= 250000) { show_videos_color == "normal-letter" ? "" : SetVideosColor("normal-letter"); return "Mid" }
 				else if (count > 250000 && count <= 1000000) { show_videos_color == "high-letter" ? "" : SetVideosColor("high-letter"); return "Macro" }
 				else if (count > 1000000) { show_videos_color == "veryhigh-letter" ? "" : SetVideosColor("veryhigh-letter"); return "Mega" }
-			case "avg_views":
-				if (count <= 50) { show_avg_views_color == "low-letter" ? "" : SetAvgViewsColor("low-letter"); return "Low average views" }
-				else if (count > 50 && count <= 60) { show_avg_views_color == "normal-letter" ? "" : SetAvgViewsColor("normal-letter"); return "Average/Good average views" }
-				else if (count > 60 && count <= 70) { show_avg_views_color == "high-letter" ? "" : SetAvgViewsColor("high-letter"); return "High average views" }
-				else if (count > 70) { show_avg_views_color == "veryhigh-letter" ? "" : SetAvgViewsColor("veryhigh-letter"); return "Very high average views" }
+			case "avg_view":
+				if (count <= 50) { show_avg_view_color == "low-letter" ? "" : SetAvgViewsColor("low-letter"); return "Low average views" }
+				else if (count > 50 && count <= 60) { show_avg_view_color == "normal-letter" ? "" : SetAvgViewsColor("normal-letter"); return "Average/Good average views" }
+				else if (count > 60 && count <= 70) { show_avg_view_color == "high-letter" ? "" : SetAvgViewsColor("high-letter"); return "High average views" }
+				else if (count > 70) { show_avg_view_color == "veryhigh-letter" ? "" : SetAvgViewsColor("veryhigh-letter"); return "Very high average views" }
 			case "view_subscriber_ratio":
 				if (count <= 6) { show_view_subscriber_color == "low-letter" ? "" : SetViewSubscriberColor("low-letter"); return "Low average views/subscribers ratio" }
 				else if (count > 6 && count <= 35) { show_view_subscriber_color == "normal-letter" ? "" : SetViewSubscriberColor("normal-letter"); return "Average/Good average views/subscribers ratio" }
@@ -128,11 +128,11 @@ const InfStatTt = (props) => {
 				else if (count > 50 && count <= 60) { show_avg_share_color == "normal-letter" ? "" : SetAvgShareColor("normal-letter"); return "Average/Good average shares" }
 				else if (count > 60 && count <= 70) { show_avg_share_color == "high-letter" ? "" : SetAvgShareColor("high-letter"); return "High average shares" }
 				else if (count > 70) { show_avg_share_color == "veryhigh-letter" ? "" : SetAvgShareColor("veryhigh-letter"); return "Very high average shares" }
-			case "avg_comments":
-				if (count <= 0.5) { show_avg_comments_color == "low-letter" ? "" : SetAvgCommentColor("low-letter"); return "Low average comments" }
-				else if (count > 0.5 && count <= 1) { show_avg_comments_color == "normal-letter" ? "" : SetAvgCommentColor("normal-letter"); return "Average/Good average comments" }
-				else if (count > 1 && count <= 3) { show_avg_comments_color == "high-letter" ? "" : SetAvgCommentColor("high-letter"); return "High average comments" }
-				else if (count > 3) { show_avg_comments_color == "veryhigh-letter" ? "" : SetAvgCommentColor("veryhigh-letter"); return "Very high average comments" }
+			case "avg_comment":
+				if (count <= 0.5) { show_avg_comment_color == "low-letter" ? "" : SetAvgCommentColor("low-letter"); return "Low average comments" }
+				else if (count > 0.5 && count <= 1) { show_avg_comment_color == "normal-letter" ? "" : SetAvgCommentColor("normal-letter"); return "Average/Good average comments" }
+				else if (count > 1 && count <= 3) { show_avg_comment_color == "high-letter" ? "" : SetAvgCommentColor("high-letter"); return "High average comments" }
+				else if (count > 3) { show_avg_comment_color == "veryhigh-letter" ? "" : SetAvgCommentColor("veryhigh-letter"); return "Very high average comments" }
 			default:
 				return "";
 		}
@@ -197,7 +197,7 @@ const InfStatTt = (props) => {
 												sx={{ fontSize: '2.3em', color: '#4466F2', fontWeight: 700, wordWrap: 'break-word' }}
 												variant="body1"
 											>
-												{tmp && tmp.subscribers ? formatNumber(tmp.subscribers) : '0'}
+												{tmp && tmp.follower_count ? formatNumber(tmp.follower_count) : '0'}
 											</Typography>
 											<Typography
 												color="text.secondary"
@@ -211,7 +211,7 @@ const InfStatTt = (props) => {
 													>
 													</Grid>
 													<Grid item xs={10} md={10} sm={10} className='custom-sub-panel' sx={{ fontSize: "1em" }}>
-														{tmp && tmp.subscribers ? getShowing(tmp.subscribers, "subscribers") : ''}
+														{tmp && tmp.follower_count ? getShowing(tmp.follower_count, "subscribers") : ''}
 													</Grid>
 
 												</Grid>
@@ -388,7 +388,7 @@ const InfStatTt = (props) => {
 												sx={{ fontSize: '2.3em', color: '#4466F2', fontWeight: 700, wordWrap: 'break-word' }}
 												variant="body1"
 											>
-												{tmp && tmp.avg_like ? show_percentage(Number(tmp.avg_like.replace(/,/g, '')) / Number(tmp.subscribers) * 100) : '0%'}
+												{tmp && tmp.avg_like ? show_percentage(Number(tmp.avg_like.replace(/,/g, '')) / Number(tmp.follower_count) * 100) : '0%'}
 
 											</Typography>
 											<Typography
@@ -404,7 +404,7 @@ const InfStatTt = (props) => {
 
 													</Grid>
 													<Grid item xs={10} md={10} sm={10} className='custom-sub-panel' sx={{ fontSize: "1em" }}>
-														{tmp && tmp.avg_like ? getShowing(Number(tmp.avg_like.replace(/,/g, '')) / Number(tmp.subscribers) * 100, "avg_like") : ''}
+														{tmp && tmp.avg_like ? getShowing(Number(tmp.avg_like.replace(/,/g, '')) / Number(tmp.follower_count) * 100, "avg_like") : ''}
 													</Grid>
 
 												</Grid>
@@ -494,14 +494,14 @@ const InfStatTt = (props) => {
 												sx={{ fontSize: '2.3em', color: '#4466F2', fontWeight: 700, wordWrap: 'break-word' }}
 												variant="body1"
 											>
-												{tmp && tmp.avg_comments ? show_percentage(Number(tmp.avg_comments) / Number(tmp.subscribers) * 100) : '0%'}
+												{tmp && tmp.avg_comment ? show_percentage(Number(tmp.avg_comment) / Number(tmp.follower_count) * 100) : '0%'}
 
 											</Typography>
 											<Typography
 												color="text.secondary"
 												sx={{ mt: 1, fontSize: '14px', color: '#008EAD', fontWeight: 600, wordWrap: 'break-word' }}
 												variant="body1"
-												className={`custom-typo ${show_avg_comments_color}`}
+												className={`custom-typo ${show_avg_comment_color}`}
 											>
 												<Grid container>
 													<Grid item xs={1} md={1} sm={1}
@@ -510,7 +510,7 @@ const InfStatTt = (props) => {
 
 													</Grid>
 													<Grid item xs={10} md={10} sm={10} className='custom-sub-panel' sx={{ fontSize: "1em" }}>
-														{tmp && tmp.avg_comments ? getShowing(Number(tmp.avg_comments) / Number(tmp.subscribers) * 100, "avg_comments") : ''}
+														{tmp && tmp.avg_comment ? getShowing(Number(tmp.avg_comment) / Number(tmp.follower_count) * 100, "avg_comment") : ''}
 													</Grid>
 
 												</Grid>
@@ -600,7 +600,7 @@ const InfStatTt = (props) => {
 												sx={{ fontSize: '2.3em', color: '#4466F2', fontWeight: 700, wordWrap: 'break-word' }}
 												variant="body1"
 											>
-												{tmp && tmp.avg_share ? show_percentage(100 * Number(tmp.avg_share.replace(/,/g, '')) / Number(tmp.subscribers)) : '0%'}
+												{tmp && tmp.avg_share ? show_percentage(100 * Number(tmp.avg_share.replace(/,/g, '')) / Number(tmp.follower_count)) : '0%'}
 											</Typography>
 											<Typography
 												color="text.secondary"
@@ -614,7 +614,7 @@ const InfStatTt = (props) => {
 													>
 													</Grid>
 													<Grid item xs={10} md={10} sm={10} className='custom-sub-panel' sx={{ fontSize: "1em" }}>
-														{tmp && tmp.avg_share ? getShowing(100 * Number(tmp.avg_share.replace(/,/g, '')) / Number(tmp.subscribers), "avg_share") : ''}
+														{tmp && tmp.avg_share ? getShowing(100 * Number(tmp.avg_share.replace(/,/g, '')) / Number(tmp.follower_count), "avg_share") : ''}
 													</Grid>
 												</Grid>
 											</Typography>
@@ -703,7 +703,7 @@ const InfStatTt = (props) => {
 												sx={{ fontSize: '2.3em', color: '#4466F2', fontWeight: 700, wordWrap: 'break-word' }}
 												variant="body1"
 											>
-												{tmp && tmp.avg_play_video ? show_percentage(100 * Number(tmp.avg_play_video.replace(/,/g, '')) / Number(tmp.subscribers)) : '0%'}
+												{tmp && tmp.avg_play_video ? show_percentage(100 * Number(tmp.avg_play_video.replace(/,/g, '')) / Number(tmp.follower_count)) : '0%'}
 											</Typography>
 											<Typography
 												color="text.secondary"
@@ -717,7 +717,7 @@ const InfStatTt = (props) => {
 													>
 													</Grid>
 													<Grid item xs={10} md={10} sm={10} className='custom-sub-panel' sx={{ fontSize: "1em" }}>
-														{tmp && tmp.avg_play_video ? getShowing(100 * Number(tmp.avg_play_video.replace(/,/g, '')) / Number(tmp.subscribers), "avg_play_video") : ''}
+														{tmp && tmp.avg_play_video ? getShowing(100 * Number(tmp.avg_play_video.replace(/,/g, '')) / Number(tmp.follower_count), "avg_play_video") : ''}
 													</Grid>
 												</Grid>
 											</Typography>

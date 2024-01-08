@@ -26,6 +26,43 @@ class FinderController extends Controller
         $infs = $this->callSearch($email, $params);
         return json_encode($infs);
     }
+    public function getoutreachs(Request $request)
+    {
+        $email=$request->email;
+        $results=array();
+        $favs = DB::table("favorites")->where("email",$email)->get()->toArray();
+        foreach($favs as $key=>$value){
+            $favs[$key]->detail = DB::table("influencers_".$value->tab)->where("id",$value->inf_id)->get()->toArray()[0];
+        }
+        array_push($results,$favs);
+        $reachs = DB::table("outreachs")->where("email",$email)->get()->toArray();
+        foreach($reachs as $key=>$value){
+            $group_inf = DB::table("group_infs")->where("group_id",$value->id)->get()->toArray();
+            if(count($group_inf)==0){
+                $value->detail=null;
+                $arr = array();
+                array_push($arr,$value);
+                array_push($results,$arr);
+            }
+            else{
+                foreach($group_inf as $key1=>$value1){
+                    $group_inf[$key1]->detail = DB::table("influencers_".$value1->social_type)->where("id",$value1->inf_id)->get()->toArray()[0]; 
+                    $group_inf[$key1]->group_name = DB::table("outreachs")->where("id",$value1->group_id)->get()->toArray()[0]->group_name;
+                }
+                array_push($results,$group_inf);
+            }
+
+        }
+        print_r(json_encode($results));
+    }
+    public function newgroup(Request $request){
+        $data=array(
+            "group_name"=>$request->group_name,
+            "email"=>$request->email
+        );
+        $res= DB::table("outreachs")->insert($data);
+        return json_encode($res);
+    }
     public function callSearch($email, $params)
     {
         $tab = $params["tab"];
@@ -47,7 +84,7 @@ class FinderController extends Controller
                 $where['external_url'] = $params["url"];
             }
             if ($params["verified"] == true) {
-                $where['is_verified'] = "1";
+                $where['verified'] = "1";
             }
             $hashtag = (string) $params["hashtags"];
             $category = (string) $params["category"];
@@ -178,36 +215,36 @@ class FinderController extends Controller
             $commentsinfs = array();
             $infs = $infs->get()->toArray();
             foreach ($infs as $key1 => $inf) {
-                if ($params["avg_comments"] == "All")
+                if ($params["avg_comment"] == "All")
                     array_push($commentsinfs, $inf);
-                else if ($params["avg_comments"] == "< 0.5 %") {
+                else if ($params["avg_comment"] == "< 0.5 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count < 0.5)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "0.5 % - 1 %") {
+                } else if ($params["avg_comment"] == "0.5 % - 1 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 0.5 && 100 * (double) $inf->avg_comment / (double) $inf->follower_count < 1)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "1 % - 2 %") {
+                } else if ($params["avg_comment"] == "1 % - 2 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 1 && 100 * (double) $inf->avg_comment / (double) $inf->follower_count < 2)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "> 2 %") {
+                } else if ($params["avg_comment"] == "> 2 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 2)
                         array_push($commentsinfs, $inf);
                 }
             }
             $likesinfs = array();
             foreach ($commentsinfs as $key => $cominf) {
-                if ($params["avg_likes"] == "All")
+                if ($params["avg_like"] == "All")
                     array_push($likesinfs, $cominf);
-                if ($params["avg_likes"] == "< 1 %") {
+                if ($params["avg_like"] == "< 1 %") {
                     if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 1)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "1 % - 2 %") {
+                } else if ($params["avg_like"] == "1 % - 2 %") {
                     if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 1 && 100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 2)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "2 % - 3 %") {
+                } else if ($params["avg_like"] == "2 % - 3 %") {
                     if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 2 && 100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 3)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "> 3 %") {
+                } else if ($params["avg_like"] == "> 3 %") {
                     if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 3)
                         array_push($likesinfs, $cominf);
                 }
@@ -367,36 +404,36 @@ class FinderController extends Controller
             $commentsinfs = array();
             $infs = $infs->get()->toArray();
             foreach ($infs as $key1 => $inf) {
-                if ($params["avg_comments"] == "All")
+                if ($params["avg_comment"] == "All")
                     array_push($commentsinfs, $inf);
-                else if ($params["avg_comments"] == "< 0.5 %") {
+                else if ($params["avg_comment"] == "< 0.5 %") {
                     if (
                         100 * (double) 
-                        $inf->avg_comments / (double) $inf->follower_count < 0.5
+                        $inf->avg_comment / (double) $inf->follower_count < 0.5
                     )
                         array_push($commentsinfs, $inf);
                 } else if
-                ($params["avg_comments"] == "0.5 % - 1 %") {
+                ($params["avg_comment"] == "0.5 % - 1 %") {
                     if (
                         100 *
-                        (double) $inf->avg_comments / (double) $inf->follower_count
-                        >= 0.5 && 100 * (double) $inf->avg_comments / (double) 
+                        (double) $inf->avg_comment / (double) $inf->follower_count
+                        >= 0.5 && 100 * (double) $inf->avg_comment / (double) 
                         $inf->follower_count < 1
                     )
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "1 % - 2 %") {
+                } else if ($params["avg_comment"] == "1 % - 2 %") {
                     if
                     (
-                        100 * (double) $inf->avg_comments / (double) 
+                        100 * (double) $inf->avg_comment / (double) 
                         $inf->follower_count >= 1 && 100 * (double) 
-                        $inf->avg_comments / (double) $inf->follower_count < 2
+                        $inf->avg_comment / (double) $inf->follower_count < 2
                     )
                         array_push($commentsinfs, $inf);
                 } else if
-                ($params["avg_comments"] == "> 2 %") {
+                ($params["avg_comment"] == "> 2 %") {
                     if (
                         100 *
-                        (double) $inf->avg_comments / (double) 
+                        (double) $inf->avg_comment / (double) 
                         $inf->follower_count >= 2
                     )
                         array_push($commentsinfs, $inf);
@@ -404,9 +441,9 @@ class FinderController extends Controller
             }
             $likesinfs = array();
             foreach ($commentsinfs as $key => $cominf) {
-                if ($params["avg_likes"] == "All")
+                if ($params["avg_like"] == "All")
                     array_push($likesinfs, $cominf);
-                if ($params["avg_likes"] == "< 1 %") {
+                if ($params["avg_like"] == "< 1 %") {
                     if (
                         100 *
                         (double) $cominf->avg_like / (double) 
@@ -414,7 +451,7 @@ class FinderController extends Controller
                     )
                         array_push($likesinfs, $cominf);
                 } else if
-                ($params["avg_likes"] == "1 % - 2 %") {
+                ($params["avg_like"] == "1 % - 2 %") {
                     if
                     (
                         100 * (double) $cominf->avg_like / (double) 
@@ -424,7 +461,7 @@ class FinderController extends Controller
                     )
                         array_push($likesinfs, $cominf);
                 } else
-                    if ($params["avg_likes"] == "2 % - 3 %") {
+                    if ($params["avg_like"] == "2 % - 3 %") {
                         if (
                             100 * (double) $cominf->avg_like /
                             (double) $cominf->follower_count >= 2 &&
@@ -433,7 +470,7 @@ class FinderController extends Controller
                         )
                             array_push($likesinfs, $cominf);
                     } else if
-                    ($params["avg_likes"] == "> 3 %") {
+                    ($params["avg_like"] == "> 3 %") {
                         if (
                             100 * (double) $cominf->avg_like
                             / (double) $cominf->follower_count
@@ -474,7 +511,7 @@ class FinderController extends Controller
                 $where['external_url'] = $params["url"];
             }
             if ($params["verified"] == true) {
-                $where['is_verified'] = "1";
+                $where['verified'] = "1";
             }
             $category = (string) $params["category"];
             $infs = DB::table("influencers_youtube")->where($where)
@@ -536,138 +573,138 @@ class FinderController extends Controller
                     return $query->where("gender", "female");
                 })
                 ->when($params["subscribers_from"] == "1K", function ($query) {
-                    return $query->where("subscribers", ">=", "1000");
+                    return $query->where("follower_count", ">=", "1000");
                 })
                 ->when($params["subscribers_from"] == "5K", function ($query) {
-                    return $query->where("subscribers", ">=", "5000");
+                    return $query->where("follower_count", ">=", "5000");
                 })
                 ->when($params["subscribers_from"] == "10K", function ($query) {
-                    return $query->where("subscribers", ">=", "10000");
+                    return $query->where("follower_count", ">=", "10000");
                 })
                 ->when($params["subscribers_from"] == "25K", function ($query) {
-                    return $query->where("subscribers", ">=", "25000");
+                    return $query->where("follower_count", ">=", "25000");
                 })
                 ->when($params["subscribers_from"] == "50K", function ($query) {
-                    return $query->where("subscribers", ">=", "50000");
+                    return $query->where("follower_count", ">=", "50000");
                 })
                 ->when($params["subscribers_from"] == "100K", function ($query) {
-                    return $query->where("subscribers", ">=", "100000");
+                    return $query->where("follower_count", ">=", "100000");
                 })
                 ->when($params["subscribers_from"] == "250K", function ($query) {
-                    return $query->where("subscribers", ">=", "250000");
+                    return $query->where("follower_count", ">=", "250000");
                 })
                 ->when($params["subscribers_from"] == "500K", function ($query) {
-                    return $query->where("subscribers", ">=", "500000");
+                    return $query->where("follower_count", ">=", "500000");
                 })
                 ->when($params["subscribers_from"] == "1M", function ($query) {
-                    return $query->where("subscribers", ">=", "1000000");
+                    return $query->where("follower_count", ">=", "1000000");
                 })
                 ->when($params["subscribers_from"] == "5M", function ($query) {
-                    return $query->where("subscribers", ">=", "5000000");
+                    return $query->where("follower_count", ">=", "5000000");
                 })
                 ->when($params["subscribers_from"] == "10M +", function ($query) {
-                    return $query->where("subscribers", ">=", "10000000");
+                    return $query->where("follower_count", ">=", "10000000");
                 })
                 ->when($params["subscribers_to"] == "5K", function ($query) {
-                    return $query->where("subscribers", "<=", "5000");
+                    return $query->where("follower_count", "<=", "5000");
                 })
                 ->when($params["subscribers_to"] == "10K", function ($query) {
-                    return $query->where("subscribers", "<=", "10000");
+                    return $query->where("follower_count", "<=", "10000");
                 })
                 ->when($params["subscribers_to"] == "25K", function ($query) {
-                    return $query->where("subscribers", "<=", "25000");
+                    return $query->where("follower_count", "<=", "25000");
                 })
                 ->when($params["subscribers_to"] == "50K", function ($query) {
-                    return $query->where("subscribers", "<=", "50000");
+                    return $query->where("follower_count", "<=", "50000");
                 })
                 ->when($params["subscribers_to"] == "100K", function ($query) {
-                    return $query->where("subscribers", "<=", "100000");
+                    return $query->where("follower_count", "<=", "100000");
                 })
                 ->when($params["subscribers_to"] == "250K", function ($query) {
-                    return $query->where("subscribers", "<=", "250000");
+                    return $query->where("follower_count", "<=", "250000");
                 })
                 ->when($params["subscribers_to"] == "500K", function ($query) {
-                    return $query->where("subscribers", "<=", "500000");
+                    return $query->where("follower_count", "<=", "500000");
                 })
                 ->when($params["subscribers_to"] == "1M", function ($query) {
-                    return $query->where("subscribers", "<=", "1000000");
+                    return $query->where("follower_count", "<=", "1000000");
                 })
                 ->when($params["subscribers_to"] == "5M", function ($query) {
-                    return $query->where("subscribers", "<=", "5000000");
+                    return $query->where("follower_count", "<=", "5000000");
                 })
                 ->when($params["subscribers_to"] == "10M +", function ($query) {
-                    return $query->where("subscribers", "<=", "10000000");
+                    return $query->where("follower_count", "<=", "10000000");
                 });
             $commentsinfs = array();
             $infs = $infs->get()->toArray();
             foreach ($infs as $key1 => $inf) {
-                if ($params["avg_comments"] == "All")
+                if ($params["avg_comment"] == "All")
                     array_push($commentsinfs, $inf);
-                else if ($params["avg_comments"] == "< 0.5 %") {
-                    if (100 * (double) $inf->avg_comments / (double) $inf->subscribers < 0.5)
+                else if ($params["avg_comment"] == "< 0.5 %") {
+                    if (100 * (double) $inf->avg_comment / (double) $inf->follower_count < 0.5)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "0.5 % - 1 %") {
-                    if (100 * (double) $inf->avg_comments / (double) $inf->subscribers >= 0.5 && 100 * (double) $inf->avg_comments / (double) $inf->subscribers < 1)
+                } else if ($params["avg_comment"] == "0.5 % - 1 %") {
+                    if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 0.5 && 100 * (double) $inf->avg_comment / (double) $inf->follower_count < 1)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "1 % - 2 %") {
-                    if (100 * (double) $inf->avg_comments / (double) $inf->subscribers >= 1 && 100 * (double) $inf->avg_comments / (double) $inf->subscribers < 2)
+                } else if ($params["avg_comment"] == "1 % - 2 %") {
+                    if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 1 && 100 * (double) $inf->avg_comment / (double) $inf->follower_count < 2)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "> 2 %") {
-                    if (100 * (double) $inf->avg_comments / (double) $inf->subscribers >= 2)
+                } else if ($params["avg_comment"] == "> 2 %") {
+                    if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 2)
                         array_push($commentsinfs, $inf);
                 }
             }
             $likesinfs = array();
             foreach ($commentsinfs as $key => $cominf) {
-                if ($params["avg_likes"] == "All")
+                if ($params["avg_like"] == "All")
                     array_push($likesinfs, $cominf);
-                if ($params["avg_likes"] == "< 1 %") {
-                    if (100 * (double) $cominf->avg_likes / (double) $cominf->subscribers < 1)
+                if ($params["avg_like"] == "< 1 %") {
+                    if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 1)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "1 % - 2 %") {
-                    if (100 * (double) $cominf->avg_likes / (double) $cominf->subscribers >= 1 && 100 * (double) $cominf->avg_likes / (double) $cominf->subscribers < 2)
+                } else if ($params["avg_like"] == "1 % - 2 %") {
+                    if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 1 && 100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 2)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "2 % - 3 %") {
-                    if (100 * (double) $cominf->avg_likes / (double) $cominf->subscribers >= 2 && 100 * (double) $cominf->avg_likes / (double) $cominf->subscribers < 3)
+                } else if ($params["avg_like"] == "2 % - 3 %") {
+                    if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 2 && 100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 3)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "> 3 %") {
-                    if (100 * (double) $cominf->avg_likes / (double) $cominf->subscribers >= 3)
+                } else if ($params["avg_like"] == "> 3 %") {
+                    if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 3)
                         array_push($likesinfs, $cominf);
                 }
             }
             $dislikesinfs = array();
             foreach ($likesinfs as $key => $likesinf) {
-                if ($params["avg_dislikes"] == "All")
+                if ($params["avg_dislike"] == "All")
                     array_push($dislikesinfs, $likesinf);
-                if ($params["avg_dislikes"] == "< 1 %") {
-                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers < 1)
+                if ($params["avg_dislike"] == "< 1 %") {
+                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->follower_count < 1)
                         array_push($dislikesinfs, $likesinf);
-                } else if ($params["avg_dislikes"] == "1 % - 2 %") {
-                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers >= 1 && 100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers < 2)
+                } else if ($params["avg_dislike"] == "1 % - 2 %") {
+                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->follower_count >= 1 && 100 * (double) $likesinf->avg_dislike / (double) $likesinf->follower_count < 2)
                         array_push($dislikesinfs, $likesinf);
-                } else if ($params["avg_dislikes"] == "2 % - 3 %") {
-                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers >= 2 && 100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers < 3)
+                } else if ($params["avg_dislike"] == "2 % - 3 %") {
+                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->follower_count >= 2 && 100 * (double) $likesinf->avg_dislike / (double) $likesinf->follower_count < 3)
                         array_push($dislikesinfs, $likesinf);
-                } else if ($params["avg_dislikes"] == "> 3 %") {
-                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->subscribers >= 3)
+                } else if ($params["avg_dislike"] == "> 3 %") {
+                    if (100 * (double) $likesinf->avg_dislike / (double) $likesinf->follower_count >= 3)
                         array_push($dislikesinfs, $likesinf);
                 }
             }
             $avgviews = array();
             foreach ($dislikesinfs as $key => $dislikesinf) {
-                if ($params["avg_views"] == "All")
+                if ($params["avg_view"] == "All")
                     array_push($avgviews, $dislikesinf);
-                if ($params["avg_views"] == "< 50 %") {
-                    if (100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers < 50)
+                if ($params["avg_view"] == "< 50 %") {
+                    if (100 * (double) $dislikesinf->avg_view / (double) $dislikesinf->follower_count < 50)
                         array_push($avgviews, $dislikesinf);
-                } else if ($params["avg_views"] == "50 % - 60 %") {
-                    if (100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers >= 50 && 100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers < 60)
+                } else if ($params["avg_view"] == "50 % - 60 %") {
+                    if (100 * (double) $dislikesinf->avg_view / (double) $dislikesinf->follower_count >= 50 && 100 * (double) $dislikesinf->avg_view / (double) $dislikesinf->follower_count < 60)
                         array_push($avgviews, $dislikesinf);
-                } else if ($params["avg_views"] == "60 % - 70 %") {
-                    if (100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers >= 60 && 100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers < 70)
+                } else if ($params["avg_view"] == "60 % - 70 %") {
+                    if (100 * (double) $dislikesinf->avg_view / (double) $dislikesinf->follower_count >= 60 && 100 * (double) $dislikesinf->avg_view / (double) $dislikesinf->follower_count < 70)
                         array_push($avgviews, $dislikesinf);
-                } else if ($params["avg_views"] == "> 70 %") {
-                    if (100 * (double) $dislikesinf->avg_views / (double) $dislikesinf->subscribers >= 70)
+                } else if ($params["avg_view"] == "> 70 %") {
+                    if (100 * (double) $dislikesinf->avg_view / (double) $dislikesinf->follower_count >= 70)
                         array_push($avgviews, $dislikesinf);
                 }
             }
@@ -695,7 +732,7 @@ class FinderController extends Controller
                 $where['external_url'] = $params["url"];
             }
             if ($params["verified"] == true) {
-                $where['is_verified'] = "1";
+                $where['verified'] = "1";
             }
             $category = (string) $params["category"];
             $infs = DB::table("influencers_twitter")->where($where)
@@ -822,36 +859,36 @@ class FinderController extends Controller
             $commentsinfs = array();
             $infs = $infs->get()->toArray();
             foreach ($infs as $key1 => $inf) {
-                if ($params["avg_comments"] == "All")
+                if ($params["avg_comment"] == "All")
                     array_push($commentsinfs, $inf);
-                else if ($params["avg_comments"] == "< 0.5 %") {
+                else if ($params["avg_comment"] == "< 0.5 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count < 0.5)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "0.5 % - 1 %") {
+                } else if ($params["avg_comment"] == "0.5 % - 1 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 0.5 && 100 * (double) $inf->avg_comment / (double) $inf->follower_count < 1)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "1 % - 2 %") {
+                } else if ($params["avg_comment"] == "1 % - 2 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 1 && 100 * (double) $inf->avg_comment / (double) $inf->follower_count < 2)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "> 2 %") {
+                } else if ($params["avg_comment"] == "> 2 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 2)
                         array_push($commentsinfs, $inf);
                 }
             }
             $likesinfs = array();
             foreach ($commentsinfs as $key => $cominf) {
-                if ($params["avg_likes"] == "All")
+                if ($params["avg_like"] == "All")
                     array_push($likesinfs, $cominf);
-                if ($params["avg_likes"] == "< 1 %") {
+                if ($params["avg_like"] == "< 1 %") {
                     if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 1)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "1 % - 2 %") {
+                } else if ($params["avg_like"] == "1 % - 2 %") {
                     if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 1 && 100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 2)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "2 % - 3 %") {
+                } else if ($params["avg_like"] == "2 % - 3 %") {
                     if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 2 && 100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 3)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "> 3 %") {
+                } else if ($params["avg_like"] == "> 3 %") {
                     if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 3)
                         array_push($likesinfs, $cominf);
                 }
@@ -880,7 +917,7 @@ class FinderController extends Controller
                 $where['external_url'] = $params["url"];
             }
             if ($params["verified"] == true) {
-                $where['is_verified'] = "1";
+                $where['verified'] = "1";
             }
             $category = (string) $params["category"];
             $infs = DB::table("influencers_pinterest")->where($where)
@@ -1007,37 +1044,37 @@ class FinderController extends Controller
             $commentsinfs = array();
             $infs = $infs->get()->toArray();
             foreach ($infs as $key1 => $inf) {
-                if ($params["avg_comments"] == "All")
+                if ($params["avg_comment"] == "All")
                     array_push($commentsinfs, $inf);
-                else if ($params["avg_comments"] == "< 0.5 %") {
+                else if ($params["avg_comment"] == "< 0.5 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count < 0.5)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "0.5 % - 1 %") {
+                } else if ($params["avg_comment"] == "0.5 % - 1 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 0.5 && 100 * (double) $inf->avg_comment / (double) $inf->follower_count < 1)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "1 % - 2 %") {
+                } else if ($params["avg_comment"] == "1 % - 2 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 1 && 100 * (double) $inf->avg_comment / (double) $inf->follower_count < 2)
                         array_push($commentsinfs, $inf);
-                } else if ($params["avg_comments"] == "> 2 %") {
+                } else if ($params["avg_comment"] == "> 2 %") {
                     if (100 * (double) $inf->avg_comment / (double) $inf->follower_count >= 2)
                         array_push($commentsinfs, $inf);
                 }
             }
             $likesinfs = array();
             foreach ($commentsinfs as $key => $cominf) {
-                if ($params["avg_likes"] == "All")
+                if ($params["avg_like"] == "All")
                     array_push($likesinfs, $cominf);
-                if ($params["avg_likes"] == "< 1 %") {
-                    if (100 * (double) $cominf->avg_likes / (double) $cominf->follower_count < 1)
+                if ($params["avg_like"] == "< 1 %") {
+                    if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 1)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "1 % - 2 %") {
-                    if (100 * (double) $cominf->avg_likes / (double) $cominf->follower_count >= 1 && 100 * (double) $cominf->avg_likes / (double) $cominf->follower_count < 2)
+                } else if ($params["avg_like"] == "1 % - 2 %") {
+                    if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 1 && 100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 2)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "2 % - 3 %") {
-                    if (100 * (double) $cominf->avg_likes / (double) $cominf->follower_count >= 2 && 100 * (double) $cominf->avg_likes / (double) $cominf->follower_count < 3)
+                } else if ($params["avg_like"] == "2 % - 3 %") {
+                    if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 2 && 100 * (double) $cominf->avg_like / (double) $cominf->follower_count < 3)
                         array_push($likesinfs, $cominf);
-                } else if ($params["avg_likes"] == "> 3 %") {
-                    if (100 * (double) $cominf->avg_likes / (double) $cominf->follower_count >= 3)
+                } else if ($params["avg_like"] == "> 3 %") {
+                    if (100 * (double) $cominf->avg_like / (double) $cominf->follower_count >= 3)
                         array_push($likesinfs, $cominf);
                 }
             }
@@ -1065,7 +1102,7 @@ class FinderController extends Controller
                 $where['external_url'] = $params["url"];
             }
             if ($params["verified"] == true) {
-                $where['is_verified'] = "1";
+                $where['verified'] = "1";
             }
             $category = (string) $params["category"];
             $industry = (string) $params["industry"];

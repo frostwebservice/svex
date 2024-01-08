@@ -296,7 +296,7 @@ const Page = (props) => {
             + (socialinfo && socialinfo["pinterest"] ? socialinfo["pinterest"].follower_count : 0)
             + (socialinfo && socialinfo["tiktok"] ? socialinfo["tiktok"].follower_count : 0)
             + (socialinfo && socialinfo["twitter"] ? socialinfo["twitter"].follower_count : 0)
-            + (socialinfo && socialinfo["youtube"] ? socialinfo["youtube"].subscribers : 0)
+            + (socialinfo && socialinfo["youtube"] ? socialinfo["youtube"].follower_count : 0)
         return formatNumber(total_number)
 
 
@@ -305,7 +305,7 @@ const Page = (props) => {
         let txt = ""
         txt += "Instagram followers: " + (socialinfo && socialinfo["instagram"] ? formatNumber(socialinfo["instagram"].follower_count) : 0) + '\n'
             + "Tiktok followers: " + (socialinfo && socialinfo["tiktok"] ? formatNumber(socialinfo["tiktok"].follower_count) : 0) + '\n'
-            + "Youtube followers: " + (socialinfo && socialinfo["youtube"] ? formatNumber(socialinfo["youtube"].subscribers) : 0) + '\n'
+            + "Youtube followers: " + (socialinfo && socialinfo["youtube"] ? formatNumber(socialinfo["youtube"].follower_count) : 0) + '\n'
             + "Twitter followers: " + (socialinfo && socialinfo["twitter"] ? formatNumber(socialinfo["twitter"].follower_count) : 0) + '\n'
             + "Pinterest followers: " + (socialinfo && socialinfo["pinterest"] ? formatNumber(socialinfo["pinterest"].follower_count) : 0) + '\n'
         return txt

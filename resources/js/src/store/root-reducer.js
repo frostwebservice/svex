@@ -7,6 +7,7 @@ import profileReducer from '../reducers/profile';
 import billinginfoReducer from '../reducers/billinginfo';
 import searchReducer from '../reducers/search';
 import onsearchReducer from '../reducers/onsearch';
+import outreachReducer from '../reducers/getoutreachs';
 import runsaveReducer from '../reducers/runsave.jsx';
 import favReducer from '../reducers/fav.jsx';
 export const rootReducer = combineReducers({
@@ -20,4 +21,5 @@ export const rootReducer = combineReducers({
   runsavestate: runsaveReducer,
   searchresult: onsearchReducer,
   favs: favReducer,
+  outreachs:outreachReducer
 });

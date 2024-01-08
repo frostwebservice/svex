@@ -58,11 +58,12 @@ const Favinfs = (props) => {
   const [sortOrder, setSortOrder] = useState("follower_order")
   usePageView();
   const email = JSON.parse(localStorage.getItem('email'));
+  const [changedFlag,setchangedFlag]=useState(true)
 
   const handleSortChange = (order) => {
     setSortOrder(order);
-    console.log(infs)
   };
+
   useEffect(() => {
     dispatch(getFavs({ email: email }));
 
@@ -75,6 +76,32 @@ const Favinfs = (props) => {
     }
 
   }, [results])
+  useEffect(() => {
+    if (sortOrder == "follower_order") {
+      let sorted = infs.sort((a, b) => {
+        return b.data[0].follower_count - a.data[0].follower_count
+      })
+      setInfs(sorted)
+    } else if (sortOrder == "engagement_order") {
+      let sorted = infs.sort((a, b) => {
+        return b.data[0].engagement_rate - a.data[0].engagement_rate
+      })
+      setInfs(sorted)
+    } else if (sortOrder == "avglikes_order") {
+      let sorted = infs.sort((a, b) => {
+        return b.data[0].avg_like - a.data[0].avg_like
+      })
+      setInfs(sorted)
+    } else if (sortOrder == "avgcomments_order") {
+      let sorted = infs.sort((a, b) => {
+        return b.data[0].avg_comment - a.data[0].avg_comment
+      })
+      setInfs(sorted)
+    }
+    let nextFlag = !changedFlag
+    setchangedFlag(nextFlag)
+
+  }, [sortOrder])
   return (
     <>
       <Seo title="Dashboard: Favorite Influencers" />
@@ -132,7 +159,7 @@ const Favinfs = (props) => {
               </TextField>
             </Box>
           </Stack>
-          <Box sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
+          <Box key={changedFlag} sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
 
             {infs.map((inf) => (
               <InfCard

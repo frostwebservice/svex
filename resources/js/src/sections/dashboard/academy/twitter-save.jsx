@@ -214,10 +214,10 @@ const TwitterSave = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={search.avg_likes}
+                                value={search.avg_like}
                                 fullWidth
                                 label="Avg likes range"
-                                name="avg_likes"
+                                name="avg_like"
                                 placeholder="Avg likes range"
                                 InputLabelProps={{ shrink: true }}
                                 inputProps={
@@ -231,10 +231,10 @@ const TwitterSave = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={search.avg_comments}
+                                value={search.avg_comment}
                                 fullWidth
                                 label="Avg comments range"
-                                name="avg_comments"
+                                name="avg_comment"
                                 placeholder="Avg comments range"
                                 InputLabelProps={{ shrink: true }}
                                 inputProps={

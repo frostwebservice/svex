@@ -323,32 +323,61 @@ class UserController extends Controller
 				"pinterest" => array(),
 				"basic" => ""
 			);
+			$count=0;
 			$table_name = "influencers_pinterest";
 			$socialinfo = DB::table($table_name)->where('username', $infname)->first();
+			if($socialinfo) 
+			{
+				$count = DB::table("favorites")->where(array("tab" => "pinterest", "email" => $request->email, "inf_id" => $socialinfo->id))->count();
+				$socialinfo->liked = $count;
+			}
 			if ($socialinfo)
 				$total["basic"] = "pinterest";
 			$total["pinterest"] = $socialinfo;
+
 			$table_name = "influencers_twitter";
 			$socialinfo = DB::table($table_name)->where('username', $infname)->first();
+			if($socialinfo) 
+			{
+				$count = DB::table("favorites")->where(array("tab" => "twitter", "email" => $request->email, "inf_id" => $socialinfo->id))->count();
+				$socialinfo->liked = $count;
+			}
 			if ($socialinfo)
 				$total["basic"] = "twitter";
 			$total["twitter"] = $socialinfo;
+
 			$table_name = "influencers_tiktok";
 			$socialinfo = DB::table($table_name)->where('username', $infname)->first();
+			if($socialinfo) 
+			{
+				$count = DB::table("favorites")->where(array("tab" => "tiktok", "email" => $request->email, "inf_id" => $socialinfo->id))->count();
+				$socialinfo->liked = $count;
+			}
 			if ($socialinfo)
 				$total["basic"] = "tiktok";
 			$total["tiktok"] = $socialinfo;
+
 			$table_name = "influencers_youtube";
 			$socialinfo = DB::table($table_name)->where('username', $infname)->first();
+			if($socialinfo) 
+			{
+				$count = DB::table("favorites")->where(array("tab" => "youtube", "email" => $request->email, "inf_id" => $socialinfo->id))->count();
+				$socialinfo->liked = $count;
+			}
 			if ($socialinfo)
 				$total["basic"] = "youtube";
 			$total["youtube"] = $socialinfo;
 			$table_name = "influencers_instagram";
+
 			$socialinfo = DB::table($table_name)->where('username', $infname)->first();
-			$count = DB::table("favorites")->where(array("tab" => "instagram", "email" => $request->email, "inf_id" => $socialinfo->id))->count();
-			$socialinfo->liked = $count;
+			if($socialinfo) 
+			{
+				$count = DB::table("favorites")->where(array("tab" => "instagram", "email" => $request->email, "inf_id" => $socialinfo->id))->count();
+				$socialinfo->liked = $count;
+			}
 			if ($socialinfo)
 				$total["basic"] = "instagram";
+
 			$total["instagram"] = $socialinfo;
 			return json_encode($total);
 		}

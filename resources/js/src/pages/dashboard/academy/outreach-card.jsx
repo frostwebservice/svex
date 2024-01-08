@@ -14,54 +14,8 @@ import { OutreachMemberCard } from './outreach-member-card';
 import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
 const now = new Date();
 
-const companies = [
-    {
-        id: 'FR-58F46',
-        averageRating: 4.3,
-        employees: '25-50',
-        isVerified: true,
-        jobs: [
-            {
-                id: '52cf72df2a519538d3d8a18d',
-                currency: '$',
-                isRemote: true,
-                publishedAt: subHours(now, 1).getTime(),
-                salaryMax: '600',
-                salaryMin: '400',
-                title: 'Instagram Influencer for a clothing brand who can market our products for a week',
-                jobType: 'Content creation & Shortouts',
-                paymentType: 'paid'
-            }
-        ],
-        logo: '/assets/avatars/brandlogo.png',
-        name: 'Canada Goose',
-        shortDescription: 'Established since 2010'
-    },
-    {
-        id: 'FR-58F46',
-        averageRating: 4.3,
-        employees: '25-50',
-        isVerified: true,
-        jobs: [
-            {
-                id: '52cf72df2a519538d3d8a18d',
-                currency: '$',
-                isRemote: true,
-                publishedAt: subHours(now, 1).getTime(),
-                salaryMax: '600',
-                salaryMin: '400',
-                title: 'Instagram Influencer for a clothing brand who can market our products for a week',
-                jobType: 'Content creation & Shortouts',
-                paymentType: 'paid'
-            }
-        ],
-        logo: '/assets/avatars/brandlogo.png',
-        name: 'Canada Goose',
-        shortDescription: 'Established since 2010'
-    }
-];
 export const OutreachCard = (props) => {
-    const { company, ...other } = props;
+    const { company,order, ...other } = props;
     const [isLiked, setIsLiked] = useState(false);
     const handleLike = useCallback(() => {
         setIsLiked(true);
@@ -97,7 +51,7 @@ export const OutreachCard = (props) => {
                                 Group Name
                             </Typography>
                             <Typography sx={{ color: "text.primary" }} style={{ fontSize: 20 }}>
-                                Favorites
+                                {order==0?"Favorites":company[0]['group_name']}
                             </Typography>
                         </div>
                     </Stack>
@@ -161,10 +115,12 @@ export const OutreachCard = (props) => {
                 //     py: 1.5
                 // }}
                 >
-                    <OutreachMemberCard
-                        key={company.id}
+                    {company[0].detail==null?<></>:                    <OutreachMemberCard
+                        key={order}
                         company={company}
-                    />
+                        order={order}
+                    />}
+
                 </Stack>
             </CardContent>
         </Card >

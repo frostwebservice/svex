@@ -13,636 +13,95 @@ import MessageChatSquareIcon from '@untitled-ui/icons-react/build/esm/MessageCha
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import { useState, useCallback } from 'react'
 export const OutreachMemberCard = (props) => {
-    const { company, ...other } = props;
-    const [isLiked, setIsLiked] = useState(false);
-    const handleLike = useCallback(() => {
-        setIsLiked(true);
-        // setLikes((prevLikes) => prevLikes + 1);
-    }, []);
-    const handleUnlike = useCallback(() => {
-        setIsLiked(false);
-        // setLikes((prevLikes) => prevLikes - 1);
-    }, []);
+    const { company,order, ...other } = props;
+    console.log(company)
     return (
         <Card {...other} style={{ marginTop: 30 }}>
             <CardContent>
                 <Grid container>
+                    {company.map((group,index) => (
                     <Grid item className="custom-grid-item" xs={12} md={4} sm={6}>
-                        <Card>
+                    <Card>
+                        <Stack
+                            // alignItems="center"
+                            direction="row"
+                            flexWrap="wrap"
+                            justifyContent="space-between"
+                            sx={{
+                                px: 2,
+                                py: 1.5
+                            }}
+                            style={{position:"relative"}}
+                        >
                             <Stack
-                                // alignItems="center"
-                                direction="row"
-                                flexWrap="wrap"
-                                justifyContent="space-between"
-                                sx={{
-                                    px: 2,
-                                    py: 1.5
+                                // alignItems="flex-start"
+                                spacing={2}
+                                direction={{
+                                    xs: 'column',
+                                    sm: 'row'
                                 }}
                             >
-                                <Stack
-                                    // alignItems="flex-start"
-                                    spacing={2}
-                                    direction={{
-                                        xs: 'column',
-                                        sm: 'row'
-                                    }}
+                                <Avatar
+                                    component={RouterLink}
+                                    href={paths.dashboard.jobs.companies.details}
+                                    src={group.detail.profile_pic_url_hd}
+                                    sx={{ width: 40, height: 40 }}
+                                // variant="rounded"
                                 >
-                                    <Avatar
+                                    {/* {getInitials(company.name)} */}
+                                </Avatar>
+                                
+                                <div>
+                                    <Link
                                         component={RouterLink}
                                         href={paths.dashboard.jobs.companies.details}
-                                        src={company.logo}
-                                        sx={{ width: 40, height: 40 }}
-                                    // variant="rounded"
+                                        variant="h6"
+                                        style={{ fontSize: 14 }}
+                                        sx={{ color: "text.primary" }}
                                     >
-                                        {getInitials(company.name)}
-                                    </Avatar>
-                                    <div>
-                                        <Link
-                                            component={RouterLink}
-                                            href={paths.dashboard.jobs.companies.details}
-                                            variant="h6"
-                                            style={{ fontSize: 14 }}
-                                            sx={{ color: "text.primary" }}
-                                        >
-                                            {company.name}
-                                        </Link>
-                                        {/* <div className='verified-image'></div> */}
-                                        <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                            Social Media Influencer
-                                        </Typography>
-                                        <Typography
-                                            color="text.secondary"
-                                            className='font-inter location-pointer'
-                                            variant="overline"
-                                            style={{ fontSize: 12, marginTop: 17 }}
-                                        >
-                                        </Typography>
-                                        <Typography
-                                            color="primary"
-                                            variant="overline"
-                                            // variant="subtitle2"
-                                            style={{ fontSize: 10 }}
-                                        >
-                                            This is my location
-                                        </Typography>
-                                    </div>
-                                </Stack>
-
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    className="right-panel vertical-dots"
-                                // spacing={2}
-                                >
-                                    <IconButton>
-                                        <SvgIcon>
-                                            <DotsVerticalIcon />
-                                        </SvgIcon>
-                                    </IconButton>
-                                </Stack>
+                                        {group.detail.username}
+                                    </Link>
+                                    {/* <div className='verified-image'></div> */}
+                                    <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
+                                        Social Media Influencer
+                                    </Typography>
+                                    <Typography
+                                        color="text.secondary"
+                                        className='font-inter location-pointer'
+                                        variant="overline"
+                                        style={{ fontSize: 12, marginTop: 17 }}
+                                    >
+                                    </Typography>
+                                    <Typography
+                                        color="primary"
+                                        variant="overline"
+                                        // variant="subtitle2"
+                                        style={{ fontSize: 10 }}
+                                    >
+                                        {group.detail.city+","+group.detail.Country}
+                                    </Typography>
+                                </div>
                             </Stack>
-                        </Card>
 
-                    </Grid>
-                    <Grid item className="custom-grid-item" xs={12} md={4} sm={6}>
-                        <Card>
                             <Stack
-                                // alignItems="center"
+                                alignItems="center"
                                 direction="row"
-                                flexWrap="wrap"
-                                justifyContent="space-between"
-                                sx={{
-                                    px: 2,
-                                    py: 1.5
-                                }}
+                                className="right-panel vertical-dots"
+                                style={{position:"absolute",right:5,top:5}}
+                            // spacing={2}
                             >
-                                <Stack
-                                    // alignItems="flex-start"
-                                    spacing={2}
-                                    direction={{
-                                        xs: 'column',
-                                        sm: 'row'
-                                    }}
-                                >
-                                    <Avatar
-                                        component={RouterLink}
-                                        href={paths.dashboard.jobs.companies.details}
-                                        src={company.logo}
-                                        sx={{ width: 40, height: 40 }}
-                                    // variant="rounded"
-                                    >
-                                        {getInitials(company.name)}
-                                    </Avatar>
-                                    <div>
-                                        <Link
-                                            component={RouterLink}
-                                            href={paths.dashboard.jobs.companies.details}
-                                            variant="h6"
-                                            style={{ fontSize: 14 }}
-                                            sx={{ color: "text.primary" }}
-                                        >
-                                            {company.name}
-                                        </Link>
-                                        {/* <div className='verified-image'></div> */}
-                                        <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                            Social Media Influencer
-                                        </Typography>
-                                        <Typography
-                                            color="text.secondary"
-                                            className='font-inter location-pointer'
-                                            variant="overline"
-                                            style={{ fontSize: 12, marginTop: 17 }}
-                                        >
-                                        </Typography>
-                                        <Typography
-                                            color="primary"
-                                            variant="overline"
-                                            // variant="subtitle2"
-                                            style={{ fontSize: 10 }}
-                                        >
-                                            This is my location
-                                        </Typography>
-                                    </div>
-                                </Stack>
-
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    className="right-panel vertical-dots"
-                                // spacing={2}
-                                >
-                                    <IconButton>
-                                        <SvgIcon>
-                                            <DotsVerticalIcon />
-                                        </SvgIcon>
-                                    </IconButton>
-                                </Stack>
+                                <IconButton>
+                                    <SvgIcon>
+                                        <DotsVerticalIcon />
+                                    </SvgIcon>
+                                </IconButton>
                             </Stack>
-                        </Card>
+                        </Stack>
+                    </Card>
 
-                    </Grid>
-                    <Grid item className="custom-grid-item" xs={12} md={4} sm={6}>
-                        <Card>
-                            <Stack
-                                // alignItems="center"
-                                direction="row"
-                                flexWrap="wrap"
-                                justifyContent="space-between"
-                                sx={{
-                                    px: 2,
-                                    py: 1.5
-                                }}
-                            >
-                                <Stack
-                                    // alignItems="flex-start"
-                                    spacing={2}
-                                    direction={{
-                                        xs: 'column',
-                                        sm: 'row'
-                                    }}
-                                >
-                                    <Avatar
-                                        component={RouterLink}
-                                        href={paths.dashboard.jobs.companies.details}
-                                        src={company.logo}
-                                        sx={{ width: 40, height: 40 }}
-                                    // variant="rounded"
-                                    >
-                                        {getInitials(company.name)}
-                                    </Avatar>
-                                    <div>
-                                        <Link
-                                            component={RouterLink}
-                                            href={paths.dashboard.jobs.companies.details}
-                                            variant="h6"
-                                            style={{ fontSize: 14 }}
-                                            sx={{ color: "text.primary" }}
-                                        >
-                                            {company.name}
-                                        </Link>
-                                        {/* <div className='verified-image'></div> */}
-                                        <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                            Social Media Influencer
-                                        </Typography>
-                                        <Typography
-                                            color="text.secondary"
-                                            className='font-inter location-pointer'
-                                            variant="overline"
-                                            style={{ fontSize: 12, marginTop: 17 }}
-                                        >
-                                        </Typography>
-                                        <Typography
-                                            color="primary"
-                                            variant="overline"
-                                            // variant="subtitle2"
-                                            style={{ fontSize: 10 }}
-                                        >
-                                            This is my location
-                                        </Typography>
-                                    </div>
-                                </Stack>
+                </Grid>
+                    ))}
 
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    className="right-panel vertical-dots"
-                                // spacing={2}
-                                >
-                                    <IconButton>
-                                        <SvgIcon>
-                                            <DotsVerticalIcon />
-                                        </SvgIcon>
-                                    </IconButton>
-                                </Stack>
-                            </Stack>
-                        </Card>
-
-                    </Grid>
-                    <Grid item className="custom-grid-item" xs={12} md={4} sm={6}>
-                        <Card>
-                            <Stack
-                                // alignItems="center"
-                                direction="row"
-                                flexWrap="wrap"
-                                justifyContent="space-between"
-                                sx={{
-                                    px: 2,
-                                    py: 1.5
-                                }}
-                            >
-                                <Stack
-                                    // alignItems="flex-start"
-                                    spacing={2}
-                                    direction={{
-                                        xs: 'column',
-                                        sm: 'row'
-                                    }}
-                                >
-                                    <Avatar
-                                        component={RouterLink}
-                                        href={paths.dashboard.jobs.companies.details}
-                                        src={company.logo}
-                                        sx={{ width: 40, height: 40 }}
-                                    // variant="rounded"
-                                    >
-                                        {getInitials(company.name)}
-                                    </Avatar>
-                                    <div>
-                                        <Link
-                                            component={RouterLink}
-                                            href={paths.dashboard.jobs.companies.details}
-                                            variant="h6"
-                                            style={{ fontSize: 14 }}
-                                            sx={{ color: "text.primary" }}
-                                        >
-                                            {company.name}
-                                        </Link>
-                                        {/* <div className='verified-image'></div> */}
-                                        <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                            Social Media Influencer
-                                        </Typography>
-                                        <Typography
-                                            color="text.secondary"
-                                            className='font-inter location-pointer'
-                                            variant="overline"
-                                            style={{ fontSize: 12, marginTop: 17 }}
-                                        >
-                                        </Typography>
-                                        <Typography
-                                            color="primary"
-                                            variant="overline"
-                                            // variant="subtitle2"
-                                            style={{ fontSize: 10 }}
-                                        >
-                                            This is my location
-                                        </Typography>
-                                    </div>
-                                </Stack>
-
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    className="right-panel vertical-dots"
-                                // spacing={2}
-                                >
-                                    <IconButton>
-                                        <SvgIcon>
-                                            <DotsVerticalIcon />
-                                        </SvgIcon>
-                                    </IconButton>
-                                </Stack>
-                            </Stack>
-                        </Card>
-
-                    </Grid>
-                    <Grid item className="custom-grid-item" xs={12} md={4} sm={6}>
-                        <Card>
-                            <Stack
-                                // alignItems="center"
-                                direction="row"
-                                flexWrap="wrap"
-                                justifyContent="space-between"
-                                sx={{
-                                    px: 2,
-                                    py: 1.5
-                                }}
-                            >
-                                <Stack
-                                    // alignItems="flex-start"
-                                    spacing={2}
-                                    direction={{
-                                        xs: 'column',
-                                        sm: 'row'
-                                    }}
-                                >
-                                    <Avatar
-                                        component={RouterLink}
-                                        href={paths.dashboard.jobs.companies.details}
-                                        src={company.logo}
-                                        sx={{ width: 40, height: 40 }}
-                                    // variant="rounded"
-                                    >
-                                        {getInitials(company.name)}
-                                    </Avatar>
-                                    <div>
-                                        <Link
-                                            component={RouterLink}
-                                            href={paths.dashboard.jobs.companies.details}
-                                            variant="h6"
-                                            style={{ fontSize: 14 }}
-                                            sx={{ color: "text.primary" }}
-                                        >
-                                            {company.name}
-                                        </Link>
-                                        {/* <div className='verified-image'></div> */}
-                                        <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                            Social Media Influencer
-                                        </Typography>
-                                        <Typography
-                                            color="text.secondary"
-                                            className='font-inter location-pointer'
-                                            variant="overline"
-                                            style={{ fontSize: 12, marginTop: 17 }}
-                                        >
-                                        </Typography>
-                                        <Typography
-                                            color="primary"
-                                            variant="overline"
-                                            // variant="subtitle2"
-                                            style={{ fontSize: 10 }}
-                                        >
-                                            This is my location
-                                        </Typography>
-                                    </div>
-                                </Stack>
-
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    className="right-panel vertical-dots"
-                                // spacing={2}
-                                >
-                                    <IconButton>
-                                        <SvgIcon>
-                                            <DotsVerticalIcon />
-                                        </SvgIcon>
-                                    </IconButton>
-                                </Stack>
-                            </Stack>
-                        </Card>
-
-                    </Grid>
-                    <Grid item className="custom-grid-item" xs={12} md={4} sm={6}>
-                        <Card>
-                            <Stack
-                                // alignItems="center"
-                                direction="row"
-                                flexWrap="wrap"
-                                justifyContent="space-between"
-                                sx={{
-                                    px: 2,
-                                    py: 1.5
-                                }}
-                            >
-                                <Stack
-                                    // alignItems="flex-start"
-                                    spacing={2}
-                                    direction={{
-                                        xs: 'column',
-                                        sm: 'row'
-                                    }}
-                                >
-                                    <Avatar
-                                        component={RouterLink}
-                                        href={paths.dashboard.jobs.companies.details}
-                                        src={company.logo}
-                                        sx={{ width: 40, height: 40 }}
-                                    // variant="rounded"
-                                    >
-                                        {getInitials(company.name)}
-                                    </Avatar>
-                                    <div>
-                                        <Link
-                                            component={RouterLink}
-                                            href={paths.dashboard.jobs.companies.details}
-                                            variant="h6"
-                                            style={{ fontSize: 14 }}
-                                            sx={{ color: "text.primary" }}
-                                        >
-                                            {company.name}
-                                        </Link>
-                                        {/* <div className='verified-image'></div> */}
-                                        <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                            Social Media Influencer
-                                        </Typography>
-                                        <Typography
-                                            color="text.secondary"
-                                            className='font-inter location-pointer'
-                                            variant="overline"
-                                            style={{ fontSize: 12, marginTop: 17 }}
-                                        >
-                                        </Typography>
-                                        <Typography
-                                            color="primary"
-                                            variant="overline"
-                                            // variant="subtitle2"
-                                            style={{ fontSize: 10 }}
-                                        >
-                                            This is my location
-                                        </Typography>
-                                    </div>
-                                </Stack>
-
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    className="right-panel vertical-dots"
-                                // spacing={2}
-                                >
-                                    <IconButton>
-                                        <SvgIcon>
-                                            <DotsVerticalIcon />
-                                        </SvgIcon>
-                                    </IconButton>
-                                </Stack>
-                            </Stack>
-                        </Card>
-
-                    </Grid>
-                    <Grid item className="custom-grid-item" xs={12} md={4} sm={6}>
-                        <Card>
-                            <Stack
-                                // alignItems="center"
-                                direction="row"
-                                flexWrap="wrap"
-                                justifyContent="space-between"
-                                sx={{
-                                    px: 2,
-                                    py: 1.5
-                                }}
-                            >
-                                <Stack
-                                    // alignItems="flex-start"
-                                    spacing={2}
-                                    direction={{
-                                        xs: 'column',
-                                        sm: 'row'
-                                    }}
-                                >
-                                    <Avatar
-                                        component={RouterLink}
-                                        href={paths.dashboard.jobs.companies.details}
-                                        src={company.logo}
-                                        sx={{ width: 40, height: 40 }}
-                                    // variant="rounded"
-                                    >
-                                        {getInitials(company.name)}
-                                    </Avatar>
-                                    <div>
-                                        <Link
-                                            component={RouterLink}
-                                            href={paths.dashboard.jobs.companies.details}
-                                            variant="h6"
-                                            style={{ fontSize: 14 }}
-                                            sx={{ color: "text.primary" }}
-                                        >
-                                            {company.name}
-                                        </Link>
-                                        {/* <div className='verified-image'></div> */}
-                                        <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                            Social Media Influencer
-                                        </Typography>
-                                        <Typography
-                                            color="text.secondary"
-                                            className='font-inter location-pointer'
-                                            variant="overline"
-                                            style={{ fontSize: 12, marginTop: 17 }}
-                                        >
-                                        </Typography>
-                                        <Typography
-                                            color="primary"
-                                            variant="overline"
-                                            // variant="subtitle2"
-                                            style={{ fontSize: 10 }}
-                                        >
-                                            This is my location
-                                        </Typography>
-                                    </div>
-                                </Stack>
-
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    className="right-panel vertical-dots"
-                                // spacing={2}
-                                >
-                                    <IconButton>
-                                        <SvgIcon>
-                                            <DotsVerticalIcon />
-                                        </SvgIcon>
-                                    </IconButton>
-                                </Stack>
-                            </Stack>
-                        </Card>
-
-                    </Grid>
-                    <Grid item className="custom-grid-item" xs={12} md={4} sm={6}>
-                        <Card>
-                            <Stack
-                                // alignItems="center"
-                                direction="row"
-                                flexWrap="wrap"
-                                justifyContent="space-between"
-                                sx={{
-                                    px: 2,
-                                    py: 1.5
-                                }}
-                            >
-                                <Stack
-                                    // alignItems="flex-start"
-                                    spacing={2}
-                                    direction={{
-                                        xs: 'column',
-                                        sm: 'row'
-                                    }}
-                                >
-                                    <Avatar
-                                        component={RouterLink}
-                                        href={paths.dashboard.jobs.companies.details}
-                                        src={company.logo}
-                                        sx={{ width: 40, height: 40 }}
-                                    // variant="rounded"
-                                    >
-                                        {getInitials(company.name)}
-                                    </Avatar>
-                                    <div>
-                                        <Link
-                                            component={RouterLink}
-                                            href={paths.dashboard.jobs.companies.details}
-                                            variant="h6"
-                                            style={{ fontSize: 14 }}
-                                            sx={{ color: "text.primary" }}
-                                        >
-                                            {company.name}
-                                        </Link>
-                                        {/* <div className='verified-image'></div> */}
-                                        <Typography sx={{ color: "text.primary" }} style={{ fontSize: 14 }}>
-                                            Social Media Influencer
-                                        </Typography>
-                                        <Typography
-                                            color="text.secondary"
-                                            className='font-inter location-pointer'
-                                            variant="overline"
-                                            style={{ fontSize: 12, marginTop: 17 }}
-                                        >
-                                        </Typography>
-                                        <Typography
-                                            color="primary"
-                                            variant="overline"
-                                            // variant="subtitle2"
-                                            style={{ fontSize: 10 }}
-                                        >
-                                            This is my location
-                                        </Typography>
-                                    </div>
-                                </Stack>
-
-                                <Stack
-                                    alignItems="center"
-                                    direction="row"
-                                    className="right-panel vertical-dots"
-                                // spacing={2}
-                                >
-                                    <IconButton>
-                                        <SvgIcon>
-                                            <DotsVerticalIcon />
-                                        </SvgIcon>
-                                    </IconButton>
-                                </Stack>
-                            </Stack>
-                        </Card>
-
-                    </Grid>
 
                 </Grid>
 

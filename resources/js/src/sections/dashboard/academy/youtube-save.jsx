@@ -213,10 +213,10 @@ const YoutubeSave = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={search.avg_views}
+                                value={search.avg_view}
                                 fullWidth
                                 label="Avg views"
-                                name="avg_views"
+                                name="avg_view"
                                 placeholder="Avg views"
                                 InputLabelProps={{ shrink: true }}
                                 inputProps={
@@ -230,10 +230,10 @@ const YoutubeSave = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={search.avg_likes}
+                                value={search.avg_like}
                                 fullWidth
                                 label="Avg likes range"
-                                name="avg_likes"
+                                name="avg_like"
                                 placeholder="Avg likes range"
                                 InputLabelProps={{ shrink: true }}
                                 inputProps={
@@ -247,10 +247,10 @@ const YoutubeSave = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={search.avg_dislikes}
+                                value={search.avg_dislike}
                                 fullWidth
                                 label="Avg dislikes range"
-                                name="avg_dislikes"
+                                name="avg_dislike"
                                 placeholder="Avg dislikes range"
                                 InputLabelProps={{ shrink: true }}
                                 inputProps={
@@ -264,10 +264,10 @@ const YoutubeSave = (props) => {
                     >
                         <Box sx={{ flexGrow: 1 }}>
                             <TextField
-                                value={search.avg_comments}
+                                value={search.avg_comment}
                                 fullWidth
                                 label="Avg comments range"
-                                name="avg_comments"
+                                name="avg_comment"
                                 placeholder="Avg comments range"
                                 InputLabelProps={{ shrink: true }}
                                 inputProps={

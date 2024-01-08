@@ -66,6 +66,18 @@ export const doSearch = (email, searchParams) => dispatch => {
         }))
         .catch(err => console.log(err));
 }
+export const getOutReachs = (email) => dispatch => {
+    let data = {
+        email: email
+    }
+    axios
+        .post("/api/getoutreachs", data)
+        .then(res => dispatch({
+            type: 'GET_OUTREACHS',
+            payload: { result: res.data}
+        }))
+        .catch(err => console.log(err));
+}
 export const runSavedSearch = (tab, searchId) => dispatch => {
 
     dispatch({
