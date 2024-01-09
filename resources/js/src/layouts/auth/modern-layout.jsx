@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Box, Stack, Typography } from '@mui/material';
-import { Logo } from '@/components/logo';
+import { Logo1 } from '@/components/logo1';
 import { LogoSamsung } from '@/components/logos/logo-samsung';
 import { LogoVisma } from '@/components/logos/logo-visma';
 import { LogoBolt } from '@/components/logos/logo-bolt';
@@ -122,13 +122,13 @@ export const Layout = (props) => {
               <Box
                 sx={{
                   display: 'inline-flex',
-                  height: 24,
-                  width: 24
+                  height: 30,
+                  // width: 24
                 }}
               >
-                <Logo />
+                <Logo1 />
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   color: 'text.primary',
                   fontFamily: '\'Plus Jakarta Sans\', sans-serif',
@@ -142,7 +142,7 @@ export const Layout = (props) => {
                 }}
               >
                 <span>Svex</span>
-              </Box>
+              </Box> */}
             </Stack>
           </Box>
           {children}

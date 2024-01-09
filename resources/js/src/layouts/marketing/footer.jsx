@@ -7,7 +7,7 @@ import {
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
-import { Logo } from '@/components/logo';
+import { Logo1 } from '@/components/logo1';
 import { RouterLink } from '@/components/router-link';
 import { paths } from '@/paths';
 
@@ -103,13 +103,13 @@ export const Footer = (props) => (
               <Box
                 sx={{
                   display: 'inline-flex',
-                  height: 24,
-                  width: 24
+                  height: 30,
+                  // width: 24
                 }}
               >
-                <Logo />
+                <Logo1 />
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   color: 'text.primary',
                   fontFamily: '\'Plus Jakarta Sans\', sans-serif',
@@ -123,7 +123,7 @@ export const Footer = (props) => (
                 }}
               >
                 <span>Svex</span>
-              </Box>
+              </Box> */}
             </Stack>
             <Typography
               color="text.secondary"

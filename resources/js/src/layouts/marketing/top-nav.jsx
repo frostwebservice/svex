@@ -8,7 +8,7 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { Logo } from '@/components/logo';
+import { Logo1 } from '@/components/logo1';
 import { RouterLink } from '@/components/router-link';
 import { usePathname } from '@/hooks/use-pathname';
 import { useWindowScroll } from '@/hooks/use-window-scroll';
@@ -101,13 +101,13 @@ export const TopNav = (props) => {
               <Box
                 sx={{
                   display: 'inline-flex',
-                  height: 24,
-                  width: 24
+                  height: 30,
+                  // width: 400
                 }}
               >
-                <Logo />
+                <Logo1 />
               </Box>
-              {mdUp && (
+              {/* {mdUp && (
                 <Box
                   sx={{
                     color: 'text.primary',
@@ -121,9 +121,9 @@ export const TopNav = (props) => {
                     }
                   }}
                 >
-                  <span>Svex</span>
+                  <span>Svex11</span>
                 </Box>
-              )}
+              )} */}
             </Stack>
             <Chip
               label="v6.1.0"

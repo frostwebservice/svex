@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Box, Container, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Logo } from '@/components/logo';
+import { Logo1 } from '@/components/logo1';
 import { RouterLink } from '@/components/router-link';
 import { paths } from '@/paths';
 
@@ -51,13 +51,13 @@ export const Layout = (props) => {
               <Box
                 sx={{
                   display: 'inline-flex',
-                  height: 24,
-                  width: 24
+                  height: 30,
+                  // width: 24
                 }}
               >
-                <Logo />
+                <Logo1 />
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   color: 'text.primary',
                   fontFamily: '\'Plus Jakarta Sans\', sans-serif',
@@ -71,7 +71,7 @@ export const Layout = (props) => {
                 }}
               >
                 <span>Svex</span>
-              </Box>
+              </Box> */}
             </Stack>
           </Stack>
         </Container>

@@ -5,7 +5,7 @@ export const Logo = () => {
   const fillColor = theme.palette.primary.main;
 
   return (
-    <img src="/favico.ico" />
+    <img src="/favicon-32x32.png" />
     // <svg
     //   fill="none"
     //   height="100%"
