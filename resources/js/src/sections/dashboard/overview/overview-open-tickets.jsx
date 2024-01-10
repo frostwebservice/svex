@@ -51,7 +51,7 @@ export const OverviewOpenTickets = (props) => {
           )}
           size="small"
         >
-          See all tickets
+          Link to see all tickets
         </Button>
       </CardActions>
     </Card>

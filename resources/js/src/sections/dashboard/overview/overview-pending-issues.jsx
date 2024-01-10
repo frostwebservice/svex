@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import { Box, Button, Card, CardActions, Divider, Stack, SvgIcon, Typography } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 export const OverviewPendingIssues = (props) => {
   const { amount } = props;
-
+  const navigate = useNavigate()
   return (
     <Card>
       <Stack
@@ -30,7 +30,7 @@ export const OverviewPendingIssues = (props) => {
             color="text.secondary"
             variant="body2"
           >
-            Pending Issues
+            Unread Messages
           </Typography>
           <Typography
             color="text.primary"
@@ -50,8 +50,9 @@ export const OverviewPendingIssues = (props) => {
             </SvgIcon>
           )}
           size="small"
+          onClick={()=>navigate("/dashboard/mail?label=all")}
         >
-          See all issues
+          View all message
         </Button>
       </CardActions>
     </Card>

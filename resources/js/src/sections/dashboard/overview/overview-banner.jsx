@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import Settings04Icon from '@untitled-ui/icons-react/build/esm/Settings04';
 import { Box, Button, Stack, SvgIcon, Typography } from '@mui/material';
 import { useSettings } from '@/hooks/use-settings';
-
+import { useNavigate } from 'react-router-dom';
+import GraduationHat01Icon from '@/icons/untitled-ui/duocolor/graduation-hat-01';
 export const OverviewBanner = (props) => {
   const { handleDrawerOpen } = useSettings();
-
+  const navigate = useNavigate()
   return (
     <Stack
       alignItems="center"
@@ -56,15 +57,15 @@ export const OverviewBanner = (props) => {
         <Box sx={{ mt: 2 }}>
           <Button
             color="primary"
-            onClick={handleDrawerOpen}
+            onClick={()=>navigate("/inf-finder")}
             startIcon={(
               <SvgIcon>
-                <Settings04Icon />
+                <GraduationHat01Icon />
               </SvgIcon>
             )}
             variant="contained"
           >
-            Open App Settings
+            Influencer Finder Tool
           </Button>
         </Box>
       </Box>

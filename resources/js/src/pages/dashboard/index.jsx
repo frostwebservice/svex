@@ -61,7 +61,7 @@ const Page = () => {
                     Overview
                   </Typography>
                 </div>
-                <div>
+                {/* <div>
                   <Stack
                     direction="row"
                     spacing={4}
@@ -77,7 +77,7 @@ const Page = () => {
                       New Dashboard
                     </Button>
                   </Stack>
-                </div>
+                </div> */}
               </Stack>
             </Grid>
             <Grid
@@ -128,71 +128,45 @@ const Page = () => {
             </Grid>
             <Grid
               xs={12}
-              md={7}
+              md={8}
             >
               <OverviewSubscriptionUsage
-                chartSeries={[
-                  {
-                    name: 'This year',
-                    data: [40, 37, 41, 42, 45, 42, 36, 45, 40, 44, 38, 41]
-                  },
-                  {
-                    name: 'Last year',
-                    data: [26, 22, 19, 22, 24, 28, 23, 25, 24, 21, 17, 19]
-                  }
-                ]}
               />
             </Grid>
             <Grid
               xs={12}
-              md={5}
+              md={4}
             >
               <OverviewInbox
                 messages={[
                   {
                     id: 'b91cbe81ee3efefba6b915a7',
-                    content: 'Hello, we spoke earlier on the phone',
-                    createdAt: subMinutes(now, 2),
+                    content: 'Check out our newly developed IG Hashtag Generator under Tools!',
+                    createdAt: '2/1/2021',
                     senderAvatar: '/assets/avatars/avatar-alcides-antonio.png',
-                    senderName: 'Alcides Antonio',
+                    senderName: 'Hashtag Generator',
                     senderOnline: true
                   },
                   {
                     id: 'de0eb1ac517aae1aa57c0b7e',
-                    content: 'Is the job still available?',
-                    createdAt: subMinutes(now, 56),
+                    content: 'Our major server upgrade is finally complete! We hope you enjoy it!',
+                    createdAt: '1/19/2020',
                     senderAvatar: '/assets/avatars/avatar-marcus-finn.png',
-                    senderName: 'Marcus Finn',
+                    senderName: 'UI Upgrade',
                     senderOnline: false
                   },
                   {
                     id: '38e2b0942c90d0ad724e6f40',
-                    content: 'What is a screening task? I’d like to',
-                    createdAt: subHours(subMinutes(now, 23), 3),
+                    content: 'Our new technical support system is now live click here',
+                    createdAt: '10/2/2020',
                     senderAvatar: '/assets/avatars/avatar-carson-darrin.png',
-                    senderName: 'Carson Darrin',
+                    senderName: 'New Support System',
                     senderOnline: true
-                  },
-                  {
-                    id: '467505f3356f25a69f4c4890',
-                    content: 'Still waiting for feedback',
-                    createdAt: subHours(subMinutes(now, 6), 8),
-                    senderAvatar: '/assets/avatars/avatar-fran-perez.png',
-                    senderName: 'Fran Perez',
-                    senderOnline: true
-                  },
-                  {
-                    id: '7e6af808e801a8361ce4cf8b',
-                    content: 'Need more information about campaigns',
-                    createdAt: subHours(subMinutes(now, 18), 10),
-                    senderAvatar: '/assets/avatars/avatar-jie-yan-song.png',
-                    senderName: 'Jie Yan Song',
-                    senderOnline: false
                   }
                 ]}
               />
             </Grid>
-            <Grid
+            {/* <Grid
               xs={12}
               md={7}
             >
@@ -269,11 +243,11 @@ const Page = () => {
                   }
                 ]}
               />
-            </Grid>
-            <Grid xs={6}>
+            </Grid> */}
+            <Grid xs={12} md={6}>
               <OverviewJobs />
             </Grid>
-            <Grid xs={6}>
+            <Grid xs={12} md={6}>
               <OverviewHelp />
             </Grid>
           </Grid>

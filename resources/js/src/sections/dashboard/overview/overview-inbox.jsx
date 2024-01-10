@@ -13,37 +13,34 @@ import {
   IconButton,
   List,
   ListItem,
+  Stack,
   ListItemAvatar,
   ListItemText,
   SvgIcon,
   Typography
 } from '@mui/material';
 import { customLocale } from '@/utils/date-locale';
-
+import Pagination from '@mui/material/Pagination';
 export const OverviewInbox = (props) => {
   const { messages } = props;
 
   return (
     <Card>
       <CardHeader
-        title="Inbox"
+        title="Announcements"
         action={(
-          <IconButton color="inherit">
-            <SvgIcon fontSize="small">
-              <RefreshCcw01Icon />
-            </SvgIcon>
-          </IconButton>
+          <Stack spacing={2}>
+            <Pagination count={0} variant="outlined" shape='rounded'/>
+        </Stack>
         )}
       />
       <List disablePadding>
         {messages.map((message) => {
-          const ago = formatDistanceStrict(message.createdAt, new Date(), {
-            addSuffix: true,
-            locale: customLocale
-          });
+          const ago = message.createdAt
 
           return (
             <ListItem
+            alignItems="flex-start"
               key={message.id}
               sx={{
                 '&:hover': {
@@ -53,22 +50,7 @@ export const OverviewInbox = (props) => {
               }}
             >
               <ListItemAvatar>
-                {message.senderOnline
-                  ? (
-                    <Badge
-                      anchorOrigin={{
-                        horizontal: 'right',
-                        vertical: 'bottom'
-                      }}
-                      color="success"
-                      variant="dot"
-                    >
-                      <Avatar src={message.senderAvatar} />
-                    </Badge>
-                  )
-                  : (
-                    <Avatar src={message.senderAvatar} />
-                  )}
+                <Avatar src={message.senderAvatar} />
               </ListItemAvatar>
               <ListItemText
                 disableTypography
@@ -85,32 +67,35 @@ export const OverviewInbox = (props) => {
                   </Typography>
                 )}
                 secondary={(
+                  <>
                   <Typography
                     color="text.secondary"
                     sx={{
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
+                      whiteSpace: 'wrap'
                     }}
                     variant="body2"
                   >
                     {message.content}
                   </Typography>
+                  <Typography
+                    color="text.secondary"
+                    sx={{ whiteSpace: 'wrap',mt:2 }}
+                    variant="subtitle2"
+                  >
+                    {ago}
+                  </Typography>
+                </>
                 )}
                 sx={{ pr: 2 }}
               />
-              <Typography
-                color="text.secondary"
-                sx={{ whiteSpace: 'nowrap' }}
-                variant="caption"
-              >
-                {ago}
-              </Typography>
+
             </ListItem>
           );
         })}
       </List>
-      <Divider />
+      {/* <Divider />
       <CardActions>
         <Button
           color="inherit"
@@ -123,7 +108,7 @@ export const OverviewInbox = (props) => {
         >
           Go to chat
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 };

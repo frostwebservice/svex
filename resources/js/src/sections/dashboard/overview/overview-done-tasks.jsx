@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import { Box, Button, Card, CardActions, Divider, Stack, SvgIcon, Typography } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 export const OverviewDoneTasks = (props) => {
   const { amount } = props;
-
+  const navigate = useNavigate()
   return (
     <Card>
       <Stack
@@ -30,13 +30,13 @@ export const OverviewDoneTasks = (props) => {
             color="text.secondary"
             variant="body2"
           >
-            Done Tasks
+            Fresh Influencers
           </Typography>
           <Typography
             color="text.primary"
             variant="h4"
           >
-            {amount}sdfsadfsdfsdfsdfsdfsdf
+            {amount}
           </Typography>
         </Box>
       </Stack>
@@ -50,8 +50,9 @@ export const OverviewDoneTasks = (props) => {
             </SvgIcon>
           )}
           size="small"
+          onClick={()=>navigate("/inf-finder")}
         >
-          See all tasks
+          Search All Influencers
         </Button>
       </CardActions>
     </Card>

@@ -1,124 +1,60 @@
 import PropTypes from 'prop-types';
-import { Box, Card, CardHeader, Tab, Tabs } from '@mui/material';
+import { Box, Card, CardHeader, Tab, Tabs,  Unstable_Grid2 as Grid ,CardMedia} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Chart } from '@/components/chart';
-
-const useChartOptions = () => {
-  const theme = useTheme();
-
-  return {
-    chart: {
-      background: 'transparent',
-      stacked: true,
-      toolbar: {
-        show: false
-      }
-    },
-    colors: [
-      theme.palette.primary.main,
-      theme.palette.mode === 'dark'
-        ? theme.palette.primary.darkest
-        : theme.palette.primary.light
-    ],
-    dataLabels: {
-      enabled: false
-    },
-    legend: {
-      labels: {
-        colors: theme.palette.text.secondary
-      },
-      onItemClick: {
-        toggleDataSeries: false
-      },
-      onItemHover: {
-        highlightDataSeries: false
-      }
-    },
-    grid: {
-      borderColor: theme.palette.divider,
-      strokeDashArray: 2
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 8,
-        columnWidth: '32px'
-      }
-    },
-    theme: {
-      mode: theme.palette.mode
-    },
-    tooltip: {
-      y: {
-        formatter: (value) => `${value}k events`
-      }
-    },
-    xaxis: {
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
-      ],
-      labels: {
-        style: {
-          colors: theme.palette.text.secondary
-        }
-      }
-    },
-    yaxis: {
-      labels: {
-        show: false
-      }
-    }
-  };
-};
-
+import "./custom.css";
 export const OverviewSubscriptionUsage = (props) => {
-  const { chartSeries } = props;
-  const chartOptions = useChartOptions();
+  const { } = props;
 
   return (
     <Card>
       <CardHeader
-        subheader="Based on the selected period"
-        title="Subscription Usage"
-        action={<Tabs value="year">
-          <Tab
-            label="Year"
-            value="year"
-          />
-          <Tab
-            label="Month"
-            value="month"
-          />
-          <Tab
-            label="Week"
-            value="week"
-          />
-        </Tabs>}
+        title="Latest Blog Posts"
+
       />
-      <Box sx={{ height: 336 }}>
-        <Chart
-          height={300}
-          options={chartOptions}
-          series={chartSeries}
-          type="bar"
-        />
-      </Box>
+      <Grid
+        container
+        disableEqualOverflow
+        spacing={{
+          xs: 3,
+          lg: 4
+        }}
+        style={{padding:"0 23px"}}
+      >
+        <Grid
+          xs={12}
+          md={4}
+        >
+          <Card className='square-card'>
+            <div style={{ position: "relative" }}>
+              <CardMedia style={{ height: "350px" }}   component="img" image={"/assets/gallery/gallery-1.jpg"} title="Pancakes" alt="Pancakes"/> 
+              <div style={{position: "absolute", color: "white",bottom: 15,width:'85%',left: "50%",transform: "translateX(-50%)",}}> Top 3 Influencer Marketing Trends to Watch Out for in 2024</div>
+            </div>
+          </Card>
+        </Grid>
+        <Grid
+          xs={12}
+          md={4}
+        >
+          <Card className='square-card'>
+            <div style={{ position: "relative" }}>
+              <CardMedia style={{ height: "350px"  }}   component="img" image={"/assets/gallery/gallery-2.jpg"} title="Pancakes" alt="Pancakes"/> 
+              <div style={{position: "absolute", color: "white",bottom: 15,width:'85%',left: "50%",transform: "translateX(-50%)",}}> 11 Influencer Marketing Trends and Tips for Success in 2024</div>
+            </div>
+          </Card>
+        </Grid>
+        <Grid
+          xs={12}
+          md={4}
+        >
+          <Card className='square-card'>
+            <div style={{ position: "relative" }}>
+              <CardMedia style={{ height: "350px"  }}   component="img" image={"/assets/gallery/gallery-3.jpg"} title="Pancakes" alt="Pancakes"/> 
+              <div style={{position: "absolute", color: "white",bottom: 15,width:'85%',left: "50%",transform: "translateX(-50%)",}}> How to Find Instagram Influencers in Your Niche</div>
+            </div>
+          </Card>
+        </Grid>
+      </Grid>
     </Card>
   );
 };

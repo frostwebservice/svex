@@ -1,36 +1,41 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon, Typography, TextField } from '@mui/material';
+import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon, Typography, TextField,Unstable_Grid2 as Grid } from '@mui/material';
 // import Radio from '@mui/material/Radio';
 // import RadioGroup from '@mui/material/RadioGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const currencies = [
-  {
-    value: 'Any',
-    label: 'Any',
-  },
-  {
-    value: 'Freelancer',
-    label: 'Freelancer',
-  },
-  {
-    value: 'Linkedin',
-    label: 'Linkedin',
-  },
-  {
-    value: 'Upwork',
-    label: 'Upwork',
-  },
-  {
-    value: 'Pinterest',
-    label: 'Pinterest',
-  },
-
+const currencies =  [
+  { label: 'Acne and Skin Care', value: 'Acne and Skin Care' },
+  { label: 'Alcohol', value: 'Alcohol' },
+  { label: 'Art', value: 'Art' },
+  { label: 'Baby and Maternity', value: 'Baby and Maternity' },
+  { label: 'Blockchain and Cryptocurrency', value: 'Blockchain and Cryptocurrency' },
+  { label: 'Books and Fiction', value: 'Books and Fiction' },
+  { label: 'Business and Career', value: 'Business and Career' },
+  { label: 'Cameras, Photography and Videography', value: 'Cameras, Photography and Videography' },
+  { label: 'Cars and Vehicles', value: 'Cars and Vehicles' },
+  { label: 'Cooking and Recipes', value: 'Cooking and Recipes' },
+  { label: 'Crafts and DIY', value: 'Crafts and DIY' },
+  { label: 'Diet and Weight Loss', value: 'Diet and Weight Loss' },
+  { label: 'Digital Marketing and Making Money Online', value: 'Digital Marketing and Making Money Online' },
+  { label: 'Exercise and Fitness', value: 'Exercise and Fitness' },
+  { label: 'Farming', value: 'Farming' },
+  { label: 'Gardening and Lawn Care', value: 'Gardening and Lawn Care' },
+  { label: 'Health', value: 'Health' },
+  { label: 'Makeup and Beauty', value: 'Makeup and Beauty' },
+  { label: 'Martial Arts', value: 'Martial Arts' },
+  { label: 'Music and Instruments', value: 'Music and Instruments' },
+  { label: 'Outdoors and Hiking', value: 'Outdoors and Hiking' },
+  { label: 'Pets and Animal Care', value: 'Pets and Animal Care' },
+  { label: 'Sports', value: 'Sports' },
+  { label: 'Technology and Gadgets', value: 'Technology and Gadgets' },
+  { label: 'Travel', value: 'Travel' },
+  { label: 'Wedding', value: 'Wedding' },
+  { label: 'OK', value: 'OK' }
 ];
-
 const categoryOptions = [
   {
     description: 'Best for small, friendly-pocket projects',
@@ -125,31 +130,39 @@ export const JobBriefSummeryStep = (props) => {
           ))}
         </TextField>
         <Stack direction="row">
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
+        <Grid
+            container
+            spacing={{
+              xs: 12,
+              lg: 12,
+              md:12
+            }}
+            style={{margin:0,width:'100%'}}
           >
-            <Card
-              spacing={3}
-              sx={{
-                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem',
-                borderRadius: '1rem', height: '74px', alignItems: 'center', display: 'flex'
-              }}
-            >
-              <FormControlLabel value="shotoutonly" control={<Radio />} label="Shotout Olny" />
-            </Card>
-            <Card
-              spacing={3}
-              sx={{
-                width: '347px', paddingLeft: '2rem',
-                borderRadius: '1rem', height: '74px', alignItems: 'center', display: 'flex'
-              }}>
-              <FormControlLabel value="female" control={<Radio />} label="Content Creation & Shotout" />
-            </Card>
+            <Grid xs={12} md={6} sx={{padding:0}}>
+              <Card
+                sx={{
+                    paddingLeft: '2rem',
+                  borderRadius: '1rem', alignItems: 'center'
+                }}
+              >
+                <FormControlLabel value="shotoutonly" control={<Radio />} label="Shoutout Olny" />
+              </Card>
+            </Grid> 
+            <Grid xs={12} md={6} sx={{padding:0}}>
+              <Card
+                sx={{
+                  paddingLeft: '2rem',
+                  borderRadius: '1rem',  alignItems: 'center'
+                }}>
+                <FormControlLabel value="female" control={<Radio />} label="Content Creation & Shoutout" />
+              </Card>
+            </Grid>
 
 
-          </RadioGroup>
+
+
+          </Grid>
         </Stack>
       </Stack>
 

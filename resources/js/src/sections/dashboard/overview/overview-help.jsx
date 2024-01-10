@@ -42,8 +42,8 @@ export const OverviewHelp = (props) => (
         sx={{ mt: 1 }}
         variant="body2"
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Boost your brand's influence and get expert assistance on our influencer marketing platform for effective and impactful campaigns.
+
       </Typography>
     </CardContent>
     <Divider />

@@ -10,9 +10,11 @@ import {
   SvgIcon,
   Typography
 } from '@mui/material';
-
-export const OverviewJobs = (props) => (
-  <Card {...props}>
+import { useNavigate } from 'react-router-dom';
+export const OverviewJobs = (props) => {
+  const navigate = useNavigate();
+  return(
+  <Card>
     <CardContent>
       <Box
         sx={{
@@ -35,15 +37,14 @@ export const OverviewJobs = (props) => (
         variant="h6"
         sx={{ mt: 2 }}
       >
-        Find your dream job
+        Post a job
       </Typography>
       <Typography
         color="text.secondary"
         sx={{ mt: 1 }}
         variant="body2"
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Unlock the potential of your brand with a diverse range of skilled influencers, ready to amplify your message and engage audiences.
       </Typography>
     </CardContent>
     <Divider />
@@ -56,9 +57,10 @@ export const OverviewJobs = (props) => (
           </SvgIcon>
         )}
         size="small"
+        onClick={()=>navigate("/dashboard/jobs/create/")}
       >
-        Search Jobs
+        Post a job
       </Button>
     </CardActions>
   </Card>
-);
+)};
