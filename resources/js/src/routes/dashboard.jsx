@@ -31,6 +31,7 @@ const InvoiceDetailPage = lazy(() => import('@/pages/dashboard/invoices/detail')
 
 // Jobs
 const JobBrowsePage = lazy(() => import('@/pages/dashboard/jobs/browse'));
+const JobManagePage = lazy(() => import('@/pages/dashboard/jobs/manage'));
 const JobCreatePage = lazy(() => import('@/pages/dashboard/jobs/create'));
 const CompanyDetailPage = lazy(() => import('@/pages/dashboard/jobs/companies/detail'));
 
@@ -164,7 +165,16 @@ export const dashboardRoutes = [
                 element: <CompanyDetailPage />
               }
             ]
-          }
+          },
+          {
+            path: 'manage',
+            children: [
+              {
+                path: ':jobId',
+                element: <JobManagePage />
+              }
+            ]
+          },
         ]
       },
       {

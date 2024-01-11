@@ -8,7 +8,7 @@ import { RouterLink } from '@/components/router-link';
 import { Scrollbar } from '@/components/scrollbar';
 import { usePathname } from '@/hooks/use-pathname';
 import { paths } from '@/paths';
-import { TenantSwitch } from '../tenant-switch';
+import  TenantSwitch  from '../tenant-switch';
 import { SideNavSection } from './side-nav-section';
 
 const SIDE_NAV_WIDTH = 280;

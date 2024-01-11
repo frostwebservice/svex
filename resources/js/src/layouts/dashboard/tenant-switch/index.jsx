@@ -3,12 +3,13 @@ import ChevronDownIcon from '@untitled-ui/icons-react/build/esm/ChevronDown';
 import { Box, IconButton, Stack, SvgIcon, Typography } from '@mui/material';
 import { usePopover } from '@/hooks/use-popover';
 import { TenantPopover } from './tenant-popover';
-
+import { connect } from 'react-redux';
 const tenants = ['Devias', 'Acme Corp'];
 
-export const TenantSwitch = (props) => {
+const TenantSwitch = (props) => {
   const popover = usePopover();
-
+  const {userinfo} = props;
+  console.log(userinfo)
   return (
     <>
       <Stack
@@ -21,7 +22,7 @@ export const TenantSwitch = (props) => {
             color="inherit"
             variant="h6"
           >
-            Admin
+            {userinfo.firstname}
           </Typography>
           <Typography
             color="neutral.400"
@@ -53,3 +54,9 @@ export const TenantSwitch = (props) => {
 TenantSwitch.propTypes = {
   sx: PropTypes.object
 };
+
+const mapStateToProps = state => ({
+  userinfo: state.profile.userinfo,
+});
+
+export default connect(mapStateToProps)(TenantSwitch);

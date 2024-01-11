@@ -103,7 +103,41 @@ const Page = () => {
             </Tabs>
             <Box>
               {currentTab == 'all' && (
-                <></>
+                <>
+                  <Stack
+                    spacing={4}
+                    sx={{ mt: 4 }}
+                  >
+
+                    {companies.map((company) => (
+                      <JobCard
+                        key={company.id}
+                        company={company}
+                      />
+                    ))}
+                    <Stack
+                      alignItems="center"
+                      direction="row"
+                      justifyContent="flex-end"
+                      spacing={2}
+                      sx={{
+                        px: 3,
+                        py: 2
+                      }}
+                    >
+                      <IconButton disabled>
+                        <SvgIcon fontSize="small">
+                          <ChevronLeftIcon />
+                        </SvgIcon>
+                      </IconButton>
+                      <IconButton>
+                        <SvgIcon fontSize="small">
+                          <ChevronRightIcon />
+                        </SvgIcon>
+                      </IconButton>
+                    </Stack>
+                  </Stack>
+                </>
               )}
               {currentTab == 'active' && (
                 <></>
@@ -131,39 +165,7 @@ const Page = () => {
               </Box>
             </Stack>
           </div>
-          <Stack
-            spacing={4}
-            sx={{ mt: 4 }}
-          >
 
-            {companies.map((company) => (
-              <JobCard
-                key={company.id}
-                company={company}
-              />
-            ))}
-            <Stack
-              alignItems="center"
-              direction="row"
-              justifyContent="flex-end"
-              spacing={2}
-              sx={{
-                px: 3,
-                py: 2
-              }}
-            >
-              <IconButton disabled>
-                <SvgIcon fontSize="small">
-                  <ChevronLeftIcon />
-                </SvgIcon>
-              </IconButton>
-              <IconButton>
-                <SvgIcon fontSize="small">
-                  <ChevronRightIcon />
-                </SvgIcon>
-              </IconButton>
-            </Stack>
-          </Stack>
         </Container>
       </Box>
     </>

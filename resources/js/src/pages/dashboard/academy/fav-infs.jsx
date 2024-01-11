@@ -166,7 +166,6 @@ const Favinfs = (props) => {
                 key={inf.id}
                 influencer={inf.data[0]}
                 currentTab={inf.tab}
-
               />
             ))}
 

@@ -102,8 +102,8 @@ const InstagramSearch = (props) => {
             avg_comment: "All",
             username: "",
             url: "",
-            hasPhone: true,
-            verified: true
+            hasPhone: false,
+            verified: false
         }
     )
     const onSearch = () => {

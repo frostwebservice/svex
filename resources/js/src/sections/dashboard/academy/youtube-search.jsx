@@ -104,8 +104,8 @@ const YoutubeSearch = (props) => {
             total_likes: "All",
             username: "",
             url: "",
-            hasPhone: true,
-            verified: true
+            hasPhone:false,
+            verified: false
         }
     )
     const onSearch = () => {
