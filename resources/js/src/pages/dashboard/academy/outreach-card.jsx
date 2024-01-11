@@ -115,7 +115,7 @@ export const OutreachCard = (props) => {
                 //     py: 1.5
                 // }}
                 >
-                    {company[0].detail==null?<></>:                    <OutreachMemberCard
+                    {company[0]&&company[0].detail==null?<></>:<OutreachMemberCard
                         key={order}
                         company={company}
                         order={order}

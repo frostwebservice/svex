@@ -56,6 +56,7 @@ const Page = (props) => {
   const [infcounter, setInfcounter] = useState(0)
   const [infs, setInfs] = useState([])
   const [changedFlag,setchangedFlag]=useState(true)
+  // console.log("infs"+infs)
   useEffect(()=>{
     if (sortOptions[0]){
       setSelectedSort(sortOptions[0].value)
@@ -64,11 +65,14 @@ const Page = (props) => {
   useEffect(()=>{
     if(results.searchresults&&results.searchresults.result.length){
       let result = results.searchresults
+
+      // console.log(arrange(result.result,selectedSort))
       setInfs(arrange(result.result,selectedSort))
     }
     let nextFlag = !changedFlag
     setchangedFlag(nextFlag)
   },[selectedSort])
+  // useEffect( () => () => console.log("unmount"), setInfs([]) );
   useEffect(() => {
     if (results.searchresults) {
       let result = results.searchresults
@@ -243,7 +247,7 @@ const Page = (props) => {
   }, [dispatch, results])
   const arrange = (array,option)=>{
     // return array
-    console.log(array);
+    if(option=="") return array;
     if(option=="follower_order")
       return [...array].sort( (a,b) => b.follower_count - a.follower_count );
     else if(option=="engagement_order")

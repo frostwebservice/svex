@@ -8,6 +8,10 @@ import {
   IconButton,
   Stack,
   SvgIcon,
+  Tabs,
+  Tab,
+  Card,
+  Input,
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
@@ -17,10 +21,12 @@ import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
-import { CompanyCard } from '@/sections/dashboard/jobs/company-card';
+import { JobCard } from '@/sections/dashboard/jobs/company-card';
 import { JobListSearch } from '@/sections/dashboard/jobs/job-list-search';
 import { useSettings } from '@/hooks/use-settings';
+import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 
+import "./manage.css";
 const useCompanies = () => {
   const isMounted = useMounted();
   const [companies, setCompanies] = useState([]);
@@ -45,11 +51,18 @@ const useCompanies = () => {
 
   return companies;
 };
-
+const tabs = [
+  { label: "All", value: "all" },
+  { label: "Active", value: "active" },
+  { label: "Archived", value: "archived" },
+] 
 const Page = () => {
   const companies = useCompanies();
   const settings = useSettings();
-
+  const [currentTab, setCurrentTab] = useState("all");
+  const handleTabsChange = useCallback((event, value) => {
+    setCurrentTab(value);
+  }, []);
   usePageView();
 
   return (
@@ -62,69 +75,69 @@ const Page = () => {
           py: 8
         }}
       >
-        <Container maxWidth={settings.stretch ? false : 'xl'}>
+        <Container  maxWidth={settings.stretch ? false : 'xl'}>
           <Typography variant="h4">
             Manage Jobs
           </Typography>
-          <Grid
-            alignItems="center"
-            container
-            sx={{
-              backgroundColor: 'neutral.900',
-              borderRadius: 1,
-              color: 'common.white',
-              px: 4,
-              py: 8
-            }}
-          >
-            <Grid
-              xs={12}
-              sm={7}
-            >
-              <Typography
-                color="inherit"
-                variant="h3"
-              >
-                Reach 50k+ potential candidates.
-              </Typography>
-              <Typography
-                color="neutral.500"
-                sx={{ mt: 2 }}
-                variant="body1"
-              >
-                Post your job today for free. Promotions start at $99.
-              </Typography>
-              <Button
-                color="primary"
-                component={RouterLink}
-                href={paths.dashboard.jobs.create}
-                size="large"
-                sx={{ mt: 3 }}
-                variant="contained"
-              >
-                Post a job
-              </Button>
-            </Grid>
-            <Grid
-              sm={5}
+          <div className='top'>
+            <Tabs
+              indicatorColor="primary"
+              onChange={handleTabsChange}
+              scrollButtons="auto"
+              textColor="primary"
               sx={{
-                display: {
-                  xs: 'none',
-                  sm: 'flex'
-                },
-                justifyContent: 'center'
+                p: 3
               }}
+              value={currentTab}
+              variant="scrollable"
             >
-              <img src="/assets/iconly/iconly-glass-shield.svg" />
-            </Grid>
-          </Grid>
+              {tabs.map((tab) => (
+                <Tab
+                  className='custom-tab'
+                  sx={{ fontSize: 18 }}
+                  key={tab.value}
+                  label={tab.label}
+                  value={tab.value}
+                />
+              ))}
+            </Tabs>
+            <Box>
+              {currentTab == 'all' && (
+                <></>
+              )}
+              {currentTab == 'active' && (
+                <></>
+              )}
+              {currentTab == 'archived' && (
+                <></>
+              )}
+            </Box>
+            <Stack
+              alignItems="center"
+              direction="row"
+              spacing={2}
+              sx={{ p: 2 }}
+              className='part'
+            >
+              <SvgIcon>
+                <SearchMdIcon />
+              </SvgIcon>
+              <Box sx={{ flexGrow: 1 }}>
+                <Input
+                  disableUnderline
+                  fullWidth
+                  placeholder="Search any of the jobs you have posted..."
+                />
+              </Box>
+            </Stack>
+          </div>
           <Stack
             spacing={4}
             sx={{ mt: 4 }}
           >
-            <JobListSearch />
+
             {companies.map((company) => (
-              <CompanyCard
+              <JobCard
                 key={company.id}
                 company={company}
               />
