@@ -76,7 +76,7 @@ export const JobShareStep = (props) => {
         <TextField
           fullWidth
           select
-          label="Favourite"
+          label="Favorites"
           // defaultValue="EUR"
           SelectProps={{
             native: true,
@@ -121,16 +121,18 @@ export const JobShareStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
+          sx={{px:5,py:2}}
           onClick={onNext}
           variant="contained"
         >
           Continue
         </Button>
         <Button
-          color="inherit"
+          color="primary"
+          sx={{px:5,py:2}}
           onClick={onBack}
         >
-          Back
+          Skip
         </Button>
       </Stack>
     </Stack>

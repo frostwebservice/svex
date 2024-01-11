@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import { Button, Chip, InputAdornment, Stack, SvgIcon, TextField, Typography } from '@mui/material';
+import { Button, Chip, InputAdornment, Stack, SvgIcon, TextField, Typography,Unstable_Grid2 as Grid } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers';
+import { categoryOptions, locationOptions, followersFromOptions, followersToOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions } from '../academy/data'
 
 
 const currencies = [
@@ -67,14 +68,15 @@ export const JobExclusionStep = (props) => {
     <Stack
       spacing={3}
       {...other}>
-      <Stack
-        direction='row'
-        // sx={{width: '44.6rem'}}
-        spacing={3}
-      >
-        <Stack spacing={3}
-          sx={{ width: '50%' }}
-        >
+          <Grid
+            container
+            disableEqualOverflow
+            spacing={{
+              xs: 3,
+              lg: 4
+            }}
+          >
+        <Grid xs={12} md={6}>
           <TextField
             fullWidth
             select
@@ -85,12 +87,14 @@ export const JobExclusionStep = (props) => {
             }}
             variant="filled"
           >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {followersFromOptions.map((option,index) => (
+              <option key={index} value={option}>
+                {option}
               </option>
             ))}
           </TextField>
+        </Grid>
+        <Grid xs={12} md={6}>
           <TextField
             fullWidth
             select
@@ -102,12 +106,15 @@ export const JobExclusionStep = (props) => {
 
             variant="filled"
           >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {locationOptions.map((option,index) => (
+              <option key={index} value={option}>
+                {option}
               </option>
             ))}
           </TextField>
+        </Grid>
+        <Grid xs={12} md={6}>
+
           <TextField
             fullWidth
             select
@@ -119,16 +126,14 @@ export const JobExclusionStep = (props) => {
 
             variant="filled"
           >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {genderOptions.map((option,index) => (
+              <option key={index} value={option}>
+                {option}
               </option>
             ))}
           </TextField>
-        </Stack>
-        <Stack
-          sx={{ width: '50%' }}
-          spacing={3}>
+        </Grid>
+        <Grid xs={12} md={6}>
           <TextField
             fullWidth
             select
@@ -140,12 +145,14 @@ export const JobExclusionStep = (props) => {
 
             variant="filled"
           >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {ageOptions.map((option,index) => (
+              <option key={index} value={option}>
+                {option}
               </option>
             ))}
           </TextField>
+        </Grid>
+        <Grid xs={12} md={6}>
           <TextField
             fullWidth
             select
@@ -157,18 +164,18 @@ export const JobExclusionStep = (props) => {
 
             variant="filled"
           >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+            {engagementOptions.map((option,index) => (
+              <option key={index} value={option}>
+                {option}
               </option>
             ))}
           </TextField>
-        </Stack>
+        </Grid>
 
 
 
 
-      </Stack>
+      </Grid>
 
 
       <Stack
@@ -182,16 +189,18 @@ export const JobExclusionStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
+          sx={{px:5,py:2}}
           onClick={onNext}
           variant="contained"
         >
           Continue
         </Button>
         <Button
-          color="inherit"
+          color="primary"
+          sx={{px:5,py:2}}
           onClick={onBack}
         >
-          Back
+          Skip
         </Button>
       </Stack>
     </Stack>

@@ -40,7 +40,7 @@ const StepIcon = (props) => {
 
 export const JobCreateForm = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [review, setReview] = useState(0);
+  const [review, setReview] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
   const handleNext = useCallback(() => {
@@ -51,10 +51,11 @@ export const JobCreateForm = () => {
     setActiveStep((prevState) => prevState - 1);
   }, []);
   const handleReview = useCallback(() => {
-    setReview(1);
+    setReview(true);
   })
 
   const handleComplete = useCallback(() => {
+    alert("complete")
     setIsComplete(true);
   }, []);
 
@@ -88,7 +89,7 @@ export const JobCreateForm = () => {
         )
       },
       {
-        label: 'Shortout Instruction',
+        label: 'Shortout Instructions',
         content: (
           <JobShotoutStep
             onBack={handleBack}
@@ -110,7 +111,7 @@ export const JobCreateForm = () => {
         content: (
           <JobShareStep
             onBack={handleBack}
-            onNext={handleNext}
+            onNext={handleReview}
           />
         )
       },
@@ -144,11 +145,11 @@ export const JobCreateForm = () => {
       }}
     >
       {steps.map((step, index) => {
-        const isCurrentStep = ((activeStep === index) || (review === 1));
+        const isCurrentStep = ((activeStep === index));
         // { console.log(isCurrentStep) }
         return (
           <Step key={step.label}
-
+            expanded={review}
           >
             <StepLabel StepIconComponent={StepIcon}>
               <Typography

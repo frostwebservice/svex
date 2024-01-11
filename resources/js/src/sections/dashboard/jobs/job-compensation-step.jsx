@@ -145,9 +145,9 @@ export const JobCompensationStep = (props) => {
           <TextField
             sx={{ height: '4rem' }}
             fullWidth
-            label="Job Title"
-            name="jobTitle"
-            placeholder="Discribe your job in brief"
+            label="Barter"
+            name="barter"
+            placeholder="Enter"
             inputProps={{
               style: {
 
@@ -158,9 +158,9 @@ export const JobCompensationStep = (props) => {
           <TextField
             sx={{ height: '4rem' }}
             fullWidth
-            label="Job Title"
-            name="jobTitle"
-            placeholder="Discribe your job in brief"
+            label="Revenue share"
+            name="revenue"
+            placeholder="Enter"
             inputProps={{
               style: {
 
@@ -171,9 +171,9 @@ export const JobCompensationStep = (props) => {
           <TextField
             sx={{ height: '4rem' }}
             fullWidth
-            label="Job Title"
-            name="jobTitle"
-            placeholder="Discribe your job in brief"
+            label="Custom"
+            name="custom"
+            placeholder="Enter"
             inputProps={{
               style: {
 
@@ -196,17 +196,19 @@ export const JobCompensationStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
+          sx={{px:5,py:2}}
           onClick={onNext}
           variant="contained"
         >
           Continue
         </Button>
-        <Button
+        {/* <Button
           color="inherit"
           onClick={onBack}
+          sx={{px:5,py:2}}
         >
           Back
-        </Button>
+        </Button> */}
       </Stack>
     </Stack>
 

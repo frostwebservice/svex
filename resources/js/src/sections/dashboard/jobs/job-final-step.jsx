@@ -32,95 +32,15 @@ export const JobFinalStep = (props) => {
   }, []);
 
   return (
-    <Stack
-      spacing={3}
-      {...other}>
-      <div>
-        <Typography variant="h6">
-          What is the job about?
-        </Typography>
-      </div>
-      <Stack spacing={3}>
-        <TextField
-          fullWidth
-          label="Job Title"
-          name="jobTitle"
-          placeholder="e.g Salesforce Analyst"
-        />
-        <TextField
-          fullWidth
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Button
-                  color="inherit"
-                  sx={{ ml: 2 }}
-                  onClick={() => {
-                    if (!tag) {
-                      return;
-                    }
 
-                    handleTagAdd(tag);
-                    setTag('');
-                  }}
-                >
-                  Add
-                </Button>
-              </InputAdornment>
-            )
-          }}
-          label="Tags"
-          name="tags"
-          onChange={(event) => setTag(event.target.value)}
-          value={tag}
-        />
-        <Stack
-          alignItems="center"
-          direction="row"
-          flexWrap="wrap"
-          spacing={1}
-        >
-          {tags.map((tag, index) => (
-            <Chip
-              key={index}
-              label={tag}
-              onDelete={() => handleTagDelete(tag)}
-              variant="outlined"
-            />
-          ))}
-        </Stack>
-      </Stack>
-      <div>
-        <Typography variant="h6">
-          When is the project starting?
-        </Typography>
-      </div>
       <Stack
-        alignItems="center"
-        direction="row"
-        spacing={3}
-      >
-        <MobileDatePicker
-          label="Start Date"
-          inputFormat="MM/dd/yyyy"
-          value={startDate}
-          onChange={handleStartDateChange}
-          renderInput={(inputProps) => <TextField {...inputProps} />}
-        />
-        <MobileDatePicker
-          label="End Date"
-          inputFormat="MM/dd/yyyy"
-          value={endDate}
-          onChange={handleEndDateChange}
-          renderInput={(inputProps) => <TextField {...inputProps} />}
-        />
-      </Stack>
-      <Stack
-        alignItems="center"
+        alignItems="right"
         direction="row"
         spacing={2}
+        sx={{float:'right'}}
       >
         <Button
+          sx={{px:5,py:2}}
           endIcon={(
             <SvgIcon>
               <ArrowRightIcon />
@@ -133,7 +53,7 @@ export const JobFinalStep = (props) => {
         </Button>
        
       </Stack>
-    </Stack>
+
   );
 };
 

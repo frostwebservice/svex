@@ -38,13 +38,31 @@ export const JobShotoutStep = (props) => {
     <Stack
       spacing={3}
       {...other}>
-      <TextField
-        fullWidth
-        // sx={{ width: '344px'}}
-        label="Business URL"
-        name="jobTitle"
-        placeholder="e.g Salesforce Analyst"
-      />
+
+      <Stack direction="row">
+        <Stack sx={{display:'contents'}}>
+          <TextField
+            fullWidth
+            label="Business URL"
+            sx={{
+              width: '344px',
+              borderRadius: '0.5rem', height: '4rem', alignItems: 'center',display:'inline'
+            }}
+            name="businessurl"
+            placeholder="e.g www.canadagoose.com"
+          />
+          <TextField
+            fullWidth
+            label="Social Media Handle"
+            sx={{
+              width: '344px',
+              borderRadius: '0.5rem', height: '4rem', alignItems: 'center',display:'inline',ml:3
+            }}
+            name="socialhandle"
+            placeholder="e.g @canadagoose"
+          />
+        </Stack>
+      </Stack>
       <Stack direction="row">
         <Stack spacing={3}>
 
@@ -69,7 +87,7 @@ export const JobShotoutStep = (props) => {
             </Button>
             <Typography ml={2}>
               Click to upload or drag your
-              brand images
+              brand videos
             </Typography>
           </Card>
         </Stack>
@@ -84,7 +102,7 @@ export const JobShotoutStep = (props) => {
             </Button>
             <Typography ml={2}>
               Click to upload or drag your
-              brand images
+              brand articles
             </Typography>
           </Card>
         </Stack>
@@ -118,16 +136,18 @@ export const JobShotoutStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
+          sx={{px:5,py:2}}
           onClick={onNext}
           variant="contained"
         >
           Continue
         </Button>
         <Button
-          color="inherit"
+          color="primary"
           onClick={onBack}
+          sx={{px:5,py:2}}
         >
-          Back
+          Skip
         </Button>
       </Stack>
     </Stack>

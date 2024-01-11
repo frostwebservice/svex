@@ -142,17 +142,18 @@ export const JobBriefSummeryStep = (props) => {
             <Grid xs={12} md={6} sx={{padding:0}}>
               <Card
                 sx={{
-                    paddingLeft: '2rem',
+                
+                    padding:'15px 20px',
                   borderRadius: '1rem', alignItems: 'center'
                 }}
               >
-                <FormControlLabel value="shotoutonly" control={<Radio />} label="Shoutout Olny" />
+                <FormControlLabel value="shotoutonly" control={<Radio />} label="Shoutout Only" />
               </Card>
             </Grid> 
             <Grid xs={12} md={6} sx={{padding:0}}>
               <Card
                 sx={{
-                  paddingLeft: '2rem',
+                  padding:'15px 20px',
                   borderRadius: '1rem',  alignItems: 'center'
                 }}>
                 <FormControlLabel value="female" control={<Radio />} label="Content Creation & Shoutout" />
@@ -173,6 +174,7 @@ export const JobBriefSummeryStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
+          sx={{px:5,py:2}}
           onClick={onNext}
           variant="contained"
         >
