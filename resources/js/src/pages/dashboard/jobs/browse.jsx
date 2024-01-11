@@ -19,6 +19,7 @@ import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
 import { CompanyCard } from '@/sections/dashboard/jobs/company-card';
 import { JobListSearch } from '@/sections/dashboard/jobs/job-list-search';
+import { useSettings } from '@/hooks/use-settings';
 
 const useCompanies = () => {
   const isMounted = useMounted();
@@ -47,6 +48,7 @@ const useCompanies = () => {
 
 const Page = () => {
   const companies = useCompanies();
+  const settings = useSettings();
 
   usePageView();
 
@@ -60,7 +62,10 @@ const Page = () => {
           py: 8
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth={settings.stretch ? false : 'xl'}>
+          <Typography variant="h4">
+            Manage Jobs
+          </Typography>
           <Grid
             alignItems="center"
             container

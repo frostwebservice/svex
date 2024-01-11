@@ -68,14 +68,14 @@ export const JobExclusionStep = (props) => {
     <Stack
       spacing={3}
       {...other}>
-          <Grid
-            container
-            disableEqualOverflow
-            spacing={{
-              xs: 3,
-              lg: 4
-            }}
-          >
+        <Grid
+          container
+          disableEqualOverflow
+          spacing={{
+            xs: 3,
+            lg: 4
+          }}
+        >
         <Grid xs={12} md={6}>
           <TextField
             fullWidth

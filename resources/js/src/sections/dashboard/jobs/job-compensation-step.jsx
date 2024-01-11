@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon, Typography, TextField } from '@mui/material';
+import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon, Typography, TextField,Unstable_Grid2 as Grid } from '@mui/material';
 // import Radio from '@mui/material/Radio';
 // import RadioGroup from '@mui/material/RadioGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
@@ -70,118 +70,130 @@ export const JobCompensationStep = (props) => {
 
 
       <Stack direction="row">
-        <Stack sx={{ width: '22.3rem' }} >
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
+
+          <Grid
+            container
+            disableEqualOverflow
+            spacing={{
+              xs: 3,
+              lg: 4
+            }}
           >
-            <Card
-              spacing={3}
-              sx={{
-                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-              }}
-            >
-              <FormControlLabel value="paid" control={<Radio />} label="Paid" />
-            </Card>
-            <Card
-              spacing={3}
-              sx={{
-                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-              }}
-            >
+            <Grid xs={12} md={6}>
+              <Card
+                spacing={3}
+                sx={{
+                 paddingLeft: '2rem',
+                  borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+                }}
+              >
+                <FormControlLabel value="paid" control={<Radio />} label="Paid" />
+              </Card>
+            </Grid>
+    
+            <Grid xs={12} md={6}>
+              <TextField
+                sx={{ height: '4rem' }}
+                inputProps={{
+                  style: {
+                    fontSize: "18px"
+                  },
+                }}
+                select
+                label="Rudget"
+                fullWidth
+                SelectProps={{
+                  native: true,
+                }}
+                variant="filled"
+              >
+                {currencies.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid xs={12} md={6}>
+              <Card
+                spacing={3}
+                sx={{
+                 paddingLeft: '2rem',
+                  borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+                }}
+              >
+                <FormControlLabel value="barter" control={<Radio />} label="Barter" />
+              </Card>
+            </Grid>
+            <Grid xs={12} md={6}>
+              <TextField
+                sx={{ height: '4rem' }}
+                fullWidth
+                label="Barter"
+                name="barter"
+                placeholder="Enter"
+                inputProps={{
+                  style: {
 
-              <FormControlLabel value="barter" control={<Radio />} label="Barter" />
+                    fontSize: "18px"
+                  },
+                }}
+              />
+            </Grid>
+            <Grid xs={12} md={6}>
+              <Card
+                spacing={3}
+                sx={{
+                 paddingLeft: '2rem',
+                  borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+                }}
+              >
+                <FormControlLabel value="Revenueshare" control={<Radio />} label="Revenue share" />
+              </Card>
+            </Grid>
+            <Grid xs={12} md={6}>
+              <TextField
+                sx={{ height: '4rem' }}
+                fullWidth
+                label="Revenue share"
+                name="revenue"
+                placeholder="Enter"
+                inputProps={{
+                  style: {
 
-            </Card>
-            <Card
-              spacing={3}
-              sx={{
-                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-              }}
-            >
+                    fontSize: "18px"
+                  },
+                }}
+              />
+            </Grid>
+            <Grid xs={12} md={6}>
+              <Card
+                spacing={3}
+                sx={{
+                 paddingLeft: '2rem',
+                  borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
+                }}
+              >
+                <FormControlLabel value="custom" control={<Radio />} label="Custom" />
+              </Card>
+            </Grid>
+            <Grid xs={12} md={6}>
+              <TextField
+                sx={{ height: '4rem' }}
+                fullWidth
+                label="Custom"
+                name="custom"
+                placeholder="Enter"
+                inputProps={{
+                  style: {
 
-              <FormControlLabel value="Revenueshare" control={<Radio />} label="Revenue share" />
-
-            </Card>
-            <Card
-              spacing={3}
-              sx={{
-                width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
-                borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
-              }}
-            >
-
-              <FormControlLabel value="custom" control={<Radio />} label="Custom" />
-            </Card>
-          </RadioGroup>
-        </Stack>
-        <Stack sx={{ width: '334px' }} spacing={2}>
-          <TextField
-            sx={{ height: '4rem' }}
-            inputProps={{
-              style: {
-
-                fontSize: "18px"
-              },
-            }}
-            select
-            label="Rudget"
-            fullWidth
-            SelectProps={{
-              native: true,
-            }}
-            variant="filled"
-          >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </TextField>
-          <TextField
-            sx={{ height: '4rem' }}
-            fullWidth
-            label="Barter"
-            name="barter"
-            placeholder="Enter"
-            inputProps={{
-              style: {
-
-                fontSize: "18px"
-              },
-            }}
-          />
-          <TextField
-            sx={{ height: '4rem' }}
-            fullWidth
-            label="Revenue share"
-            name="revenue"
-            placeholder="Enter"
-            inputProps={{
-              style: {
-
-                fontSize: "18px"
-              },
-            }}
-          />
-          <TextField
-            sx={{ height: '4rem' }}
-            fullWidth
-            label="Custom"
-            name="custom"
-            placeholder="Enter"
-            inputProps={{
-              style: {
-
-                fontSize: "18px"
-              },
-            }}
-          />
-        </Stack>
+                    fontSize: "18px"
+                  },
+                }}
+              />
+            </Grid>
+          </Grid>
+      
       </Stack>
 
 

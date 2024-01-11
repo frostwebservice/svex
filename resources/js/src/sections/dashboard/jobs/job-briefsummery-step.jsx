@@ -144,7 +144,7 @@ export const JobBriefSummeryStep = (props) => {
                 sx={{
                 
                     padding:'15px 20px',
-                  borderRadius: '1rem', alignItems: 'center'
+                  borderRadius: '1rem', alignItems: 'center', display:'flex',mb:2
                 }}
               >
                 <FormControlLabel value="shotoutonly" control={<Radio />} label="Shoutout Only" />
@@ -154,7 +154,7 @@ export const JobBriefSummeryStep = (props) => {
               <Card
                 sx={{
                   padding:'15px 20px',
-                  borderRadius: '1rem',  alignItems: 'center'
+                  borderRadius: '1rem',  alignItems: 'center', display:'flex',mb:2
                 }}>
                 <FormControlLabel value="female" control={<Radio />} label="Content Creation & Shoutout" />
               </Card>

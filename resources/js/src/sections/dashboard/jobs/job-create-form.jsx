@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import CheckIcon from '@untitled-ui/icons-react/build/esm/Check';
-import { Avatar, Step, StepContent, StepLabel, Stepper, SvgIcon, Typography } from '@mui/material';
+import { Avatar, Step, StepContent, StepLabel, Stepper, SvgIcon, Stack,Button,Typography } from '@mui/material';
+import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
+
 import { JobFinalStep } from './job-final-step';
 import { JobPreview } from './job-preview';
 import { JobBriefSummeryStep } from './job-briefsummery-step';
@@ -42,7 +44,7 @@ export const JobCreateForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [review, setReview] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-
+  const [lasthidden,setlasthidden] = useState("span");
   const handleNext = useCallback(() => {
     setActiveStep((prevState) => prevState + 1);
   }, []);
@@ -52,6 +54,7 @@ export const JobCreateForm = () => {
   }, []);
   const handleReview = useCallback(() => {
     setReview(true);
+    setlasthidden("none")
   })
 
   const handleComplete = useCallback(() => {
@@ -147,7 +150,7 @@ export const JobCreateForm = () => {
       {steps.map((step, index) => {
         const isCurrentStep = ((activeStep === index));
         // { console.log(isCurrentStep) }
-        return (
+        return index<6?(
           <Step key={step.label}
             expanded={review}
           >
@@ -172,7 +175,34 @@ export const JobCreateForm = () => {
               {step.content}
             </StepContent>
           </Step>
-        );
+        ):
+        (
+        <Step key={step.label}
+          expanded={review}
+          >
+          <StepLabel StepIconComponent={StepIcon} sx={{display:lasthidden}}>
+            <Typography
+              sx={{ ml: 2 }}
+              variant="overline"
+            >
+              {step.label}
+            </Typography>
+          </StepLabel>
+          <StepContent
+            sx={{
+              borderLeftColor: 'divider',
+              borderLeftWidth: 2,
+              ml: '20px',
+              ...(isCurrentStep && {
+                py: 4
+              })
+            }}
+          >
+            {step.content}
+          </StepContent>
+        </Step>
+
+        )
       })}
     </Stepper>
   );

@@ -7,6 +7,7 @@ import { usePageView } from '@/hooks/use-page-view';
 import AccountBillingSettings from '@/sections/dashboard/account/account-billing-settings';
 import AccountGeneralSettings from '@/sections/dashboard/account/account-general-settings';
 import { AccountNotificationsSettings } from '@/sections/dashboard/account/account-notifications-settings';
+import { useSettings } from '@/hooks/use-settings';
 import AccountTeamSettings from '@/sections/dashboard/account/account-team-settings';
 import AccountSecuritySettings from '@/sections/dashboard/account/account-security-settings';
 import "./account.css";
@@ -24,6 +25,7 @@ const tabs = [
 const Page = () => {
   const user = useMockedUser();
   const [currentTab, setCurrentTab] = useState('general');
+  const settings = useSettings();
 
   usePageView();
 
@@ -41,7 +43,7 @@ const Page = () => {
           py: 8
         }}
       >
-        <Container maxWidth="xl">
+        <Container  maxWidth={settings.stretch ? false : 'xl'}>
           <Stack
             spacing={3}
             sx={{ mb: 3 }}

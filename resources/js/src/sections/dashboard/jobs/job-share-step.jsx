@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import { Button, Chip, InputAdornment, Stack, SvgIcon, TextField, Typography } from '@mui/material';
+import { Button, Chip, InputAdornment, Stack, SvgIcon, TextField, Typography,Unstable_Grid2 as Grid } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 
 const currencies = [
@@ -66,48 +66,56 @@ export const JobShareStep = (props) => {
     <Stack
       spacing={3}
       {...other}>
-
-      <Stack spacing={3}
-        // sx={{
-        //     width: '44.6rem'
-        // }}
-        direction='row'
+      <Grid
+        container
+        disableEqualOverflow
+        spacing={{
+          xs: 3,
+          lg: 4
+        }}
       >
-        <TextField
-          fullWidth
-          select
-          label="Favorites"
-          // defaultValue="EUR"
-          SelectProps={{
-            native: true,
-          }}
-          variant="filled"
-        >
+        <Grid xs={12} md={6}>
+          <TextField
+            fullWidth
+            select
+            label="Favorites"
+            // defaultValue="EUR"
+            SelectProps={{
+              native: true,
+            }}
+            variant="filled"
+          >
           {currencies.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
         </TextField>
-        <TextField
-          fullWidth
-          select
-          label="Outreach Groups"
-          // defaultValue="EUR"
-          SelectProps={{
-            native: true,
-          }}
+        </Grid>
+        <Grid xs={12} md={6}>
+          <TextField
+            fullWidth
+            select
+            label="Outreach Groups"
+            // defaultValue="EUR"
+            SelectProps={{
+              native: true,
+            }}
 
-          variant="filled"
-        >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
+            variant="filled"
+          >
+            {currencies.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+        </Grid>
+      </Grid>
 
-      </Stack>
+
+
+
 
 
       <Stack

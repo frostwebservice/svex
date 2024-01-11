@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import { Button, Chip, Card, InputAdornment, Stack, SvgIcon, TextField, Typography } from '@mui/material';
+import { Button, Chip, Card, InputAdornment, Stack, SvgIcon, TextField, Typography ,Unstable_Grid2 as Grid } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import Upload01Icon from '@untitled-ui/icons-react/build/esm/Upload01';
 import Download01Icon from '@untitled-ui/icons-react/build/esm/Download01';
@@ -39,35 +39,44 @@ export const JobShotoutStep = (props) => {
       spacing={3}
       {...other}>
 
-      <Stack direction="row">
-        <Stack sx={{display:'contents'}}>
-          <TextField
-            fullWidth
-            label="Business URL"
+     
+        <Grid
+          container
+          disableEqualOverflow
+          spacing={{
+            xs: 3,
+            lg: 4
+          }}
+        >
+          <Grid xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Business URL"
+              sx={{
+            
+                borderRadius: '0.5rem', height: '4rem', alignItems: 'center'
+              }}
+              name="businessurl"
+              placeholder="e.g www.canadagoose.com"
+            />
+          </Grid>
+          <Grid xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Social Media Handle"
+              sx={{
+            
+                borderRadius: '0.5rem', height: '4rem', alignItems: 'center'
+              }}
+              name="socialhandle"
+              placeholder="e.g @canadagoose"
+            />
+          </Grid>
+        
+        <Grid xs={12} md={6}>
+          <Card
+            spacing={3}
             sx={{
-              width: '344px',
-              borderRadius: '0.5rem', height: '4rem', alignItems: 'center',display:'inline'
-            }}
-            name="businessurl"
-            placeholder="e.g www.canadagoose.com"
-          />
-          <TextField
-            fullWidth
-            label="Social Media Handle"
-            sx={{
-              width: '344px',
-              borderRadius: '0.5rem', height: '4rem', alignItems: 'center',display:'inline',ml:3
-            }}
-            name="socialhandle"
-            placeholder="e.g @canadagoose"
-          />
-        </Stack>
-      </Stack>
-      <Stack direction="row">
-        <Stack spacing={3}>
-
-          <Card sx={{
-            width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
             borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
           }}>
             <Button>
@@ -78,8 +87,12 @@ export const JobShotoutStep = (props) => {
               brand images
             </Typography>
           </Card>
-          <Card sx={{
-            width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+        </Grid>
+        <Grid xs={12} md={6}>
+          <Card 
+            spacing={3}
+            
+          sx={{
             borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
           }}>
             <Button>
@@ -90,11 +103,11 @@ export const JobShotoutStep = (props) => {
               brand videos
             </Typography>
           </Card>
-        </Stack>
-        <Stack spacing={3}>
-
-          <Card sx={{
-            width: '344px', marginRight: '1.4rem', paddingLeft: '2rem', marginBottom: '1rem',
+        </Grid>
+        <Grid xs={12} md={6}>
+          <Card 
+            spacing={3}
+          sx={{
             borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
           }}>
             <Button>
@@ -105,7 +118,11 @@ export const JobShotoutStep = (props) => {
               brand articles
             </Typography>
           </Card>
-        </Stack>
+        </Grid>
+        </Grid>
+
+      
+      <Stack direction="row">
 
         <Stack
           alignItems="center"
