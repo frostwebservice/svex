@@ -45,6 +45,14 @@ export const JobCreateForm = () => {
   const [review, setReview] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [lasthidden,setlasthidden] = useState("span");
+  const [jobDetail,setJobDetail] = useState({
+    title:"",brief:"",niche:"Acne and Skin Care",shoutoutonly:"shoutoutonly",socialtypes:"",ig:"",tt:"",yt:"",tw:"",pt:"",li:"",bw:"",paid:"maxbudget",barter:"",revenue:"",custom:"",businessurl:"",socialhandle:"",images:[],videos:[],articles:[],totalreach:"all",location:"all",gender:"all",agerange:"all",engagementrate:"all",favorites:"",outreachgroups:""
+  });
+  const updateValue = (which,value) => {
+    let key = which;
+    setJobDetail(jobDetail=>({...jobDetail,[key]:value}))
+  }
+  console.log(jobDetail);
   const handleNext = useCallback(() => {
     setActiveStep((prevState) => prevState + 1);
   }, []);
@@ -70,6 +78,8 @@ export const JobCreateForm = () => {
           <JobBriefSummeryStep
             onBack={handleBack}
             onNext={handleNext}
+            updateValue={updateValue}
+            jobDetail={jobDetail}
           />
         )
       },
@@ -79,6 +89,8 @@ export const JobCreateForm = () => {
           <JobSocialDetailStep
             onBack={handleBack}
             onNext={handleNext}
+            updateValue = {updateValue}
+            jobDetail = {jobDetail}
           />
         )
       },
@@ -88,15 +100,19 @@ export const JobCreateForm = () => {
           <JobCompensationStep
             onBack={handleBack}
             onNext={handleNext}
+            updateValue = {updateValue}
+            jobDetail = {jobDetail}
           />
         )
       },
       {
-        label: 'Shortout Instructions',
+        label: 'Shoutout Instructions',
         content: (
           <JobShotoutStep
             onBack={handleBack}
             onNext={handleNext}
+            updateValue = {updateValue}
+            jobDetail = {jobDetail}
           />
         )
       },
@@ -106,6 +122,8 @@ export const JobCreateForm = () => {
           <JobExclusionStep
             onBack={handleBack}
             onNext={handleNext}
+            updateValue = {updateValue}
+            jobDetail = {jobDetail}
           />
         )
       },
@@ -115,6 +133,8 @@ export const JobCreateForm = () => {
           <JobShareStep
             onBack={handleBack}
             onNext={handleReview}
+            updateValue = {updateValue}
+            jobDetail = {jobDetail}
           />
         )
       },

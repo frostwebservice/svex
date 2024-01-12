@@ -184,7 +184,7 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
         debouncedStateValue(filtered);
     };
 
-    const inputRenderer = (params) => <TextField {...params} label="Category/Niche" />;
+    const inputRenderer = (params) => <TextField {...params} label="Social Media Types" />;
 
     const filter = createFilterOptions();
 

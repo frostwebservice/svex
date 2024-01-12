@@ -37,11 +37,34 @@ const currencies = [
 ];
 
 export const JobSocialDetailStep = (props) => {
-  const { onBack, onNext, ...other } = props;
+  const { onBack, onNext,jobDetail,updateValue, ...other } = props;
+  const [ighidden,setighidden] = useState("none");
+  const [twhidden,settwhidden] = useState("none");
+  const [tthidden,settthiden] = useState("none");
+  const [ythidden,setythidden] = useState("none");
+  const [lihidden,setlihidden] = useState("none");
+  const [bwhidden,setbwhidden] = useState("none");
+  const [pthidden,setpthidden] = useState("none");
   const handleSelectionChange = (result) => {
-    console.log(result)
-    // setCurrentSelection(result);
-
+    let types= "";
+    setighidden("none")
+    settwhidden("none")
+    settthiden("none")
+    setythidden("none")
+    setlihidden("none")
+    setbwhidden("none")
+    setpthidden("none")
+    result.map(res=>{
+      if(res.value=="instagram") setighidden("")
+      if(res.value=="twitter") settwhidden("")
+      if(res.value=="tiktok") settthiden("")
+      if(res.value=="youtube") setythidden("")
+      if(res.value=="linkein") setlihidden("")
+      if(res.value=="pinterest") setpthidden("")
+      if(res.value=="blogwebsite") setbwhidden("")
+      types+=res.value+","
+    })
+    updateValue("socialtypes",types.slice(0, -1))
   };
   const [initialSelect, setInitialSelect] = useState([])
   return (
@@ -83,44 +106,58 @@ export const JobSocialDetailStep = (props) => {
         <TextField
           fullWidth
           label="Instagram"
+          sx={{display:ighidden}}
           name="instagram"
-        // placeholder="e.g Salesforce Analyst"
+          onChange={(e)=>updateValue("ig",e.target.value)}
+        placeholder="3 Permanent Posts and 3 Stories every 24 hrs for 3 days"
         />
         <TextField
           fullWidth
+          sx={{display:tthidden}}
           label="Tiktok"
+          onChange={(e)=>updateValue("tt",e.target.value)}
           name="tiktok"
-        // placeholder="e.g Salesforce Analyst"
+        placeholder="1 Permanent TikTok Post"
         />
         <TextField
+          sx={{display:ythidden}}
           fullWidth
+          onChange={(e)=>updateValue("yt",e.target.value)}
           label="Youtube"
           name="youtube"
-        // placeholder="e.g Salesforce Analyst"
+        placeholder="1 Temporary YouTube Short Story"
         />
         <TextField
+          sx={{display:twhidden}}
           fullWidth
           label="Twitter"
+          onChange={(e)=>updateValue("tw",e.target.value)}
           name="twitter"
-        // placeholder="e.g Salesforce Analyst"
+        placeholder="3 Pinned Tweets for 24 Hours"
         />
         <TextField
           fullWidth
+          sx={{display:pthidden}}
           label="Pinterest"
+          onChange={(e)=>updateValue("pt",e.target.value)}
           name="pinterest"
-        // placeholder="e.g Salesforce Analyst"
+        placeholder="3 Permanent Pins"
         />
         <TextField
+          sx={{display:lihidden}}
           fullWidth
+          onChange={(e)=>updateValue("li",e.target.value)}
           label="LinkedIn"
           name="linkedin"
-        // placeholder="e.g Salesforce Analyst"
+        placeholder="1 Article Publication"
         />
         <TextField
+          sx={{display:bwhidden}}
           fullWidth
+          onChange={(e)=>updateValue("bw",e.target.value)}
           label="Blog/Website"
           name="blogwebsite"
-        // placeholder="e.g Salesforce Analyst"
+        placeholder="Blog Post: 1 Blog Article of 500 Words"
         />
 
 
@@ -138,7 +175,7 @@ export const JobSocialDetailStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
-          sx={{px:5,py:2}}
+          sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
           variant="contained"
         >

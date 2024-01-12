@@ -38,7 +38,7 @@ const currencies = [
 ];
 
 export const JobExclusionStep = (props) => {
-  const { onBack, onNext, ...other } = props;
+  const { onBack, onNext,updateValue,jobDetail, ...other } = props;
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
   const [startDate, setStartDate] = useState(new Date('2022-09-22T11:41:50'));
@@ -81,6 +81,7 @@ export const JobExclusionStep = (props) => {
             fullWidth
             select
             label="Total Reach"
+            onChange={(e)=>updateValue("totalreach",e.target.value)}
             // defaultValue="EUR"
             SelectProps={{
               native: true,
@@ -98,6 +99,7 @@ export const JobExclusionStep = (props) => {
           <TextField
             fullWidth
             select
+            onChange={(e)=>updateValue("location",e.target.value)}
             label="Location"
             // defaultValue="EUR"
             SelectProps={{
@@ -117,6 +119,7 @@ export const JobExclusionStep = (props) => {
 
           <TextField
             fullWidth
+            onChange={(e)=>updateValue("gender",e.target.value)}
             select
             label="Gender"
             // defaultValue="EUR"
@@ -136,6 +139,7 @@ export const JobExclusionStep = (props) => {
         <Grid xs={12} md={6}>
           <TextField
             fullWidth
+            onChange={(e)=>updateValue("agerange",e.target.value)}
             select
             label="Age Range"
             // defaultValue="EUR"
@@ -155,6 +159,7 @@ export const JobExclusionStep = (props) => {
         <Grid xs={12} md={6}>
           <TextField
             fullWidth
+            onChange={(e)=>updateValue("engagementrate",e.target.value)}
             select
             label="Engagement Rate"
             // defaultValue="EUR"
@@ -189,7 +194,7 @@ export const JobExclusionStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
-          sx={{px:5,py:2}}
+          sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
           variant="contained"
         >
@@ -197,8 +202,8 @@ export const JobExclusionStep = (props) => {
         </Button>
         <Button
           color="primary"
-          sx={{px:5,py:2}}
-          onClick={onBack}
+          sx={{px:5,py:2,fontSize:18}}
+          onClick={onNext}
         >
           Skip
         </Button>

@@ -55,7 +55,7 @@ const categoryOptions = [
 ];
 
 export const JobBriefSummeryStep = (props) => {
-  const { onBack, onNext, ...other } = props;
+  const { onBack, onNext,updateValue,jobDetail, ...other } = props;
   const [category, setCategory] = useState(categoryOptions[1].value);
   const [content, setContent] = useState('');
 
@@ -88,6 +88,7 @@ export const JobBriefSummeryStep = (props) => {
               fontSize: "18px"
             },
           }}
+          onChange= {(e)=>updateValue("title",e.target.value)}
         />
       </div>
 
@@ -98,6 +99,7 @@ export const JobBriefSummeryStep = (props) => {
           variant="filled"
           placeholder="Describe your goals and objectives of this job and what you require from an Influencer"
           multiline
+          onChange= {(e)=>updateValue("brief",e.target.value)}
           fullWidth
           inputProps={{
             style: {
@@ -116,6 +118,7 @@ export const JobBriefSummeryStep = (props) => {
             },
           }}
           select
+          onChange= {(e)=>updateValue("niche",e.target.value)}
           label="Niche"
           fullWidth
           SelectProps={{
@@ -129,52 +132,61 @@ export const JobBriefSummeryStep = (props) => {
             </option>
           ))}
         </TextField>
+        <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue={jobDetail.shoutoutonly}
+              onChange = {(e)=>updateValue("shoutoutonly",e.target.value)}
+              name="shoutout-group"
+            >
         <Stack direction="row">
-        <Grid
-            container
-            spacing={{
-              xs: 12,
-              lg: 12,
-              md:12
-            }}
-            style={{margin:0,width:'100%'}}
-          >
-            <Grid xs={12} md={6} sx={{padding:0}}>
-              <Card
-                sx={{
-                
-                    padding:'15px 20px',
-                  borderRadius: '1rem', alignItems: 'center', display:'flex',mb:2
-                }}
-              >
-                <FormControlLabel value="shotoutonly" control={<Radio />} label="Shoutout Only" />
-              </Card>
-            </Grid> 
-            <Grid xs={12} md={6} sx={{padding:0}}>
-              <Card
-                sx={{
-                  padding:'15px 20px',
-                  borderRadius: '1rem',  alignItems: 'center', display:'flex',mb:2
-                }}>
-                <FormControlLabel value="female" control={<Radio />} label="Content Creation & Shoutout" />
-              </Card>
-            </Grid>
 
+          <Grid
+              disableEqualOverflow
+              container
+              spacing={{
+                xs: 3,
+                lg: 4
+              }}
+              style={{margin:0,width:'100%'}}
+            >
 
+              <Grid xs={12} md={6} sx={{padding:0}}>
+                <Card
+                  spacing={3}
+                  sx={{
+                  
+                    padding:'15px 25px',
+                    borderRadius: '1rem', alignItems: 'center', display:'flex',mb:2
+                  }}
+                >
+                  <FormControlLabel value="shoutoutonly" control={<Radio />} label="Shoutout Only" />
+                </Card>
+                </Grid> 
+                <Grid xs={12} md={6} sx={{py:0}}>
+                <Card
 
+                  sx={{
+                    padding:'15px 25px',
+                    borderRadius: '1rem',  alignItems: 'center', display:'flex',mb:2
+                  }}>
+                  <FormControlLabel value="contentshoutout" control={<Radio />} label="Content Creation & Shoutout" />
+                </Card>
+                </Grid>
 
           </Grid>
         </Stack>
+        </RadioGroup>
+
       </Stack>
 
-      <div>
+      <div style={{marginTop:15}}> 
         <Button
           endIcon={(
             <SvgIcon>
               <ArrowRightIcon />
             </SvgIcon>
           )}
-          sx={{px:5,py:2}}
+          sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
           variant="contained"
         >

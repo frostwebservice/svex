@@ -9,26 +9,17 @@ import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon,
 
 const currencies = [
   {
-    value: 'budget range',
+    value: 'maxbudget',
+    label: 'Max Budget',
+  },
+  {
+    value: 'budgetrange',
     label: 'Budget Range',
   },
   {
-    value: 'Freelancer',
-    label: 'Freelancer',
-  },
-  {
-    value: 'Linkedin',
-    label: 'Linkedin',
-  },
-  {
-    value: 'Upwork',
-    label: 'Upwork',
-  },
-  {
-    value: 'Pinterest',
-    label: 'Pinterest',
-  },
-
+    value: 'flexible',
+    label: 'Flexible',
+  }
 ];
 
 const categoryOptions = [
@@ -50,17 +41,39 @@ const categoryOptions = [
 ];
 
 export const JobCompensationStep = (props) => {
-  const { onBack, onNext, ...other } = props;
+  const { onBack, onNext,jobDetail,updateValue, ...other } = props;
   const [category, setCategory] = useState(categoryOptions[1].value);
   const [content, setContent] = useState('');
-
+  // const [barter,setBarter] = useState("")
+  // const [revenue,setRevenue] = useState("")
+  // const [custom,setCustom] = useState("")
+  // const [budget,setBudget] = useState("maxbudget")
+  const [selected,setSelected] = useState("paid")
   const handleContentChange = useCallback((value) => {
     setContent(value);
   }, []);
   const handleCategoryChange = useCallback((category) => {
     setCategory(category);
   }, []);
+  const changehandler = (target,value) =>{
+    updateValue("paid","maxbudget")
+    updateValue("barter","")
+    updateValue("revenue","")
+    updateValue("custom","")
+    if(target=="paid"){
+      updateValue("paid",value)
+    }else if(target=="barter"){
+      updateValue("barter",value)
+    }else if(target=="revenue"){
+      updateValue("revenue",value)
+    }else if(target=="custom"){
+      updateValue("custom",value)
 
+    }
+  }
+  const changeSelected = (target)=>{
+    setSelected(target);
+  }
   return (
     <Stack
       spacing={3}
@@ -68,7 +81,12 @@ export const JobCompensationStep = (props) => {
       {...other}>
 
 
-
+    <RadioGroup
+      aria-labelledby="demo-radio-buttons-group-label"
+      defaultValue="paid"
+      onChange = {(e)=>changeSelected(e.target.value)}
+      name="shoutout-group"
+    >
       <Stack direction="row">
 
           <Grid
@@ -100,7 +118,8 @@ export const JobCompensationStep = (props) => {
                   },
                 }}
                 select
-                label="Rudget"
+                label="Budget"
+                onChange={(e)=>changehandler("paid",e.target.value)}
                 fullWidth
                 SelectProps={{
                   native: true,
@@ -130,6 +149,7 @@ export const JobCompensationStep = (props) => {
                 sx={{ height: '4rem' }}
                 fullWidth
                 label="Barter"
+                onChange={(e)=>changehandler("barter",e.target.value)}
                 name="barter"
                 placeholder="Enter"
                 inputProps={{
@@ -156,6 +176,7 @@ export const JobCompensationStep = (props) => {
                 sx={{ height: '4rem' }}
                 fullWidth
                 label="Revenue share"
+                onChange={(e)=>changehandler("revenue",e.target.value)}
                 name="revenue"
                 placeholder="Enter"
                 inputProps={{
@@ -182,11 +203,11 @@ export const JobCompensationStep = (props) => {
                 sx={{ height: '4rem' }}
                 fullWidth
                 label="Custom"
+                onChange={(e)=>changehandler("custom",e.target.value)}
                 name="custom"
                 placeholder="Enter"
                 inputProps={{
                   style: {
-
                     fontSize: "18px"
                   },
                 }}
@@ -195,7 +216,7 @@ export const JobCompensationStep = (props) => {
           </Grid>
       
       </Stack>
-
+    </RadioGroup>
 
       <Stack
         alignItems="center"
@@ -208,7 +229,7 @@ export const JobCompensationStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
-          sx={{px:5,py:2}}
+          sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
           variant="contained"
         >

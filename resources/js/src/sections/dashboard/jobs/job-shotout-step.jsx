@@ -8,7 +8,7 @@ import Download01Icon from '@untitled-ui/icons-react/build/esm/Download01';
 import Avatar from './Avatar.png';
 
 export const JobShotoutStep = (props) => {
-  const { onBack, onNext, ...other } = props;
+  const { onBack, onNext,updateValue,jobDetail, ...other } = props;
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
   const [startDate, setStartDate] = useState(new Date('2022-09-22T11:41:50'));
@@ -52,6 +52,8 @@ export const JobShotoutStep = (props) => {
             <TextField
               fullWidth
               label="Business URL"
+              onChange= {(e)=>updateValue("businessurl",e.target.value)}
+
               sx={{
             
                 borderRadius: '0.5rem', height: '4rem', alignItems: 'center'
@@ -62,6 +64,7 @@ export const JobShotoutStep = (props) => {
           </Grid>
           <Grid xs={12} md={6}>
             <TextField
+              onChange= {(e)=>updateValue("socialhandle",e.target.value)}
               fullWidth
               label="Social Media Handle"
               sx={{
@@ -153,7 +156,7 @@ export const JobShotoutStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
-          sx={{px:5,py:2}}
+          sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
           variant="contained"
         >
@@ -161,8 +164,8 @@ export const JobShotoutStep = (props) => {
         </Button>
         <Button
           color="primary"
-          onClick={onBack}
-          sx={{px:5,py:2}}
+          onClick={onNext}
+          sx={{px:5,py:2,fontSize:18}}
         >
           Skip
         </Button>

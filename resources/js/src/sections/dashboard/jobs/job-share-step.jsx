@@ -112,12 +112,6 @@ export const JobShareStep = (props) => {
           </TextField>
         </Grid>
       </Grid>
-
-
-
-
-
-
       <Stack
         alignItems="center"
         direction="row"
@@ -129,7 +123,7 @@ export const JobShareStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
-          sx={{px:5,py:2}}
+          sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
           variant="contained"
         >
@@ -137,8 +131,8 @@ export const JobShareStep = (props) => {
         </Button>
         <Button
           color="primary"
-          sx={{px:5,py:2}}
-          onClick={onBack}
+          sx={{px:5,py:2,fontSize:18}}
+          onClick={onNext}
         >
           Skip
         </Button>
