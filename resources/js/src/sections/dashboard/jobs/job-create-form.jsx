@@ -1,17 +1,20 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState,useEffect } from 'react';
 import CheckIcon from '@untitled-ui/icons-react/build/esm/Check';
 import { Avatar, Step, StepContent, StepLabel, Stepper, SvgIcon, Stack,Button,Typography } from '@mui/material';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 
 import { JobFinalStep } from './job-final-step';
 import { JobPreview } from './job-preview';
-import { JobBriefSummeryStep } from './job-briefsummery-step';
-import { JobSocialDetailStep } from './job-social-detail-step';
-import { JobCompensationStep } from './job-compensation-step';
-import { JobShotoutStep } from './job-shotout-step';
-import { JobExclusionStep } from './job-exclusions-step';
-import { JobShareStep } from './job-share-step';
-
+import  JobBriefSummeryStep  from './job-briefsummery-step';
+import  JobSocialDetailStep  from './job-social-detail-step';
+import  JobCompensationStep  from './job-compensation-step';
+import  JobShotoutStep  from './job-shotout-step';
+import  JobExclusionStep  from './job-exclusions-step';
+import JobShareStep  from './job-share-step';
+import axios from 'axios';
+import { updateJob } from '@/actions';
+import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 const StepIcon = (props) => {
   const { active, completed, icon } = props;
 
@@ -39,24 +42,32 @@ const StepIcon = (props) => {
     </Avatar>
   );
 };
-
-export const JobCreateForm = () => {
+const JobCreateForm = (props) => {
+  const {job} = props;
   const [activeStep, setActiveStep] = useState(0);
   const [review, setReview] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [lasthidden,setlasthidden] = useState("span");
-  const [jobDetail,setJobDetail] = useState({
-    title:"",brief:"",niche:"Acne and Skin Care",shoutoutonly:"shoutoutonly",socialtypes:"",ig:"",tt:"",yt:"",tw:"",pt:"",li:"",bw:"",paid:"maxbudget",barter:"",revenue:"",custom:"",businessurl:"",socialhandle:"",images:[],videos:[],articles:[],totalreach:"all",location:"all",gender:"all",agerange:"all",engagementrate:"all",favorites:"",outreachgroups:""
-  });
+  const email = JSON.parse(localStorage.getItem('email'))
+  const [socialtypes,setSocialTypes] = useState([])
+
+  const dispatch = useDispatch()
+
   const updateValue = (which,value) => {
-    let key = which;
-    setJobDetail(jobDetail=>({...jobDetail,[key]:value}))
+    dispatch(updateJob(which,value))
   }
-  console.log(jobDetail);
+
+
   const handleNext = useCallback(() => {
     setActiveStep((prevState) => prevState + 1);
-  }, []);
 
+  }, []);
+  useEffect(()=>{
+    if(activeStep==6) {
+      setReview(true);
+      setlasthidden("none")
+    }
+  },[activeStep])
   const handleBack = useCallback(() => {
     setActiveStep((prevState) => prevState - 1);
   }, []);
@@ -66,8 +77,12 @@ export const JobCreateForm = () => {
   })
 
   const handleComplete = useCallback(() => {
-    alert("complete")
-    setIsComplete(true);
+    console.log(job)
+    axios.post("/api/create_job", {job}, {
+    }).then(res => {
+      // console.log(res)
+    })
+
   }, []);
 
   const steps = useMemo(() => {
@@ -79,7 +94,6 @@ export const JobCreateForm = () => {
             onBack={handleBack}
             onNext={handleNext}
             updateValue={updateValue}
-            jobDetail={jobDetail}
           />
         )
       },
@@ -90,7 +104,8 @@ export const JobCreateForm = () => {
             onBack={handleBack}
             onNext={handleNext}
             updateValue = {updateValue}
-            jobDetail = {jobDetail}
+            socialtypes ={socialtypes}
+            setSocialTypes = {setSocialTypes}
           />
         )
       },
@@ -101,7 +116,6 @@ export const JobCreateForm = () => {
             onBack={handleBack}
             onNext={handleNext}
             updateValue = {updateValue}
-            jobDetail = {jobDetail}
           />
         )
       },
@@ -112,7 +126,6 @@ export const JobCreateForm = () => {
             onBack={handleBack}
             onNext={handleNext}
             updateValue = {updateValue}
-            jobDetail = {jobDetail}
           />
         )
       },
@@ -123,7 +136,6 @@ export const JobCreateForm = () => {
             onBack={handleBack}
             onNext={handleNext}
             updateValue = {updateValue}
-            jobDetail = {jobDetail}
           />
         )
       },
@@ -132,16 +144,15 @@ export const JobCreateForm = () => {
         content: (
           <JobShareStep
             onBack={handleBack}
-            onNext={handleReview}
+            onNext={handleNext}
             updateValue = {updateValue}
-            jobDetail = {jobDetail}
           />
         )
       },
       {
         label: 'Review',
         content: (
-          <JobFinalStep
+        <JobFinalStep
             onBack={handleBack}
             onNext={handleComplete}
           />
@@ -157,7 +168,6 @@ export const JobCreateForm = () => {
   return (
     <Stepper
       activeStep={activeStep}
-      review={review}
       orientation="vertical"
       sx={{
         '& .MuiStepConnector-line': {
@@ -227,3 +237,8 @@ export const JobCreateForm = () => {
     </Stepper>
   );
 };
+const mapStateToProps = state => ({
+  job: state.job
+});
+
+export default connect(mapStateToProps)(JobCreateForm);

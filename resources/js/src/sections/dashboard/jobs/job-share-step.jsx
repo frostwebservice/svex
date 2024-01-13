@@ -1,47 +1,43 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState ,useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import { Button, Chip, InputAdornment, Stack, SvgIcon, TextField, Typography,Unstable_Grid2 as Grid } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers';
-
-const currencies = [
-  {
-    value: 'Instagram',
-    label: 'Instagram',
-  },
-  {
-    value: 'Tik Toc',
-    label: 'TikToc',
-  },
-  {
-    value: 'youTube',
-    label: 'YouTube',
-  },
-  {
-    value: 'Twitter',
-    label: 'Twitter',
-  },
-  {
-    value: 'Pinterest',
-    label: 'Pinterest',
-  },
-  {
-    value: 'LinkedIn',
-    label: 'LinkedIn',
-  },
-  {
-    value: 'Blog/Website',
-    label: 'Blob/Website',
-  },
-];
-
-export const JobShareStep = (props) => {
-  const { onBack, onNext, ...other } = props;
+import { connect } from 'react-redux';
+const JobShareStep = (props) => {
+  const { onBack, onNext,updateValue,job, ...other } = props;
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
   const [startDate, setStartDate] = useState(new Date('2022-09-22T11:41:50'));
   const [endDate, setEndDate] = useState(new Date('2023-01-11T12:41:50'));
+  const email = JSON.parse(localStorage.getItem('email'));
+  const [selectedFavorite,setSelectedFavorite] = useState("")
+  const [selectedGroup,setSelectedGroup] = useState("")
+  const [favorites,setFavorites] = useState([])
+  const [groups,setGroups] = useState([])
+  useEffect(() => {
+    axios.post("/api/get_favs", {email:email}, {
+    }).then(res => {
+        setFavorites(res.data)
+        setSelectedFavorite(res.data[0]?.data[0]?.username)
+        upgradeFavorite(res.data[0]?.id)
+      })
+    axios.post("/api/getoutreachs", {email:email}, {
+      }).then(res => {
 
+        setGroups(res.data)
+        setSelectedGroup("Favorites")
+        upgradeGroup(0)
+        })
+  }, []);
+  const upgradeFavorite = (value) => {
+    setSelectedFavorite(value)
+    updateValue("favorites",value)
+  }
+  const upgradeGroup = (value) =>{
+    setSelectedGroup(value)
+    updateValue("outreachgroups",value)
+  }
   const handleStartDateChange = useCallback((date) => {
     setStartDate(date);
   }, []);
@@ -80,14 +76,16 @@ export const JobShareStep = (props) => {
             select
             label="Favorites"
             // defaultValue="EUR"
+            value={job.favorites}
+            onChange={(e)=>upgradeFavorite(e.target.value)}
             SelectProps={{
               native: true,
             }}
             variant="filled"
           >
-          {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
+          {favorites.map((option,index) => (
+            <option key={option.id} value={option.id}>
+              {option.data[0].username}
             </option>
           ))}
         </TextField>
@@ -97,6 +95,8 @@ export const JobShareStep = (props) => {
             fullWidth
             select
             label="Outreach Groups"
+            onChange={(e)=>upgradeGroup(e.target.value)}
+            value={job.outreachgroups}
             // defaultValue="EUR"
             SelectProps={{
               native: true,
@@ -104,11 +104,19 @@ export const JobShareStep = (props) => {
 
             variant="filled"
           >
-            {currencies.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+
+            {groups.map((group,index) => 
+              index==0?(
+                <option key="0" value="0">
+                Favorites
               </option>
-            ))}
+              ):(
+                <option key={index} value={group[0].id}>
+                {group[0].group_name}
+              </option>
+              )
+
+            )}
           </TextField>
         </Grid>
       </Grid>
@@ -145,3 +153,8 @@ JobShareStep.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func
 };
+const mapStateToProps = state => ({
+  job: state.job
+});
+
+export default connect(mapStateToProps)(JobShareStep);

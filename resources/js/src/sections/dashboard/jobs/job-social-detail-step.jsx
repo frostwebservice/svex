@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import { Button, Chip, Grid, InputAdornment, Stack, SvgIcon, TextField, Typography } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers';
-
+import { connect } from 'react-redux';
 import MultiSelectAll from "./MultiSelectAll";
 const currencies = [
   {
@@ -36,8 +36,8 @@ const currencies = [
   },
 ];
 
-export const JobSocialDetailStep = (props) => {
-  const { onBack, onNext,jobDetail,updateValue, ...other } = props;
+const JobSocialDetailStep = (props) => {
+  const { onBack, onNext,job,updateValue, ...other } = props;
   const [ighidden,setighidden] = useState("none");
   const [twhidden,settwhidden] = useState("none");
   const [tthidden,settthiden] = useState("none");
@@ -45,7 +45,10 @@ export const JobSocialDetailStep = (props) => {
   const [lihidden,setlihidden] = useState("none");
   const [bwhidden,setbwhidden] = useState("none");
   const [pthidden,setpthidden] = useState("none");
+  const [initialSelect, setInitialSelect] = useState([])
+
   const handleSelectionChange = (result) => {
+    console.log("called")
     let types= "";
     setighidden("none")
     settwhidden("none")
@@ -66,7 +69,6 @@ export const JobSocialDetailStep = (props) => {
     })
     updateValue("socialtypes",types.slice(0, -1))
   };
-  const [initialSelect, setInitialSelect] = useState([])
   return (
     <Stack
       spacing={3}
@@ -96,7 +98,7 @@ export const JobSocialDetailStep = (props) => {
                 sx={{ maxheight: "700px"}}
                 items={currencies}
                 selectAllLabel="Select All"
-                value={initialSelect}
+                value={job.typesarray}
                 // key={tmpkey}
                 placeholder="sss"
                 onChange={handleSelectionChange}
@@ -107,6 +109,7 @@ export const JobSocialDetailStep = (props) => {
           fullWidth
           label="Instagram"
           sx={{display:ighidden}}
+          value={job.ig}
           name="instagram"
           onChange={(e)=>updateValue("ig",e.target.value)}
         placeholder="3 Permanent Posts and 3 Stories every 24 hrs for 3 days"
@@ -114,6 +117,7 @@ export const JobSocialDetailStep = (props) => {
         <TextField
           fullWidth
           sx={{display:tthidden}}
+          value={job.tt}
           label="Tiktok"
           onChange={(e)=>updateValue("tt",e.target.value)}
           name="tiktok"
@@ -121,6 +125,7 @@ export const JobSocialDetailStep = (props) => {
         />
         <TextField
           sx={{display:ythidden}}
+          value={job.yt}
           fullWidth
           onChange={(e)=>updateValue("yt",e.target.value)}
           label="Youtube"
@@ -130,6 +135,7 @@ export const JobSocialDetailStep = (props) => {
         <TextField
           sx={{display:twhidden}}
           fullWidth
+          value={job.tw}
           label="Twitter"
           onChange={(e)=>updateValue("tw",e.target.value)}
           name="twitter"
@@ -138,6 +144,7 @@ export const JobSocialDetailStep = (props) => {
         <TextField
           fullWidth
           sx={{display:pthidden}}
+          value={job.pt}
           label="Pinterest"
           onChange={(e)=>updateValue("pt",e.target.value)}
           name="pinterest"
@@ -146,6 +153,7 @@ export const JobSocialDetailStep = (props) => {
         <TextField
           sx={{display:lihidden}}
           fullWidth
+          value={job.li}
           onChange={(e)=>updateValue("li",e.target.value)}
           label="LinkedIn"
           name="linkedin"
@@ -154,6 +162,7 @@ export const JobSocialDetailStep = (props) => {
         <TextField
           sx={{display:bwhidden}}
           fullWidth
+          value={job.bw}
           onChange={(e)=>updateValue("bw",e.target.value)}
           label="Blog/Website"
           name="blogwebsite"
@@ -197,3 +206,8 @@ JobSocialDetailStep.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func
 };
+const mapStateToProps = state => ({
+  job: state.job
+});
+
+export default connect(mapStateToProps)(JobSocialDetailStep);

@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
-import { JobCreateForm } from '@/sections/dashboard/jobs/job-create-form';
+import  JobCreateForm  from '@/sections/dashboard/jobs/job-create-form';
 
 const Page = () => {
   usePageView();

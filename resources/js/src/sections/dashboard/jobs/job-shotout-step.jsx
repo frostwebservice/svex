@@ -6,14 +6,19 @@ import { MobileDatePicker } from '@mui/x-date-pickers';
 import Upload01Icon from '@untitled-ui/icons-react/build/esm/Upload01';
 import Download01Icon from '@untitled-ui/icons-react/build/esm/Download01';
 import Avatar from './Avatar.png';
-
-export const JobShotoutStep = (props) => {
-  const { onBack, onNext,updateValue,jobDetail, ...other } = props;
+import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
+import { useDialog } from '@/hooks/use-dialog';
+import { connect } from 'react-redux';
+const JobShotoutStep = (props) => {
+  const { onBack, onNext,updateValue,job, ...other } = props;
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
   const [startDate, setStartDate] = useState(new Date('2022-09-22T11:41:50'));
   const [endDate, setEndDate] = useState(new Date('2023-01-11T12:41:50'));
-
+  const uploadDialog = useDialog();
+  const imageUpload = () => {
+    uploadDialog.handleOpen()
+  }
   const handleStartDateChange = useCallback((date) => {
     setStartDate(date);
   }, []);
@@ -51,6 +56,7 @@ export const JobShotoutStep = (props) => {
           <Grid xs={12} md={6}>
             <TextField
               fullWidth
+              value={job.businessurl}
               label="Business URL"
               onChange= {(e)=>updateValue("businessurl",e.target.value)}
 
@@ -66,6 +72,7 @@ export const JobShotoutStep = (props) => {
             <TextField
               onChange= {(e)=>updateValue("socialhandle",e.target.value)}
               fullWidth
+              value={job.socialhandle}
               label="Social Media Handle"
               sx={{
             
@@ -78,6 +85,7 @@ export const JobShotoutStep = (props) => {
         
         <Grid xs={12} md={6}>
           <Card
+            onClick={imageUpload}
             spacing={3}
             sx={{
             borderRadius: '0.5rem', height: '4rem', alignItems: 'center', display: 'flex'
@@ -164,12 +172,18 @@ export const JobShotoutStep = (props) => {
         </Button>
         <Button
           color="primary"
-          onClick={onNext}
+          onClick={onBack}
           sx={{px:5,py:2,fontSize:18}}
         >
           Skip
         </Button>
       </Stack>
+      <FileUploader
+        onClose={uploadDialog.handleClose}
+        open={uploadDialog.open}
+        // onUpgrade={onUpgrade}
+      // kind={kind}
+      />
     </Stack>
   );
 };
@@ -178,3 +192,8 @@ JobShotoutStep.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func
 };
+const mapStateToProps = state => ({
+  job: state.job
+});
+
+export default connect(mapStateToProps)(JobShotoutStep);

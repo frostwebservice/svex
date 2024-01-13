@@ -20,6 +20,15 @@ export const getUserProfile = (email) => dispatch => {
         .catch(err => console.log(err));
 
 }
+export const updateJob = (which,value) => dispatch =>{
+    dispatch({
+        type:"UPDATE_JOB",
+        payload:{
+            which:which,
+            value:value
+        }
+    })
+}
 export const getSocialProfile = (userdata) => dispatch => {
     let payload = {};
     axios

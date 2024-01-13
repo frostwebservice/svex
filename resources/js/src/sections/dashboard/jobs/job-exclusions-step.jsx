@@ -4,7 +4,7 @@ import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import { Button, Chip, InputAdornment, Stack, SvgIcon, TextField, Typography,Unstable_Grid2 as Grid } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import { categoryOptions, locationOptions, followersFromOptions, followersToOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions } from '../academy/data'
-
+import { connect } from 'react-redux';
 
 const currencies = [
   {
@@ -37,8 +37,8 @@ const currencies = [
   },
 ];
 
-export const JobExclusionStep = (props) => {
-  const { onBack, onNext,updateValue,jobDetail, ...other } = props;
+const JobExclusionStep = (props) => {
+  const { onBack, onNext,updateValue,job, ...other } = props;
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
   const [startDate, setStartDate] = useState(new Date('2022-09-22T11:41:50'));
@@ -80,6 +80,7 @@ export const JobExclusionStep = (props) => {
           <TextField
             fullWidth
             select
+            value={job.totalreach}
             label="Total Reach"
             onChange={(e)=>updateValue("totalreach",e.target.value)}
             // defaultValue="EUR"
@@ -97,6 +98,7 @@ export const JobExclusionStep = (props) => {
         </Grid>
         <Grid xs={12} md={6}>
           <TextField
+            value={job.location}
             fullWidth
             select
             onChange={(e)=>updateValue("location",e.target.value)}
@@ -118,6 +120,7 @@ export const JobExclusionStep = (props) => {
         <Grid xs={12} md={6}>
 
           <TextField
+            value={job.gender}
             fullWidth
             onChange={(e)=>updateValue("gender",e.target.value)}
             select
@@ -138,6 +141,7 @@ export const JobExclusionStep = (props) => {
         </Grid>
         <Grid xs={12} md={6}>
           <TextField
+            value={job.agerange}
             fullWidth
             onChange={(e)=>updateValue("agerange",e.target.value)}
             select
@@ -158,6 +162,7 @@ export const JobExclusionStep = (props) => {
         </Grid>
         <Grid xs={12} md={6}>
           <TextField
+            value={job.engagementrate}
             fullWidth
             onChange={(e)=>updateValue("engagementrate",e.target.value)}
             select
@@ -216,3 +221,8 @@ JobExclusionStep.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func
 };
+const mapStateToProps = state => ({
+  job: state.job
+});
+
+export default connect(mapStateToProps)(JobExclusionStep);

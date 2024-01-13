@@ -1,11 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon, Typography, TextField,Unstable_Grid2 as Grid } from '@mui/material';
 // import Radio from '@mui/material/Radio';
 // import RadioGroup from '@mui/material/RadioGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
-
+import { connect } from 'react-redux';
 
 const currencies =  [
   { label: 'Acne and Skin Care', value: 'Acne and Skin Care' },
@@ -54,20 +54,28 @@ const categoryOptions = [
   }
 ];
 
-export const JobBriefSummeryStep = (props) => {
-  const { onBack, onNext,updateValue,jobDetail, ...other } = props;
+const JobBriefSummeryStep = (props) => {
+  const { onBack, onNext,updateValue,job, ...other } = props;
+
   const [category, setCategory] = useState(categoryOptions[1].value);
   const [content, setContent] = useState('');
-
+  const [tempKey,setTempKey] = useState(true);
   const handleContentChange = useCallback((value) => {
     setContent(value);
   }, []);
   const handleCategoryChange = useCallback((category) => {
     setCategory(category);
   }, []);
+  useEffect(() =>{
+    if(tempKey){
+      setTempKey(!tempKey);
 
+    }
+  },[job])
   return (
     <Stack
+
+      key={tempKey}
       spacing={3}
       // sx={{ width: '44.6rem' }}
       {...other}>
@@ -80,6 +88,7 @@ export const JobBriefSummeryStep = (props) => {
         <TextField
           fullWidth
           label="Job Title"
+          value={job.title}
           name="jobTitle"
           placeholder="Discribe your job in brief"
           inputProps={{
@@ -99,6 +108,7 @@ export const JobBriefSummeryStep = (props) => {
           variant="filled"
           placeholder="Describe your goals and objectives of this job and what you require from an Influencer"
           multiline
+          value={job.brief}
           onChange= {(e)=>updateValue("brief",e.target.value)}
           fullWidth
           inputProps={{
@@ -118,6 +128,7 @@ export const JobBriefSummeryStep = (props) => {
             },
           }}
           select
+          value={job.niche}
           onChange= {(e)=>updateValue("niche",e.target.value)}
           label="Niche"
           fullWidth
@@ -134,7 +145,8 @@ export const JobBriefSummeryStep = (props) => {
         </TextField>
         <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={jobDetail.shoutoutonly}
+              defaultValue={job.shoutoutonly}
+              value={job.shoutoutonly}
               onChange = {(e)=>updateValue("shoutoutonly",e.target.value)}
               name="shoutout-group"
             >
@@ -201,3 +213,8 @@ JobBriefSummeryStep.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func
 };
+const mapStateToProps = state => ({
+  job: state.job
+});
+
+export default connect(mapStateToProps)(JobBriefSummeryStep);

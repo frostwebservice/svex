@@ -10,6 +10,7 @@ import onsearchReducer from '../reducers/onsearch';
 import outreachReducer from '../reducers/getoutreachs';
 import runsaveReducer from '../reducers/runsave.jsx';
 import favReducer from '../reducers/fav.jsx';
+import jobReducer from '../reducers/job.jsx';
 export const rootReducer = combineReducers({
   calendar: calendarReducer,
   chat: chatReducer,
@@ -21,5 +22,6 @@ export const rootReducer = combineReducers({
   runsavestate: runsaveReducer,
   searchresult: onsearchReducer,
   favs: favReducer,
-  outreachs:outreachReducer
+  outreachs:outreachReducer,
+  job:jobReducer
 });

@@ -6,7 +6,7 @@ import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon,
 // import RadioGroup from '@mui/material/RadioGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 
-
+import { connect } from 'react-redux';
 const currencies = [
   {
     value: 'maxbudget',
@@ -40,8 +40,8 @@ const categoryOptions = [
   }
 ];
 
-export const JobCompensationStep = (props) => {
-  const { onBack, onNext,jobDetail,updateValue, ...other } = props;
+const JobCompensationStep = (props) => {
+  const { onBack, onNext,job,updateValue, ...other } = props;
   const [category, setCategory] = useState(categoryOptions[1].value);
   const [content, setContent] = useState('');
   // const [barter,setBarter] = useState("")
@@ -120,6 +120,7 @@ export const JobCompensationStep = (props) => {
                 select
                 label="Budget"
                 onChange={(e)=>changehandler("paid",e.target.value)}
+                value={job.paid}
                 fullWidth
                 SelectProps={{
                   native: true,
@@ -150,6 +151,7 @@ export const JobCompensationStep = (props) => {
                 fullWidth
                 label="Barter"
                 onChange={(e)=>changehandler("barter",e.target.value)}
+                value={job.barter}
                 name="barter"
                 placeholder="Enter"
                 inputProps={{
@@ -174,6 +176,7 @@ export const JobCompensationStep = (props) => {
             <Grid xs={12} md={6}>
               <TextField
                 sx={{ height: '4rem' }}
+                value={job.revenue}
                 fullWidth
                 label="Revenue share"
                 onChange={(e)=>changehandler("revenue",e.target.value)}
@@ -203,6 +206,7 @@ export const JobCompensationStep = (props) => {
                 sx={{ height: '4rem' }}
                 fullWidth
                 label="Custom"
+                value={job.custom}
                 onChange={(e)=>changehandler("custom",e.target.value)}
                 name="custom"
                 placeholder="Enter"
@@ -252,3 +256,8 @@ JobCompensationStep.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func
 };
+const mapStateToProps = state => ({
+  job: state.job
+});
+
+export default connect(mapStateToProps)(JobCompensationStep);
