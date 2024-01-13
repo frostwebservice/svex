@@ -7,10 +7,15 @@ import { RouterLink } from '@/components/router-link';
 import { paths } from '@/paths';
 import { getInitials } from '@/utils/get-initials';
 import { CompanyJobs } from './company-jobs';
+import { connect } from 'react-redux';
 import "./manage.css";
-export const SimpleJobCard = (props) => {
-  const { company, ...other } = props;
+const SimpleJobCard = (props) => {
+  const { jobs,order, ...other } = props;
 
+  const job = jobs?.filter(obj => {
+    return obj.id == order
+  })
+  console.log(job)
   return (
     <Card {...other}>
       <CardContent>
@@ -32,7 +37,7 @@ export const SimpleJobCard = (props) => {
               >
                 {/* <div className='top'> */}
                   <Typography variant="subtitle1" sx={{fontSize:16}}>
-                    Instagram Influencer for a clothing brand who can market our products for a week
+                    {job[0]?.title}
                   </Typography>
                   <Stack
                     alignItems="center"
@@ -109,6 +114,9 @@ export const SimpleJobCard = (props) => {
   );
 };
 
-SimpleJobCard.propTypes = {
-  company: PropTypes.object.isRequired
-};
+
+const mapStateToProps = state => ({
+  jobs: state.jobs.jobs
+});
+
+export default connect(mapStateToProps)(SimpleJobCard);

@@ -25,8 +25,10 @@ import { JobCard } from '@/sections/dashboard/jobs/company-card';
 import { JobListSearch } from '@/sections/dashboard/jobs/job-list-search';
 import { useSettings } from '@/hooks/use-settings';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
-
+import { getJobs } from '@/actions';
+import { useDispatch } from 'react-redux';
 import "./manage.css";
+import { connect } from 'react-redux';
 const useCompanies = () => {
   const isMounted = useMounted();
   const [companies, setCompanies] = useState([]);
@@ -56,15 +58,21 @@ const tabs = [
   { label: "Active", value: "active" },
   { label: "Archived", value: "archived" },
 ] 
-const Page = () => {
+const Page = (props) => {
+  const {jobs} = props;
   const companies = useCompanies();
   const settings = useSettings();
+  const email = JSON.parse(localStorage.getItem('email'))
   const [currentTab, setCurrentTab] = useState("all");
   const handleTabsChange = useCallback((event, value) => {
     setCurrentTab(value);
   }, []);
+  const dispatch = useDispatch();
+  console.log(jobs);
   usePageView();
-
+  useEffect(() => {
+    dispatch(getJobs(email,1));
+  }, []);
   return (
     <>
       <Seo title="Dashboard: Job Browse" />
@@ -109,10 +117,11 @@ const Page = () => {
                     sx={{ mt: 4 }}
                   >
 
-                    {companies.map((company) => (
+                    {jobs?.map((job) => (
                       <JobCard
-                        key={company.id}
-                        company={company}
+                        key={job.id}
+                        job={job}
+                        active="all"
                       />
                     ))}
                     <Stack
@@ -140,10 +149,82 @@ const Page = () => {
                 </>
               )}
               {currentTab == 'active' && (
-                <></>
+                <>
+                  <Stack
+                    spacing={4}
+                    sx={{ mt: 4 }}
+                  >
+
+                    {jobs?.map((job) => job.is_active==1?(
+                      <JobCard
+                        key={job.id}
+                        job={job}
+                        active="active"
+                      />
+                    ):(<></>))}
+                    <Stack
+                      alignItems="center"
+                      direction="row"
+                      justifyContent="flex-end"
+                      spacing={2}
+                      sx={{
+                        px: 3,
+                        py: 2
+                      }}
+                    >
+                      <IconButton disabled>
+                        <SvgIcon fontSize="small">
+                          <ChevronLeftIcon />
+                        </SvgIcon>
+                      </IconButton>
+                      <IconButton>
+                        <SvgIcon fontSize="small">
+                          <ChevronRightIcon />
+                        </SvgIcon>
+                      </IconButton>
+                    </Stack>
+                  </Stack>
+                </>
               )}
               {currentTab == 'archived' && (
-                <></>
+                <>
+             
+                  <Stack
+                    spacing={4}
+                    sx={{ mt: 4 }}
+                  >
+
+                    {jobs?.map((job) => job.is_active==0?(
+                      <JobCard
+                        key={job.id}
+                        job={job}
+                        active="archived"
+                      />
+                    ):(<></>))}
+                    <Stack
+                      alignItems="center"
+                      direction="row"
+                      justifyContent="flex-end"
+                      spacing={2}
+                      sx={{
+                        px: 3,
+                        py: 2
+                      }}
+                    >
+                      <IconButton disabled>
+                        <SvgIcon fontSize="small">
+                          <ChevronLeftIcon />
+                        </SvgIcon>
+                      </IconButton>
+                      <IconButton>
+                        <SvgIcon fontSize="small">
+                          <ChevronRightIcon />
+                        </SvgIcon>
+                      </IconButton>
+                    </Stack>
+                  </Stack>
+             
+                </>
               )}
             </Box>
             <Stack
@@ -172,4 +253,8 @@ const Page = () => {
   );
 };
 
-export default Page;
+const mapStateToProps = state => ({
+  jobs: state.jobs.jobs
+});
+
+export default connect(mapStateToProps)(Page);

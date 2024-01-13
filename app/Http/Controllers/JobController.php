@@ -28,6 +28,21 @@ class JobController extends Controller
         $res = DB::table("jobs")->insert($data);
         print_r($res);
     }
+    public function get_jobs(Request $request){
+        $email= $request->email;
+        $active = $request->active;
+        $res = DB::table("jobs")
+        ->where("jobs.email",$email)
+        ->join('users','users.email','=','jobs.email')
+        ->select(
+            'users.*',
+            'jobs.*',
+            "users.email as uemail"
+        )
+        ->get()
+        ->toArray();
+        print_r(json_encode($res));
+    }
 
 
 }

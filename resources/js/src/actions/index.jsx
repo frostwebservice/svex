@@ -29,6 +29,15 @@ export const updateJob = (which,value) => dispatch =>{
         }
     })
 }
+export const getJobs = (email,active) => dispatch =>{
+    axios
+        .post("/api/get_jobs", {email,active})
+        .then(res => dispatch({
+            type: 'GET_JOBS',
+            payload: res.data
+        }))
+        .catch(err => console.log(err));
+}
 export const getSocialProfile = (userdata) => dispatch => {
     let payload = {};
     axios

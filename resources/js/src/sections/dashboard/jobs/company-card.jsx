@@ -6,11 +6,118 @@ import { Avatar, Box, Card, CardContent, Link, Stack, SvgIcon, Typography,Divide
 import { RouterLink } from '@/components/router-link';
 import { paths } from '@/paths';
 import { getInitials } from '@/utils/get-initials';
-import { CompanyJobs } from './company-jobs';
 import "./manage.css";
 export const JobCard = (props) => {
-  const { company, ...other } = props;
+  const { job,active, ...other } = props;
+  const getBudget = (job)=>{
+    if(job.barter) return job.barter;
+    else if(job.revenue) return job.revenue;
+    else if (job.custom) return job.custom;
+    else{
+      if(job.paid=="maxbudget")return "Max Budget";
+      else if(job.paid=="flexible") return "Flexible";
+      else return "Budget Range";
+    };
+  }
+  const getPaymentType = (job)=>{
+    if(job.barter) return "Barter";
+    else if(job.revenue) return "Revenue";
+    else if (job.custom) return "Custom";
+    else return "Paid";
+  }
+  const getSocialMediaTypes=(str)=>{
+    let strs = str?.split(",");
+    let res = "";
+    for(var i=0;i<strs?.length;i++){
+      res+= strs[i].charAt(0)?.toUpperCase()+strs[i].slice(1);
+      if(i!=strs.length-1) res+=", ";
+    }
+    return res;
+  }
+  const timeSince=(date)=> {
 
+    var seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
+  
+    var interval = seconds / 31536000;
+  
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+  const renderSocial = (job) => {
+    return(
+      <>
+      {job.ig?(<Typography
+        color="text.secondary"
+        style={{ marginLeft:40 }}
+        variant="caption"
+      >
+        Instagram • {job.ig}
+      </Typography>):(<></>)}
+      {job.tt?(<Typography
+        color="text.secondary"
+        style={{ marginLeft:40 }}
+        variant="caption"
+      >
+        Tiktok • {job.tt}
+      </Typography>):(<></>)}
+      {job.yt?(<Typography
+        color="text.secondary"
+        style={{ marginLeft:40 }}
+        variant="caption"
+      >
+        Youtube • {job.yt}
+      </Typography>):(<></>)}
+      {job.tw?(<Typography
+        color="text.secondary"
+        style={{ marginLeft:40 }}
+        variant="caption"
+      >
+        Twitter • {job.tw}
+      </Typography>):(<></>)}
+      {job.pt?(<Typography
+        color="text.secondary"
+        style={{ marginLeft:40 }}
+        variant="caption"
+      >
+        Pinterest • {job.pt}
+      </Typography>):(<></>)}
+      {job.li?(<Typography
+        color="text.secondary"
+        style={{ marginLeft:40 }}
+        variant="caption"
+      >
+        LinkedIn • {job.li}
+      </Typography>):(<></>)}
+      {job.bw?(<Typography
+        color="text.secondary"
+        style={{ marginLeft:40 }}
+        variant="caption"
+      >
+        Blog/Website • {job.bw}
+      </Typography>):(<></>)}
+      </>
+
+
+    )
+  }
   return (
     <Card {...other}>
       <CardContent>
@@ -26,11 +133,11 @@ export const JobCard = (props) => {
           <Stack direction="row" spacing={3}>
             <Avatar
               component={RouterLink}
-              href={paths.dashboard.jobs.companies.details}
-              src={company.logo}
-              variant="rounded"
+              // href={paths.dashboard.jobs.companies.details}
+              src={job.avatar}
+              variant="circle"
             >
-              {getInitials(company.name)}
+              {getInitials(job.firstname)}
             </Avatar>
             <div>
               <Link
@@ -39,10 +146,10 @@ export const JobCard = (props) => {
                 href={paths.dashboard.jobs.companies.details}
                 variant="h6"
               >
-                {company.name}
+                {job.fullname}
               </Link>
               <Typography variant="body2">
-                {company.shortDescription}
+                Established since {job.companyfounded}
               </Typography>
               <Stack
                 alignItems="center"
@@ -64,7 +171,8 @@ export const JobCard = (props) => {
                     noWrap
                     variant="overline"
                   >
-                    {company.employees}
+                    {/* {company.employees} */}
+                    25 - 75
                   </Typography>
                 </Stack>
                 {/* <Stack
@@ -84,7 +192,7 @@ export const JobCard = (props) => {
                     /5
                   </Typography>
                 </Stack> */}
-                {company.isVerified && (
+                {job.verification_token && (
                   <Stack
                     alignItems="center"
                     direction="row"
@@ -116,7 +224,7 @@ export const JobCard = (props) => {
           </Stack>
           <Stack direction="row">
             <Typography variant="text.secondary" sx={{fontSize:16,pt:0.8}}>
-              Open
+              {job.is_active==1?"Open":"Close"}
             </Typography>
             <Switch
               checked={true}
@@ -142,7 +250,7 @@ export const JobCard = (props) => {
               >
                 {/* <div className='top'> */}
                   <Typography variant="subtitle1" sx={{fontSize:16}}>
-                    Job Title: Instagram Influencer for a clothing brand who can market our products for a week
+                    Job Title: {job.title}
                   </Typography>
                   <Stack
                     alignItems="center"
@@ -155,9 +263,11 @@ export const JobCard = (props) => {
                       variant="caption"
                       style={{ fontSize: 12 }}
                     >
-                      5d ago
+                      {timeSince(job.created_at)} ago
                     </Typography>
                     <Button size="small"
+                      component={RouterLink}
+                      href={"/dashboard/jobs/manage/"+job.id}
                       style={{ fontSize: 14 }}
                     >
                       Manage
@@ -168,7 +278,7 @@ export const JobCard = (props) => {
 
               </Stack>
               <Typography variant="inherit" sx={{fontSize:14,px:2}}>
-                  Job Brief: We are seeking a talented and creative Marketing Specialist with a strong focus on brand development to join our dynamic marketing team. As a Marketing Specialist, you will be responsible for developing and executing strategic marketing initiatives that enhance our brand presence, engage our target audience, and drive business growth. This role requires a deep understanding of brand strategy, creative thinking, and the ability to translate marketing objectives into impactful campaigns across various channels.
+                  Job Brief: {job.brief}
               </Typography>
             </Stack>
           </Card>
@@ -191,49 +301,36 @@ export const JobCard = (props) => {
                     color="text.secondary"
                     variant="caption"
                   >
-                    Niche • Clothing
+                    Niche • {job.niche}
                   </Typography>
                   <Typography
                     color="text.secondary"
                     variant="caption"
                     style={{ marginLeft:40 }}
                   >
-                    Social media types • Instagram, Tiktok 
+                    Social media types • {getSocialMediaTypes(job.socialtypes)}
+                  </Typography>
+                  {renderSocial(job)}
+                  <Typography
+                    color="text.secondary"
+                    style={{ marginLeft:40 }}
+                    variant="caption"
+                  >
+                    Budget • {getBudget(job)}
                   </Typography>
                   <Typography
                     color="text.secondary"
                     style={{ marginLeft:40 }}
                     variant="caption"
                   >
-                    Instagram • 3 permanent posts & # stories
+                    Job type • {job.shoutoutonly=="shoutoutonly"?"Shoutout Only":"Content Creation & Shoutouts"}
                   </Typography>
                   <Typography
                     color="text.secondary"
                     style={{ marginLeft:40 }}
                     variant="caption"
                   >
-                    Tiktok • 1 permanent tiktok post
-                  </Typography>
-                  <Typography
-                    color="text.secondary"
-                    style={{ marginLeft:40 }}
-                    variant="caption"
-                  >
-                    Budget • $400-$600
-                  </Typography>
-                  <Typography
-                    color="text.secondary"
-                    style={{ marginLeft:40 }}
-                    variant="caption"
-                  >
-                    Job type • Content creation & Shoutouts
-                  </Typography>
-                  <Typography
-                    color="text.secondary"
-                    style={{ marginLeft:40 }}
-                    variant="caption"
-                  >
-                    Payment type • Paid
+                    Payment type • {getPaymentType(job)}
                   </Typography>
                 </div>
 
@@ -277,5 +374,5 @@ export const JobCard = (props) => {
 };
 
 JobCard.propTypes = {
-  company: PropTypes.object.isRequired
+  job: PropTypes.object.isRequired
 };

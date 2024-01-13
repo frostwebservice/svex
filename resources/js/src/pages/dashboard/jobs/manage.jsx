@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import ChevronLeftIcon from '@untitled-ui/icons-react/build/esm/ChevronLeft';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
+
 import {
   Box,
   Button,
@@ -21,12 +22,14 @@ import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
-import { SimpleJobCard } from '@/sections/dashboard/jobs/simplejobcard';
+import SimpleJobCard  from '@/sections/dashboard/jobs/simplejobcard';
 import { AppCard } from './app_card';
 import { JobListSearch } from '@/sections/dashboard/jobs/job-list-search';
 import { useSettings } from '@/hooks/use-settings';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import EmptyInvited from './empty_invited';
+import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
+import { connect } from 'react-redux';
 import "./manage.css";
 const useCompanies = () => {
   const isMounted = useMounted();
@@ -58,7 +61,8 @@ const tabs = [
   { label: "Offer", value: "offer" },
   { label: "Invited Influencers", value: "invitedinfluencers" },
 ] 
-const Page = () => {
+const Page = (props) => {
+  const {jobs} = props
   const companies = useCompanies();
   const settings = useSettings();
   const [currentTab, setCurrentTab] = useState("applicants");
@@ -81,11 +85,21 @@ const Page = () => {
           <Typography variant="h4">
             Manage Jobs
           </Typography>
-          <Typography variant="text.secondary" sx={{mt:20}}>
+          <Button size="small"
+            sx={{py:3}}
+            component={RouterLink}
+            href={"/dashboard/jobs"}
+            style={{ fontSize: 14 }}
+          >
+            <SvgIcon fontSize='2'>
+                <ArrowLeftIcon />
+              </SvgIcon>
             Back
-          </Typography>
+          </Button>
+
           <SimpleJobCard
-            company={companies.length>0?companies[0]:{}}
+            order = {window.location.pathname.split("/")[window.location.pathname.split("/").length-1]}
+          
             />
           <div className='top'>
             <Tabs
@@ -162,4 +176,9 @@ const Page = () => {
   );
 };
 
-export default Page;
+
+const mapStateToProps = state => ({
+  jobs: state.jobs.jobs
+});
+
+export default connect(mapStateToProps)(Page);

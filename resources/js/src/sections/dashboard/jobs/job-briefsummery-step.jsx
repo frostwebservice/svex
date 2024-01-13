@@ -181,7 +181,7 @@ const JobBriefSummeryStep = (props) => {
                     padding:'15px 25px',
                     borderRadius: '1rem',  alignItems: 'center', display:'flex',mb:2
                   }}>
-                  <FormControlLabel value="contentshoutout" control={<Radio />} label="Content Creation & Shoutout" />
+                  <FormControlLabel value="contentshoutout" control={<Radio />} label="Content Creation & Shoutouts" />
                 </Card>
                 </Grid>
 
