@@ -48,7 +48,6 @@ const JobSocialDetailStep = (props) => {
   const [initialSelect, setInitialSelect] = useState([])
 
   const handleSelectionChange = (result) => {
-    console.log("called")
     let types= "";
     setighidden("none")
     settwhidden("none")
@@ -68,6 +67,7 @@ const JobSocialDetailStep = (props) => {
       types+=res.value+","
     })
     updateValue("socialtypes",types.slice(0, -1))
+    updateValue("typesarray",result)
   };
   return (
     <Stack

@@ -40,7 +40,7 @@ export const JobFinalStep = (props) => {
         sx={{float:'right'}}
       >
         <Button
-          sx={{px:5,py:2}}
+          sx={{px:5,py:2,fontSize:18}}
           endIcon={(
             <SvgIcon>
               <ArrowRightIcon />

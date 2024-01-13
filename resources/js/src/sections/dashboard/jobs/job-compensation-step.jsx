@@ -84,7 +84,8 @@ const JobCompensationStep = (props) => {
     <RadioGroup
       aria-labelledby="demo-radio-buttons-group-label"
       defaultValue="paid"
-      onChange = {(e)=>changeSelected(e.target.value)}
+      value={job.payselected}
+      onChange = {(e)=>updateValue("payselected",e.target.value)}
       name="shoutout-group"
     >
       <Stack direction="row">

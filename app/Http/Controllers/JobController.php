@@ -20,8 +20,11 @@ class JobController extends Controller
     //
     private $status_code = 200;
     public function create_job(Request $request)
-    {   print_r($request->job);die();
+    {   
+        
         $data = $request->job;
+        unset($data["typesarray"]);
+        unset($data["payselected"]);
         $res = DB::table("jobs")->insert($data);
         print_r($res);
     }

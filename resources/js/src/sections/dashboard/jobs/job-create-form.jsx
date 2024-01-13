@@ -15,6 +15,7 @@ import axios from 'axios';
 import { updateJob } from '@/actions';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 const StepIcon = (props) => {
   const { active, completed, icon } = props;
 
@@ -50,7 +51,11 @@ const JobCreateForm = (props) => {
   const [lasthidden,setlasthidden] = useState("span");
   const email = JSON.parse(localStorage.getItem('email'))
   const [socialtypes,setSocialTypes] = useState([])
-
+  const navigate = useNavigate()
+  const [temp,setTemp] = useState({
+    email:"email",
+    test:"sdf"
+  })
   const dispatch = useDispatch()
 
   const updateValue = (which,value) => {
@@ -67,6 +72,7 @@ const JobCreateForm = (props) => {
       setReview(true);
       setlasthidden("none")
     }
+    updateValue("email",email)
   },[activeStep])
   const handleBack = useCallback(() => {
     setActiveStep((prevState) => prevState - 1);
@@ -76,19 +82,52 @@ const JobCreateForm = (props) => {
     setlasthidden("none")
   })
 
-  const handleComplete = useCallback(() => {
-    console.log(job)
+  const handleComplete = () => {
+
     axios.post("/api/create_job", {job}, {
     }).then(res => {
-      // console.log(res)
+      // setIsComplete(true)
+      console.log(res)
+      updateValue("email","");
+      updateValue("title","");
+      updateValue("brief","");
+      updateValue("niche","Acne and Skin Care");
+      updateValue("shoutoutonly","shoutoutonly");
+      updateValue("typesarray",[]);
+      updateValue("socialtypes","");
+      updateValue("ig","");
+      updateValue("tt","");
+      updateValue("ty","");
+      updateValue("tw","");
+      updateValue("pt","");
+      updateValue("li","");
+      updateValue("bw","");
+      updateValue("payselected","paid");
+      updateValue("paid","maxbudget");
+      updateValue("barter","");
+      updateValue("revenue","");
+      updateValue("custom","");
+      updateValue("businessurl","");
+      updateValue("socialhandle","");
+      updateValue("images","");
+      updateValue("videos","");
+      updateValue("articles","");
+      updateValue("totalreach","all");
+      updateValue("location","all");
+      updateValue("gender","all");
+      updateValue("agerange","all");
+      updateValue("engagementrate","all");
+      updateValue("favorites","");
+      updateValue("outreachgroups","");
+      navigate("/dashboard/jobs")
     })
 
-  }, []);
+  }
 
   const steps = useMemo(() => {
     return [
       {
-        label: ' Brief Summery',
+        label: 'Brief Summery',
         content: (
           <JobBriefSummeryStep
             onBack={handleBack}
