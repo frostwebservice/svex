@@ -30,7 +30,9 @@ import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import EmptyInvited from './empty_invited';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import { connect } from 'react-redux';
+import { InfCard } from './inf_card';
 import "./manage.css";
+import "./inf_finder.css"
 const useCompanies = () => {
   const isMounted = useMounted();
   const [companies, setCompanies] = useState([]);
@@ -66,11 +68,33 @@ const Page = (props) => {
   const companies = useCompanies();
   const settings = useSettings();
   const [currentTab, setCurrentTab] = useState("applicants");
+  const [applicants,setApplicants] = useState([])
+  const [invited,setInvited] = useState([])
+  const [rendered,setRendered] = useState(false)
+  const [renderedinvited,setRenderedInvited] = useState(false)
+  const email = JSON.parse(localStorage.getItem('email'));
+
   const handleTabsChange = useCallback((event, value) => {
     setCurrentTab(value);
   }, []);
   usePageView();
-
+  const jobID = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
+  if(!rendered){
+    axios.post('/api/get_applicants', {jobID:jobID,email:email})
+    .then((response) => {
+      setApplicants(response.data);
+      if(response.data.length>0) setRendered(true);
+    }).catch(e => {
+    });
+  }
+  if(!renderedinvited){
+    axios.post('/api/get_invited', {jobID:jobID,email:email})
+    .then((response) => {
+      setInvited(response.data);
+      if(response.data.length>0) setRenderedInvited(true);
+    }).catch(e => {
+    });
+  }
   return (
     <>
       <Seo title="Dashboard: Job Browse" />
@@ -83,7 +107,7 @@ const Page = (props) => {
       >
         <Container  maxWidth={settings.stretch ? false : 'xl'}>
           <Typography variant="h4">
-            Manage Jobs
+            Manage Job
           </Typography>
           <Button size="small"
             sx={{py:3}}
@@ -99,9 +123,8 @@ const Page = (props) => {
 
           <SimpleJobCard
             order = {window.location.pathname.split("/")[window.location.pathname.split("/").length-1]}
-          
             />
-          <div className='top'>
+          <div className=''>
             <Tabs
               indicatorColor="primary"
               onChange={handleTabsChange}
@@ -126,19 +149,60 @@ const Page = (props) => {
             <Box>
               {currentTab == 'applicants' && (
                 <>
-                {/* <AppCard /> */}
+                {applicants?.map((applicant)=>{
+                  return (
+                  <InfCard 
+                    key={applicant.id}
+                    influencer={applicant.inf}
+                    currentTab={applicant.tab}
+                    invited = "0"
+                  />
+                  )
+                })}
+                
                 </>
               )}
               {currentTab == 'joblisting' && (
                 <></>
               )}
               {currentTab == 'offer' && (
-                <></>
+                <>
+                {applicants?.map((applicant)=>{
+                  return (
+                  <InfCard 
+                    key={applicant.id}
+                    influencer={applicant.inf}
+                    currentTab={applicant.tab}
+                    invited="0"
+                  />
+                  )
+                })}
+                
+                </>
               )}
               {currentTab == 'invitedinfluencers' && (
                 <>
-                    <EmptyInvited />
+                {invited.length==0?(
+                  <>
+                      <EmptyInvited />
+                  </>
+                ):(
+                  <>
+                  {invited?.map((applicant)=>{
+                  return (
+                  <InfCard 
+                    key={applicant.id}
+                    influencer={applicant.inf}
+                    currentTab={applicant.tab}
+                    createdAt = {applicant.updated_at}
+                    invited = "1"
+                  />
+                  )
+                })}
+                  </>
+                )}
                 </>
+
               )}
             </Box>
 
