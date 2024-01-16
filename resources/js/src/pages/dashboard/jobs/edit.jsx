@@ -1,11 +1,19 @@
+import { useCallback, useEffect, useState } from 'react';
 import { Box, Stack, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import  JobCreateForm  from '@/sections/dashboard/jobs/job-create-form';
+import { getCurrentJob } from '@/actions';
+import { useDispatch } from 'react-redux';
 
 const Page = () => {
   usePageView();
+  const dispatch= useDispatch();
+  const jobID = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
 
+  useEffect(() =>{
+    dispatch(getCurrentJob(jobID));
+  },[])
   return (
     <>
       <Seo title="Dashboard: Job Create" />
@@ -50,9 +58,9 @@ const Page = () => {
               spacing={3}
             >
               <Typography variant="h4">
-                Create Job Ad
+                Edit Job Listing
               </Typography>
-              <JobCreateForm isEdit={false} jobID={0}/>
+              <JobCreateForm isEdit={true} jobID = {jobID}/>
             </Stack>
           </Grid>
         </Grid>

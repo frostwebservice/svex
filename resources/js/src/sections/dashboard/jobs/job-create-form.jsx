@@ -16,6 +16,7 @@ import { updateJob } from '@/actions';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import "./create.css";
 const StepIcon = (props) => {
   const { active, completed, icon } = props;
 
@@ -44,31 +45,35 @@ const StepIcon = (props) => {
   );
 };
 const JobCreateForm = (props) => {
-  const {job} = props;
+  const {job,isEdit,jobID} = props;
   const [activeStep, setActiveStep] = useState(0);
   const [review, setReview] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [lasthidden,setlasthidden] = useState("span");
   const email = JSON.parse(localStorage.getItem('email'))
   const [socialtypes,setSocialTypes] = useState([])
+  const [checkEdit,setCheckEdit] = useState(false);
   const navigate = useNavigate()
   const [temp,setTemp] = useState({
     email:"email",
     test:"sdf"
   })
-  const dispatch = useDispatch()
 
+  const dispatch = useDispatch()
+  if(!checkEdit&&isEdit){
+    setReview(isEdit);
+    setCheckEdit(true)
+  }
   const updateValue = (which,value) => {
     dispatch(updateJob(which,value))
   }
-
 
   const handleNext = useCallback(() => {
     setActiveStep((prevState) => prevState + 1);
 
   }, []);
   useEffect(()=>{
-    if(activeStep==6) {
+    if(activeStep==6||review) {
       setReview(true);
       setlasthidden("none")
     }
@@ -81,13 +86,9 @@ const JobCreateForm = (props) => {
     setReview(true);
     setlasthidden("none")
   })
-
-  const handleComplete = () => {
-
-    axios.post("/api/create_job", {job}, {
+  const handleUpdate = () => {
+    axios.post("/api/update_job", {job:job,jobID:jobID}, {
     }).then(res => {
-      // setIsComplete(true)
-      console.log(res)
       updateValue("email","");
       updateValue("title","");
       updateValue("brief","");
@@ -97,7 +98,45 @@ const JobCreateForm = (props) => {
       updateValue("socialtypes","");
       updateValue("ig","");
       updateValue("tt","");
-      updateValue("ty","");
+      updateValue("yt","");
+      updateValue("tw","");
+      updateValue("pt","");
+      updateValue("li","");
+      updateValue("bw","");
+      updateValue("payselected","paid");
+      updateValue("paid","maxbudget");
+      updateValue("barter","");
+      updateValue("revenue","");
+      updateValue("custom","");
+      updateValue("businessurl","");
+      updateValue("socialhandle","");
+      updateValue("images","");
+      updateValue("videos","");
+      updateValue("articles","");
+      updateValue("totalreach","all");
+      updateValue("location","all");
+      updateValue("gender","all");
+      updateValue("agerange","all");
+      updateValue("engagementrate","all");
+      updateValue("favorites","");
+      updateValue("outreachgroups","");
+      navigate("/dashboard/jobs")
+    })
+  }
+  const handleComplete = () => {
+
+    axios.post("/api/create_job", {job}, {
+    }).then(res => {
+      updateValue("email","");
+      updateValue("title","");
+      updateValue("brief","");
+      updateValue("niche","Acne and Skin Care");
+      updateValue("shoutoutonly","shoutoutonly");
+      updateValue("typesarray",[]);
+      updateValue("socialtypes","");
+      updateValue("ig","");
+      updateValue("tt","");
+      updateValue("yt","");
       updateValue("tw","");
       updateValue("pt","");
       updateValue("li","");
@@ -133,6 +172,7 @@ const JobCreateForm = (props) => {
             onBack={handleBack}
             onNext={handleNext}
             updateValue={updateValue}
+            isReview={review}
           />
         )
       },
@@ -142,6 +182,7 @@ const JobCreateForm = (props) => {
           <JobSocialDetailStep
             onBack={handleBack}
             onNext={handleNext}
+            isReview={review}
             updateValue = {updateValue}
             socialtypes ={socialtypes}
             setSocialTypes = {setSocialTypes}
@@ -153,6 +194,7 @@ const JobCreateForm = (props) => {
         content: (
           <JobCompensationStep
             onBack={handleBack}
+            isReview={review}
             onNext={handleNext}
             updateValue = {updateValue}
           />
@@ -162,6 +204,7 @@ const JobCreateForm = (props) => {
         label: 'Shoutout Instructions',
         content: (
           <JobShotoutStep
+            isReview={review}
             onBack={handleBack}
             onNext={handleNext}
             updateValue = {updateValue}
@@ -172,6 +215,7 @@ const JobCreateForm = (props) => {
         label: 'Exclusions',
         content: (
           <JobExclusionStep
+            isReview={review}
             onBack={handleBack}
             onNext={handleNext}
             updateValue = {updateValue}
@@ -182,6 +226,7 @@ const JobCreateForm = (props) => {
         label: 'Share',
         content: (
           <JobShareStep
+            isReview={review}
             onBack={handleBack}
             onNext={handleNext}
             updateValue = {updateValue}
@@ -192,8 +237,11 @@ const JobCreateForm = (props) => {
         label: 'Review',
         content: (
         <JobFinalStep
+            isReview={review}
             onBack={handleBack}
             onNext={handleComplete}
+            onUpdate = {handleUpdate}
+            isEdit={isEdit}
           />
         )
       }
@@ -218,7 +266,7 @@ const JobCreateForm = (props) => {
     >
       {steps.map((step, index) => {
         const isCurrentStep = ((activeStep === index));
-        // { console.log(isCurrentStep) }
+ 
         return index<6?(
           <Step key={step.label}
             expanded={review}

@@ -119,7 +119,7 @@ export const CardBottom = (props) => {
                             variant="overline"
                             sx={{ fontSize: 14, fontWeight: 700 }}
                         >
-                            {createdAt}
+                            {[new Date(createdAt).getMonth() + 1, new Date(createdAt).getDate(), new Date(createdAt).getFullYear()].join('/')}
                         </Typography>
                         <Typography
                             color="text.secondary"

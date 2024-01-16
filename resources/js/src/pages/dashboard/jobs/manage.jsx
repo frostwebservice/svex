@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import ChevronLeftIcon from '@untitled-ui/icons-react/build/esm/ChevronLeft';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
-
 import {
   Box,
   Button,
   Container,
   IconButton,
+  Switch,
   Stack,
   SvgIcon,
   Tabs,
@@ -31,6 +31,8 @@ import EmptyInvited from './empty_invited';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import { connect } from 'react-redux';
 import { InfCard } from './inf_card';
+import { JobCard } from '@/sections/dashboard/jobs/company-card';
+
 import "./manage.css";
 import "./inf_finder.css"
 const useCompanies = () => {
@@ -70,8 +72,8 @@ const Page = (props) => {
   const [currentTab, setCurrentTab] = useState("applicants");
   const [applicants,setApplicants] = useState([])
   const [invited,setInvited] = useState([])
-  const [rendered,setRendered] = useState(false)
-  const [renderedinvited,setRenderedInvited] = useState(false)
+  const [rendered,setRendered] = useState(0)
+  const [renderedinvited,setRenderedInvited] = useState(0)
   const email = JSON.parse(localStorage.getItem('email'));
 
   const handleTabsChange = useCallback((event, value) => {
@@ -79,19 +81,22 @@ const Page = (props) => {
   }, []);
   usePageView();
   const jobID = window.location.pathname.split("/")[window.location.pathname.split("/").length-1];
-  if(!rendered){
+  const job = jobs?.filter(obj => {
+    return obj.id == jobID
+  })
+  if(rendered<1){
     axios.post('/api/get_applicants', {jobID:jobID,email:email})
     .then((response) => {
       setApplicants(response.data);
-      if(response.data.length>0) setRendered(true);
+      setRendered(rendered+1);
     }).catch(e => {
     });
   }
-  if(!renderedinvited){
+  if(renderedinvited<1){
     axios.post('/api/get_invited', {jobID:jobID,email:email})
     .then((response) => {
       setInvited(response.data);
-      if(response.data.length>0) setRenderedInvited(true);
+     setRenderedInvited(renderedinvited+1);
     }).catch(e => {
     });
   }
@@ -124,16 +129,16 @@ const Page = (props) => {
           <SimpleJobCard
             order = {window.location.pathname.split("/")[window.location.pathname.split("/").length-1]}
             />
-          <div className=''>
+          <div className='right-parent'>
             <Tabs
               indicatorColor="primary"
               onChange={handleTabsChange}
               scrollButtons="auto"
               textColor="primary"
               sx={{
-                p: 3
+                py: 3
               }}
-              value={currentTab}
+              value={currentTab}  
               variant="scrollable"
             >
               {tabs.map((tab) => (
@@ -146,6 +151,31 @@ const Page = (props) => {
                 />
               ))}
             </Tabs>
+            {currentTab == 'joblisting' && (
+            <Stack direction="row" className="right-edit">
+              <Stack direction="row">
+                <Typography variant="text.secondary" sx={{fontSize:16,pt:0.8}}>
+                  Close the job
+                </Typography> 
+                <Switch
+                  checked={true}
+                  // onChange={() => handleChange('app_message')}
+                />
+              </Stack>
+              <Stack>
+              <Button
+                className='right-alone-btn'
+                component={RouterLink}
+                href={"/dashboard/jobs/edit/"+jobID}
+                sx={{fontSize:15}}
+                variant="contained"
+              >
+                Edit This Job Listing
+              </Button>
+              </Stack>
+              
+            </Stack>   
+            )}
             <Box>
               {currentTab == 'applicants' && (
                 <>
@@ -163,7 +193,15 @@ const Page = (props) => {
                 </>
               )}
               {currentTab == 'joblisting' && (
-                <></>
+                <>
+                {job&&job[0]?(
+                  <JobCard
+                    job={job[0]}
+                    active="all"
+                  />
+                ):(<></>)}
+                  
+                </>
               )}
               {currentTab == 'offer' && (
                 <>

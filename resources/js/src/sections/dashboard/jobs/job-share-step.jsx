@@ -5,7 +5,7 @@ import { Button, Chip, InputAdornment, Stack, SvgIcon, TextField, Typography,Uns
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import { connect } from 'react-redux';
 const JobShareStep = (props) => {
-  const { onBack, onNext,updateValue,job, ...other } = props;
+  const { onBack, onNext,updateValue,isReview,job, ...other } = props;
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
   const [startDate, setStartDate] = useState(new Date('2022-09-22T11:41:50'));
@@ -132,6 +132,7 @@ const JobShareStep = (props) => {
             </SvgIcon>
           )}
           sx={{px:5,py:2,fontSize:18}}
+          className={isReview?"review-hidden":""}
           onClick={onNext}
           variant="contained"
         >
@@ -139,6 +140,7 @@ const JobShareStep = (props) => {
         </Button>
         <Button
           color="primary"
+          className={isReview?"review-hidden":""}
           sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
         >

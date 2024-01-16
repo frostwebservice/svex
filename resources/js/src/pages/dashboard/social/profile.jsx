@@ -34,7 +34,7 @@ import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
-import { SocialConnections } from '@/sections/dashboard/social/social-connections';
+import  SocialConnections  from '@/sections/dashboard/social/social-connections';
 import { SocialTimeline } from '@/sections/dashboard/social/social-timeline';
 import "./profile.css";
 import { getBrandProfile, getUserProfile } from '@/actions';

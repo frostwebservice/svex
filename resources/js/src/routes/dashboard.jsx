@@ -33,6 +33,7 @@ const InvoiceDetailPage = lazy(() => import('@/pages/dashboard/invoices/detail')
 const JobBrowsePage = lazy(() => import('@/pages/dashboard/jobs/browse'));
 const JobManagePage = lazy(() => import('@/pages/dashboard/jobs/manage'));
 const JobCreatePage = lazy(() => import('@/pages/dashboard/jobs/create'));
+const JobEditPage = lazy(() => import('@/pages/dashboard/jobs/edit'));
 const CompanyDetailPage = lazy(() => import('@/pages/dashboard/jobs/companies/detail'));
 
 // Logistics
@@ -156,6 +157,15 @@ export const dashboardRoutes = [
           {
             path: 'create',
             element: <JobCreatePage />
+          },
+          {
+            path: 'edit',
+            children: [
+              {
+                path: ':jobId',
+                element: <JobEditPage />
+              }
+            ]
           },
           {
             path: 'companies',

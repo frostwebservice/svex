@@ -1,3 +1,25 @@
+.right-parent{
+    position: relative;
+}
+.right-edit{
+    position: absolute;
+    top: 25px;
+    right: 0;
+}
+@media screen  and (max-width: 1408px) {
+    .right-edit {
+        position: unset!important;
+    }
+}
+@media screen and (max-width: 380px) {
+    .right-edit {
+        flex-direction: column;
+        
+    }
+    .right-alone-btn{
+        margin-top:10px;
+    }
+}
 .MuiInputLabel-root {
     font-size: 11px !important;
 }

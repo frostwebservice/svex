@@ -68,7 +68,6 @@ const Page = (props) => {
     setCurrentTab(value);
   }, []);
   const dispatch = useDispatch();
-  console.log(jobs);
   usePageView();
   useEffect(() => {
     dispatch(getJobs(email,1));

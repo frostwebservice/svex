@@ -1,10 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 import { Button, Chip, Grid, InputAdornment, Stack, SvgIcon, TextField, Typography } from '@mui/material';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import { connect } from 'react-redux';
 import MultiSelectAll from "./MultiSelectAll";
+
 const currencies = [
   {
     value: 'instagram',
@@ -37,7 +38,7 @@ const currencies = [
 ];
 
 const JobSocialDetailStep = (props) => {
-  const { onBack, onNext,job,updateValue, ...other } = props;
+  const { onBack, onNext,job,isReview,updateValue, ...other } = props;
   const [ighidden,setighidden] = useState("none");
   const [twhidden,settwhidden] = useState("none");
   const [tthidden,settthiden] = useState("none");
@@ -45,8 +46,14 @@ const JobSocialDetailStep = (props) => {
   const [lihidden,setlihidden] = useState("none");
   const [bwhidden,setbwhidden] = useState("none");
   const [pthidden,setpthidden] = useState("none");
+  const [tempKey,setTempKey] = useState(0)
   const [initialSelect, setInitialSelect] = useState([])
 
+  useEffect(() =>{
+      if(tempKey<3)
+      setTempKey(tempKey+1);
+
+  },[job])
   const handleSelectionChange = (result) => {
     let types= "";
     setighidden("none")
@@ -74,7 +81,7 @@ const JobSocialDetailStep = (props) => {
       spacing={3}
       {...other}>
 
-      <Stack spacing={3}>
+      <Stack spacing={3} >
         {/* <TextField
 
           select
@@ -97,6 +104,7 @@ const JobSocialDetailStep = (props) => {
             <MultiSelectAll
                 sx={{ maxheight: "700px"}}
                 items={currencies}
+                key={tempKey}
                 selectAllLabel="Select All"
                 value={job.typesarray}
                 // key={tmpkey}
@@ -185,6 +193,7 @@ const JobSocialDetailStep = (props) => {
             </SvgIcon>
           )}
           sx={{px:5,py:2,fontSize:18}}
+          className={isReview?"review-hidden":""}
           onClick={onNext}
           variant="contained"
         >

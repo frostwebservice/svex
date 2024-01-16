@@ -10,7 +10,7 @@ import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
 import { useDialog } from '@/hooks/use-dialog';
 import { connect } from 'react-redux';
 const JobShotoutStep = (props) => {
-  const { onBack, onNext,updateValue,job, ...other } = props;
+  const { onBack, onNext,updateValue,isReview,job, ...other } = props;
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
   const [startDate, setStartDate] = useState(new Date('2022-09-22T11:41:50'));
@@ -164,6 +164,7 @@ const JobShotoutStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
+          className={isReview?"review-hidden":""}
           sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
           variant="contained"
@@ -172,6 +173,7 @@ const JobShotoutStep = (props) => {
         </Button>
         <Button
           color="primary"
+          className={isReview?"review-hidden":""}
           onClick={onBack}
           sx={{px:5,py:2,fontSize:18}}
         >

@@ -5,31 +5,7 @@ import { Button, Chip, InputAdornment, Stack, SvgIcon, TextField, Typography } f
 import { MobileDatePicker } from '@mui/x-date-pickers';
 
 export const JobFinalStep = (props) => {
-  const { onBack, onNext, ...other } = props;
-  const [tag, setTag] = useState('');
-  const [tags, setTags] = useState([]);
-  const [startDate, setStartDate] = useState(new Date('2022-09-22T11:41:50'));
-  const [endDate, setEndDate] = useState(new Date('2023-01-11T12:41:50'));
-
-  const handleStartDateChange = useCallback((date) => {
-    setStartDate(date);
-  }, []);
-
-  const handleEndDateChange = useCallback((date) => {
-    setEndDate(date);
-  }, []);
-
-  const handleTagAdd = useCallback((tag) => {
-    setTags((prevState) => {
-      return [...prevState, tag];
-    });
-  }, []);
-
-  const handleTagDelete = useCallback((tag) => {
-    setTags((prevState) => {
-      return prevState.filter((t) => t !== tag);
-    });
-  }, []);
+  const { onBack, onNext,isEdit,onUpdate, ...other } = props;
 
   return (
 
@@ -46,10 +22,11 @@ export const JobFinalStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
-          onClick={onNext}
+          onClick={isEdit?onUpdate:onNext}
           variant="contained"
         >
-          Post the Job
+          {isEdit?"Update Job":"Post the Job"}
+          
         </Button>
        
       </Stack>

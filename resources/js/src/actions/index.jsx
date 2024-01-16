@@ -29,6 +29,16 @@ export const updateJob = (which,value) => dispatch =>{
         }
     })
 }
+export const getCurrentJob = (jobId) => dispatch =>{
+    axios
+    .post("/api/get_current_job", {jobId})
+    .then(res => dispatch({
+        type: 'CURRENT_JOB',
+        payload: res.data
+    }))
+    .catch(err => console.log(err));
+
+}
 export const getJobs = (email,active) => dispatch =>{
     axios
         .post("/api/get_jobs", {email,active})

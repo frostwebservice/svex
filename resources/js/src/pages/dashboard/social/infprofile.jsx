@@ -29,7 +29,6 @@ import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
-import { SocialConnections } from '@/sections/dashboard/social/social-connections';
 import InfOverview from '@/sections/dashboard/social/inf-overview';
 import "./profile.css";
 import { getSocialProfile } from '@/actions';

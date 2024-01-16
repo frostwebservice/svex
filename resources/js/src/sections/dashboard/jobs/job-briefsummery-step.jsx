@@ -55,7 +55,7 @@ const categoryOptions = [
 ];
 
 const JobBriefSummeryStep = (props) => {
-  const { onBack, onNext,updateValue,job, ...other } = props;
+  const { onBack, onNext,isReview,updateValue,job, ...other } = props;
 
   const [category, setCategory] = useState(categoryOptions[1].value);
   const [content, setContent] = useState('');
@@ -198,6 +198,7 @@ const JobBriefSummeryStep = (props) => {
               <ArrowRightIcon />
             </SvgIcon>
           )}
+          className={isReview?"review-hidden":""}
           sx={{px:5,py:2,fontSize:18}}
           onClick={onNext}
           variant="contained"

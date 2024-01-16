@@ -41,7 +41,7 @@ const categoryOptions = [
 ];
 
 const JobCompensationStep = (props) => {
-  const { onBack, onNext,job,updateValue, ...other } = props;
+  const { onBack, onNext,isReview,job,updateValue, ...other } = props;
   const [category, setCategory] = useState(categoryOptions[1].value);
   const [content, setContent] = useState('');
   // const [barter,setBarter] = useState("")
@@ -235,6 +235,7 @@ const JobCompensationStep = (props) => {
             </SvgIcon>
           )}
           sx={{px:5,py:2,fontSize:18}}
+          className={isReview?"review-hidden":""}
           onClick={onNext}
           variant="contained"
         >
