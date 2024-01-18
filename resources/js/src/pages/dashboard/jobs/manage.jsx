@@ -60,16 +60,17 @@ const useCompanies = () => {
   return companies;
 };
 const tabs = [
-  { label: "Applicants", value: "applicants" },
   { label: "Job listing", value: "joblisting" },
-  { label: "Offer", value: "offer" },
+  { label: "Review Offers", value: "applicants" },
   { label: "Invited Influencers", value: "invitedinfluencers" },
+  { label: "Hired", value: "hired" },
+  
 ] 
 const Page = (props) => {
   const {jobs} = props
   const companies = useCompanies();
   const settings = useSettings();
-  const [currentTab, setCurrentTab] = useState("applicants");
+  const [currentTab, setCurrentTab] = useState("joblisting");
   const [applicants,setApplicants] = useState([])
   const [invited,setInvited] = useState([])
   const [rendered,setRendered] = useState(0)
@@ -203,7 +204,7 @@ const Page = (props) => {
                   
                 </>
               )}
-              {currentTab == 'offer' && (
+              {currentTab == 'hired' && (
                 <>
                 {applicants?.map((applicant)=>{
                   return (

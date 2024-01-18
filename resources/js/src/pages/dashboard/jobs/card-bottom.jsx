@@ -43,6 +43,7 @@ export const CardBottom = (props) => {
                             color="text.secondary"
                             noWrap
                             sx={{ fontSize: 12 }}
+                            style={{marginTop:0}}
                         >
                             Followers
                         </Typography>
@@ -68,6 +69,7 @@ export const CardBottom = (props) => {
                         <Typography
                             color="text.secondary"
                             noWrap
+                            style={{marginTop:0}}
                             sx={{ fontSize: 12 }}
                         >
                             Engagement rate
@@ -93,18 +95,16 @@ export const CardBottom = (props) => {
                         </Typography>
                         <Typography
                             color="text.secondary"
+                            style={{marginTop:0}}
                             noWrap
                             sx={{ fontSize: 12 }}
                         >
                             {category}
                         </Typography>
                     </Stack>
-                    </Stack>
-
                     {invited=="1"?(
                     <Stack
-                        // alignItems="flex-start"
-                        justifyContent="flex-end"
+                        alignItems="flex-start"
                         spacing={2}
                         direction={{
                             xs: 'column',
@@ -123,13 +123,44 @@ export const CardBottom = (props) => {
                         </Typography>
                         <Typography
                             color="text.secondary"
+                            style={{marginTop:0}}
                             noWrap
                             sx={{ fontSize: 12 }}
                         >
                             Invited Date
                         </Typography>
                     </Stack>
-                    ):(<></>)}
+                    ):(<>
+                        </>)}
+                    </Stack>
+
+           
+                    <Stack
+                        // alignItems="flex-start"
+                        justifyContent="flex-end"
+                        spacing={2}
+                        direction={{
+                            xs: 'column',
+                            sm: 'column',
+                            md: 'column',
+                        }}
+                        sx={{ mr: 10 }}
+                    >
+                        <Typography
+                            color="text.primary"
+                            noWrap
+                            variant="overline"
+                            sx={{ fontSize: 14, fontWeight: 700 }}
+                        >
+                        </Typography>
+                        <Typography
+                            color="text.secondary"
+                            noWrap
+                            sx={{ fontSize: 12 }}
+                        >
+                            Invited Date
+                        </Typography>
+                    </Stack>
                 </Stack>
 
 

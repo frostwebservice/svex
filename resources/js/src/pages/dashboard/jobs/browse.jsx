@@ -200,7 +200,7 @@ const Page = (props) => {
                         active="archived"
                       />
                     ):(<></>))}
-                    <Stack
+                    {/* <Stack
                       alignItems="center"
                       direction="row"
                       justifyContent="flex-end"
@@ -220,7 +220,7 @@ const Page = (props) => {
                           <ChevronRightIcon />
                         </SvgIcon>
                       </IconButton>
-                    </Stack>
+                    </Stack> */}
                   </Stack>
              
                 </>
