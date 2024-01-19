@@ -123,7 +123,7 @@ const Page = (props) => {
                         active="all"
                       />
                     ))}
-                    <Stack
+                    {/* <Stack
                       alignItems="center"
                       direction="row"
                       justifyContent="flex-end"
@@ -143,7 +143,7 @@ const Page = (props) => {
                           <ChevronRightIcon />
                         </SvgIcon>
                       </IconButton>
-                    </Stack>
+                    </Stack> */}
                   </Stack>
                 </>
               )}
@@ -161,7 +161,7 @@ const Page = (props) => {
                         active="active"
                       />
                     ):(<></>))}
-                    <Stack
+                    {/* <Stack
                       alignItems="center"
                       direction="row"
                       justifyContent="flex-end"
@@ -181,7 +181,7 @@ const Page = (props) => {
                           <ChevronRightIcon />
                         </SvgIcon>
                       </IconButton>
-                    </Stack>
+                    </Stack> */}
                   </Stack>
                 </>
               )}
