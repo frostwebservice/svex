@@ -37,6 +37,16 @@ class JobController extends Controller
 
         print_r(json_encode($applicants));
     }
+    public function hire_inf(Request $request){
+        $data = array(
+            'inf_id'=>$request->inf_id,
+            'job_id'=>$request->job_id,
+            'tab'=>$request->tab
+        );
+        $res = DB::table("applicants")->where($data)->update(array("hired"=>1));
+        print_r(json_encode($res));
+
+    }
     public function get_hired(Request $request){
         $jobID = $request->jobID;
         $applicants = DB::table("applicants")->where("job_id",$jobID)->where(array("hired"=>1))->get()->toArray();

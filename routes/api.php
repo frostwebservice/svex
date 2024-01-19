@@ -47,6 +47,7 @@ Route::post('get_team_info', [App\Http\Controllers\UserController::class, 'getTe
 Route::post('send_invite_email', [App\Http\Controllers\UserController::class, 'sendInviteEmail']);
 Route::post('search_infs', [App\Http\Controllers\FinderController::class, 'findWithParams']);
 Route::post('save_search', [App\Http\Controllers\FinderController::class, 'saveSearch']);
+Route::post('update_search', [App\Http\Controllers\FinderController::class, 'updateSearch']);
 Route::post('get_searchs', [App\Http\Controllers\FinderController::class, 'getSearchs']);
 Route::post('get_favs', [App\Http\Controllers\FinderController::class, 'getFavs']);
 Route::post('handle_like', [App\Http\Controllers\FinderController::class, 'handleLike']);
@@ -60,3 +61,4 @@ Route::post('get_hired', [App\Http\Controllers\JobController::class, 'get_hired'
 Route::post('get_invited', [App\Http\Controllers\JobController::class, 'get_invited']);
 Route::post('get_current_job', [App\Http\Controllers\JobController::class, 'get_current_job']);
 Route::post('update_jobactivity', [App\Http\Controllers\JobController::class, 'update_jobactivity']);
+Route::post('hire_inf', [App\Http\Controllers\JobController::class, 'hire_inf']);

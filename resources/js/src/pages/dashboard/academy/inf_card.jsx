@@ -173,7 +173,7 @@ export const InfCard = (props) => {
                         >
                             <Avatar
                                 component={RouterLink}
-                                href={paths.dashboard.jobs.companies.details}
+                                href={"/profile/inf/"+influencer.username}
                                 src={influencer.profile_pic_url_hd ? influencer.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${influencer.full_name ? influencer.full_name : ""}&background=2970FF&color=fff&rounded=true`}
 
                                 sx={{ width: 74, height: 74 }}
@@ -185,7 +185,7 @@ export const InfCard = (props) => {
                                 <Link
                                     color="#2970FF"
                                     component={RouterLink}
-                                    href={paths.dashboard.jobs.companies.details}
+                                    href={"/profile/inf/"+influencer.username}
                                     variant="h6"
                                     style={{ fontSize: 18 }}
                                 >

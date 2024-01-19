@@ -37,7 +37,9 @@
     font-size: 14px;
     margin-bottom: 0px;
 }
-
+.create-btn{
+    margin-bottom:-40px;
+}
 .right-btn:hover {
     color: lightgrey
 }
@@ -54,7 +56,17 @@
     .right-btn {
         margin-bottom: 15px !important;
     }
-
+    .create-btn{
+        margin-top:20px;
+        width: -webkit-fill-available;
+    }
+    .create-parent{
+        width:100%;
+    }
+    .mass-btn{
+        margin-left:0px!important;
+        
+    }
     .right-panel {
         display: grid;
         width: -webkit-fill-available;

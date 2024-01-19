@@ -79,7 +79,7 @@ export const OutreachCard = (props) => {
                             component={RouterLink}
                             href={paths.dashboard.chat}
                             size="small"
-                            className="right-btn"
+                            className="right-btn mass-btn"
                             startIcon={(
                                 <SvgIcon>
                                     <MessageChatSquareIcon />

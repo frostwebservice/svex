@@ -1,7 +1,7 @@
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
-import { Typography, Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { Typography, Box, Button, Card, Stack,IconButton, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { doSearch } from '@/actions';
 import { useDispatch, connect } from "react-redux";
@@ -9,6 +9,15 @@ import { useState, useEffect } from 'react'
 import { RouterLink } from '@/components/router-link';
 import { runSavedSearch } from '@/actions'
 import { useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useDialog } from '@/hooks/use-dialog';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { getSearchs } from '@/actions';
 const LinkedinSave = (props) => {
     const { search } = props
     const navigate = useNavigate()
@@ -23,6 +32,51 @@ const LinkedinSave = (props) => {
         dispatch(runSavedSearch("linkedin", search.id))
         navigate("/inf-finder")
     }
+    const [open, setOpen] = useState(false);
+    const [search_name,setSearchName] = useState(search.search_name);
+    const [brief_description,setBriefDescription] = useState(search.brief_description);
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+    const handleCreate = () => {
+        saveSearch();
+    };
+    const saveSearch = () => {
+        let values = {
+            "id":search.id,
+            "search_name":search_name,
+            "brief_description":brief_description,
+            "type":"update"
+        }
+        axios
+            .post("/api/update_search", {values:values})
+            .then((response) => {
+                if (response.data.status === 200) {
+                    dispatch(getSearchs({ email: email }));
+                }
+                setOpen(false);
+            });
+    }
+    const handleTrash = () => {
+        let values = {
+            "id":search.id,
+            "search_name":search_name,
+            "brief_description":brief_description,
+            "type":"delete"
+        }
+        axios
+            .post("/api/update_search", {values:values})
+            .then((response) => {
+                if (response.data.status === 200) {
+                    dispatch(getSearchs({ email: email }));
+                }
+                setOpen(false);
+            });
+    }
     return (
         <>
             <Stack
@@ -30,6 +84,40 @@ const LinkedinSave = (props) => {
                 gap={1}
                 sx={{ p: 3 }}
             >
+                                <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>Update Search</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText>
+                        To update this search, please modify search name and breif description here.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Search Name"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={search_name}
+                        onChange={(e)=>setSearchName(e.target.value)}
+                    />
+                    <TextField
+                    
+                        margin="dense"
+                        id="name"
+                        label="Brief Search Description"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={brief_description}
+                        onChange={(e)=>setBriefDescription(e.target.value)}
+                    />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleCreate}>Update</Button>
+                    </DialogActions>
+                </Dialog>
                 <Box>
                     <Stack
                         alignItems="center"
@@ -46,10 +134,10 @@ const LinkedinSave = (props) => {
                             }}
                         >
                             <Typography sx={{ color: "text.primary" }} style={{ fontSize: 24, fontWeight: 700 }}>
-                                Search Name
+                                {search.search_name.charAt(0).toUpperCase() + search.search_name.slice(1)}
                             </Typography>
                             <Typography sx={{ color: "text.secondary" }} style={{ fontSize: 20 }}>
-                                {search.tab.charAt(0).toUpperCase() + search.tab.slice(1) + " Influencers"}
+                                {search.brief_description}
                             </Typography>
                         </Stack>
                         <Stack
@@ -57,6 +145,20 @@ const LinkedinSave = (props) => {
                             direction="row"
                             spacing={2}
                         >
+                                                        <IconButton
+                                onClick={handleClickOpen}
+                            >
+                                <SvgIcon>
+                                    <EditIcon />
+                                </SvgIcon>
+                            </IconButton>
+                            <IconButton
+                                onClick={handleTrash}
+                            >
+                                <SvgIcon>
+                                    <DeleteIcon />
+                                </SvgIcon>
+                            </IconButton>
                             <Button
                                 size="large"
                                 fullWidth

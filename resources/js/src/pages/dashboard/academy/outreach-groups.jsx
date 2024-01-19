@@ -107,16 +107,21 @@ const OutreachGroups = (props) => {
                             // onSubmit={handleQueryChange}
                             sx={{ flexGrow: 1 }}
                         >
-                            <Typography variant="h4" sx={{ mt: 10, mb: 7, fontSize: '32px' }}>
+                            <Typography variant="h4" sx={{ mt: 7, mb: 0, fontSize: '32px' }}>
                                 Outreach Groups
                             </Typography>
                         </Box>
                         <Box sx={{
-                            display: 'flex'
-                        }}>
+                            display: 'flex',
+                            
+                        }}
+                        className="create-parent"
+                        style={{marginLeft:0}}
+                        >
                             <Button
                                 size="small"
-                                className="right-btn"
+                             
+                                className="right-btn create-btn"
                                 variant="contained"
                                 onClick={handleClickOpen}
                             >

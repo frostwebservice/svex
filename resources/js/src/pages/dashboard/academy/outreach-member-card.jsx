@@ -86,7 +86,7 @@ export const OutreachMemberCard = (props) => {
                             <Stack
                                 alignItems="center"
                                 direction="row"
-                                className="right-panel vertical-dots"
+                                className="vertical-dots"
                                 style={{position:"absolute",right:5,top:5}}
                             // spacing={2}
                             >

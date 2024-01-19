@@ -1302,7 +1302,15 @@ class FinderController extends Controller
         $flag = DB::table('searchs')->insert($params);
         return response()->json(["status" => $this->status_code, "success" => true, "message" => "Save data successfully", "data" => $flag]);
     }
-
+    public function updateSearch(Request $request)
+    {
+        $params = $request->values;
+        if($params["type"]=="update")
+            $flag = DB::table('searchs')->where("id",$params["id"])->update(array("search_name"=>$params["search_name"],"brief_description"=>$params["brief_description"]));
+        else
+            $flag = DB::table("searchs")->where("id",$params["id"])->delete();
+            return response()->json(["status" => $this->status_code, "success" => true, "message" => "Save data successfully", "data" => $flag]);
+    }
     public function handleLike(Request $request)
     {
         $data = array(

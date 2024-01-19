@@ -41,6 +41,7 @@ export const CardBottom = (props) => {
                             color="text.secondary"
                             noWrap
                             sx={{ fontSize: 12 }}
+                            style={{marginTop:0}}
                         >
                             Followers
                         </Typography>
@@ -65,6 +66,7 @@ export const CardBottom = (props) => {
                         </Typography>
                         <Typography
                             color="text.secondary"
+                            style={{marginTop:0}}
                             noWrap
                             sx={{ fontSize: 12 }}
                         >
@@ -91,6 +93,7 @@ export const CardBottom = (props) => {
                         </Typography>
                         <Typography
                             color="text.secondary"
+                            style={{marginTop:0}}
                             noWrap
                             sx={{ fontSize: 12 }}
                         >

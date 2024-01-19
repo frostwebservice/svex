@@ -31,7 +31,7 @@ import EmptyInvited from './empty_invited';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import { connect } from 'react-redux';
 import { InfCard } from './inf_card';
-import { JobCard } from '@/sections/dashboard/jobs/company-card';
+import  JobCard  from '@/sections/dashboard/jobs/company-card';
 
 import "./manage.css";
 import "./inf_finder.css"
@@ -78,7 +78,11 @@ const Page = (props) => {
   const [renderedhired,setRenderedHired] = useState(0)
   const [renderedinvited,setRenderedInvited] = useState(0)
   const email = JSON.parse(localStorage.getItem('email'));
-
+  const onRerender = () => {
+    setRendered(0);
+    setRenderedHired(0);
+    setRenderedInvited(0);
+  }
   const handleTabsChange = useCallback((event, value) => {
     setCurrentTab(value);
   }, []);
@@ -147,6 +151,7 @@ const Page = (props) => {
 
           <SimpleJobCard
             order = {window.location.pathname.split("/")[window.location.pathname.split("/").length-1]}
+            offer={false}
             />
           <div className='right-parent'>
             <Tabs
@@ -202,8 +207,10 @@ const Page = (props) => {
                   return (
                   <InfCard 
                     key={applicant.id}
+                    offer={false}
                     influencer={applicant.inf}
                     currentTab={applicant.tab}
+                    onRerender = {onRerender}
                     invited = "0"
                   />
                   )
@@ -229,7 +236,9 @@ const Page = (props) => {
                   return (
                   <InfCard 
                     key={hire.id}
+                    offer={false}
                     influencer={hire.inf}
+                    onRerender = {onRerender}
                     currentTab={hire.tab}
                     invited="0"
                   />
@@ -251,9 +260,11 @@ const Page = (props) => {
                   <InfCard 
                     key={applicant.id}
                     influencer={applicant.inf}
+                    onRerender = {onRerender}
                     currentTab={applicant.tab}
                     createdAt = {applicant.updated_at}
                     invited = "1"
+                    offer={false}
                   />
                   )
                 })}

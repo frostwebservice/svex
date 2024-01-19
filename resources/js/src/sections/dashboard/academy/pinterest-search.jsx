@@ -8,6 +8,12 @@ import { doSearch } from '@/actions';
 import { categoryOptions, locationOptions, followersFromOptions, followersToOptions, ageOptions, genderOptions, languageOptions, ptengagementOptions, avglikesOptions, avgcommentsOptions, totallikesOptions } from './data'
 import { useDispatch, connect } from "react-redux";
 import { getSearchs } from '@/actions';
+import { useDialog } from '@/hooks/use-dialog';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 const PinterestSearch = (props) => {
     const { searchs, runTab } = props
     const email = JSON.parse(localStorage.getItem('email'));
@@ -21,15 +27,30 @@ const PinterestSearch = (props) => {
     const saveSearch = () => {
         let values = searchParams
         values["email"] = email;
+        values["search_name"] = search_name;
+        values["brief_description"] = brief_description;
         axios
             .post("/api/save_search", { values })
             .then((response) => {
                 if (response.data.status === 200) {
                     dispatch(getSearchs({ email: email }));
-
+                    setOpen(false);
                 }
             });
     }
+    const [open, setOpen] = useState(false);
+    const [search_name,setSearchName] = useState("");
+    const [brief_description,setBriefDescription] = useState("");
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+    const handleCreate = () => {
+        saveSearch();
+    };
     const runSearch = () => {
 
         if (selectedSearch > 0) {
@@ -165,6 +186,40 @@ const PinterestSearch = (props) => {
                 gap={1}
                 sx={{ p: 3 }}
             >
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Save Search</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                    To save this search, please enter search name and breif description here.
+                </DialogContentText>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Search Name"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    value={search_name}
+                    onChange={(e)=>setSearchName(e.target.value)}
+                />
+                <TextField
+                  
+                    margin="dense"
+                    id="name"
+                    label="Brief Search Description"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    value={brief_description}
+                    onChange={(e)=>setBriefDescription(e.target.value)}
+                />
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleCreate}>Create</Button>
+                </DialogActions>
+            </Dialog>
                 <Grid container spacing={3}>
 
                     <Grid item xs={12} md={2} sm={4}
@@ -529,7 +584,7 @@ const PinterestSearch = (props) => {
                                         <BookmarkBorderIcon />
                                     </SvgIcon>
                                 )}
-                                onClick={saveSearch}
+                                onClick={handleClickOpen}
                                 variant="outlined"
                             >
                                 Save this Search
@@ -565,7 +620,7 @@ const PinterestSearch = (props) => {
                                                 key={option["id"]}
                                                 value={option["id"]}
                                             >
-                                                {option["tab"].charAt(0).toUpperCase() + option["tab"].slice(1) + " Influencers"}
+                                                {option["search_name"].charAt(0).toUpperCase() + option["search_name"].slice(1)}
                                             </option>
                                         )
                                 }

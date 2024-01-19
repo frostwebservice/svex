@@ -9,11 +9,13 @@ import { getInitials } from '@/utils/get-initials';
 import "./manage.css";
 import { getJobs } from '@/actions';
 import { useDispatch } from 'react-redux';
-export const JobCard = (props) => {
-  const { job,active,openBar, ...other } = props;
+import { connect } from 'react-redux';
+import { getUserProfile } from '@/actions';
+const JobCard = (props) => {
+  const { job,active,openBar,userinfo, ...other } = props;
   const dispatch = useDispatch();
   const email = JSON.parse(localStorage.getItem('email'))
-
+  console.log(userinfo)
   const handleChange = (job) => {
     axios.post('/api/update_jobactivity', {jobID:job.id,isActive:job.is_active})
     .then((response) => {
@@ -145,7 +147,7 @@ export const JobCard = (props) => {
           <Stack direction="row" spacing={3}>
             <Avatar
               component={RouterLink}
-              // href={paths.dashboard.jobs.companies.details}
+              href={"/profile/"+userinfo?.firstname+"-"+userinfo?.lastname+"-"+userinfo?.id}
               src={job.avatar}
               variant="circle"
             >
@@ -155,7 +157,7 @@ export const JobCard = (props) => {
               <Link
                 color="text.primary"
                 component={RouterLink}
-                href={paths.dashboard.jobs.companies.details}
+                href={"/profile/"+userinfo?.firstname+"-"+userinfo?.lastname+"-"+userinfo?.id}
                 variant="h6"
               >
                 {job.fullname}
@@ -394,3 +396,8 @@ export const JobCard = (props) => {
 JobCard.propTypes = {
   job: PropTypes.object.isRequired
 };
+const mapStateToProps = state => ({
+  userinfo: state.profile.userinfo
+});
+
+export default connect(mapStateToProps)(JobCard);

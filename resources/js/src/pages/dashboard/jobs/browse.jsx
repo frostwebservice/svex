@@ -21,7 +21,7 @@ import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
-import { JobCard } from '@/sections/dashboard/jobs/company-card';
+import  JobCard  from '@/sections/dashboard/jobs/company-card';
 import { JobListSearch } from '@/sections/dashboard/jobs/job-list-search';
 import { useSettings } from '@/hooks/use-settings';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
