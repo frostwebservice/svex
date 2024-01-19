@@ -69,6 +69,8 @@ const SocialConnections = (props) => {
               key={job.id}
               job={job}
               active="active"
+              openBar={false}
+
             />
           ):(<></>))}
 

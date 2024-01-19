@@ -121,6 +121,7 @@ const Page = (props) => {
                         key={job.id}
                         job={job}
                         active="all"
+                        openBar={true}
                       />
                     ))}
                     {/* <Stack
@@ -158,6 +159,7 @@ const Page = (props) => {
                       <JobCard
                         key={job.id}
                         job={job}
+                        openBar={true}
                         active="active"
                       />
                     ):(<></>))}
@@ -197,6 +199,7 @@ const Page = (props) => {
                       <JobCard
                         key={job.id}
                         job={job}
+                        openBar={true}
                         active="archived"
                       />
                     ):(<></>))}

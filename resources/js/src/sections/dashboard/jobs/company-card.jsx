@@ -7,8 +7,20 @@ import { RouterLink } from '@/components/router-link';
 import { paths } from '@/paths';
 import { getInitials } from '@/utils/get-initials';
 import "./manage.css";
+import { getJobs } from '@/actions';
+import { useDispatch } from 'react-redux';
 export const JobCard = (props) => {
-  const { job,active, ...other } = props;
+  const { job,active,openBar, ...other } = props;
+  const dispatch = useDispatch();
+  const email = JSON.parse(localStorage.getItem('email'))
+
+  const handleChange = (job) => {
+    axios.post('/api/update_jobactivity', {jobID:job.id,isActive:job.is_active})
+    .then((response) => {
+      dispatch(getJobs(email,1));
+    }).catch(e => {
+    });
+  }
   const getBudget = (job)=>{
     if(job.barter) return job.barter;
     else if(job.revenue) return job.revenue;
@@ -222,15 +234,21 @@ export const JobCard = (props) => {
               
             </div>
           </Stack>
-          <Stack direction="row">
-            <Typography variant="text.secondary" sx={{fontSize:16,pt:0.8}}>
-              {job.is_active==1?"Open":"Close"}
-            </Typography>
-            <Switch
-              checked={true}
-              // onChange={() => handleChange('app_message')}
-            />
-          </Stack>           
+          {openBar?(
+            <Stack direction="row">
+              <Typography variant="text.secondary" sx={{fontSize:16,pt:0.8}}>
+                {job.is_active==1?"Open":"Close"}
+              </Typography>
+              <Switch
+                checked={true}
+                onChange={() => handleChange(job)}
+              />
+            </Stack>   
+          )
+          :(
+            <></>
+          )}
+        
 
         </Stack>
         <Box sx={{ mt: 2 }}>

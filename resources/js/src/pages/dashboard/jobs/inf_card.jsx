@@ -346,6 +346,7 @@ export const InfCard = (props) => {
                             category={influencer.category_niche}
                             createdAt = {createdAt}
                             invited={invited}
+                            influencer = {influencer}
                         />
                     </Box>
                 </CardContent>

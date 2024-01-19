@@ -56,5 +56,7 @@ Route::post('create_job', [App\Http\Controllers\JobController::class, 'create_jo
 Route::post('update_job', [App\Http\Controllers\JobController::class, 'update_job']);
 Route::post('get_jobs', [App\Http\Controllers\JobController::class, 'get_jobs']);
 Route::post('get_applicants', [App\Http\Controllers\JobController::class, 'get_applicants']);
+Route::post('get_hired', [App\Http\Controllers\JobController::class, 'get_hired']);
 Route::post('get_invited', [App\Http\Controllers\JobController::class, 'get_invited']);
 Route::post('get_current_job', [App\Http\Controllers\JobController::class, 'get_current_job']);
+Route::post('update_jobactivity', [App\Http\Controllers\JobController::class, 'update_jobactivity']);

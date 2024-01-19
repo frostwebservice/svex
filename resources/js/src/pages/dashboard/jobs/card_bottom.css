@@ -1,0 +1,55 @@
+
+.about-list-font {
+    font-size: 16px !important;
+}
+.custom-item{
+    padding:20px;
+    width: 350px;
+}
+
+.global-icon {
+    width: 22px;
+    height: 22px;
+    background-size: cover;
+    background-image: url('./images/global.png');
+}
+
+.age-icon {
+    width: 22px;
+    height: 22px;
+    background-size: cover;
+    background-image: url('./images/age.png');
+}
+
+.male-icon {
+    width: 22px;
+    height: 22px;
+    background-size: cover;
+    background-image: url('./images/male.png');
+}
+
+.ethnicity-icon {
+    width: 22px;
+    height: 22px;
+    background-image: url('./images/ethnicity.png');
+    background-size: cover;
+
+}
+.profile-niche {
+    background-color: #2970FF1F;
+    font-size: 18px !important;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+
+}
+
+
+
+
+
+
+
+
+
