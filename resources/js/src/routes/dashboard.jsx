@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Layout as DashboardLayout } from '@/layouts/dashboard';
 
 const IndexPage = lazy(() => import('@/pages/dashboard/index'));
+const AdminPage = lazy(() => import('@/pages/dashboard/admin'));
 
 // Academy
 const AcademyDashboardPage = lazy(() => import('@/pages/dashboard/academy/dashboard'));
@@ -84,7 +85,10 @@ export const dashboardRoutes = [
         index: true,
         element: <IndexPage />
       },
-
+      {
+        path:'admin',
+        element:<AdminPage />
+      },
       {
         path: 'blog',
         children: [

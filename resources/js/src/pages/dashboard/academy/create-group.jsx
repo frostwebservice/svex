@@ -112,11 +112,11 @@ const CreateNewGroup = (props) => {
                 >
                 <Container maxWidth="lg">
                     <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        mb: 6
-                    }}
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            mb: 6
+                        }}
                     >
                     <Box
                         alt="Internal server error"

@@ -79,6 +79,7 @@ export const paths = {
   },
   dashboard: {
     index: '/dashboard',
+    admin: '/dashboard/admin',
     account: '/dashboard/account',
     analytics: '/dashboard/analytics',
     blank: '/dashboard/blank',

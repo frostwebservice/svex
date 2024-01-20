@@ -234,7 +234,7 @@ export const AppCard = (props) => {
                         <Stack
                             alignItems="center"
                             direction="row"
-                            className="right-panel"
+                            className="right-panel1"
                             spacing={2}
                         >
                             {isLiked

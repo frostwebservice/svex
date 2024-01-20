@@ -2,6 +2,7 @@ import { tokens } from '../tokens';
 
 export const en = {
   [tokens.common.languageChanged]: 'Language changed',
+  [tokens.nav.admin]: 'Admin Dashboard',
   [tokens.nav.academy]: 'Influencer Finder Tool',
   [tokens.nav.findertool]: 'Finder Tool',
   [tokens.nav.outreachgroups]: 'Outreach Groups',
