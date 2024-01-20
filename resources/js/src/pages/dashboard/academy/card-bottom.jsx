@@ -32,7 +32,7 @@ export const CardBottom = (props) => {
                         <Typography
                             color="text.primary"
                             noWrap
-                            variant="overline"
+                            // variant="overline"
                             sx={{ fontSize: 14, fontWeight: 700 }}
                         >
                             {followers}
@@ -59,7 +59,7 @@ export const CardBottom = (props) => {
                         <Typography
                             color="text.primary"
                             noWrap
-                            variant="overline"
+                            // variant="overline"
                             sx={{ fontSize: 14, fontWeight: 700 }}
                         >
                             {engagement}
@@ -86,7 +86,7 @@ export const CardBottom = (props) => {
                         <Typography
                             color="text.primary"
                             noWrap
-                            variant="overline"
+                            // variant="overline"
                             sx={{ fontSize: 14, fontWeight: 700 }}
                         >
                             Categories

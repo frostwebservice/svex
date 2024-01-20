@@ -1,0 +1,148 @@
+
+
+#app{
+    background-image: url("../Assets/SVG/gradient-bg.svg");
+    background-repeat:no-repeat;
+    display:flex;
+    height:100%;
+  }
+  
+  .containers {
+      background-color: rgb(255, 255, 255);
+      padding: 20px 40px;
+      color: #fff;
+      font-weight: 600;
+      border: solid 1px;
+      border-radius:3%;
+      box-shadow: 7px -8px 11px -5px rgba(#195190FF);
+  }
+  .Tab{
+      display: flex;
+      justify-content: space-between;
+  }
+  .signUp, .signIn{
+      background-color: #A2A2A1FF;
+      width:50%;
+      font-size: 22px;
+      color: #201f1f;
+      padding: 10px;
+      text-align: center;
+  }
+  .signIn:hover, .signUp:hover {
+      text-decoration: none;
+      color: #fff;
+  }
+  .activeLink{
+      color: #fff;
+      background-color: #195190FF;
+  }
+  .border-radiusImportant{
+      border-radius: 5px !important;
+    }
+    .error-message{
+      color:red;
+      font-size:13px;
+    }
+    .text-blue{
+      color:blue;
+      text-align: center;
+      font-weight:'bold';
+    }
+    /* .sendEmail-card{
+      padding-top:100px;
+    } */
+    .left-img{
+       background-image:url("../Assets/png/person-standing.png"); 
+       background-size: cover;
+  
+      min-width:200px;
+    }
+  
+    .signup-page {
+  
+      width:444px;
+      /* padding:56px; */
+      margin:auto;
+  
+    }
+    .signin-page, .forgotpassword-page, .resetpassword-page{
+  
+      width:620px;
+      margin:auto;
+  
+    }
+    .sendEmail-page{
+     
+      min-width:444px;
+      margin:auto;
+  
+    }
+    .firstInfo-page, .secondInfo-page ,.social-page ,.trial-page {
+       width:693px;
+      margin:auto;
+    }
+    .trial-page {
+      width:750px;
+     margin:auto;
+   }
+    .start-page{
+      width:879px;
+      margin:auto;
+    
+    }
+  
+  .linkback, a{
+    text-decoration: none;
+  }
+  .title {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+   }
+   .largesize{ 
+    font-Size:32px !important;
+    font-Weight:bold !important ;
+  }
+  .bigsize{
+    font-Size:32px !important;
+    font-Weight:600 !important ;
+  }
+
+  .smallsize{
+    font-Size:14px !important;
+    font-Weight:bold !important ;
+  }
+  .tinysize{
+    font-Size:14px !important;
+    font-Weight:500 !important ;
+    color:black !important;
+  }
+  .title-inter {
+    font-Family:'inter' !important;
+   }
+  .smalltitle .MuiCardHeader-title{
+     font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-Size:18px !important;
+    font-Weight:bold !important ;
+  
+  }
+  .card{
+   font-family: 'Plus Jakarta Sans', sans-serif !important;
+  }
+  .transparent{
+    background-color: #FFFFFF00 !important;
+  }
+  .transparent-mid{
+    background-color: #FFFFFFee !important;
+  }
+  
+  .MuiButton-root,.mainButton {
+    border-radius: 12px !important;
+  
+  }
+  .background-blue{
+    background-color:#2970FF !important;
+  
+  }
+  .mainCard{
+    box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.03), 0 10px 10px 0 rgba(0, 0, 0, 0.03) !important;
+    border:0px;
+  }

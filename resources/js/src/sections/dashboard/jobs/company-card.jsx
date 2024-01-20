@@ -11,8 +11,9 @@ import { getJobs } from '@/actions';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import { getUserProfile } from '@/actions';
+import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 const JobCard = (props) => {
-  const { job,active,openBar,userinfo, ...other } = props;
+  const { job,active,openBar,userinfo,invite=false, ...other } = props;
   const dispatch = useDispatch();
   const email = JSON.parse(localStorage.getItem('email'))
   console.log(userinfo)
@@ -149,6 +150,8 @@ const JobCard = (props) => {
               component={RouterLink}
               href={"/profile/"+userinfo?.firstname+"-"+userinfo?.lastname+"-"+userinfo?.id}
               src={job.avatar}
+              target="_target"
+
               variant="circle"
             >
               {getInitials(job.firstname)}
@@ -157,6 +160,8 @@ const JobCard = (props) => {
               <Link
                 color="text.primary"
                 component={RouterLink}
+                target="_target"
+
                 href={"/profile/"+userinfo?.firstname+"-"+userinfo?.lastname+"-"+userinfo?.id}
                 variant="h6"
               >
@@ -356,33 +361,53 @@ const JobCard = (props) => {
 
               </Stack>
               <Stack
-                // alignItems="center"
-                direction="row"
-                // flexWrap="wrap"
+                justifyContent="space-between"
+                direction={{
+                  xs: 'column',
+                  sm: 'row'
+                }}
                 sx={{
                   px: 2,
                   py: 1.5
                 }}
               >
-                <Stack>
-                  <div style={{fontWeight:700,fontSize:14}}>25+</div>
-                  <Typography
-                    color="text.secondary"
-                    variant="caption"
-                  >
-                    Number of Applicants
-                  </Typography>
+                <Stack  alignItems="center" direction="row" spacing={3}>
+                  <Stack>
+                    <div style={{fontWeight:700,fontSize:14}}>25+</div>
+                    <Typography
+                      color="text.secondary"
+                      variant="caption"
+                    >
+                      Number of Applicants
+                    </Typography>
+                  </Stack>
+                      
+                  <Stack sx={{ml:5}}>
+                    <div style={{fontWeight:700,fontSize:14}}>Actively Hiring</div>
+                    <Typography
+                      color="text.secondary"
+                      variant="caption"
+                    >
+                      Status
+                    </Typography>
+                  </Stack>
                 </Stack>
-                    
-                <Stack sx={{ml:5}}>
-                  <div style={{fontWeight:700,fontSize:14}}>Actively Hiring</div>
-                  <Typography
-                    color="text.secondary"
-                    variant="caption"
-                  >
-                    Status
-                  </Typography>
-                </Stack>
+                {invite?(
+                <Stack  alignItems="center" direction="row" spacing={3}>
+                <Button size="small"
+                    variant="contained"
+                  // component={RouterLink}
+                  // href={"/dashboard/jobs"}
+                  style={{ fontSize: 14 }}
+                >
+                  Invite On This Project
+                  <SvgIcon fontSize='2'>
+                    <ArrowRightIcon />
+                  </SvgIcon>
+                </Button>
+              </Stack>
+                ):(<></>)}
+
 
               </Stack>
             </Stack>

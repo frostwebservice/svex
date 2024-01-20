@@ -69,9 +69,9 @@ const EmptyInvited = () => {
               component={RouterLink}
               variant="contained"
 
-              href={paths.index}
+              href="/inf-finder/new-group"
             >
-              Create outreach group
+              Create Outreach Group
             </Button>
           </Box>
         </Container>

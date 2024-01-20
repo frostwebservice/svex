@@ -86,34 +86,62 @@ const Page = (props) => {
           <Typography variant="h4">
             Manage Jobs
           </Typography>
-          <div className='top'>
-            <Tabs
-              indicatorColor="primary"
-              onChange={handleTabsChange}
-              scrollButtons="auto"
-              textColor="primary"
-              sx={{
-                p: 3
-              }}
-              value={currentTab}
-              variant="scrollable"
+          <Stack
+            alignItems="center"
+            justifyContent="space-between"
+            spacing={2}
+            direction={{
+              xs: 'column',
+              sm: 'row'
+            }}
+          >
+            <Stack alignItems="center" direction="row" spacing={3}>
+              <Tabs
+                indicatorColor="primary"
+                onChange={handleTabsChange}
+                scrollButtons="auto"
+                textColor="primary"
+                sx={{
+                  p: 3
+                }}
+                value={currentTab}
+                variant="scrollable"
+              >
+                {tabs.map((tab) => (
+                  <Tab
+                    className='custom-tab'
+                    sx={{ fontSize: 18 }}
+                    key={tab.value}
+                    label={tab.label}
+                    value={tab.value}
+                  />
+                ))}
+              </Tabs>
+            </Stack>
+            <Stack
+              alignItems="center"
+              direction="row"
+              spacing={2}
+              sx={{ p: 1 }}
+              className='part'
             >
-              {tabs.map((tab) => (
-                <Tab
-                  className='custom-tab'
-                  sx={{ fontSize: 18 }}
-                  key={tab.value}
-                  label={tab.label}
-                  value={tab.value}
+              <SvgIcon>
+                <SearchMdIcon />
+              </SvgIcon>
+              <Box sx={{ flexGrow: 1 }}>
+                <Input
+                  disableUnderline
+                  fullWidth
+                  placeholder="Search any of the jobs you have posted..."
                 />
-              ))}
-            </Tabs>
+              </Box>
+            </Stack>
+          </Stack>
             <Box>
               {currentTab == 'all' && (
                 <>
                   <Stack
                     spacing={4}
-                    sx={{ mt: 4 }}
                   >
 
                     {jobs?.map((job) => (
@@ -152,7 +180,6 @@ const Page = (props) => {
                 <>
                   <Stack
                     spacing={4}
-                    sx={{ mt: 4 }}
                   >
 
                     {jobs?.map((job) => job.is_active==1?(
@@ -192,7 +219,6 @@ const Page = (props) => {
              
                   <Stack
                     spacing={4}
-                    sx={{ mt: 4 }}
                   >
 
                     {jobs?.map((job) => job.is_active==0?(
@@ -229,26 +255,6 @@ const Page = (props) => {
                 </>
               )}
             </Box>
-            <Stack
-              alignItems="center"
-              direction="row"
-              spacing={2}
-              sx={{ p: 2 }}
-              className='part'
-            >
-              <SvgIcon>
-                <SearchMdIcon />
-              </SvgIcon>
-              <Box sx={{ flexGrow: 1 }}>
-                <Input
-                  disableUnderline
-                  fullWidth
-                  placeholder="Search any of the jobs you have posted..."
-                />
-              </Box>
-            </Stack>
-          </div>
-
         </Container>
       </Box>
     </>

@@ -125,7 +125,7 @@ const Page = (props) => {
   }
   return (
     <>
-      <Seo title="Dashboard: Job Browse" />
+      <Seo title="Dashboard: Manage Jobs" />
       <Box
         component="main"
         sx={{

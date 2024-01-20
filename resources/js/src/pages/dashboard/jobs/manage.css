@@ -11,10 +11,18 @@
     position:relative;
 }
 .part{
-    position: absolute;
+    /* position: absolute;
     right: 0px;
-    top:10px;
-    min-width: 400px;
+    top:16px; */
+    width: -webkit-fill-available;
+    max-width: 370px;
     border: 1px solid #F2F4F7;
     border-radius: 10px;
+    margin-bottom:5px!important;
+    height: 50px;
+}
+@media screen and (min-width: 600px) {
+    /* .part{
+        min-width: 370px;
+    } */
 }

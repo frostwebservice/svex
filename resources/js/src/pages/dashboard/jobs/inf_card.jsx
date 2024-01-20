@@ -184,7 +184,7 @@ export const InfCard = (props) => {
                                 component={RouterLink}
                                 href={paths.dashboard.jobs.companies.details}
                                 src={influencer.profile_pic_url_hd ? influencer.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${influencer.full_name ? influencer.full_name : ""}&background=2970FF&color=fff&rounded=true`}
-
+                                target="_blank"
                                 sx={{ width: 74, height: 74 }}
                             // variant="rounded"
                             >
@@ -192,7 +192,8 @@ export const InfCard = (props) => {
                             </Avatar>
                             <div>
                                 <Link
-                                    color="#2970FF"
+                                target="_blank"
+                                color="#2970FF"
                                     component={RouterLink}
                                     href={paths.dashboard.jobs.companies.details}
                                     variant="h6"

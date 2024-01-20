@@ -58,6 +58,7 @@ class FinderController extends Controller
     public function newgroup(Request $request){
         $data=array(
             "group_name"=>$request->group_name,
+            "brief_group"=>$request->brief_group,
             "email"=>$request->email
         );
         $res= DB::table("outreachs")->insert($data);
