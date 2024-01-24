@@ -72,24 +72,26 @@ const useCustomersStore = (searchState) => {
 
   const handleCustomersGet = useCallback(async () => {
     try {
-      const response = await customersApi.getCustomers(searchState);
-
-      if (isMounted()) {
-        setState({
-          customers: response.data,
-          customersCount: response.count
-        });
-      }
+      axios.post('/api/user-getuser').then((response) => {
+        if (isMounted()) {
+          setState({
+            customers: response.data,
+            customersCount: response.data.length
+          });
+        }
+      });
     } catch (err) {
       console.error(err);
     }
   }, [searchState, isMounted]);
 
-  useEffect(() => {
+  useEffect(
+    () => {
       handleCustomersGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchState]);
+    [searchState]
+  );
 
   return {
     ...state
@@ -106,7 +108,6 @@ const Page = () => {
   const customersSearch = useCustomersSearch();
   const customersStore = useCustomersStore(customersSearch.state);
   const customersIds = useCustomersIds(customersStore.customers);
-  const customersSelection = useSelection(customersIds);
 
   usePageView();
 
@@ -122,80 +123,38 @@ const Page = () => {
       >
         <Container maxWidth="xl">
           <Stack spacing={4}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              spacing={4}
-            >
+            <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Typography variant="h4">
-                  Customers
-                </Typography>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={1}
-                >
-                  <Button
-                    color="inherit"
-                    size="small"
-                    startIcon={(
-                      <SvgIcon>
-                        <Upload01Icon />
-                      </SvgIcon>
-                    )}
-                  >
-                    Import
-                  </Button>
-                  <Button
-                    color="inherit"
-                    size="small"
-                    startIcon={(
-                      <SvgIcon>
-                        <Download01Icon />
-                      </SvgIcon>
-                    )}
-                  >
-                    Export
-                  </Button>
-                </Stack>
+                <Typography variant="h4">Brand Users</Typography>
               </Stack>
-              <Stack
-                alignItems="center"
-                direction="row"
-                spacing={3}
-              >
+              <Stack alignItems="center" direction="row" spacing={3}>
                 <Button
-                  startIcon={(
+                  color="inherit"
+                  size="small"
+                  startIcon={
                     <SvgIcon>
-                      <PlusIcon />
+                      <Download01Icon />
                     </SvgIcon>
-                  )}
-                  variant="contained"
+                  }
                 >
-                  Add
+                  Download CSV
                 </Button>
               </Stack>
             </Stack>
             <Card>
-              <CustomerListSearch
+              {/* <CustomerListSearch
                 onFiltersChange={customersSearch.handleFiltersChange}
                 onSortChange={customersSearch.handleSortChange}
                 sortBy={customersSearch.state.sortBy}
                 sortDir={customersSearch.state.sortDir}
-              />
+              /> */}
               <UsermanageListTable
                 count={customersStore.customersCount}
-                items={customersStore.customers}
-                onDeselectAll={customersSelection.handleDeselectAll}
-                onDeselectOne={customersSelection.handleDeselectOne}
+                users={customersStore.customers}
                 onPageChange={customersSearch.handlePageChange}
                 onRowsPerPageChange={customersSearch.handleRowsPerPageChange}
-                onSelectAll={customersSelection.handleSelectAll}
-                onSelectOne={customersSelection.handleSelectOne}
                 page={customersSearch.state.page}
                 rowsPerPage={customersSearch.state.rowsPerPage}
-                selected={customersSelection.selected}
               />
             </Card>
           </Stack>

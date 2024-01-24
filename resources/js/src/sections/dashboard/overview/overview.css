@@ -1,0 +1,7 @@
+.MuiPaginationItem-root{
+    display:none;
+
+}
+.MuiPaginationItem-previousNext{
+    display: block;
+}

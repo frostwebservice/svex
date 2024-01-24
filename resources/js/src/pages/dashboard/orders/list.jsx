@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
-import { Box, Button, Divider, Stack, SvgIcon, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Stack,
+  SvgIcon,
+  Container,
+  Typography
+} from '@mui/material';
 import { ordersApi } from '@/api/orders';
 import { Seo } from '@/components/seo';
 import { useDialog } from '@/hooks/use-dialog';
@@ -10,7 +18,8 @@ import { OrderDrawer } from '@/sections/dashboard/order/order-drawer';
 import { OrderListContainer } from '@/sections/dashboard/order/order-list-container';
 import { OrderListSearch } from '@/sections/dashboard/order/order-list-search';
 import { OrderListTable } from '@/sections/dashboard/order/order-list-table';
-
+import { useSettings } from '@/hooks/use-settings';
+import './order.css';
 const useOrdersSearch = () => {
   const [state, setState] = useState({
     filters: {
@@ -82,11 +91,13 @@ const useOrdersStore = (searchState) => {
     }
   }, [searchState, isMounted]);
 
-  useEffect(() => {
+  useEffect(
+    () => {
       handleOrdersGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchState]);
+    [searchState]
+  );
 
   return {
     ...state
@@ -109,97 +120,89 @@ const Page = () => {
   const ordersStore = useOrdersStore(ordersSearch.state);
   const dialog = useDialog();
   const currentOrder = useCurrentOrder(ordersStore.orders, dialog.data);
-
+  const settings = useSettings();
   usePageView();
 
-  const handleOrderOpen = useCallback((orderId) => {
-    // Close drawer if is the same order
+  const handleOrderOpen = useCallback(
+    (orderId) => {
+      // Close drawer if is the same order
 
-    if (dialog.open && dialog.data === orderId) {
-      dialog.handleClose();
-      return;
-    }
+      if (dialog.open && dialog.data === orderId) {
+        dialog.handleClose();
+        return;
+      }
 
-    dialog.handleOpen(orderId);
-  }, [dialog]);
+      dialog.handleOpen(orderId);
+    },
+    [dialog]
+  );
 
   return (
     <>
       <Seo title="Dashboard: Order List" />
-      <Divider />
+
       <Box
         component="main"
         ref={rootRef}
         sx={{
-          display: 'flex',
-          flex: '1 1 auto',
-          overflow: 'hidden',
-          position: 'relative'
+          flexGrow: 1,
+          py: 8
         }}
       >
-        <Box
-          ref={rootRef}
-          sx={{
-            bottom: 0,
-            display: 'flex',
-            left: 0,
-            position: 'absolute',
-            right: 0,
-            top: 0
-          }}
-        >
-          <OrderListContainer open={dialog.open}>
-            <Box sx={{ p: 3 }}>
-              <Stack
-                alignItems="flex-start"
-                direction="row"
-                justifyContent="space-between"
-                spacing={4}
-              >
-                <div>
-                  <Typography variant="h4">
-                    Orders
-                  </Typography>
-                </div>
-                <div>
-                  <Button
-                    startIcon={(
-                      <SvgIcon>
-                        <PlusIcon />
-                      </SvgIcon>
-                    )}
-                    variant="contained"
-                  >
-                    Add
-                  </Button>
-                </div>
-              </Stack>
+        <Container maxWidth={settings.stretch ? false : 'xl'}>
+          <div>
+            <Box ref={rootRef}>
+              <Box sx={{ p: 3 }}>
+                <Stack
+                  alignItems="flex-start"
+                  direction="row"
+                  justifyContent="space-between"
+                  spacing={4}
+                >
+                  <div>
+                    <Typography variant="h4">Orders</Typography>
+                  </div>
+                  <div>
+                    <Button
+                      startIcon={
+                        <SvgIcon>
+                          <PlusIcon />
+                        </SvgIcon>
+                      }
+                      variant="contained"
+                    >
+                      Add
+                    </Button>
+                  </div>
+                </Stack>
+              </Box>
+              <Divider />
+              <OrderListSearch
+                onFiltersChange={ordersSearch.handleFiltersChange}
+                onSortChange={ordersSearch.handleSortChange}
+                sortBy={ordersSearch.state.sortBy}
+                sortDir={ordersSearch.state.sortDir}
+              />
+              <Divider />
+              <OrderListTable
+                count={ordersStore.ordersCount}
+                items={ordersStore.orders}
+                onPageChange={ordersSearch.handlePageChange}
+                onRowsPerPageChange={ordersSearch.handleRowsPerPageChange}
+                onSelect={handleOrderOpen}
+                page={ordersSearch.state.page}
+                rowsPerPage={ordersSearch.state.rowsPerPage}
+              />
+
+              <OrderDrawer
+                container={rootRef.current}
+                onClose={dialog.handleClose}
+                open={dialog.open}
+                order={currentOrder}
+              />
             </Box>
-            <Divider />
-            <OrderListSearch
-              onFiltersChange={ordersSearch.handleFiltersChange}
-              onSortChange={ordersSearch.handleSortChange}
-              sortBy={ordersSearch.state.sortBy}
-              sortDir={ordersSearch.state.sortDir}
-            />
-            <Divider />
-            <OrderListTable
-              count={ordersStore.ordersCount}
-              items={ordersStore.orders}
-              onPageChange={ordersSearch.handlePageChange}
-              onRowsPerPageChange={ordersSearch.handleRowsPerPageChange}
-              onSelect={handleOrderOpen}
-              page={ordersSearch.state.page}
-              rowsPerPage={ordersSearch.state.rowsPerPage}
-            />
-          </OrderListContainer>
-          <OrderDrawer
-            container={rootRef.current}
-            onClose={dialog.handleClose}
-            open={dialog.open}
-            order={currentOrder}
-          />
-        </Box>
+          </div>
+        </Container>
       </Box>
     </>
   );

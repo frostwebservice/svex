@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('user-signup', [App\Http\Controllers\UserController::class, 'userSignUp']);
 Route::post('user-reset', [App\Http\Controllers\UserController::class, 'userReset']);
 Route::post('user-getuser', [App\Http\Controllers\UserController::class, 'getUsers']);
+Route::post('deleteUser', [App\Http\Controllers\UserController::class, 'deleteUser']);
 Route::post('first-Info', [App\Http\Controllers\UserController::class, 'firstInfo']);
 Route::post('social-Info', [App\Http\Controllers\UserController::class, 'socialInfo']);
 Route::post('second-Info', [App\Http\Controllers\UserController::class, 'secondInfo']);
@@ -62,3 +63,8 @@ Route::post('get_invited', [App\Http\Controllers\JobController::class, 'get_invi
 Route::post('get_current_job', [App\Http\Controllers\JobController::class, 'get_current_job']);
 Route::post('update_jobactivity', [App\Http\Controllers\JobController::class, 'update_jobactivity']);
 Route::post('hire_inf', [App\Http\Controllers\JobController::class, 'hire_inf']);
+Route::post('get_tips', [App\Http\Controllers\DashboardController::class, 'get_tips']);
+Route::post('update_tips', [App\Http\Controllers\DashboardController::class, 'update_tips']);
+Route::post('get_announcements', [App\Http\Controllers\DashboardController::class, 'get_announcements']);
+
+

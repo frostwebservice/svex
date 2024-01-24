@@ -221,6 +221,15 @@ class UserController extends Controller
 		$status = BillingInfo::where("email", $request->user_email)->update($arr);
 		return response()->json(["status" => $this->status_code, "success" => true, "message" => "Get data successfully", "data" => $status]);
 	}
+	public function getUsers(Request $request){
+		$users = DB::table("users")->where("is_admin",0)->get();
+		print_r(json_encode($users));
+	}
+	public function deleteUser(Request $request){
+		$id = $request->id;
+		$res = DB::table("users")->where("id",$id)->delete();
+		print_r(json_encode($res));
+	}
 	public function getUserInfo(Request $request)
 	{
 		$email = $request->email;

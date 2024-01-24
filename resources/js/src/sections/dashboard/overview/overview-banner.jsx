@@ -16,13 +16,15 @@ export const OverviewBanner = (props) => {
       }}
       spacing={4}
       sx={{
-        backgroundColor: (theme) => theme.palette.mode === 'dark'
-          ? 'primary.darkest'
-          : 'primary.lightest',
+        backgroundColor: (theme) =>
+          theme.palette.mode === 'dark'
+            ? 'primary.darkest'
+            : 'primary.lightest',
         borderRadius: 2.5,
         p: 4
       }}
-      {...props}>
+      {...props}
+    >
       <Box
         sx={{
           width: 200,
@@ -34,35 +36,24 @@ export const OverviewBanner = (props) => {
         <img src="/assets/person-standing.png" />
       </Box>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography
-          color="primary.main"
-          variant="overline"
-        >
+        <Typography color="primary.main" variant="overline">
           New v6 update
         </Typography>
-        <Typography
-          color="text.primary"
-          sx={{ mt: 2 }}
-          variant="h6"
-        >
-          New update available!
+        <Typography color="text.primary" sx={{ mt: 2 }} variant="h6">
+          Influencer Discovery Tool
         </Typography>
-        <Typography
-          color="text.primary"
-          sx={{ mt: 1 }}
-          variant="body1"
-        >
-          Your favorite template has a new trendy look, more customization options, screens & more.
+        <Typography color="text.primary" sx={{ mt: 1 }} variant="body1">
+          To find your influencer, please click the below button.
         </Typography>
         <Box sx={{ mt: 2 }}>
           <Button
             color="primary"
-            onClick={()=>navigate("/inf-finder")}
-            startIcon={(
+            onClick={() => navigate('/inf-finder')}
+            startIcon={
               <SvgIcon>
                 <GraduationHat01Icon />
               </SvgIcon>
-            )}
+            }
             variant="contained"
           >
             Influencer Finder Tool

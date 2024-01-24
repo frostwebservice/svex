@@ -1,7 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import FilterFunnel01Icon from '@untitled-ui/icons-react/build/esm/FilterFunnel01';
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
-import { Box, Button, Divider, Stack, SvgIcon, Typography, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Stack,
+  Container,
+  SvgIcon,
+  Typography,
+  useMediaQuery,
+  Unstable_Grid2 as Grid
+} from '@mui/material';
 import { invoicesApi } from '@/api/invoices';
 import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
@@ -10,6 +20,7 @@ import { InvoiceListContainer } from '@/sections/dashboard/invoice/invoice-list-
 import { InvoiceListSidebar } from '@/sections/dashboard/invoice/invoice-list-sidebar';
 import { InvoiceListSummary } from '@/sections/dashboard/invoice/invoice-list-summary';
 import { InvoiceListTable } from '@/sections/dashboard/invoice/invoice-list-table';
+import { useSettings } from '@/hooks/use-settings';
 
 const useInvoicesSearch = () => {
   const [state, setState] = useState({
@@ -75,11 +86,13 @@ const useInvoicesStore = (searchState) => {
     }
   }, [searchState, isMounted]);
 
-  useEffect(() => {
+  useEffect(
+    () => {
       handleInvoicesGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [searchState]);
+    [searchState]
+  );
 
   return {
     ...state
@@ -93,7 +106,7 @@ const Page = () => {
   const invoicesStore = useInvoicesStore(invoicesSearch.state);
   const [group, setGroup] = useState(true);
   const [openSidebar, setOpenSidebar] = useState(lgUp);
-
+  const settings = useSettings();
   usePageView();
 
   const handleGroupChange = useCallback((event) => {
@@ -115,86 +128,78 @@ const Page = () => {
       <Box
         component="main"
         sx={{
-          display: 'flex',
-          flex: '1 1 auto',
-          overflow: 'hidden',
-          position: 'relative'
+          flexGrow: 1,
+          py: 8
         }}
       >
-        <Box
-          ref={rootRef}
-          sx={{
-            bottom: 0,
-            display: 'flex',
-            left: 0,
-            position: 'absolute',
-            right: 0,
-            top: 0
-          }}
-        >
-          <InvoiceListSidebar
-            container={rootRef.current}
-            filters={invoicesSearch.state.filters}
-            group={group}
-            onFiltersChange={invoicesSearch.handleFiltersChange}
-            onClose={handleFiltersClose}
-            onGroupChange={handleGroupChange}
-            open={openSidebar}
-          />
-          <InvoiceListContainer open={openSidebar}>
-            <Stack spacing={4}>
-              <Stack
-                alignItems="flex-start"
-                direction="row"
-                justifyContent="space-between"
-                spacing={3}
-              >
-                <div>
-                  <Typography variant="h4">
-                    Invoices
-                  </Typography>
-                </div>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={1}
-                >
-                  <Button
-                    color="inherit"
-                    startIcon={(
-                      <SvgIcon>
-                        <FilterFunnel01Icon />
-                      </SvgIcon>
-                    )}
-                    onClick={handleFiltersToggle}
-                  >
-                    Filters
-                  </Button>
-                  <Button
-                    startIcon={(
-                      <SvgIcon>
-                        <PlusIcon />
-                      </SvgIcon>
-                    )}
-                    variant="contained"
-                  >
-                    New
-                  </Button>
-                </Stack>
-              </Stack>
-              <InvoiceListSummary />
-              <InvoiceListTable
-                count={invoicesStore.invoicesCount}
-                group={group}
-                items={invoicesStore.invoices}
-                onPageChange={invoicesSearch.handlePageChange}
-                onRowsPerPageChange={invoicesSearch.handleRowsPerPageChange}
-                page={invoicesSearch.state.page}
-                rowsPerPage={invoicesSearch.state.rowsPerPage}
-              />
-            </Stack>
-          </InvoiceListContainer>
-        </Box>
+        <Container maxWidth={settings.stretch ? false : 'xl'}>
+          <Box ref={rootRef}>
+            <Grid container spacing={3}>
+              <Grid xs={12} lg={4}>
+                <InvoiceListSidebar
+                  container={rootRef.current}
+                  filters={invoicesSearch.state.filters}
+                  group={group}
+                  onFiltersChange={invoicesSearch.handleFiltersChange}
+                  onClose={handleFiltersClose}
+                  onGroupChange={handleGroupChange}
+                  open={openSidebar}
+                />
+              </Grid>
+              <Grid xs={12} lg={8}>
+                <InvoiceListContainer open={openSidebar}>
+                  <Stack spacing={4}>
+                    <Stack
+                      alignItems="flex-start"
+                      direction="row"
+                      justifyContent="space-between"
+                      spacing={3}
+                    >
+                      <div>
+                        <Typography variant="h4">Invoices</Typography>
+                      </div>
+                      <Stack alignItems="center" direction="row" spacing={1}>
+                        <Button
+                          color="inherit"
+                          startIcon={
+                            <SvgIcon>
+                              <FilterFunnel01Icon />
+                            </SvgIcon>
+                          }
+                          onClick={handleFiltersToggle}
+                        >
+                          Filters
+                        </Button>
+                        <Button
+                          startIcon={
+                            <SvgIcon>
+                              <PlusIcon />
+                            </SvgIcon>
+                          }
+                          variant="contained"
+                        >
+                          New
+                        </Button>
+                      </Stack>
+                    </Stack>
+                    <InvoiceListSummary />
+                    <InvoiceListTable
+                      count={invoicesStore.invoicesCount}
+                      group={group}
+                      items={invoicesStore.invoices}
+                      onPageChange={invoicesSearch.handlePageChange}
+                      onRowsPerPageChange={
+                        invoicesSearch.handleRowsPerPageChange
+                      }
+                      page={invoicesSearch.state.page}
+                      rowsPerPage={invoicesSearch.state.rowsPerPage}
+                    />
+                  </Stack>
+                </InvoiceListContainer>
+              </Grid>
+            </Grid>
+          </Box>
+        </Container>
       </Box>
     </>
   );
