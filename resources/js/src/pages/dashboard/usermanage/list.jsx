@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import Download01Icon from '@untitled-ui/icons-react/build/esm/Download01'
-import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus'
-import Upload01Icon from '@untitled-ui/icons-react/build/esm/Upload01'
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import Download01Icon from '@untitled-ui/icons-react/build/esm/Download01';
+import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
+import Upload01Icon from '@untitled-ui/icons-react/build/esm/Upload01';
 import {
   Box,
   Button,
@@ -9,75 +9,75 @@ import {
   Container,
   Stack,
   SvgIcon,
-  Typography,
-} from '@mui/material'
-import { customersApi } from '@/api/customers'
-import { Seo } from '@/components/seo'
-import { useMounted } from '@/hooks/use-mounted'
-import { usePageView } from '@/hooks/use-page-view'
-import { useSelection } from '@/hooks/use-selection'
-import { CustomerListSearch } from '@/sections/dashboard/customer/customer-list-search'
-import { UsermanageListTable } from '@/sections/dashboard/usermanage/usermanage_list_table'
-import { useSettings } from '@/hooks/use-settings'
-import { ExportJsonCsv } from 'react-export-json-csv'
-import $ from 'jquery'
+  Typography
+} from '@mui/material';
+import { customersApi } from '@/api/customers';
+import { Seo } from '@/components/seo';
+import { useMounted } from '@/hooks/use-mounted';
+import { usePageView } from '@/hooks/use-page-view';
+import { useSelection } from '@/hooks/use-selection';
+import { CustomerListSearch } from '@/sections/dashboard/customer/customer-list-search';
+import { UsermanageListTable } from '@/sections/dashboard/usermanage/usermanage_list_table';
+import { useSettings } from '@/hooks/use-settings';
+import { ExportJsonCsv } from 'react-export-json-csv';
+import $ from 'jquery';
 const useCustomersSearch = () => {
   const [state, setState] = useState({
     filters: {
       query: undefined,
       hasAcceptedMarketing: undefined,
       isProspect: undefined,
-      isReturning: undefined,
+      isReturning: undefined
     },
     page: 0,
     rowsPerPage: 5,
     sortBy: 'updatedAt',
-    sortDir: 'desc',
-  })
+    sortDir: 'desc'
+  });
   const handleFiltersChange = useCallback((filters) => {
     setState((prevState) => ({
       ...prevState,
-      filters,
-    }))
-  }, [])
+      filters
+    }));
+  }, []);
 
   const handleSortChange = useCallback((sort) => {
     setState((prevState) => ({
       ...prevState,
       sortBy: sort.sortBy,
-      sortDir: sort.sortDir,
-    }))
-  }, [])
+      sortDir: sort.sortDir
+    }));
+  }, []);
 
   const handlePageChange = useCallback((event, page) => {
     setState((prevState) => ({
       ...prevState,
-      page,
-    }))
-  }, [])
+      page
+    }));
+  }, []);
 
   const handleRowsPerPageChange = useCallback((event) => {
     setState((prevState) => ({
       ...prevState,
-      rowsPerPage: parseInt(event.target.value, 10),
-    }))
-  }, [])
+      rowsPerPage: parseInt(event.target.value, 10)
+    }));
+  }, []);
 
   return {
     handleFiltersChange,
     handleSortChange,
     handlePageChange,
     handleRowsPerPageChange,
-    state,
-  }
-}
+    state
+  };
+};
 
 const useCustomersStore = (searchState) => {
-  const isMounted = useMounted()
+  const isMounted = useMounted();
   const [state, setState] = useState({
     customers: [],
-    customersCount: 0,
-  })
+    customersCount: 0
+  });
 
   const handleCustomersGet = useCallback(async () => {
     try {
@@ -85,63 +85,63 @@ const useCustomersStore = (searchState) => {
         if (isMounted()) {
           setState({
             customers: response.data,
-            customersCount: response.data.length,
-          })
+            customersCount: response.data.length
+          });
         }
-      })
+      });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }, [searchState, isMounted])
+  }, [searchState, isMounted]);
 
   useEffect(
     () => {
-      handleCustomersGet()
+      handleCustomersGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [searchState]
-  )
+  );
 
   return {
-    ...state,
-  }
-}
+    ...state
+  };
+};
 
 const useCustomersIds = (customers = []) => {
   return useMemo(() => {
-    return customers.map((customer) => customer.id)
-  }, [customers])
-}
+    return customers.map((customer) => customer.id);
+  }, [customers]);
+};
 
 const Page = () => {
-  const customersSearch = useCustomersSearch()
-  const customersStore = useCustomersStore(customersSearch.state)
-  const customersIds = useCustomersIds(customersStore.customers)
-  const settings = useSettings()
-  usePageView()
-  const [csv, setCsv] = useState([])
+  const customersSearch = useCustomersSearch();
+  const customersStore = useCustomersStore(customersSearch.state);
+  const customersIds = useCustomersIds(customersStore.customers);
+  const settings = useSettings();
+  usePageView();
+  const [csv, setCsv] = useState([]);
   const headers = [
     {
       key: 'id',
-      name: 'ID',
+      name: 'ID'
     },
     {
       key: 'email',
-      name: 'Email',
+      name: 'Email'
     },
     {
       key: 'firstname',
-      name: 'FirstName',
+      name: 'FirstName'
     },
     {
       key: 'name',
-      name: 'Name',
+      name: 'Name'
     },
     {
       key: 'regdate',
-      name: 'Registration Date',
-    },
-  ]
+      name: 'Registration Date'
+    }
+  ];
   const downloadCSV = () => {
     customersStore.customers.map((customer, index) => {
       setCsv((oldArray) => [
@@ -151,15 +151,15 @@ const Page = () => {
           email: customer.email,
           firstname: customer.firstname,
           name: customer.fullname,
-          regdate: customer.created_at,
-        },
-      ])
-    })
+          regdate: customer.created_at
+        }
+      ]);
+    });
     setTimeout(() => {
-      $('.export')[0].click()
-    }, '1000')
-  }
-  console.log(csv)
+      $('.export')[0].click();
+    }, '1000');
+  };
+  console.log(csv);
   return (
     <>
       <Seo title="Dashboard: Customer List" />
@@ -167,7 +167,7 @@ const Page = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8,
+          py: 8
         }}
       >
         <Container maxWidth={settings.stretch ? false : 'xl'}>
@@ -221,7 +221,7 @@ const Page = () => {
         </Container>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
