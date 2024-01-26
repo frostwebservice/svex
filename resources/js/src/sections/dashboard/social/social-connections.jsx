@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import { useCallback, useEffect, useState } from 'react';
 import { jobsApi } from '@/api/jobs';
-import { JobCard } from '@/sections/dashboard/jobs/company-card';
+import  JobCard  from '@/sections/dashboard/jobs/company-card';
 import { connect } from 'react-redux';
 import {
   Box,
@@ -69,6 +69,8 @@ const SocialConnections = (props) => {
               key={job.id}
               job={job}
               active="active"
+              openBar={false}
+
             />
           ):(<></>))}
 

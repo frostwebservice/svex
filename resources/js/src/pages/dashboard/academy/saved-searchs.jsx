@@ -60,47 +60,64 @@ const SavedSearchs = (props) => {
             >
                 <Container maxWidth={settings.stretch ? false : 'xl'} >
 
-                    <Typography variant="h4" sx={{ mt: 10, mb: 7, fontSize: '32px' }}>
+                    <Typography variant="h4" sx={{ mt: 8, mb: 4, fontSize: '32px' }}>
                         Saved Searchs
                     </Typography>
                     {searchs && searchs.map((search) => {
                         if (search.tab == "instagram") return (
-                            <Card sx={{ my: 4 }}>
+                            <Card sx={{ my: 4 }} 
+                            key={search.id}
+                            >
                                 <InstagramSave
                                     search={search}
                                 />
                             </Card>
                         )
                         else if (search.tab == "tiktok") return (
-                            <Card sx={{ my: 4 }}>
+                            <Card sx={{ my: 4 }}
+                            key={search.id}
+                            
+                            >
                                 <TiktokSave
                                     search={search}
                                 />
                             </Card>
                         )
                         else if (search.tab == "youtube") return (
-                            <Card sx={{ my: 4 }}>
+                            <Card sx={{ my: 4 }}
+                            key={search.id}
+                            
+                            >
                                 <YoutubeSave
                                     search={search}
                                 />
                             </Card>
                         )
                         else if (search.tab == "twitter") return (
-                            <Card sx={{ my: 4 }}>
+                            <Card sx={{ my: 4 }}
+                            key={search.id}
+                            
+                            >
                                 <TwitterSave
                                     search={search}
                                 />
                             </Card >
                         )
                         else if (search.tab == "pinterest") return (
-                            <Card sx={{ my: 4 }}>
+                            <Card sx={{ my: 4 }}
+                            key={search.id}
+                            
+                            >
                                 <PinterestSave
                                     search={search}
                                 />
                             </Card >
                         )
                         else if (search.tab == "linkedin") return (
-                            <Card sx={{ my: 4 }}>
+                            <Card sx={{ my: 4 }}
+                            key={search.id}
+                            
+                            >
                                 <LinkedinSave
                                     search={search}
                                 />

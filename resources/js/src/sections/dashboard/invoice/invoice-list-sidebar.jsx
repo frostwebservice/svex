@@ -115,34 +115,28 @@ export const InvoiceListSidebar = (props) => {
         direction="row"
         sx={{ p: 3 }}
       >
-        <Typography variant="h5">
-          Filters
-        </Typography>
-        {!lgUp && (
-          <IconButton onClick={onClose}>
-            <SvgIcon>
-              <XIcon />
-            </SvgIcon>
-          </IconButton>
-        )}
+        <Typography variant="h5">Filters</Typography>
+
+        <IconButton onClick={onClose}>
+          <SvgIcon>
+            <XIcon />
+          </SvgIcon>
+        </IconButton>
       </Stack>
-      <Stack
-        spacing={3}
-        sx={{ p: 3 }}
-      >
+      <Stack spacing={3} sx={{ p: 3 }}>
         <form onSubmit={handleQueryChange}>
           <OutlinedInput
             defaultValue=""
             fullWidth
             inputProps={{ ref: queryRef }}
             placeholder="Invoice number"
-            startAdornment={(
+            startAdornment={
               <InputAdornment position="start">
                 <SvgIcon>
                   <SearchMdIcon />
                 </SvgIcon>
               </InputAdornment>
-            )}
+            }
           />
         </form>
         <div>
@@ -182,9 +176,8 @@ export const InvoiceListSidebar = (props) => {
           </FormLabel>
           <Box
             sx={{
-              backgroundColor: (theme) => theme.palette.mode === 'dark'
-                ? 'neutral.800'
-                : 'neutral.50',
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'dark' ? 'neutral.800' : 'neutral.50',
               borderColor: 'divider',
               borderRadius: 1,
               borderStyle: 'solid',
@@ -203,12 +196,12 @@ export const InvoiceListSidebar = (props) => {
 
                   return (
                     <FormControlLabel
-                      control={(
+                      control={
                         <Checkbox
                           checked={isChecked}
                           onChange={handleCustomerToggle}
                         />
-                      )}
+                      }
                       key={customer}
                       label={customer}
                       value={customer}
@@ -220,21 +213,16 @@ export const InvoiceListSidebar = (props) => {
           </Box>
         </div>
         <FormControlLabel
-          control={(
+          control={
             <Switch
               checked={filters.status === 'paid'}
               onChange={handleStatusChange}
             />
-          )}
+          }
           label="Paid only"
         />
         <FormControlLabel
-          control={(
-            <Switch
-              checked={group}
-              onChange={onGroupChange}
-            />
-          )}
+          control={<Switch checked={group} onChange={onGroupChange} />}
           label="Group by status"
         />
       </Stack>

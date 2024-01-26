@@ -51,120 +51,32 @@ const Page = () => {
             }}
           >
             <Grid xs={12}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                spacing={4}
-              >
+              <Stack direction="row" justifyContent="space-between" spacing={4}>
                 <div>
-                  <Typography variant="h4">
-                    Overview
-                  </Typography>
+                  <Typography variant="h4">Overview</Typography>
                 </div>
-                {/* <div>
-                  <Stack
-                    direction="row"
-                    spacing={4}
-                  >
-                    <Button
-                      startIcon={(
-                        <SvgIcon>
-                          <PlusIcon />
-                        </SvgIcon>
-                      )}
-                      variant="contained"
-                    >
-                      New Dashboard
-                    </Button>
-                  </Stack>
-                </div> */}
               </Stack>
             </Grid>
-            <Grid
-              xs={12}
-              md={4}
-            >
+            <Grid xs={12} md={4}>
               <OverviewDoneTasks amount={31} />
             </Grid>
-            <Grid
-              xs={12}
-              md={4}
-            >
+            <Grid xs={12} md={4}>
               <OverviewPendingIssues amount={12} />
             </Grid>
-            <Grid
-              xs={12}
-              md={4}
-            >
+            <Grid xs={12} md={4}>
               <OverviewOpenTickets amount={5} />
             </Grid>
-            <Grid
-              xs={12}
-              md={7}
-            >
+            <Grid xs={12} md={7}>
               <OverviewBanner />
             </Grid>
-            <Grid
-              xs={12}
-              md={5}
-            >
-              <OverviewTips
-                sx={{ height: '100%' }}
-                tips={[
-                  {
-                    title: 'New fresh design.',
-                    content: 'Your favorite template has a new trendy look, more customization options, screens & more.'
-                  },
-                  {
-                    title: 'Tip 2.',
-                    content: 'Tip content'
-                  },
-                  {
-                    title: 'Tip 3.',
-                    content: 'Tip content'
-                  }
-                ]}
-              />
+            <Grid xs={12} md={5}>
+              <OverviewTips sx={{ height: '100%' }} />
             </Grid>
-            <Grid
-              xs={12}
-              md={8}
-            >
-              <OverviewSubscriptionUsage
-              />
+            <Grid xs={12} md={8}>
+              <OverviewSubscriptionUsage />
             </Grid>
-            <Grid
-              xs={12}
-              md={4}
-            >
-              <OverviewInbox
-                messages={[
-                  {
-                    id: 'b91cbe81ee3efefba6b915a7',
-                    content: 'Check out our newly developed IG Hashtag Generator under Tools!',
-                    createdAt: '2/1/2021',
-                    senderAvatar: '/assets/avatars/avatar-alcides-antonio.png',
-                    senderName: 'Hashtag Generator',
-                    senderOnline: true
-                  },
-                  {
-                    id: 'de0eb1ac517aae1aa57c0b7e',
-                    content: 'Our major server upgrade is finally complete! We hope you enjoy it!',
-                    createdAt: '1/19/2020',
-                    senderAvatar: '/assets/avatars/avatar-marcus-finn.png',
-                    senderName: 'UI Upgrade',
-                    senderOnline: false
-                  },
-                  {
-                    id: '38e2b0942c90d0ad724e6f40',
-                    content: 'Our new technical support system is now live click here',
-                    createdAt: '10/2/2020',
-                    senderAvatar: '/assets/avatars/avatar-carson-darrin.png',
-                    senderName: 'New Support System',
-                    senderOnline: true
-                  }
-                ]}
-              />
+            <Grid xs={12} md={4}>
+              <OverviewInbox />
             </Grid>
             {/* <Grid
               xs={12}

@@ -37,6 +37,15 @@ export const useSections = () => {
       {
         items: [
           {
+            title: t(tokens.nav.admin),
+            path: paths.dashboard.admin,
+            icon: (
+              <SvgIcon fontSize="small">
+                <HomeSmileIcon />
+              </SvgIcon>
+            )
+          },
+          {
             title: t(tokens.nav.overview),
             path: paths.dashboard.index,
             icon: (
@@ -50,7 +59,7 @@ export const useSections = () => {
             path: paths.dashboard.account,
             icon: (
               <SvgIcon fontSize="small">
-                <HomeSmileIcon />
+                <CreditCard01Icon />
               </SvgIcon>
             )
           },

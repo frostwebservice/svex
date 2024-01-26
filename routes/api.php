@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('user-signup', [App\Http\Controllers\UserController::class, 'userSignUp']);
 Route::post('user-reset', [App\Http\Controllers\UserController::class, 'userReset']);
 Route::post('user-getuser', [App\Http\Controllers\UserController::class, 'getUsers']);
+Route::post('deleteUser', [App\Http\Controllers\UserController::class, 'deleteUser']);
 Route::post('first-Info', [App\Http\Controllers\UserController::class, 'firstInfo']);
 Route::post('social-Info', [App\Http\Controllers\UserController::class, 'socialInfo']);
 Route::post('second-Info', [App\Http\Controllers\UserController::class, 'secondInfo']);
@@ -47,6 +48,7 @@ Route::post('get_team_info', [App\Http\Controllers\UserController::class, 'getTe
 Route::post('send_invite_email', [App\Http\Controllers\UserController::class, 'sendInviteEmail']);
 Route::post('search_infs', [App\Http\Controllers\FinderController::class, 'findWithParams']);
 Route::post('save_search', [App\Http\Controllers\FinderController::class, 'saveSearch']);
+Route::post('update_search', [App\Http\Controllers\FinderController::class, 'updateSearch']);
 Route::post('get_searchs', [App\Http\Controllers\FinderController::class, 'getSearchs']);
 Route::post('get_favs', [App\Http\Controllers\FinderController::class, 'getFavs']);
 Route::post('handle_like', [App\Http\Controllers\FinderController::class, 'handleLike']);
@@ -56,5 +58,13 @@ Route::post('create_job', [App\Http\Controllers\JobController::class, 'create_jo
 Route::post('update_job', [App\Http\Controllers\JobController::class, 'update_job']);
 Route::post('get_jobs', [App\Http\Controllers\JobController::class, 'get_jobs']);
 Route::post('get_applicants', [App\Http\Controllers\JobController::class, 'get_applicants']);
+Route::post('get_hired', [App\Http\Controllers\JobController::class, 'get_hired']);
 Route::post('get_invited', [App\Http\Controllers\JobController::class, 'get_invited']);
 Route::post('get_current_job', [App\Http\Controllers\JobController::class, 'get_current_job']);
+Route::post('update_jobactivity', [App\Http\Controllers\JobController::class, 'update_jobactivity']);
+Route::post('hire_inf', [App\Http\Controllers\JobController::class, 'hire_inf']);
+Route::post('get_tips', [App\Http\Controllers\DashboardController::class, 'get_tips']);
+Route::post('update_tips', [App\Http\Controllers\DashboardController::class, 'update_tips']);
+Route::post('get_announcements', [App\Http\Controllers\DashboardController::class, 'get_announcements']);
+
+

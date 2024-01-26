@@ -56,7 +56,6 @@ const Page = (props) => {
   const [infcounter, setInfcounter] = useState(0)
   const [infs, setInfs] = useState([])
   const [changedFlag,setchangedFlag]=useState(true)
-  // console.log("infs"+infs)
   useEffect(()=>{
     if (sortOptions[0]){
       setSelectedSort(sortOptions[0].value)
@@ -65,14 +64,11 @@ const Page = (props) => {
   useEffect(()=>{
     if(results.searchresults&&results.searchresults.result.length){
       let result = results.searchresults
-
-      // console.log(arrange(result.result,selectedSort))
       setInfs(arrange(result.result,selectedSort))
     }
     let nextFlag = !changedFlag
     setchangedFlag(nextFlag)
   },[selectedSort])
-  // useEffect( () => () => console.log("unmount"), setInfs([]) );
   useEffect(() => {
     if (results.searchresults) {
       let result = results.searchresults
@@ -99,6 +95,7 @@ const Page = (props) => {
         ])
         if (sortOptions[0]){
           setSelectedSort(sortOptions[0].value)
+          setInfs(arrange(result.result,sortOptions[0].value))
         }
       }
       else if (result.tab == "tiktok") {
@@ -126,6 +123,7 @@ const Page = (props) => {
 
         ])
         if (sortOptions[0])
+          setInfs(arrange(result.result,sortOptions[0].value))
           setSelectedSort(sortOptions[0].value)
       }
       else if (result.tab == "youtube") {
@@ -153,6 +151,7 @@ const Page = (props) => {
 
         ])
         if (sortOptions[0])
+          setInfs(arrange(result.result,sortOptions[0].value))
           setSelectedSort(sortOptions[0].value)
       }
       else if (result.tab == "twitter") {
@@ -180,6 +179,7 @@ const Page = (props) => {
 
         ])
         if (sortOptions[0])
+          setInfs(arrange(result.result,sortOptions[0].value))
           setSelectedSort(sortOptions[0].value)
       }
       else if (result.tab == "pinterest") {
@@ -207,6 +207,7 @@ const Page = (props) => {
 
         ])
         if (sortOptions[0])
+          setInfs(arrange(result.result,sortOptions[0].value))
           setSelectedSort(sortOptions[0].value)
       }
       else if (result.tab == "linkedin") {
@@ -238,6 +239,7 @@ const Page = (props) => {
 
         ])
         if (sortOptions[0])
+          setInfs(arrange(result.result,sortOptions[0].value))
           setSelectedSort(sortOptions[0].value)
       }
       setInfcounter(result.result.length)
@@ -397,7 +399,7 @@ const Page = (props) => {
             direction="row"
             flexWrap="wrap"
             spacing={3}
-            sx={{ p: 3 }}
+            sx={{ px: 3,pt:5 }}
           >
             <Box
               component="form"

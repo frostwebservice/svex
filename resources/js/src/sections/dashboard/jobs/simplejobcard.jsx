@@ -10,7 +10,7 @@ import { CompanyJobs } from './company-jobs';
 import { connect } from 'react-redux';
 import "./manage.css";
 const SimpleJobCard = (props) => {
-  const { jobs,order, ...other } = props;
+  const { jobs,order,offer, ...other } = props;
 
   const job = jobs?.filter(obj => {
     return obj.id == order
@@ -31,6 +31,11 @@ const SimpleJobCard = (props) => {
       if(job[0].paid=="flexible") return "Flexible";
       if(job[0].paid=="maxbudget") return "Max Budget";
       if(job[0].paid=="Budget Range") return "Budget Range";
+    }
+  }
+  const getJobID = () => {
+    if(job&&job[0]){
+      return job[0].id;
     }
   }
   const timeSince=(date=new Date())=> {
@@ -91,6 +96,18 @@ const SimpleJobCard = (props) => {
               >
                 {timeSince(job&&job[0]?.created_at)} ago
               </Typography>
+              {offer?(
+              <Button
+                className='right-alone-btn'
+                component={RouterLink}
+                href={"/dashboard/jobs/"}
+                sx={{fontSize:15}}
+                // variant="contained"
+              >
+                View
+              </Button>
+              ):(<></>)}
+
             </Stack>
             
         </Stack>

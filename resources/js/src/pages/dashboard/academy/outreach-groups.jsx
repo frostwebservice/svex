@@ -1,18 +1,8 @@
-import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
-import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
-
 import {
     Box,
     Button,
-    Tabs,
-    Tab,
     Container,
-    Card,
     Stack,
-    SvgIcon,
-    InputAdornment,
-    OutlinedInput,
     TextField,
     Typography,
     Unstable_Grid2 as Grid
@@ -21,7 +11,6 @@ import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import { useSettings } from '@/hooks/use-settings';
 import "./inf_finder.css"
-import { useCallback } from 'react'
 import { OutreachCard } from './outreach-card';
 import { getOutReachs } from '@/actions';
 import { useState, useEffect } from 'react';
@@ -31,6 +20,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { RouterLink } from '@/components/router-link';
+
 const now = new Date();
 
 const OutreachGroups = (props) => {
@@ -52,20 +43,17 @@ const OutreachGroups = (props) => {
       setOpen(false);
     };
     const handleCreate = () => {
-        console.log(newName)
         axios
         .post("/api/newgroup", {group_name:newName,email:email})
         .then((response) => {
-
             dispatch(getOutReachs({ email: email }));
             setOpen(false);
-
         });
 
     };
     return (
         <>
-            <Seo title="Dashboard: Favorite Influencers" />
+            <Seo title="Dashboard: Outreach Groups" />
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Create New Outreach Group</DialogTitle>
                 <DialogContent>
@@ -107,18 +95,24 @@ const OutreachGroups = (props) => {
                             // onSubmit={handleQueryChange}
                             sx={{ flexGrow: 1 }}
                         >
-                            <Typography variant="h4" sx={{ mt: 10, mb: 7, fontSize: '32px' }}>
+                            <Typography variant="h4" sx={{ mt: 7, mb: 0, fontSize: '32px' }}>
                                 Outreach Groups
                             </Typography>
                         </Box>
                         <Box sx={{
-                            display: 'flex'
-                        }}>
+                            display: 'flex',
+                            
+                        }}
+                        className="create-parent"
+                        style={{marginLeft:0}}
+                        >
                             <Button
                                 size="small"
-                                className="right-btn"
+                                component={RouterLink}
+                                href="/inf-finder/new-group"
+                                className="right-btn create-btn"
                                 variant="contained"
-                                onClick={handleClickOpen}
+                                // onClick={handleClickOpen}
                             >
                                 Create New Outreach Group
                             </Button>

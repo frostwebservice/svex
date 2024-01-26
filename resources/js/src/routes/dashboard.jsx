@@ -3,10 +3,12 @@ import { Outlet } from 'react-router-dom';
 import { Layout as DashboardLayout } from '@/layouts/dashboard';
 
 const IndexPage = lazy(() => import('@/pages/dashboard/index'));
+const AdminPage = lazy(() => import('@/pages/dashboard/admin'));
 
 // Academy
 const AcademyDashboardPage = lazy(() => import('@/pages/dashboard/academy/dashboard'));
 const OutreachGroups = lazy(() => import('@/pages/dashboard/academy/outreach-groups'));
+const CreateNewGroup = lazy(() => import('@/pages/dashboard/academy/create-group'));
 const SavedSearchs = lazy(() => import('@/pages/dashboard/academy/saved-searchs'));
 const FavInfs = lazy(() => import('@/pages/dashboard/academy/fav-infs'));
 
@@ -31,6 +33,7 @@ const InvoiceDetailPage = lazy(() => import('@/pages/dashboard/invoices/detail')
 
 // Jobs
 const JobBrowsePage = lazy(() => import('@/pages/dashboard/jobs/browse'));
+const InvitePage = lazy(() => import('@/pages/dashboard/jobs/invite'));
 const JobManagePage = lazy(() => import('@/pages/dashboard/jobs/manage'));
 const JobCreatePage = lazy(() => import('@/pages/dashboard/jobs/create'));
 const JobEditPage = lazy(() => import('@/pages/dashboard/jobs/edit'));
@@ -82,7 +85,10 @@ export const dashboardRoutes = [
         index: true,
         element: <IndexPage />
       },
-
+      {
+        path:'admin',
+        element:<AdminPage />
+      },
       {
         path: 'blog',
         children: [
@@ -157,6 +163,10 @@ export const dashboardRoutes = [
           {
             path: 'create',
             element: <JobCreatePage />
+          },
+          {
+            path: 'invite',
+            element: <InvitePage />
           },
           {
             path: 'edit',
@@ -307,6 +317,10 @@ export const dashboardRoutes = [
       {
         path: 'fav-infs',
         element: <FavInfs />
+      },
+      {
+        path: 'new-group',
+        element: <CreateNewGroup />
       }
     ]
   },

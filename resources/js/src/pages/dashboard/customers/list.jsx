@@ -52,6 +52,10 @@ const useCustomersSearch = () => {
       ...prevState,
       rowsPerPage: parseInt(event.target.value, 10)
     }));
+    setState((prevState) => ({
+      ...prevState,
+      page: 0
+    }));
   }, []);
 
   return {
@@ -122,68 +126,54 @@ const Page = () => {
       >
         <Container maxWidth="xl">
           <Stack spacing={4}>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              spacing={4}
-            >
+            <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Typography variant="h4">
-                  Customers
-                </Typography>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={1}
-                >
+                <Typography variant="h4">Customers</Typography>
+                <Stack alignItems="center" direction="row" spacing={1}>
                   <Button
                     color="inherit"
                     size="small"
-                    startIcon={(
+                    startIcon={
                       <SvgIcon>
                         <Upload01Icon />
                       </SvgIcon>
-                    )}
+                    }
                   >
                     Import
                   </Button>
                   <Button
                     color="inherit"
                     size="small"
-                    startIcon={(
+                    startIcon={
                       <SvgIcon>
                         <Download01Icon />
                       </SvgIcon>
-                    )}
+                    }
                   >
                     Export
                   </Button>
                 </Stack>
               </Stack>
-              <Stack
-                alignItems="center"
-                direction="row"
-                spacing={3}
-              >
+              <Stack alignItems="center" direction="row" spacing={3}>
                 <Button
-                  startIcon={(
+                  startIcon={
                     <SvgIcon>
                       <PlusIcon />
                     </SvgIcon>
-                  )}
+                  }
                   variant="contained"
                 >
-                  Add
+                  Add7
                 </Button>
               </Stack>
             </Stack>
             <Card>
-              <CustomerListSearch
+              {/* <CustomerListSearch
                 onFiltersChange={customersSearch.handleFiltersChange}
                 onSortChange={customersSearch.handleSortChange}
                 sortBy={customersSearch.state.sortBy}
                 sortDir={customersSearch.state.sortDir}
-              />
+              /> */}
               <CustomerListTable
                 count={customersStore.customersCount}
                 items={customersStore.customers}

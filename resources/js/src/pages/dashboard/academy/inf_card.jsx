@@ -173,7 +173,8 @@ export const InfCard = (props) => {
                         >
                             <Avatar
                                 component={RouterLink}
-                                href={paths.dashboard.jobs.companies.details}
+                                href={"/profile/inf/"+influencer.username}
+                                target="_blank"
                                 src={influencer.profile_pic_url_hd ? influencer.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${influencer.full_name ? influencer.full_name : ""}&background=2970FF&color=fff&rounded=true`}
 
                                 sx={{ width: 74, height: 74 }}
@@ -185,7 +186,8 @@ export const InfCard = (props) => {
                                 <Link
                                     color="#2970FF"
                                     component={RouterLink}
-                                    href={paths.dashboard.jobs.companies.details}
+                                    href={"/profile/inf/"+influencer.username}
+                                    target="_blank"
                                     variant="h6"
                                     style={{ fontSize: 18 }}
                                 >
@@ -265,6 +267,7 @@ export const InfCard = (props) => {
                                             href={"/profile/inf/" + influencer.username}
                                             sx={{ color: "text.primary" }}
                                             size="small"
+                                            target="_blank"
                                             className='right-btn'
                                             startIcon={(
                                                 <>
@@ -309,6 +312,7 @@ export const InfCard = (props) => {
                                             component={RouterLink}
                                             href={"/profile/inf/" + influencer.username}
                                             size="small"
+                                            target="_blank"
                                             className='right-btn'
                                             startIcon={(
                                                 <>

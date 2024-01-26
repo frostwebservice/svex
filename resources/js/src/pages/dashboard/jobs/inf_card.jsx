@@ -14,7 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import { MailComposer } from '@/sections/dashboard/mail/mail-composer';
 import { useDispatch } from 'react-redux';
 import { getFavs } from '@/actions';
-
+import { useDialog } from '@/hooks/use-dialog';
+import JobOffer from './job-offer';
 const useComposer = () => {
     const initialState = {
         isFullScreen: false,
@@ -88,12 +89,14 @@ const useComposer = () => {
     };
 };
 export const InfCard = (props) => {
-    const { influencer, currentTab,invited,createdAt, ...other } = props;
+    const { influencer, currentTab,invited,offer,onRerender=null,createdAt, ...other } = props;
     const navigate = useNavigate()
     const [isLiked, setIsLiked] = useState(influencer.liked == 1 ? true : false);
     const composer = useComposer();
     const dispatch = useDispatch()
-    console.log(influencer)
+    const [offerinf,setOfferInf] = useState({});
+    const [offertab,setOfferTab] = useState("");
+    const offerDialog = useDialog();
     useEffect(() => {
         setIsLiked(influencer.liked == 1 ? true : false)
     }, [influencer]);
@@ -150,6 +153,11 @@ export const InfCard = (props) => {
         }
         return n.toString();
     }
+    const openOffer = () => {
+        setOfferInf(influencer)
+        setOfferTab(currentTab)
+        offerDialog.handleOpen()
+    }
     return (
         <>
             <Card {...other} style={{ marginTop: 30, marginBottom: 30 }}>
@@ -174,19 +182,21 @@ export const InfCard = (props) => {
                         >
                             <Avatar
                                 component={RouterLink}
-                                href={paths.dashboard.jobs.companies.details}
+                                href={"/profile/inf/"+influencer.full_name}
                                 src={influencer.profile_pic_url_hd ? influencer.profile_pic_url_hd : `https://ui-avatars.com/api/?name=${influencer.full_name ? influencer.full_name : ""}&background=2970FF&color=fff&rounded=true`}
-
+                                target="_blank"
                                 sx={{ width: 74, height: 74 }}
                             // variant="rounded"
                             >
-                                {getInitials(influencer.full_name)}
+                                {getInitials(influencer.username)}
                             </Avatar>
                             <div>
                                 <Link
-                                    color="#2970FF"
+                                target="_blank"
+                                color="#2970FF"
                                     component={RouterLink}
-                                    href={paths.dashboard.jobs.companies.details}
+                                    href={"/profile/inf/"+influencer.username}
+
                                     variant="h6"
                                     style={{ fontSize: 18 }}
                                 >
@@ -242,6 +252,7 @@ export const InfCard = (props) => {
                             {isLiked
                                 ? (
                                     <>
+                                    {!offer?(<>
                                         <Button
                                             onClick={handleUnlike}
                                             className='right-btn'
@@ -263,8 +274,7 @@ export const InfCard = (props) => {
                                         </Button>
 
                                         <Button
-                                            component={RouterLink}
-                                            href={"/profile/inf/" + influencer.username}
+                                            onClick={openOffer}
                                             sx={{ color: "text.primary" }}
                                             size="small"
                                             className='right-btn'
@@ -277,6 +287,8 @@ export const InfCard = (props) => {
                                         >
                                             View Offer
                                         </Button>
+                                    </>):(<></>)}
+
                                         <Button
                                             onClick={composer.handleOpen}
                                             size="small"
@@ -294,6 +306,7 @@ export const InfCard = (props) => {
                                 )
                                 : (
                                     <>
+                                    {!offer?(<>
                                         <Button
                                             onClick={handleLike}
 
@@ -307,9 +320,7 @@ export const InfCard = (props) => {
 
                                         </Button>
                                         <Button
-                                            // onClick={handleInvite}
-                                            component={RouterLink}
-                                            href={"/profile/inf/" + influencer.username}
+                                            onClick={openOffer}
                                             size="small"
                                             className='right-btn'
                                             startIcon={(
@@ -321,6 +332,8 @@ export const InfCard = (props) => {
                                         >
                                             View Offer
                                         </Button>
+                                    </>):(<></>)}
+
                                         <Button
                                             onClick={composer.handleOpen}
                                             size="small"
@@ -339,6 +352,7 @@ export const InfCard = (props) => {
                                 )}
                         </Stack>
                     </Stack>
+
                     <Box sx={{ mt: 2 }}>
                         <CardBottom
                             engagement={show_percentage(influencer.engagement_rate)}
@@ -346,8 +360,26 @@ export const InfCard = (props) => {
                             category={influencer.category_niche}
                             createdAt = {createdAt}
                             invited={invited}
+                            influencer = {influencer}
+                            offer={offer}
                         />
                     </Box>
+                    {offer?(<>
+                        <Stack sx={{mt:5}}>
+                            <Typography variant="h6">
+                                Job Proposal
+                            </Typography>
+                            <Typography sx={{mt:4}}>
+                            
+                                Dear [Brand Name],
+                                I hope this letter finds you well. My name is [Your Name], and I am an experienced and passionate influencer in the [niche/industry]. I recently came across the job posting for a collaboration opportunity on your brand's social media channels, and I am thrilled to express my interest in working with your esteemed brand.
+                                Allow me to introduce myself and my work briefly. I have [X years/months] of experience as an influencer, and during this time, I have built a loyal and engaged following of [number of followers] across various social media platforms, including Instagram, YouTube, and TikTok. My content focuses on [specific niche/industry] and resonates with my audience, resulting in high levels of engagement and brand awareness.
+                                I have had the pleasure of partnering with several renowned brands in the past, including [mention notable brand collaborations], and have consistently delivered exceptional results. I believe that collaborating with your brand would be a perfect fit, as your products/services align closely with my audience's interests and preferences.
+                                                
+                            </Typography>
+                        </Stack>
+                    </>):(<></>)}
+
                 </CardContent>
             </Card >
             <MailComposer
@@ -363,6 +395,13 @@ export const InfCard = (props) => {
                 to={influencer.full_name}
                 avatar={influencer.profile_pic_url_hd}
                 toemail={influencer.public_email}
+            />
+            <JobOffer
+                influencer={offerinf}
+                currentTab = {offertab}
+                onClose={offerDialog.handleClose}
+                open={offerDialog.open}
+                onRerender = {onRerender}
             />
         </>
     );

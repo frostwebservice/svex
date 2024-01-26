@@ -7,8 +7,23 @@ import { RouterLink } from '@/components/router-link';
 import { paths } from '@/paths';
 import { getInitials } from '@/utils/get-initials';
 import "./manage.css";
-export const JobCard = (props) => {
-  const { job,active, ...other } = props;
+import { getJobs } from '@/actions';
+import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { getUserProfile } from '@/actions';
+import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
+const JobCard = (props) => {
+  const { job,active,openBar,userinfo,invite=false, ...other } = props;
+  const dispatch = useDispatch();
+  const email = JSON.parse(localStorage.getItem('email'))
+  console.log(userinfo)
+  const handleChange = (job) => {
+    axios.post('/api/update_jobactivity', {jobID:job.id,isActive:job.is_active})
+    .then((response) => {
+      dispatch(getJobs(email,1));
+    }).catch(e => {
+    });
+  }
   const getBudget = (job)=>{
     if(job.barter) return job.barter;
     else if(job.revenue) return job.revenue;
@@ -133,8 +148,10 @@ export const JobCard = (props) => {
           <Stack direction="row" spacing={3}>
             <Avatar
               component={RouterLink}
-              // href={paths.dashboard.jobs.companies.details}
+              href={"/profile/"+userinfo?.firstname+"-"+userinfo?.lastname+"-"+userinfo?.id}
               src={job.avatar}
+              target="_target"
+
               variant="circle"
             >
               {getInitials(job.firstname)}
@@ -143,7 +160,9 @@ export const JobCard = (props) => {
               <Link
                 color="text.primary"
                 component={RouterLink}
-                href={paths.dashboard.jobs.companies.details}
+                target="_target"
+
+                href={"/profile/"+userinfo?.firstname+"-"+userinfo?.lastname+"-"+userinfo?.id}
                 variant="h6"
               >
                 {job.fullname}
@@ -222,15 +241,21 @@ export const JobCard = (props) => {
               
             </div>
           </Stack>
-          <Stack direction="row">
-            <Typography variant="text.secondary" sx={{fontSize:16,pt:0.8}}>
-              {job.is_active==1?"Open":"Close"}
-            </Typography>
-            <Switch
-              checked={true}
-              // onChange={() => handleChange('app_message')}
-            />
-          </Stack>           
+          {openBar?(
+            <Stack direction="row">
+              <Typography variant="text.secondary" sx={{fontSize:16,pt:0.8}}>
+                {job.is_active==1?"Open":"Close"}
+              </Typography>
+              <Switch
+                checked={true}
+                onChange={() => handleChange(job)}
+              />
+            </Stack>   
+          )
+          :(
+            <></>
+          )}
+        
 
         </Stack>
         <Box sx={{ mt: 2 }}>
@@ -336,33 +361,53 @@ export const JobCard = (props) => {
 
               </Stack>
               <Stack
-                // alignItems="center"
-                direction="row"
-                // flexWrap="wrap"
+                justifyContent="space-between"
+                direction={{
+                  xs: 'column',
+                  sm: 'row'
+                }}
                 sx={{
                   px: 2,
                   py: 1.5
                 }}
               >
-                <Stack>
-                  <div style={{fontWeight:700,fontSize:14}}>25+</div>
-                  <Typography
-                    color="text.secondary"
-                    variant="caption"
-                  >
-                    Number of Applicants
-                  </Typography>
+                <Stack  alignItems="center" direction="row" spacing={3}>
+                  <Stack>
+                    <div style={{fontWeight:700,fontSize:14}}>25+</div>
+                    <Typography
+                      color="text.secondary"
+                      variant="caption"
+                    >
+                      Number of Applicants
+                    </Typography>
+                  </Stack>
+                      
+                  <Stack sx={{ml:5}}>
+                    <div style={{fontWeight:700,fontSize:14}}>Actively Hiring</div>
+                    <Typography
+                      color="text.secondary"
+                      variant="caption"
+                    >
+                      Status
+                    </Typography>
+                  </Stack>
                 </Stack>
-                    
-                <Stack sx={{ml:5}}>
-                  <div style={{fontWeight:700,fontSize:14}}>Actively Hiring</div>
-                  <Typography
-                    color="text.secondary"
-                    variant="caption"
-                  >
-                    Status
-                  </Typography>
-                </Stack>
+                {invite?(
+                <Stack  alignItems="center" direction="row" spacing={3}>
+                <Button size="small"
+                    variant="contained"
+                  // component={RouterLink}
+                  // href={"/dashboard/jobs"}
+                  style={{ fontSize: 14 }}
+                >
+                  Invite On This Project
+                  <SvgIcon fontSize='2'>
+                    <ArrowRightIcon />
+                  </SvgIcon>
+                </Button>
+              </Stack>
+                ):(<></>)}
+
 
               </Stack>
             </Stack>
@@ -376,3 +421,8 @@ export const JobCard = (props) => {
 JobCard.propTypes = {
   job: PropTypes.object.isRequired
 };
+const mapStateToProps = state => ({
+  userinfo: state.profile.userinfo
+});
+
+export default connect(mapStateToProps)(JobCard);

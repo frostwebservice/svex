@@ -110,7 +110,7 @@ const Favinfs = (props) => {
         sx={{ flexGrow: 1 }}
       >
         <Container maxWidth={settings.stretch ? false : 'xl'} >
-          <Typography variant="h4" sx={{ mt: 10, mb: 7, fontSize: '32px' }}>
+          <Typography variant="h4" sx={{ mt: 8, mb: 4, fontSize: '32px' }}>
             Favorite Influencers
           </Typography>
           <Stack

@@ -32,7 +32,7 @@ export const CardBottom = (props) => {
                         <Typography
                             color="text.primary"
                             noWrap
-                            variant="overline"
+                            // variant="overline"
                             sx={{ fontSize: 14, fontWeight: 700 }}
                         >
                             {followers}
@@ -41,6 +41,7 @@ export const CardBottom = (props) => {
                             color="text.secondary"
                             noWrap
                             sx={{ fontSize: 12 }}
+                            style={{marginTop:0}}
                         >
                             Followers
                         </Typography>
@@ -58,13 +59,14 @@ export const CardBottom = (props) => {
                         <Typography
                             color="text.primary"
                             noWrap
-                            variant="overline"
+                            // variant="overline"
                             sx={{ fontSize: 14, fontWeight: 700 }}
                         >
                             {engagement}
                         </Typography>
                         <Typography
                             color="text.secondary"
+                            style={{marginTop:0}}
                             noWrap
                             sx={{ fontSize: 12 }}
                         >
@@ -84,13 +86,14 @@ export const CardBottom = (props) => {
                         <Typography
                             color="text.primary"
                             noWrap
-                            variant="overline"
+                            // variant="overline"
                             sx={{ fontSize: 14, fontWeight: 700 }}
                         >
                             Categories
                         </Typography>
                         <Typography
                             color="text.secondary"
+                            style={{marginTop:0}}
                             noWrap
                             sx={{ fontSize: 12 }}
                         >

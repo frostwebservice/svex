@@ -21,7 +21,7 @@ import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
-import { JobCard } from '@/sections/dashboard/jobs/company-card';
+import  JobCard  from '@/sections/dashboard/jobs/company-card';
 import { JobListSearch } from '@/sections/dashboard/jobs/job-list-search';
 import { useSettings } from '@/hooks/use-settings';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
@@ -86,151 +86,43 @@ const Page = (props) => {
           <Typography variant="h4">
             Manage Jobs
           </Typography>
-          <div className='top'>
-            <Tabs
-              indicatorColor="primary"
-              onChange={handleTabsChange}
-              scrollButtons="auto"
-              textColor="primary"
-              sx={{
-                p: 3
-              }}
-              value={currentTab}
-              variant="scrollable"
-            >
-              {tabs.map((tab) => (
-                <Tab
-                  className='custom-tab'
-                  sx={{ fontSize: 18 }}
-                  key={tab.value}
-                  label={tab.label}
-                  value={tab.value}
-                />
-              ))}
-            </Tabs>
-            <Box>
-              {currentTab == 'all' && (
-                <>
-                  <Stack
-                    spacing={4}
-                    sx={{ mt: 4 }}
-                  >
-
-                    {jobs?.map((job) => (
-                      <JobCard
-                        key={job.id}
-                        job={job}
-                        active="all"
-                      />
-                    ))}
-                    <Stack
-                      alignItems="center"
-                      direction="row"
-                      justifyContent="flex-end"
-                      spacing={2}
-                      sx={{
-                        px: 3,
-                        py: 2
-                      }}
-                    >
-                      <IconButton disabled>
-                        <SvgIcon fontSize="small">
-                          <ChevronLeftIcon />
-                        </SvgIcon>
-                      </IconButton>
-                      <IconButton>
-                        <SvgIcon fontSize="small">
-                          <ChevronRightIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </Stack>
-                  </Stack>
-                </>
-              )}
-              {currentTab == 'active' && (
-                <>
-                  <Stack
-                    spacing={4}
-                    sx={{ mt: 4 }}
-                  >
-
-                    {jobs?.map((job) => job.is_active==1?(
-                      <JobCard
-                        key={job.id}
-                        job={job}
-                        active="active"
-                      />
-                    ):(<></>))}
-                    <Stack
-                      alignItems="center"
-                      direction="row"
-                      justifyContent="flex-end"
-                      spacing={2}
-                      sx={{
-                        px: 3,
-                        py: 2
-                      }}
-                    >
-                      <IconButton disabled>
-                        <SvgIcon fontSize="small">
-                          <ChevronLeftIcon />
-                        </SvgIcon>
-                      </IconButton>
-                      <IconButton>
-                        <SvgIcon fontSize="small">
-                          <ChevronRightIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </Stack>
-                  </Stack>
-                </>
-              )}
-              {currentTab == 'archived' && (
-                <>
-             
-                  <Stack
-                    spacing={4}
-                    sx={{ mt: 4 }}
-                  >
-
-                    {jobs?.map((job) => job.is_active==0?(
-                      <JobCard
-                        key={job.id}
-                        job={job}
-                        active="archived"
-                      />
-                    ):(<></>))}
-                    <Stack
-                      alignItems="center"
-                      direction="row"
-                      justifyContent="flex-end"
-                      spacing={2}
-                      sx={{
-                        px: 3,
-                        py: 2
-                      }}
-                    >
-                      <IconButton disabled>
-                        <SvgIcon fontSize="small">
-                          <ChevronLeftIcon />
-                        </SvgIcon>
-                      </IconButton>
-                      <IconButton>
-                        <SvgIcon fontSize="small">
-                          <ChevronRightIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </Stack>
-                  </Stack>
-             
-                </>
-              )}
-            </Box>
+          <Stack
+            alignItems="center"
+            justifyContent="space-between"
+            spacing={2}
+            direction={{
+              xs: 'column',
+              sm: 'row'
+            }}
+          >
+            <Stack alignItems="center" direction="row" spacing={3}>
+              <Tabs
+                indicatorColor="primary"
+                onChange={handleTabsChange}
+                scrollButtons="auto"
+                textColor="primary"
+                sx={{
+                  p: 3
+                }}
+                value={currentTab}
+                variant="scrollable"
+              >
+                {tabs.map((tab) => (
+                  <Tab
+                    className='custom-tab'
+                    sx={{ fontSize: 18 }}
+                    key={tab.value}
+                    label={tab.label}
+                    value={tab.value}
+                  />
+                ))}
+              </Tabs>
+            </Stack>
             <Stack
               alignItems="center"
               direction="row"
               spacing={2}
-              sx={{ p: 2 }}
+              sx={{ p: 1 }}
               className='part'
             >
               <SvgIcon>
@@ -244,8 +136,125 @@ const Page = (props) => {
                 />
               </Box>
             </Stack>
-          </div>
+          </Stack>
+            <Box>
+              {currentTab == 'all' && (
+                <>
+                  <Stack
+                    spacing={4}
+                  >
 
+                    {jobs?.map((job) => (
+                      <JobCard
+                        key={job.id}
+                        job={job}
+                        active="all"
+                        openBar={true}
+                      />
+                    ))}
+                    {/* <Stack
+                      alignItems="center"
+                      direction="row"
+                      justifyContent="flex-end"
+                      spacing={2}
+                      sx={{
+                        px: 3,
+                        py: 2
+                      }}
+                    >
+                      <IconButton disabled>
+                        <SvgIcon fontSize="small">
+                          <ChevronLeftIcon />
+                        </SvgIcon>
+                      </IconButton>
+                      <IconButton>
+                        <SvgIcon fontSize="small">
+                          <ChevronRightIcon />
+                        </SvgIcon>
+                      </IconButton>
+                    </Stack> */}
+                  </Stack>
+                </>
+              )}
+              {currentTab == 'active' && (
+                <>
+                  <Stack
+                    spacing={4}
+                  >
+
+                    {jobs?.map((job) => job.is_active==1?(
+                      <JobCard
+                        key={job.id}
+                        job={job}
+                        openBar={true}
+                        active="active"
+                      />
+                    ):(<></>))}
+                    {/* <Stack
+                      alignItems="center"
+                      direction="row"
+                      justifyContent="flex-end"
+                      spacing={2}
+                      sx={{
+                        px: 3,
+                        py: 2
+                      }}
+                    >
+                      <IconButton disabled>
+                        <SvgIcon fontSize="small">
+                          <ChevronLeftIcon />
+                        </SvgIcon>
+                      </IconButton>
+                      <IconButton>
+                        <SvgIcon fontSize="small">
+                          <ChevronRightIcon />
+                        </SvgIcon>
+                      </IconButton>
+                    </Stack> */}
+                  </Stack>
+                </>
+              )}
+              {currentTab == 'archived' && (
+                <>
+             
+                  <Stack
+                    spacing={4}
+                  >
+
+                    {jobs?.map((job) => job.is_active==0?(
+                      <JobCard
+                        key={job.id}
+                        job={job}
+                        openBar={true}
+                        active="archived"
+                      />
+                    ):(<></>))}
+                    {/* <Stack
+                      alignItems="center"
+                      direction="row"
+                      justifyContent="flex-end"
+                      spacing={2}
+                      sx={{
+                        px: 3,
+                        py: 2
+                      }}
+                    >
+                      <IconButton disabled>
+                        <SvgIcon fontSize="small">
+                          <ChevronLeftIcon />
+                        </SvgIcon>
+                      </IconButton>
+                      <IconButton>
+                        <SvgIcon fontSize="small">
+                          <ChevronRightIcon />
+                        </SvgIcon>
+                      </IconButton>
+                    </Stack> */}
+                  </Stack>
+             
+                </>
+              )}
+            </Box>
         </Container>
       </Box>
     </>

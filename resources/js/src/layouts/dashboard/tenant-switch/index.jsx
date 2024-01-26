@@ -9,7 +9,6 @@ const tenants = ['Devias', 'Acme Corp'];
 const TenantSwitch = (props) => {
   const popover = usePopover();
   const {userinfo} = props;
-  console.log(userinfo)
   return (
     <>
       <Stack

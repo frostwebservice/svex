@@ -31,7 +31,7 @@ import EmptyInvited from './empty_invited';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import { connect } from 'react-redux';
 import { InfCard } from './inf_card';
-import { JobCard } from '@/sections/dashboard/jobs/company-card';
+import  JobCard  from '@/sections/dashboard/jobs/company-card';
 
 import "./manage.css";
 import "./inf_finder.css"
@@ -60,22 +60,29 @@ const useCompanies = () => {
   return companies;
 };
 const tabs = [
-  { label: "Applicants", value: "applicants" },
   { label: "Job listing", value: "joblisting" },
-  { label: "Offer", value: "offer" },
+  { label: "Review Offers", value: "applicants" },
   { label: "Invited Influencers", value: "invitedinfluencers" },
+  { label: "Hired", value: "hired" },
+  
 ] 
 const Page = (props) => {
   const {jobs} = props
   const companies = useCompanies();
   const settings = useSettings();
-  const [currentTab, setCurrentTab] = useState("applicants");
+  const [currentTab, setCurrentTab] = useState("joblisting");
   const [applicants,setApplicants] = useState([])
   const [invited,setInvited] = useState([])
+  const [hired,setHired] = useState([])
   const [rendered,setRendered] = useState(0)
+  const [renderedhired,setRenderedHired] = useState(0)
   const [renderedinvited,setRenderedInvited] = useState(0)
   const email = JSON.parse(localStorage.getItem('email'));
-
+  const onRerender = () => {
+    setRendered(0);
+    setRenderedHired(0);
+    setRenderedInvited(0);
+  }
   const handleTabsChange = useCallback((event, value) => {
     setCurrentTab(value);
   }, []);
@@ -84,11 +91,27 @@ const Page = (props) => {
   const job = jobs?.filter(obj => {
     return obj.id == jobID
   })
+  const handleChange = () => {
+    // axios.post('/api/update_jobactivity', {jobID:jobID,isActive:job[0]?.is_active})
+    axios.post('/api/update_jobactivity', {jobID:jobID,isActive:"1"})
+    .then((response) => {
+      dispatch(getJobs(email,1));
+    }).catch(e => {
+    });
+  }
   if(rendered<1){
     axios.post('/api/get_applicants', {jobID:jobID,email:email})
     .then((response) => {
       setApplicants(response.data);
       setRendered(rendered+1);
+    }).catch(e => {
+    });
+  }
+  if(renderedhired<1){
+    axios.post('/api/get_hired', {jobID:jobID,email:email})
+    .then((response) => {
+      setHired(response.data);
+      setRenderedHired(renderedhired+1);
     }).catch(e => {
     });
   }
@@ -102,7 +125,7 @@ const Page = (props) => {
   }
   return (
     <>
-      <Seo title="Dashboard: Job Browse" />
+      <Seo title="Dashboard: Manage Jobs" />
       <Box
         component="main"
         sx={{
@@ -128,6 +151,7 @@ const Page = (props) => {
 
           <SimpleJobCard
             order = {window.location.pathname.split("/")[window.location.pathname.split("/").length-1]}
+            offer={false}
             />
           <div className='right-parent'>
             <Tabs
@@ -159,7 +183,7 @@ const Page = (props) => {
                 </Typography> 
                 <Switch
                   checked={true}
-                  // onChange={() => handleChange('app_message')}
+                  onChange={handleChange}
                 />
               </Stack>
               <Stack>
@@ -183,8 +207,10 @@ const Page = (props) => {
                   return (
                   <InfCard 
                     key={applicant.id}
+                    offer={false}
                     influencer={applicant.inf}
                     currentTab={applicant.tab}
+                    onRerender = {onRerender}
                     invited = "0"
                   />
                   )
@@ -197,20 +223,23 @@ const Page = (props) => {
                 {job&&job[0]?(
                   <JobCard
                     job={job[0]}
+                    openBar={false}
                     active="all"
                   />
                 ):(<></>)}
                   
                 </>
               )}
-              {currentTab == 'offer' && (
+              {currentTab == 'hired' && (
                 <>
-                {applicants?.map((applicant)=>{
+                {hired?.map((hire)=>{
                   return (
                   <InfCard 
-                    key={applicant.id}
-                    influencer={applicant.inf}
-                    currentTab={applicant.tab}
+                    key={hire.id}
+                    offer={false}
+                    influencer={hire.inf}
+                    onRerender = {onRerender}
+                    currentTab={hire.tab}
                     invited="0"
                   />
                   )
@@ -231,9 +260,11 @@ const Page = (props) => {
                   <InfCard 
                     key={applicant.id}
                     influencer={applicant.inf}
+                    onRerender = {onRerender}
                     currentTab={applicant.tab}
                     createdAt = {applicant.updated_at}
                     invited = "1"
+                    offer={false}
                   />
                   )
                 })}
@@ -250,7 +281,7 @@ const Page = (props) => {
             sx={{ mt: 4 }}
           >
 
-            <Stack
+            {/* <Stack
               alignItems="center"
               direction="row"
               justifyContent="flex-end"
@@ -270,7 +301,7 @@ const Page = (props) => {
                   <ChevronRightIcon />
                 </SvgIcon>
               </IconButton>
-            </Stack>
+            </Stack> */}
           </Stack>
         </Container>
       </Box>
