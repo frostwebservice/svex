@@ -19,12 +19,35 @@ class FinderController extends Controller
 {
     //
     private $status_code = 200;
+    public function update_group(Request $request){
+        $data = array(
+            "group_name"=>$request->group_name,
+            "brief_group"=>$request->brief_group
+        );
+        $res = DB::table("outreachs")->where('id',$request->id)->update($data);
+        print_r($res);
+    }
     public function findWithParams(Request $request)
     {
         $email = $request->email;
         $params = $request->searchParams;
         $infs = $this->callSearch($email, $params);
         return json_encode($infs);
+    }
+    public function add_group(Request $request){
+        $data = array(
+            'group_id' =>$request->group_id,
+            'inf_id' =>$request->inf_id,
+            'social_type' =>$request->tab
+        );
+        $res = DB::table("group_infs")->insert($data);
+        print_r(json_encode($res));
+    }
+    public function delete_user_group(Request $request){
+        $id = $request-> group_inf_id;
+        DB::table("group_infs")->where("id",$id)->delete();
+        
+
     }
     public function getoutreachs(Request $request)
     {

@@ -1,97 +1,97 @@
 .MuiAvatar-img {
-    object-fit: contain;
+  object-fit: contain;
 }
 
 #react-select-2-listbox {
-    z-index: 10000 !important;
-    position: relative;
-    background-color: var(--bg-secondary);
+  z-index: 10000 !important;
+  position: relative;
+  background-color: var(--bg-secondary);
 }
 
 [id^='react-select-2-option-']:hover {
-
-    background-color: #0d6efd;
+  background-color: #0d6efd;
 }
 
 .css-t3ipsp-control {
-    background-color: var(--bg-secondary);
-
+  background-color: var(--bg-secondary);
+}
+.MuiInputLabel-root {
+  font-size: 11px !important;
 }
 
 .opacity-disable {
-    opacity: 1 !important;
+  opacity: 1 !important;
 }
 
 .css-1nmdiq5-menu {
-    z-index: 10000 !important;
-    position: relative;
-    background-color: var(--bg-secondary);
+  z-index: 10000 !important;
+  position: relative;
+  background-color: var(--bg-secondary);
 
-    &:hover {
-        background-color: var(--bg-primary);
-    }
+  &:hover {
+    background-color: var(--bg-primary);
+  }
 }
 
 .dark-menu {
-    background-color: #111927;
-    color: white !important;
+  background-color: #111927;
+  color: white !important;
 }
 
 .css-1dimb5e-singleValue {
-    font-size: 14px !important;
-    padding-top: 14px !important;
+  font-size: 14px !important;
+  padding-top: 14px !important;
 }
 
 .css-olqui2-singleValue {
-    font-size: 14px !important;
-    padding-top: 14px !important;
+  font-size: 14px !important;
+  padding-top: 14px !important;
 }
 
 .custom-parent {
-    position: relative;
+  position: relative;
 }
 
 .css-13cymwt-control {
-    height: 55.13px !important;
-    border-radius: 8px;
-    border-color: #E5E7EB;
-    background-color: var(--bg-secondary);
+  height: 55.13px !important;
+  border-radius: 8px;
+  border-color: #e5e7eb;
+  background-color: var(--bg-secondary);
 }
 
 .custom-timezone {
-    border-color: #2D3748 !important;
-
+  border-color: #2d3748 !important;
 }
 
 .timezone-label {
-    position: absolute;
-    top: 2px;
-    left: -5px;
+  position: absolute;
+  top: 2px;
+  left: -5px;
 }
 
 .custom-timezone-light {
-    border-color: #E5E7EB !important;
+  border-color: #e5e7eb !important;
 }
 
 .css-16xfy0z-control {
-    height: 55.13px !important;
-    border-radius: 8px;
-    border-color: #E5E7EB;
-    background-color: var(--bg-secondary);
+  height: 55.13px !important;
+  border-radius: 8px;
+  border-color: #e5e7eb;
+  background-color: var(--bg-secondary);
 }
 
 .css-13cymwt-control:hover {
-    height: 55.13px !important;
-    border-radius: 8px;
-    border-color: #E5E7EB;
-    background-color: var(--bg-secondary);
+  height: 55.13px !important;
+  border-radius: 8px;
+  border-color: #e5e7eb;
+  background-color: var(--bg-secondary);
 }
 
 .css-16xfy0z-control:hover {
-    height: 55.13px !important;
-    border-radius: 8px;
-    border-color: #E5E7EB;
-    background-color: var(--bg-secondary);
+  height: 55.13px !important;
+  border-radius: 8px;
+  border-color: #e5e7eb;
+  background-color: var(--bg-secondary);
 }
 
 /* .css-t3ipsp-control {
@@ -100,15 +100,15 @@
 } */
 
 .css-b62m3t-container {
-    width: -webkit-fill-available !important;
+  width: -webkit-fill-available !important;
 }
 
 .css-3iigni-container {
-    width: -webkit-fill-available !important;
+  width: -webkit-fill-available !important;
 }
 
 .css-art2ul-ValueContainer2 {
-    height: 55.13px;
+  height: 55.13px;
 }
 
 /* 
@@ -119,16 +119,14 @@
 } */
 
 .darkColor {
-    /* color: #A0AEC0; */
-    color: white;
+  /* color: #A0AEC0; */
+  color: white;
 }
 
 .css-1dimb5e-singleValue {
-    color: var(--text-primary);
+  color: var(--text-primary);
 }
 
-
-
 .MuiInputLabel-root {
-    font-size: 11px !important;
+  font-size: 11px !important;
 }

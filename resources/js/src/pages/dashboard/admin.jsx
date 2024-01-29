@@ -27,6 +27,7 @@ import { OverviewOpenTickets } from '@/sections/dashboard/overview/overview-open
 import { OverviewTips } from '@/sections/dashboard/overview/overview-tips';
 import { OverviewOrders } from '@/sections/dashboard/overview/overview-order';
 import { OverviewInvoices } from '@/sections/dashboard/overview/overview-invoice';
+import { OverviewPayment } from '@/sections/dashboard/overview/overview-payment';
 import { AdminTips } from '@/sections/dashboard/overview/admin-tips';
 
 const now = new Date();
@@ -95,84 +96,9 @@ const Page = () => {
             <Grid xs={12} md={6}>
               <OverviewInvoices />
             </Grid>
-            {/* <Grid
-              xs={12}
-              md={7}
-            >
-              <OverviewTransactions
-                transactions={[
-                  {
-                    id: 'd46800328cd510a668253b45',
-                    amount: 25000,
-                    createdAt: now.getTime(),
-                    currency: 'usd',
-                    sender: 'Devias',
-                    status: 'on_hold',
-                    type: 'receive'
-                  },
-                  {
-                    id: 'b4b19b21656e44b487441c50',
-                    amount: 6843,
-                    createdAt: subDays(now, 1).getTime(),
-                    currency: 'usd',
-                    sender: 'Zimbru',
-                    status: 'confirmed',
-                    type: 'send'
-                  },
-                  {
-                    id: '56c09ad91f6d44cb313397db',
-                    amount: 91823,
-                    createdAt: subDays(now, 1).getTime(),
-                    currency: 'usd',
-                    sender: 'Vertical Jelly',
-                    status: 'failed',
-                    type: 'send'
-                  },
-                  {
-                    id: 'aaeb96c5a131a55d9623f44d',
-                    amount: 49550,
-                    createdAt: subDays(now, 3).getTime(),
-                    currency: 'usd',
-                    sender: 'Devias',
-                    status: 'confirmed',
-                    type: 'receive'
-                  }
-                ]}
-              />
+            <Grid xs={12} md={6}>
+              <OverviewPayment />
             </Grid>
-            <Grid
-              xs={12}
-              md={5}
-            >
-              <OverviewEvents
-                events={[
-                  {
-                    id: '3bfa0bc6cbc99bf747c94d51',
-                    createdAt: addDays(now, 1),
-                    description: '17:00 to 18:00',
-                    title: 'Meeting with Partners'
-                  },
-                  {
-                    id: 'dd6c8ce8655ac222b01f24f9',
-                    createdAt: addDays(now, 4),
-                    description: '17:00 to 18:00',
-                    title: 'Weekly Meeting'
-                  },
-                  {
-                    id: 'f274902e2bf226865b3cf947',
-                    createdAt: addDays(now, 4),
-                    description: '17:00 to 18:00',
-                    title: 'Weekly Meeting'
-                  },
-                  {
-                    id: 'd2a66e24110f52acb0cd0b9f',
-                    createdAt: addDays(now, 7),
-                    description: '17:00 to 18:00',
-                    title: 'Weekly Meeting'
-                  }
-                ]}
-              />
-            </Grid> */}
             <Grid xs={12} md={6}>
               <OverviewJobs />
             </Grid>

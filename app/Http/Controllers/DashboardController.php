@@ -38,5 +38,53 @@ class DashboardController extends Controller
         $announcements = DB::table("announcements")->orderBy("updated_at","DESC")->get();
         print_r(json_encode($announcements));
     }
+    public function delete_announcement(Request $request){
+        $id = $request->id;
+        $del = DB::table("announcements")->where("id",$id)->delete();
+        $announcements = DB::table("announcements")->orderBy("updated_at","DESC")->get();
+        print_r(json_encode($announcements));
+    }
+    public function update_announcement(Request $request){
+        $id = $request->id;
+        $data=array(
+            "a_title"=>$request->a_title,
+            "a_content"=>$request->a_content
+        );
+        $update = DB::table("announcements")->where("id",$id)->update($data);
+        $announcements = DB::table("announcements")->orderBy("updated_at","DESC")->get();
+        print_r(json_encode($announcements));
+    }
+    public function get_paypal(Request $request){
+        $pp = DB::table('paypal_setting')->where("id",1)->get()->toArray()[0];
+        print_r(json_encode($pp));
+    }
+    public function get_stripe(Request $request){
+        $pp = DB::table('stripe_setting')->where("id",1)->get()->toArray()[0];
+        print_r(json_encode($pp));
+    }
+    public function update_paypal(Request $request){
+        $data = array(
+            "mode"=>$request->values['paypal_mode'],
+            "client_id"=>$request->values['paypal_client_id'],
+            "secret"=>$request->values['paypal_secret'],
+            "plain_id"=>$request->values['paypal_plain_id'],
+            "currency"=>$request->values['currency'],
+            "unlimited_access"=>$request->values['costofunlimited_access']
+        );
+        $update = DB::table("paypal_setting")->where("id",1)->update($data);
+        print_r(json_encode($update));
+    }
+    public function update_stripe(Request $request){
+        $data = array(
+            "pub_key"=>$request->values['stripe_publishable_key'],
+            "sec_key"=>$request->values['stripe_secret_key'],
+            "webhook_sec"=>$request->values['stripe_webhook_secret'],
+            "sub_id"=>$request->values['stripe_subscription_plan_id'],
+            "currency"=>$request->values['currency'],
+            "unlimited_access"=>$request->values['costofunlimited_access']
+        );
+        $update = DB::table("stripe_setting")->where("id",1)->update($data);
+        print_r(json_encode($update));
+    }
 }
 

@@ -27,6 +27,57 @@ class JobController extends Controller
         $update = DB::table("jobs")->where("id",$jobID)->update(array("is_active"=>$isActive));
         print_r(json_encode($update));
     }
+    public function invite_influencer(Request $request){
+        $where = array(
+            'job_id' => $request->job_id,
+            'inf_id' => $request->inf_id,
+            'tab' => $request->tab
+        );
+        $res = DB::table('applicants')->where($where)->get()->count();
+        if($res==0){
+            $data = array(
+                'job_id' => $request->job_id,
+                'inf_id' => $request->inf_id,
+                'tab' => $request->tab,
+                'invited' =>1
+            );
+            $res = DB::table('applicants')->insert($data);
+        }
+        print_r(json_encode($res));
+
+    }
+    public function invite_group(Request $request){
+        $data = array(
+            'job_id'=>$request->job_id,
+            'group_id'=>$request->group_id
+        );
+        $email = $request->email;
+        $ins = DB::table("job_group")->insert($data);
+        if($request->group_id=='0'){
+            $favs = DB::table('favorites')->where('email',$email)->get()->toArray();
+            foreach($favs as $key=>$fav){
+                $fdata = array(
+                    'job_id'=>$request->job_id,
+                    'inf_id'=>$fav->inf_id,
+                    'tab'=>$fav->tab,
+                    'invited'=>1
+                );
+                DB::table('applicants')->insert($fdata);
+            }
+        }
+        else{
+            $infs = DB::table('group_infs')->where('group_id',$request->group_id)->get()->toArray();
+            foreach($infs as $key=>$inf){
+                $idata = array(
+                    'job_id'=>$request->job_id,
+                    'inf_id'=>$inf->inf_id,
+                    'tab'=>$inf->social_type,
+                    'invited'=>1
+                );
+                DB::table('applicants')->insert($idata);
+            }
+        }
+    }
     public function get_applicants(Request $request){
         $jobID = $request->jobID;
         $applicants = DB::table("applicants")->where("job_id",$jobID)->where(array("invited"=>0,"hired"=>0))->get()->toArray();
@@ -64,7 +115,7 @@ class JobController extends Controller
     }
     public function get_invited(Request $request){
         $jobID = $request->jobID;
-        $applicants = DB::table("applicants")->where("job_id",$jobID)->where(array("invited"=>1,"hired"=>0))->get()->toArray();
+        $applicants = DB::table("applicants")->where("job_id",$jobID)->where(array("invited"=>1,"hired"=>0))->distinct()->get()->toArray();
         foreach($applicants as $key=>$value){
             $applicants[$key]->inf = DB::table("influencers_".$value->tab)->where("id",$value->inf_id)->get()->toArray()[0];
             $applicants[$key]->inf->liked = DB::table("favorites")->where(array("tab"=>$value->tab,"inf_id"=>$value->inf_id,"email"=>$request->email))->count();

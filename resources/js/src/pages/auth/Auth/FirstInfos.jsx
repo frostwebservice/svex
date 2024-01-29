@@ -1,11 +1,14 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { isEmptyArray, useFormik } from 'formik';
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
 import { useSearchParams } from '@/hooks/use-search-params';
 import { useNavigate } from 'react-router-dom';
-import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
+import {
+  GeoapifyGeocoderAutocomplete,
+  GeoapifyContext
+} from '@geoapify/react-geocoder-autocomplete';
 import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 import $ from 'jquery';
 import {
@@ -26,54 +29,37 @@ import { RouterLink } from '@/components/router-link';
 import { Seo } from '@/components/seo';
 import { paths } from '@/paths';
 import './Form.css';
-import { useDispatch, connect } from "react-redux";
+import { useDispatch, connect } from 'react-redux';
 
 import { getUserProfile } from '@/actions';
-import { set } from "nprogress";
+import { set } from 'nprogress';
 
 const Page = (props) => {
-
   const validationSchema = Yup.object({
-    firstname: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
-    lastname: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
-    phonenumber: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
-    companywebsite: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
-    companyname: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
+    firstname: Yup.string().max(255).required('This Field is required'),
+    lastname: Yup.string().max(255).required('This Field is required'),
+    phonenumber: Yup.string().max(255).required('This Field is required'),
+    companywebsite: Yup.string().max(255).required('This Field is required'),
+    companyname: Yup.string().max(255).required('This Field is required')
   });
   const [renderedonce, setRenderedonce] = useState(false);
-  const { userinfo } = props
+  const { userinfo } = props;
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
   const [isLoading, setIsLoading] = useState(false);
   const [menuclick, Setmenuclick] = useState(false);
-  const [letter, setLetter] = useState("Save changes and NEXT");
+  const [letter, setLetter] = useState('Save changes and NEXT');
   const email = JSON.parse(localStorage.getItem('email'));
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserProfile({ email: email }));
-
-  }, [dispatch])
+  }, [dispatch]);
   const navigate = useNavigate();
-  const [templocation, setTemplocation] = useState("");
+  const [templocation, setTemplocation] = useState('');
   const [focused, SetFocused] = useState(false);
   const [haserror, SetHaserror] = useState(false);
   const [clickonce, SetClickonce] = useState(false);
-  const [renderkey, Setrenderkey] = useState("");
+  const [renderkey, Setrenderkey] = useState('');
   const [initialValues, setInitialValues] = useState({
     firstname: '',
     lastname: '',
@@ -86,122 +72,128 @@ const Page = (props) => {
   initialValues.email = email;
 
   const onCancel = () => {
-    navigate(returnTo || paths.auth.auth.signin)
-  }
+    navigate(returnTo || paths.auth.auth.signin);
+  };
   function isEmpty(value) {
     for (let prop in value) {
       if (value.hasOwnProperty(prop)) return false;
     }
     return true;
   }
-  const onPlaceSelect = value => {
-    console.log("select", value)
-    Setmenuclick(true)
+  const onPlaceSelect = (value) => {
+    console.log('select', value);
+    Setmenuclick(true);
     if (value != null) {
       setInitialValues({
         ...formik.values,
         companylocation: value.properties.formatted
       });
-      SetHaserror(false)
-    }
-    else {
+      SetHaserror(false);
+    } else {
       setInitialValues({
         ...formik.values,
         companylocation: ''
       });
-      SetHaserror(true)
-      SetFocused(false)
-
+      SetHaserror(true);
+      SetFocused(false);
     }
-
-  }
+  };
   $('.geoapify-autocomplete-input').on('focusout', function () {
+    console.log('out1', initialValues.companylocation);
+    console.log('out2', $('.geoapify-autocomplete-input')[0].value);
 
-    console.log("out1", initialValues.companylocation)
-    console.log("out2", $('.geoapify-autocomplete-input')[0].value)
-
-    if (($('.geoapify-autocomplete-input')[0].value == "" || $('.geoapify-autocomplete-input')[0].value == " ") && (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ')) {
+    if (
+      ($('.geoapify-autocomplete-input')[0].value == '' ||
+        $('.geoapify-autocomplete-input')[0].value == ' ') &&
+      (initialValues.companylocation === '' ||
+        !initialValues.companylocation ||
+        initialValues.companylocation === ' ')
+    ) {
       setInitialValues({
         ...formik.values,
         companylocation: ''
       });
-      SetHaserror(true)
-      SetFocused(false)
-      Setrenderkey(renderkey + "a")
+      SetHaserror(true);
+      SetFocused(false);
+      Setrenderkey(renderkey + 'a');
     }
-    Setmenuclick(false)
-  })
-  const onUserInput = value => {
-
-    console.log("input", value);
+    Setmenuclick(false);
+  });
+  const onUserInput = (value) => {
+    console.log('input', value);
     SetFocused(true);
-    SetHaserror(false)
-    SetClickonce(true)
-    if (document.getElementsByClassName('geoapify-autocomplete-input')[0].value == '') {
-      document.getElementsByClassName('geoapify-autocomplete-input')[0].value = ' '
+    SetHaserror(false);
+    SetClickonce(true);
+    if (
+      document.getElementsByClassName('geoapify-autocomplete-input')[0].value ==
+      ''
+    ) {
+      document.getElementsByClassName('geoapify-autocomplete-input')[0].value =
+        ' ';
     }
-  }
+  };
 
-  const onSuggectionChange = value => {
-  }
-  const onClose = value => {
-  }
+  const onSuggectionChange = (value) => {};
+  const onClose = (value) => {};
 
   const formik = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema,
-    onSubmit: values => {
-      if (initialValues.companylocation === '' || !initialValues.companylocation || initialValues.companylocation === ' ' || !menuclick) {
+    onSubmit: (values) => {
+      if (
+        initialValues.companylocation === '' ||
+        !initialValues.companylocation ||
+        initialValues.companylocation === ' ' ||
+        !menuclick
+      ) {
         setInitialValues({
           ...formik.values,
           companylocation: ''
         });
-        SetHaserror(true)
-        SetFocused(false)
-        Setrenderkey(renderkey + "a")
+        SetHaserror(true);
+        SetFocused(false);
+        Setrenderkey(renderkey + 'a');
         return;
       }
 
       setIsLoading(true);
-      setLetter("");
-      axios
-        .post("/api/first-Info", values)
-        .then((response) => {
-          if (response.data.status === 200) {
-            setInitialValues({
-              firstname: '',
-              lastname: '',
-              phonenumber: '',
-              companywebsite: '',
-              companylocation: '',
-              companyname: '',
-              email: ''
-            })
-            navigate(returnTo || paths.auth.auth.secondInfos)
-            setLetter("Save changes and NEXT")
-            setIsLoading(false)
-          }
+      setLetter('');
+      axios.post('/api/first-Info', values).then((response) => {
+        if (response.data.status === 200) {
+          setInitialValues({
+            firstname: '',
+            lastname: '',
+            phonenumber: '',
+            companywebsite: '',
+            companylocation: '',
+            companyname: '',
+            email: ''
+          });
+          navigate(returnTo || paths.auth.auth.secondInfos);
+          setLetter('Save changes and NEXT');
+          setIsLoading(false);
+        }
 
-          if (response.data.status === "failed") {
-            setLetter("Save changes and NEXT")
-            setIsLoading(false);
-
-          }
-        });
+        if (response.data.status === 'failed') {
+          setLetter('Save changes and NEXT');
+          setIsLoading(false);
+        }
+      });
     }
   });
   useEffect(() => {
-    let input = document.getElementsByClassName('geoapify-autocomplete-input')[0];
+    let input = document.getElementsByClassName(
+      'geoapify-autocomplete-input'
+    )[0];
     if (clickonce && initialValues.companylocation === '') {
       input.setAttribute('required', '');
-      SetHaserror(true)
+      SetHaserror(true);
     }
 
-    if (!initialValues.companylocation && clickonce) SetHaserror(true)
-    else SetHaserror(false)
-    if (focused) SetHaserror(false)
-
+    if (!initialValues.companylocation && clickonce) SetHaserror(true);
+    else SetHaserror(false);
+    if (focused) SetHaserror(false);
 
     if (!renderedonce && userinfo) {
       setInitialValues({
@@ -211,43 +203,46 @@ const Page = (props) => {
         phonenumber: userinfo ? userinfo.phonenumber : '',
         companywebsite: userinfo ? userinfo.companywebsite : '',
         companylocation: userinfo ? userinfo.companylocation : '',
-        companyname: userinfo ? userinfo.companyname : '',
-      })
+        companyname: userinfo ? userinfo.companyname : ''
+      });
       setRenderedonce(true);
-      document.getElementsByClassName('geoapify-autocomplete-input')[0].value = userinfo ? userinfo.companylocation : ''
+      document.getElementsByClassName('geoapify-autocomplete-input')[0].value =
+        userinfo ? userinfo.companylocation : '';
       // if (userinfo.companylocation) document.getElementsByClassName('geoapify-autocomplete-input')[0].click();
     }
-
   });
   const convertInput = () => {
     document.getElementsByClassName('geoapify-autocomplete-input')[0].click();
     document.getElementsByClassName('geoapify-autocomplete-input')[0].focus();
-  }
+  };
 
   return (
     <>
       <Seo title="Business Info" />
       <div className="firstinfo-card">
-        <Typography color="primary" variant="h4" sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}>
+        <Typography
+          color="primary"
+          variant="h4"
+          sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}
+        >
           LOGO
         </Typography>
-        <Card sx={{ borderRadius: 2.5 }} className="mainCard card  px-4 pt-4 pb-3">
-
+        <Card
+          sx={{ borderRadius: 2.5 }}
+          className="mainCard card  px-4 pt-4 pb-3"
+        >
           <CardContent className="container">
-            <form
-              noValidate
-              onSubmit={formik.handleSubmit}
-              className="row"
-            >
-              <Typography color='black'
+            <form noValidate onSubmit={formik.handleSubmit} className="row">
+              <Typography
+                color="black"
                 className="title largesize mb-1"
 
-              // variant="h4" 
+                // variant="h4"
               >
                 General Business Information
               </Typography>
               <Stack spacing={0} className="col-md-6 col-12">
-                <div className='p-2 '>
+                <div className="p-2 ">
                   <RedditTextField
                     label="First name"
                     className="title-inter "
@@ -255,15 +250,20 @@ const Page = (props) => {
                     variant="filled"
                     fullWidth
                     style={{ marginTop: 11 }}
-                    error={!!(formik.touched.firstname && formik.errors.firstname)}
-                    helperText={formik.touched.firstname && formik.errors.firstname}
+                    error={
+                      !!(formik.touched.firstname && formik.errors.firstname)
+                    }
+                    helperText={
+                      formik.touched.firstname && formik.errors.firstname
+                    }
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.firstname}
-                  /></div>
+                  />
+                </div>
               </Stack>
               <Stack spacing={0} className="col-md-6 col-12 ">
-                <div className='p-2  '>
+                <div className="p-2  ">
                   <RedditTextField
                     label="Last name"
                     className="title-inter"
@@ -271,70 +271,95 @@ const Page = (props) => {
                     variant="filled"
                     fullWidth
                     style={{ marginTop: 11 }}
-                    error={!!(formik.touched.lastname && formik.errors.lastname)}
-                    helperText={formik.touched.lastname && formik.errors.lastname}
+                    error={
+                      !!(formik.touched.lastname && formik.errors.lastname)
+                    }
+                    helperText={
+                      formik.touched.lastname && formik.errors.lastname
+                    }
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.lastname}
-                  /></div>
+                  />
+                </div>
               </Stack>
               <Stack spacing={0} className="col-md-6 col-12 ">
-
-                <div className='p-2 '>
+                <div className="p-2 ">
                   <RedditTextField
                     variant="filled"
                     className="title-inter "
                     style={{ marginTop: 11 }}
-                    error={!!(formik.touched.phonenumber && formik.errors.phonenumber)}
-                    helperText={formik.touched.phonenumber && formik.errors.phonenumber}
+                    error={
+                      !!(
+                        formik.touched.phonenumber && formik.errors.phonenumber
+                      )
+                    }
+                    helperText={
+                      formik.touched.phonenumber && formik.errors.phonenumber
+                    }
                     label="Phone Number"
                     name="phonenumber"
                     fullWidth
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.phonenumber}
-                  /></div>
+                  />
+                </div>
               </Stack>
               <Stack spacing={0} className="col-md-6 col-12 ">
-                <div className='p-2 '>
+                <div className="p-2 ">
                   <RedditTextField
                     variant="filled"
                     className="title-inter "
                     style={{ marginTop: 11 }}
-                    error={!!(formik.touched.companyname && formik.errors.companyname)}
-                    helperText={formik.touched.companyname && formik.errors.companyname}
+                    error={
+                      !!(
+                        formik.touched.companyname && formik.errors.companyname
+                      )
+                    }
+                    helperText={
+                      formik.touched.companyname && formik.errors.companyname
+                    }
                     label="Company Name"
                     name="companyname"
                     fullWidth
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.companyname}
-                  /></div>
+                  />
+                </div>
               </Stack>
               <Stack spacing={0} className="col-md-6 col-12 ">
-
-                <div className='p-2'>
+                <div className="p-2">
                   <RedditTextField
                     variant="filled"
                     className="title-inter "
                     style={{ marginTop: 11 }}
-                    error={!!(formik.touched.companywebsite && formik.errors.companywebsite)}
-                    helperText={formik.touched.companywebsite && formik.errors.companywebsite}
+                    error={
+                      !!(
+                        formik.touched.companywebsite &&
+                        formik.errors.companywebsite
+                      )
+                    }
+                    helperText={
+                      formik.touched.companywebsite &&
+                      formik.errors.companywebsite
+                    }
                     label="Company Website"
                     name="companywebsite"
                     fullWidth
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.companywebsite}
-                  /></div>
+                  />
+                </div>
               </Stack>
 
               <Stack spacing={0} className="col-md-6 col-12 ">
-
-                <div className='p-2' style={{ position: 'relative' }}>
-
+                <div className="p-2" style={{ position: 'relative' }}>
                   <GeoapifyContext apiKey="1040c1c2e3e34b3b80b351a587232b75">
-                    <GeoapifyGeocoderAutocomplete placeholder=" "
+                    <GeoapifyGeocoderAutocomplete
+                      placeholder=" "
                       key={renderkey}
                       onUserInput={onUserInput}
                       onClose={onClose}
@@ -343,19 +368,25 @@ const Page = (props) => {
                     />
                     <div
                       onClick={convertInput}
-                      className={`${focused ? 'location-placeholder-top' : 'location-placeholder-general'} ${haserror ? 'location-placeholder-error' : ''}`}
+                      className={`${
+                        focused
+                          ? 'location-placeholder-top'
+                          : 'location-placeholder-general'
+                      } ${haserror ? 'location-placeholder-error' : ''}`}
                     >
                       Company Location
                     </div>
 
-                    {haserror ? (<div className="location-error">Invalid address</div>) : ''}
+                    {haserror ? (
+                      <div className="location-error">Invalid address</div>
+                    ) : (
+                      ''
+                    )}
                   </GeoapifyContext>
                 </div>
               </Stack>
 
-
               <div className="row d-flex justify-content-end pt-4 px-1 title-inter ">
-
                 <Button
                   className="text-center mx-4 w-25  btn btn-hover-outline mainButton smallsize cancel-button"
                   variant="text"
@@ -364,16 +395,13 @@ const Page = (props) => {
                   Cancel
                 </Button>
 
-
                 <Button
                   className="text-center   mx-8 w-50  mainButton background-blue smallsize firstinfo-button"
                   variant="contained"
-
-
-                  type="submit">
+                  type="submit"
+                >
                   <span className="ml-2"> {letter} </span>
                   {isLoading ? (
-
                     <CircularProgress color="inherit" size="2rem" />
                   ) : (
                     <span></span>
@@ -382,12 +410,12 @@ const Page = (props) => {
               </div>
             </form>
           </CardContent>
-        </Card >
-      </div >
+        </Card>
+      </div>
     </>
   );
 };
 const mapStateToProps = (state) => ({
   userinfo: state.profile.userinfo
-})
+});
 export default connect(mapStateToProps)(Page);

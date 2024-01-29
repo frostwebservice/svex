@@ -1,7 +1,9 @@
-.MuiPaginationItem-root{
-    display:none;
-
+.MuiPaginationItem-root {
+  display: none;
 }
-.MuiPaginationItem-previousNext{
-    display: block;
+.MuiPaginationItem-previousNext {
+  display: block;
+}
+.MuiInputLabel-root {
+  font-size: 11px !important;
 }

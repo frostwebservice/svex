@@ -4,12 +4,24 @@ import { Layout as DashboardLayout } from '@/layouts/dashboard';
 
 const IndexPage = lazy(() => import('@/pages/dashboard/index'));
 const AdminPage = lazy(() => import('@/pages/dashboard/admin'));
+const Payment = lazy(() => import('@/pages/dashboard/payment'));
+// const OrderSummary = lazy(() =>
+//   import('@/pages/dashboard/payments/ordersummary')
+// );
 
 // Academy
-const AcademyDashboardPage = lazy(() => import('@/pages/dashboard/academy/dashboard'));
-const OutreachGroups = lazy(() => import('@/pages/dashboard/academy/outreach-groups'));
-const CreateNewGroup = lazy(() => import('@/pages/dashboard/academy/create-group'));
-const SavedSearchs = lazy(() => import('@/pages/dashboard/academy/saved-searchs'));
+const AcademyDashboardPage = lazy(() =>
+  import('@/pages/dashboard/academy/dashboard')
+);
+const OutreachGroups = lazy(() =>
+  import('@/pages/dashboard/academy/outreach-groups')
+);
+const CreateNewGroup = lazy(() =>
+  import('@/pages/dashboard/academy/create-group')
+);
+const SavedSearchs = lazy(() =>
+  import('@/pages/dashboard/academy/saved-searchs')
+);
 const FavInfs = lazy(() => import('@/pages/dashboard/academy/fav-infs'));
 
 // Blog
@@ -19,17 +31,22 @@ const BlogPostCreatePage = lazy(() => import('@/pages/dashboard/blog/create'));
 
 // Customers
 const CustomerListPage = lazy(() => import('@/pages/dashboard/customers/list'));
-const CustomerDetailPage = lazy(() => import('@/pages/dashboard/customers/detail'));
+const CustomerDetailPage = lazy(() =>
+  import('@/pages/dashboard/customers/detail')
+);
 const CustomerEditPage = lazy(() => import('@/pages/dashboard/customers/edit'));
 
-
 const UserListPage = lazy(() => import('@/pages/dashboard/usermanage/list'));
-const UserDetailPage = lazy(() => import('@/pages/dashboard/usermanage/detail'));
+const UserDetailPage = lazy(() =>
+  import('@/pages/dashboard/usermanage/detail')
+);
 const UserEditPage = lazy(() => import('@/pages/dashboard/usermanage/edit'));
 
 // Invoice
 const InvoiceListPage = lazy(() => import('@/pages/dashboard/invoices/list'));
-const InvoiceDetailPage = lazy(() => import('@/pages/dashboard/invoices/detail'));
+const InvoiceDetailPage = lazy(() =>
+  import('@/pages/dashboard/invoices/detail')
+);
 
 // Jobs
 const JobBrowsePage = lazy(() => import('@/pages/dashboard/jobs/browse'));
@@ -37,11 +54,17 @@ const InvitePage = lazy(() => import('@/pages/dashboard/jobs/invite'));
 const JobManagePage = lazy(() => import('@/pages/dashboard/jobs/manage'));
 const JobCreatePage = lazy(() => import('@/pages/dashboard/jobs/create'));
 const JobEditPage = lazy(() => import('@/pages/dashboard/jobs/edit'));
-const CompanyDetailPage = lazy(() => import('@/pages/dashboard/jobs/companies/detail'));
+const CompanyDetailPage = lazy(() =>
+  import('@/pages/dashboard/jobs/companies/detail')
+);
 
 // Logistics
-const LogisticsDashboardPage = lazy(() => import('@/pages/dashboard/logistics/dashboard'));
-const LogisticsFleetPage = lazy(() => import('@/pages/dashboard/logistics/fleet'));
+const LogisticsDashboardPage = lazy(() =>
+  import('@/pages/dashboard/logistics/dashboard')
+);
+const LogisticsFleetPage = lazy(() =>
+  import('@/pages/dashboard/logistics/fleet')
+);
 
 // Orders
 const OrderListPage = lazy(() => import('@/pages/dashboard/orders/list'));
@@ -49,13 +72,19 @@ const OrderDetailPage = lazy(() => import('@/pages/dashboard/orders/detail'));
 
 // Products
 const ProductListPage = lazy(() => import('@/pages/dashboard/products/list'));
-const ProductCreatePage = lazy(() => import('@/pages/dashboard/products/create'));
+const ProductCreatePage = lazy(() =>
+  import('@/pages/dashboard/products/create')
+);
 
 // Social
 const SocialFeedPage = lazy(() => import('@/pages/dashboard/social/feed'));
-const SocialProfilePage = lazy(() => import('@/pages/dashboard/social/profile'));
+const SocialProfilePage = lazy(() =>
+  import('@/pages/dashboard/social/profile')
+);
 const SocialProfileEdit = lazy(() => import('@/pages/dashboard/social/edit'));
-const SocialInfGlobalPage = lazy(() => import('@/pages/dashboard/social/infglobalprofile'));
+const SocialInfGlobalPage = lazy(() =>
+  import('@/pages/dashboard/social/infglobalprofile')
+);
 const SocialInfPage = lazy(() => import('@/pages/dashboard/social/infprofile'));
 
 // Other
@@ -86,8 +115,17 @@ export const dashboardRoutes = [
         element: <IndexPage />
       },
       {
-        path:'admin',
-        element:<AdminPage />
+        path: 'admin',
+        children: [
+          {
+            index: true,
+            element: <AdminPage />
+          },
+          {
+            path: 'payment',
+            element: <Payment />
+          }
+        ]
       },
       {
         path: 'blog',
@@ -194,7 +232,7 @@ export const dashboardRoutes = [
                 element: <JobManagePage />
               }
             ]
-          },
+          }
         ]
       },
       {
@@ -308,7 +346,6 @@ export const dashboardRoutes = [
       {
         path: 'outreach-groups',
         element: <OutreachGroups />
-
       },
       {
         path: 'saved-searchs',
@@ -349,8 +386,7 @@ export const dashboardRoutes = [
                 element: <SocialInfPage />
               }
             ]
-          },
-
+          }
         ]
       },
       {

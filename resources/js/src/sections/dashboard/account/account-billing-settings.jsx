@@ -28,12 +28,13 @@ import { PropertyList } from '@/components/property-list';
 import { PropertyListItem } from '@/components/property-list-item';
 import { AccountPlanIcon } from './account-plan-icon';
 import { getBillingInfo } from '@/actions';
+import OrderSummary from './payments/ordersummary';
 var tmpBilling = {
-  billing_name: "",
-  card_number: "",
-  country: "",
-  zip_code: ""
-}
+  billing_name: '',
+  card_number: '',
+  country: '',
+  zip_code: ''
+};
 const plans = [
   {
     id: 'startup',
@@ -51,38 +52,38 @@ const plans = [
 
 const AccountBillingSettings = (props) => {
   const { plan, invoices = [], userinfo, billinginfo } = props;
-  const [selectedPlan, setSelectedPlan] = useState(userinfo.trial == 1 ? "standard" : "startup");
-  const [currentPlan, setCurrentPlan] = useState(userinfo.trial == 1 ? "standard" : "startup");
+  const [selectedPlan, setSelectedPlan] = useState(
+    userinfo.trial == 1 ? 'standard' : 'startup'
+  );
+  const [currentPlan, setCurrentPlan] = useState(
+    userinfo.trial == 1 ? 'standard' : 'startup'
+  );
   const [isEdit, setIsEdit] = useState(false);
   const [billing, setBilling] = useState(billinginfo);
-  console.log(billing)
-  const handleEdit = ((status) => {
+  const handleEdit = (status) => {
     setBilling(billinginfo);
     setIsEdit((prevState) => !prevState);
     if (!status) return;
-    axios.post('/api/update_billing_info', { value: billing, user_email: JSON.parse(localStorage.getItem('email')) })
-      .then(response => {
-        // console.log(response)
+    axios
+      .post('/api/update_billing_info', {
+        value: billing,
+        user_email: JSON.parse(localStorage.getItem('email'))
+      })
+      .then((response) => {
         dispatch(getBillingInfo({ email }));
-
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error getting Notify Settings', error);
-      })
-
-  });
+      });
+  };
   const dispatch = useDispatch();
   const email = JSON.parse(localStorage.getItem('email'));
 
   useEffect(() => {
     dispatch(getBillingInfo({ email }));
-
-
-  }, [dispatch])
+  }, [dispatch]);
   return (
-    <Stack
-      spacing={4}
-      {...props}>
+    <Stack spacing={4} {...props}>
       <Card>
         <CardHeader
           title="Change Plan"
@@ -90,21 +91,14 @@ const AccountBillingSettings = (props) => {
         />
         <CardContent sx={{ pt: 0 }}>
           <div>
-            <Grid
-              container
-              spacing={3}
-            >
+            <Grid container spacing={3}>
               {plans.map((plan) => {
                 const isSelected = plan.id === selectedPlan;
                 const isCurrent = plan.id === currentPlan;
                 const price = numeral(plan.price).format('$0,0.00');
 
                 return (
-                  <Grid
-                    key={plan.id}
-                    xs={12}
-                    sm={4}
-                  >
+                  <Grid key={plan.id} xs={12} sm={4}>
                     <Card
                       onClick={() => setSelectedPlan(plan.id)}
                       sx={{
@@ -137,9 +131,7 @@ const AccountBillingSettings = (props) => {
                             mt: 1
                           }}
                         >
-                          <Typography variant="h5">
-                            {price}
-                          </Typography>
+                          <Typography variant="h5">{price}</Typography>
                           <Typography
                             color="text.secondary"
                             sx={{
@@ -161,10 +153,7 @@ const AccountBillingSettings = (props) => {
                             {plan.name}
                           </Typography>
                           {isCurrent && (
-                            <Typography
-                              color="primary.main"
-                              variant="caption"
-                            >
+                            <Typography color="primary.main" variant="caption">
                               Using now
                             </Typography>
                           )}
@@ -184,197 +173,195 @@ const AccountBillingSettings = (props) => {
               justifyContent: 'space-between'
             }}
           >
-            <Typography variant="h6">
-              Billing details
-            </Typography>
-            <Button
+            <Typography variant="h6">Billing details</Typography>
+
+            {/* <Button
               color="inherit"
               onClick={() => handleEdit(isEdit)}
-              startIcon={(
-                <SvgIcon>
-                  {isEdit ? <PlusIcon /> : <Edit02Icon />}
-
-                </SvgIcon>
-              )}
+              startIcon={
+                <SvgIcon>{isEdit ? <PlusIcon /> : <Edit02Icon />}</SvgIcon>
+              }
             >
-              {isEdit ? "Save" : "Edit"}
-
-            </Button>
+              {isEdit ? 'Save' : 'Edit'}
+            </Button> */}
           </Box>
-          {
-            isEdit ? (
-              <Box
-                sx={{
-                  border: 1,
-                  borderColor: 'divider',
-                  borderRadius: 1,
-                  mt: 3
-                }}
-              >
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                  sx={{ m: 2 }}
-                >
-                  <TextField
-                    value={billing.billing_name ? billing.billing_name : ""}
-                    onChange={(e) => {
-                      tmpBilling.billing_name = e.target.value
-                      setBilling({
-                        ...billing,
-                        billing_name: e.target.value
-                      });
-                    }}
-                    label="Billing name"
-                    placeholder='Your Billing Name'
-                    // disabled={!editlast}
-                    sx={{
-                      flexGrow: 1,
-                      ...(!isEdit && {
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderStyle: 'dotted'
-                        }
-                      })
-                    }}
-                  />
-                </Stack>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  sx={{ m: 2 }}
-                  spacing={2}
-                >
-                  <TextField
-                    value={billing.card_number ? billing.card_number : ""}
-                    onChange={(e) => {
-                      setBilling({
-                        ...billing,
-                        card_number: e.target.value
-                      });
-                    }}
-                    label="Card number"
-                    placeholder='Your Card Number'
-                    // disabled={!editlast}
-                    sx={{
-                      flexGrow: 1,
-                      ...(!isEdit && {
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderStyle: 'dotted'
-                        }
-                      })
-                    }}
-                  />
-                </Stack>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  sx={{ m: 2 }}
-                  spacing={2}
-                >
-                  <TextField
-                    value={billing.country ? billing.country : ""}
-                    onChange={(e) => {
-                      setBilling({
-                        ...billing,
-                        country: e.target.value
-                      });
-                    }}
-                    label="Country"
-                    placeholder='Your Country'
-                    // disabled={!editlast}
-                    sx={{
-                      flexGrow: 1,
-                      ...(!isEdit && {
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderStyle: 'dotted'
-                        }
-                      })
-                    }}
-                  />
-                </Stack>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  sx={{ m: 2 }}
-                  spacing={2}
-                >
-                  <TextField
-                    value={billing.zip_code ? billing.zip_code : ""}
-                    onChange={(e) => {
-                      setBilling({
-                        ...billing,
-                        zip_code: e.target.value
-                      });
-                    }}
-                    label="Zip / Postal code"
-                    placeholder='Your Zip / Postal code'
-                    // disabled={!editlast}
-                    sx={{
-                      flexGrow: 1,
-                      ...(!isEdit && {
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderStyle: 'dotted'
-                        }
-                      })
-                    }}
-                  />
-                </Stack>
-
-              </Box>
-            ) : (
-              <Box
-                sx={{
-                  border: 1,
-                  borderColor: 'divider',
-                  borderRadius: 1,
-                  mt: 3
-                }}
-              >
-                <PropertyList>
-                  <PropertyListItem
-                    align="horizontal"
-                    divider
-                    label="Billing name"
-                    value={billinginfo.billing_name ? billinginfo.billing_name : "No billing name"}
-                  />
-                  <PropertyListItem
-                    align="horizontal"
-                    divider
-                    label="Card number"
-                    value={billinginfo.card_number ? billinginfo.card_number : "No Card number"}
-                  />
-                  <PropertyListItem
-                    align="horizontal"
-                    divider
-                    label="Country"
-                    value={billinginfo.country ? billinginfo.country : "No country name"}
-
-                  />
-                  <PropertyListItem
-                    align="horizontal"
-                    label="Zip / Postal code"
-                    value={billinginfo.zip_code ? billinginfo.zip_code : "No zip/postal code"}
-
-                  />
-                </PropertyList>
-              </Box>
-            )
-          }
-
-
-          <Typography
-            color="text.secondary"
-            variant="body2"
-            sx={{ mt: 3 }}
-          >
-            We cannot refund once you purchased a subscription, but you can always
-            <Link
-              href="#"
-              sx={{ ml: '4px' }}
-              underline="none"
-              variant="body2"
+          <OrderSummary />
+          {/* {isEdit ? (
+            <Box
+              sx={{
+                border: 1,
+                borderColor: 'divider',
+                borderRadius: 1,
+                mt: 3
+              }}
             >
+              <Stack
+                alignItems="center"
+                direction="row"
+                spacing={2}
+                sx={{ m: 2 }}
+              >
+                <TextField
+                  value={billing.billing_name ? billing.billing_name : ''}
+                  onChange={(e) => {
+                    tmpBilling.billing_name = e.target.value;
+                    setBilling({
+                      ...billing,
+                      billing_name: e.target.value
+                    });
+                  }}
+                  label="Billing name"
+                  placeholder="Your Billing Name"
+                  // disabled={!editlast}
+                  sx={{
+                    flexGrow: 1,
+                    ...(!isEdit && {
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderStyle: 'dotted'
+                      }
+                    })
+                  }}
+                />
+              </Stack>
+              <Stack
+                alignItems="center"
+                direction="row"
+                sx={{ m: 2 }}
+                spacing={2}
+              >
+                <TextField
+                  value={billing.card_number ? billing.card_number : ''}
+                  onChange={(e) => {
+                    setBilling({
+                      ...billing,
+                      card_number: e.target.value
+                    });
+                  }}
+                  label="Card number"
+                  placeholder="Your Card Number"
+                  // disabled={!editlast}
+                  sx={{
+                    flexGrow: 1,
+                    ...(!isEdit && {
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderStyle: 'dotted'
+                      }
+                    })
+                  }}
+                />
+              </Stack>
+              <Stack
+                alignItems="center"
+                direction="row"
+                sx={{ m: 2 }}
+                spacing={2}
+              >
+                <TextField
+                  value={billing.country ? billing.country : ''}
+                  onChange={(e) => {
+                    setBilling({
+                      ...billing,
+                      country: e.target.value
+                    });
+                  }}
+                  label="Country"
+                  placeholder="Your Country"
+                  // disabled={!editlast}
+                  sx={{
+                    flexGrow: 1,
+                    ...(!isEdit && {
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderStyle: 'dotted'
+                      }
+                    })
+                  }}
+                />
+              </Stack>
+              <Stack
+                alignItems="center"
+                direction="row"
+                sx={{ m: 2 }}
+                spacing={2}
+              >
+                <TextField
+                  value={billing.zip_code ? billing.zip_code : ''}
+                  onChange={(e) => {
+                    setBilling({
+                      ...billing,
+                      zip_code: e.target.value
+                    });
+                  }}
+                  label="Zip / Postal code"
+                  placeholder="Your Zip / Postal code"
+                  // disabled={!editlast}
+                  sx={{
+                    flexGrow: 1,
+                    ...(!isEdit && {
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderStyle: 'dotted'
+                      }
+                    })
+                  }}
+                />
+              </Stack>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                border: 1,
+                borderColor: 'divider',
+                borderRadius: 1,
+                mt: 3
+              }}
+            >
+              <PropertyList>
+                <PropertyListItem
+                  align="horizontal"
+                  divider
+                  label="Billing name"
+                  value={
+                    billinginfo.billing_name
+                      ? billinginfo.billing_name
+                      : 'No billing name'
+                  }
+                />
+                <PropertyListItem
+                  align="horizontal"
+                  divider
+                  label="Card number"
+                  value={
+                    billinginfo.card_number
+                      ? billinginfo.card_number
+                      : 'No Card number'
+                  }
+                />
+                <PropertyListItem
+                  align="horizontal"
+                  divider
+                  label="Country"
+                  value={
+                    billinginfo.country
+                      ? billinginfo.country
+                      : 'No country name'
+                  }
+                />
+                <PropertyListItem
+                  align="horizontal"
+                  label="Zip / Postal code"
+                  value={
+                    billinginfo.zip_code
+                      ? billinginfo.zip_code
+                      : 'No zip/postal code'
+                  }
+                />
+              </PropertyList>
+            </Box>
+          )} */}
+
+          <Typography color="text.secondary" variant="body2" sx={{ mt: 3 }}>
+            We cannot refund once you purchased a subscription, but you can
+            always
+            <Link href="#" sx={{ ml: '4px' }} underline="none" variant="body2">
               Cancel
             </Link>
           </Typography>
@@ -385,9 +372,7 @@ const AccountBillingSettings = (props) => {
               mt: 3
             }}
           >
-            <Button variant="contained">
-              Upgrade Plan
-            </Button>
+            <Button variant="contained">Upgrade Plan</Button>
           </Box>
         </CardContent>
       </Card>
@@ -399,12 +384,8 @@ const AccountBillingSettings = (props) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
-                Date
-              </TableCell>
-              <TableCell>
-                Total (incl. tax)
-              </TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Total (incl. tax)</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -415,18 +396,10 @@ const AccountBillingSettings = (props) => {
 
               return (
                 <TableRow key={invoice.id}>
-                  <TableCell>
-                    {createdAt}
-                  </TableCell>
-                  <TableCell>
-                    {amount}
-                  </TableCell>
+                  <TableCell>{createdAt}</TableCell>
+                  <TableCell>{amount}</TableCell>
                   <TableCell align="right">
-                    <Link
-                      color="inherit"
-                      underline="always"
-                      href="#"
-                    >
+                    <Link color="inherit" underline="always" href="#">
                       View Invoice
                     </Link>
                   </TableCell>
@@ -436,7 +409,7 @@ const AccountBillingSettings = (props) => {
           </TableBody>
         </Table>
       </Card>
-    </Stack >
+    </Stack>
   );
 };
 
@@ -444,7 +417,7 @@ AccountBillingSettings.propTypes = {
   plan: PropTypes.string,
   invoices: PropTypes.array
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   userinfo: state.profile.userinfo,
   billinginfo: state.billinginfo.billinginfo
 });

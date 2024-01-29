@@ -8,7 +8,7 @@ import { RouterLink } from '@/components/router-link';
 import { Scrollbar } from '@/components/scrollbar';
 import { usePathname } from '@/hooks/use-pathname';
 import { paths } from '@/paths';
-import  TenantSwitch  from '../tenant-switch';
+import TenantSwitch from '../tenant-switch';
 import { MobileNavSection } from './mobile-nav-section';
 
 const MOBILE_NAV_WIDTH = 280;
@@ -133,12 +133,7 @@ export const MobileNav = (props) => {
         }}
       >
         <Stack sx={{ height: '100%' }}>
-          <Stack
-            alignItems="center"
-            direction="row"
-            spacing={2}
-            sx={{ p: 3 }}
-          >
+          <Stack alignItems="center" direction="row" spacing={2} sx={{ p: 3 }}>
             <Box
               component={RouterLink}
               href={paths.index}
@@ -174,7 +169,7 @@ export const MobileNav = (props) => {
               />
             ))}
           </Stack>
-          <Box sx={{ p: 3 }}>
+          {/* <Box sx={{ p: 3 }}>
             <Typography
               color="neutral.400"
               variant="subtitle1"
@@ -202,7 +197,7 @@ export const MobileNav = (props) => {
             >
               Documentation
             </Button>
-          </Box>
+          </Box> */}
         </Stack>
       </Scrollbar>
     </Drawer>

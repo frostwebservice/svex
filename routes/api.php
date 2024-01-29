@@ -66,5 +66,18 @@ Route::post('hire_inf', [App\Http\Controllers\JobController::class, 'hire_inf'])
 Route::post('get_tips', [App\Http\Controllers\DashboardController::class, 'get_tips']);
 Route::post('update_tips', [App\Http\Controllers\DashboardController::class, 'update_tips']);
 Route::post('get_announcements', [App\Http\Controllers\DashboardController::class, 'get_announcements']);
+Route::post('delete_announcement', [App\Http\Controllers\DashboardController::class, 'delete_announcement']);
+Route::post('update_announcement', [App\Http\Controllers\DashboardController::class, 'update_announcement']);
+Route::post('get_paypal', [App\Http\Controllers\DashboardController::class, 'get_paypal']);
+Route::post('update_paypal', [App\Http\Controllers\DashboardController::class, 'update_paypal']);
+Route::post('get_stripe', [App\Http\Controllers\DashboardController::class, 'get_stripe']);
+Route::post('update_stripe', [App\Http\Controllers\DashboardController::class, 'update_stripe']);
+Route::post('invite_influencer', [App\Http\Controllers\JobController::class, 'invite_influencer']);
+Route::post('invite_group', [App\Http\Controllers\JobController::class, 'invite_group']);
+Route::post('update_group', [App\Http\Controllers\FinderController::class, 'update_group']);
+Route::post('add_group', [App\Http\Controllers\FinderController::class, 'add_group']);
+Route::post('delete_user_group', [App\Http\Controllers\FinderController::class, 'delete_user_group']);
 
 
+Route::post('payByStripe',[App\Http\Controllers\PaymentController::class,'payByStripe']);
+Route::post('get_stripe_info',[App\Http\Controllers\PaymentController::class,'getStripeInfo']);
