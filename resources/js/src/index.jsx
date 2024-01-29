@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';

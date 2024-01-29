@@ -81,3 +81,5 @@ Route::post('delete_user_group', [App\Http\Controllers\FinderController::class, 
 
 Route::post('payByStripe',[App\Http\Controllers\PaymentController::class,'payByStripe']);
 Route::post('get_stripe_info',[App\Http\Controllers\PaymentController::class,'getStripeInfo']);
+Route::post('get_paypal_info',[App\Http\Controllers\PaymentController::class,'getPaypalInfo']);
+Route::post('update_paydate',[App\Http\Controllers\PaymentController::class,'updatePayment']);

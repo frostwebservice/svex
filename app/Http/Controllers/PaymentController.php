@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 class PaymentController extends Controller
 {
+    public function updatePayment(Request $request){
+        $email= $request->email;
+        $data=array(
+            'pay_date'=>date('Y-m-d')
+        );
+        $res = DB::table('users')->where("email",$email)->update($data);
+        print_r(json_encode($res));
+    }
     /** Pay order via stripe */
     public function payByStripe(){
         $sec_key = DB::table('stripe_setting')->where('id',1)->get()->toArray()[0]->sec_key;
@@ -48,6 +56,10 @@ class PaymentController extends Controller
     }
     public function getStripeInfo(Request $request){
         $data = DB::table('stripe_setting')->where("id",1)->get()->toArray()[0];
+        print_r(json_encode($data));
+    }
+    public function getPaypalInfo(Request $request){
+        $data = DB::table('paypal_setting')->where("id",1)->get()->toArray()[0];
         print_r(json_encode($data));
     }
 }

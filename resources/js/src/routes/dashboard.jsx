@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Layout as DashboardLayout } from '@/layouts/dashboard';
+import Layout from '@/layouts/dashboard';
 
 const IndexPage = lazy(() => import('@/pages/dashboard/index'));
 const AdminPage = lazy(() => import('@/pages/dashboard/admin'));
@@ -103,11 +103,11 @@ export const dashboardRoutes = [
   {
     path: 'dashboard',
     element: (
-      <DashboardLayout>
+      <Layout>
         <Suspense>
           <Outlet />
         </Suspense>
-      </DashboardLayout>
+      </Layout>
     ),
     children: [
       {
@@ -332,11 +332,11 @@ export const dashboardRoutes = [
   {
     path: 'inf-finder',
     element: (
-      <DashboardLayout>
+      <Layout>
         <Suspense>
           <Outlet />
         </Suspense>
-      </DashboardLayout>
+      </Layout>
     ),
     children: [
       {
@@ -364,11 +364,11 @@ export const dashboardRoutes = [
   {
     path: 'profile',
     element: (
-      <DashboardLayout>
+      <Layout>
         <Suspense>
           <Outlet />
         </Suspense>
-      </DashboardLayout>
+      </Layout>
     ),
     children: [
       {

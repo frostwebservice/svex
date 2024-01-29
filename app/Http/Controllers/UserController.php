@@ -235,6 +235,15 @@ class UserController extends Controller
 		$email = $request->email;
 		$user = User::where("email", $email)->first();
 		$niches = User::where("email", $email)->first()->niches;
+		if(!$user->pay_date){
+			$paid = "0";
+		}else{
+			$diff = date_diff(date_create($user->pay_date),date_create(date('Y-m-d')),true);
+			$diff = (int)$diff->format("%a");
+			if($diff<=30) $paid="1";
+			else $paid = "0";
+		}
+		$user['paid'] = $paid;
 		$user['niches'] = $niches;
 		return json_encode($user);
 	}

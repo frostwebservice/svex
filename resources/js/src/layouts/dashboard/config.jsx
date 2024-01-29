@@ -33,124 +33,125 @@ export const useSections = () => {
   const { t } = useTranslation();
 
   return useMemo(() => {
+    var items = [];
+    items.push({
+      title: t(tokens.nav.admin),
+      path: paths.dashboard.admin,
+      icon: (
+        <SvgIcon fontSize="small">
+          <HomeSmileIcon />
+        </SvgIcon>
+      )
+    });
+    items.push({
+      title: t(tokens.nav.overview),
+      path: paths.dashboard.index,
+      icon: (
+        <SvgIcon fontSize="small">
+          <HomeSmileIcon />
+        </SvgIcon>
+      )
+    });
+    items.push({
+      title: t(tokens.nav.account),
+      path: paths.dashboard.account,
+      icon: (
+        <SvgIcon fontSize="small">
+          <CreditCard01Icon />
+        </SvgIcon>
+      )
+    });
+    items.push({
+      title: t(tokens.nav.academy),
+      path: paths.academy.index,
+      icon: (
+        <SvgIcon fontSize="small">
+          <GraduationHat01Icon />
+        </SvgIcon>
+      ),
+      items: [
+        {
+          title: t(tokens.nav.findertool),
+          path: paths.academy.index
+        },
+        {
+          title: t(tokens.nav.outreachgroups),
+          path: paths.academy.outreachgroups
+        },
+        {
+          title: t(tokens.nav.savedsearchs),
+          path: paths.academy.savedsearchs
+        },
+        {
+          title: t(tokens.nav.favinfs),
+          path: paths.academy.favinfs
+        }
+      ]
+    });
+    items.push({
+      title: t(tokens.nav.mail),
+      path: paths.dashboard.mail,
+      icon: (
+        <SvgIcon fontSize="small">
+          <Mail03Icon />
+        </SvgIcon>
+      )
+    });
+    items.push({
+      title: t(tokens.nav.jobList),
+      path: paths.dashboard.jobs.index,
+      icon: (
+        <SvgIcon fontSize="small">
+          <Building04Icon />
+        </SvgIcon>
+      ),
+      items: [
+        {
+          title: t(tokens.nav.createjob),
+          path: paths.dashboard.jobs.create
+        },
+        {
+          title: t(tokens.nav.manage),
+          path: paths.dashboard.jobs.index
+        },
+        {
+          title: t(tokens.nav.history),
+          path: paths.dashboard.jobs.companies.details
+        }
+      ]
+    });
     return [
       {
-        items: [
-          {
-            title: t(tokens.nav.admin),
-            path: paths.dashboard.admin,
-            icon: (
-              <SvgIcon fontSize="small">
-                <HomeSmileIcon />
-              </SvgIcon>
-            )
-          },
-          {
-            title: t(tokens.nav.overview),
-            path: paths.dashboard.index,
-            icon: (
-              <SvgIcon fontSize="small">
-                <HomeSmileIcon />
-              </SvgIcon>
-            )
-          },
-          {
-            title: t(tokens.nav.account),
-            path: paths.dashboard.account,
-            icon: (
-              <SvgIcon fontSize="small">
-                <CreditCard01Icon />
-              </SvgIcon>
-            )
-          },
-          {
-            title: t(tokens.nav.academy),
-            path: paths.academy.index,
-            icon: (
-              <SvgIcon fontSize="small">
-                <GraduationHat01Icon />
-              </SvgIcon>
-            ),
-            items: [
-              {
-                title: t(tokens.nav.findertool),
-                path: paths.academy.index
-              },
-              {
-                title: t(tokens.nav.outreachgroups),
-                path: paths.academy.outreachgroups
-              },
-              {
-                title: t(tokens.nav.savedsearchs),
-                path: paths.academy.savedsearchs
-              },
-              {
-                title: t(tokens.nav.favinfs),
-                path: paths.academy.favinfs
-              }
-            ]
-          },
-          {
-            title: t(tokens.nav.mail),
-            path: paths.dashboard.mail,
-            icon: (
-              <SvgIcon fontSize="small">
-                <Mail03Icon />
-              </SvgIcon>
-            )
-          },
-          {
-            title: t(tokens.nav.jobList),
-            path: paths.dashboard.jobs.index,
-            icon: (
-              <SvgIcon fontSize="small">
-                <Building04Icon />
-              </SvgIcon>
-            ),
-            items: [
-              {
-                title: t(tokens.nav.createjob),
-                path: paths.dashboard.jobs.create
-              },
-              {
-                title: t(tokens.nav.manage),
-                path: paths.dashboard.jobs.index
-              },
-              {
-                title: t(tokens.nav.history),
-                path: paths.dashboard.jobs.companies.details
-              }
-            ]
-          }
-          // {
-          //   title: t(tokens.nav.analytics),
-          //   path: paths.dashboard.analytics,
-          //   icon: (
-          //     <SvgIcon fontSize="small">
-          //       <BarChartSquare02Icon />
-          //     </SvgIcon>
-          //   )
-          // },
-          // {
-          //   title: t(tokens.nav.ecommerce),
-          //   path: paths.dashboard.ecommerce,
-          //   icon: (
-          //     <SvgIcon fontSize="small">
-          //       <LineChartUp04Icon />
-          //     </SvgIcon>
-          //   )
-          // },
-          // {
-          //   title: t(tokens.nav.crypto),
-          //   path: paths.dashboard.crypto,
-          //   icon: (
-          //     <SvgIcon fontSize="small">
-          //       <CurrencyBitcoinCircleIcon />
-          //     </SvgIcon>
-          //   ),
-          //   label: <Chip color="primary" label="New" size="small" />
-          // }
-        ]
+        items: items
+
+        // {
+        //   title: t(tokens.nav.analytics),
+        //   path: paths.dashboard.analytics,
+        //   icon: (
+        //     <SvgIcon fontSize="small">
+        //       <BarChartSquare02Icon />
+        //     </SvgIcon>
+        //   )
+        // },
+        // {
+        //   title: t(tokens.nav.ecommerce),
+        //   path: paths.dashboard.ecommerce,
+        //   icon: (
+        //     <SvgIcon fontSize="small">
+        //       <LineChartUp04Icon />
+        //     </SvgIcon>
+        //   )
+        // },
+        // {
+        //   title: t(tokens.nav.crypto),
+        //   path: paths.dashboard.crypto,
+        //   icon: (
+        //     <SvgIcon fontSize="small">
+        //       <CurrencyBitcoinCircleIcon />
+        //     </SvgIcon>
+        //   ),
+        //   label: <Chip color="primary" label="New" size="small" />
+        // }
       }
       // {
       //   subheader: t(tokens.nav.concepts),

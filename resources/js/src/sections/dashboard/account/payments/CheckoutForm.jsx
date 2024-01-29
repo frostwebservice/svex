@@ -1,13 +1,17 @@
 import { PaymentElement } from '@stripe/react-stripe-js';
 import { useState } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
-
+import toast from 'react-hot-toast';
+import { getUserProfile } from '@/actions';
+import { connect, useDispatch } from 'react-redux';
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const email = JSON.parse(localStorage.getItem('email'));
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +39,19 @@ export default function CheckoutForm() {
       setMessage(response.error.message);
     } else if (response.paymentIntent.id) {
       //display success message or redirect user
+      axios
+        .post('/api/update_paydate', {
+          email: email
+        })
+        .then((response) => {
+          toast.success('Payment successfuly done and upgraded plan.');
+          dispatch(
+            getUserProfile({ email: JSON.parse(localStorage.getItem('email')) })
+          );
+        })
+        .catch((error) => {
+          console.error('Error getting payment', error);
+        });
     }
 
     setIsProcessing(false);

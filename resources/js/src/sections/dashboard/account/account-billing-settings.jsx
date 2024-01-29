@@ -28,13 +28,15 @@ import {
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
+import $ from 'jquery';
 import { PropertyList } from '@/components/property-list';
 import { PropertyListItem } from '@/components/property-list-item';
 import { AccountPlanIcon } from './account-plan-icon';
 import { getBillingInfo } from '@/actions';
 import './bill.css';
 import OrderSummary from './payments/ordersummary';
-import $ from 'jquery';
+import PaypalForm from './payments/paypalForm';
+
 var tmpBilling = {
   billing_name: '',
   card_number: '',
@@ -59,10 +61,10 @@ const plans = [
 const AccountBillingSettings = (props) => {
   const { plan, invoices = [], userinfo, billinginfo } = props;
   const [selectedPlan, setSelectedPlan] = useState(
-    userinfo.trial == 1 ? 'standard' : 'startup'
+    userinfo.paid == '1' ? 'standard' : 'startup'
   );
   const [currentPlan, setCurrentPlan] = useState(
-    userinfo.trial == 1 ? 'standard' : 'startup'
+    userinfo.paid == '1' ? 'standard' : 'startup'
   );
   const [isEdit, setIsEdit] = useState(false);
   const [billing, setBilling] = useState(billinginfo);
@@ -113,7 +115,7 @@ const AccountBillingSettings = (props) => {
                 return (
                   <Grid key={plan.id} xs={12} sm={4}>
                     <Card
-                      onClick={() => setSelectedPlan(plan.id)}
+                      // onClick={() => setSelectedPlan(plan.id)}
                       sx={{
                         cursor: 'pointer',
                         ...(isSelected && {
@@ -210,7 +212,7 @@ const AccountBillingSettings = (props) => {
             <MenuItem value="paypal">Paypal</MenuItem>
             <MenuItem value="stripe">Stripe</MenuItem>
           </TextField>
-          {paytype == 'paypal' ? <div>Paypal</div> : <></>}
+          {paytype == 'paypal' ? <PaypalForm /> : <></>}
           {paytype == 'stripe' ? <OrderSummary /> : <></>}
 
           {/* {isEdit ? (
