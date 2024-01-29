@@ -12,6 +12,10 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
   Link,
   Stack,
   TextField,
@@ -28,7 +32,9 @@ import { PropertyList } from '@/components/property-list';
 import { PropertyListItem } from '@/components/property-list-item';
 import { AccountPlanIcon } from './account-plan-icon';
 import { getBillingInfo } from '@/actions';
+import './bill.css';
 import OrderSummary from './payments/ordersummary';
+import $ from 'jquery';
 var tmpBilling = {
   billing_name: '',
   card_number: '',
@@ -60,6 +66,13 @@ const AccountBillingSettings = (props) => {
   );
   const [isEdit, setIsEdit] = useState(false);
   const [billing, setBilling] = useState(billinginfo);
+  const [paytype, setPaytype] = useState('paypal');
+  const payNow = () => {
+    $('#submit')[0].click();
+  };
+  const handlePaytype = (p) => {
+    setPaytype(p);
+  };
   const handleEdit = (status) => {
     setBilling(billinginfo);
     setIsEdit((prevState) => !prevState);
@@ -185,7 +198,21 @@ const AccountBillingSettings = (props) => {
               {isEdit ? 'Save' : 'Edit'}
             </Button> */}
           </Box>
-          <OrderSummary />
+          <TextField
+            sx={{ my: 2 }}
+            id="outlined-select-currency"
+            select
+            label="Select"
+            defaultValue="paypal"
+            onChange={(e) => handlePaytype(e.target.value)}
+            helperText="Please select your payment method."
+          >
+            <MenuItem value="paypal">Paypal</MenuItem>
+            <MenuItem value="stripe">Stripe</MenuItem>
+          </TextField>
+          {paytype == 'paypal' ? <div>Paypal</div> : <></>}
+          {paytype == 'stripe' ? <OrderSummary /> : <></>}
+
           {/* {isEdit ? (
             <Box
               sx={{
@@ -372,7 +399,9 @@ const AccountBillingSettings = (props) => {
               mt: 3
             }}
           >
-            <Button variant="contained">Upgrade Plan</Button>
+            <Button variant="contained" onClick={payNow}>
+              Upgrade Plan
+            </Button>
           </Box>
         </CardContent>
       </Card>

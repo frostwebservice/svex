@@ -18,12 +18,12 @@ class PaymentController extends Controller
             // retrieve JSON from POST body
             $jsonStr = file_get_contents('php://input');
             $jsonObj = json_decode($jsonStr);
-
+            
             // Create a PaymentIntent with amount and currency
             $paymentIntent = \Stripe\PaymentIntent::create([
                 'amount' => $this->calculateOrderAmount($jsonObj->items),
                 'currency' => 'usd',
-                'description' => 'React Store',
+                'description' => 'Social Vex',
                 'setup_future_usage' => 'on_session'
             ]);
             

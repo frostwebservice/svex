@@ -12,8 +12,8 @@ export default function OrderSummary() {
   return (
     <div className="container">
       <div className="row my-3">
-        <div className="col-md-6 mx-auto">
-          <Stripe total={10} />
+        <div className="col-md-6">
+          <Stripe total={99.99} />
         </div>
       </div>
     </div>
