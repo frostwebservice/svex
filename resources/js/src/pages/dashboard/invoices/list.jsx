@@ -170,7 +170,7 @@ const Page = () => {
                         >
                           Filters
                         </Button>
-                        <Button
+                        {/* <Button
                           startIcon={
                             <SvgIcon>
                               <PlusIcon />
@@ -179,7 +179,7 @@ const Page = () => {
                           variant="contained"
                         >
                           New
-                        </Button>
+                        </Button> */}
                       </Stack>
                     </Stack>
                     <InvoiceListSummary />

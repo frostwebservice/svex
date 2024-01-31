@@ -35,6 +35,7 @@ Route::post('get_brand_info', [App\Http\Controllers\UserController::class, 'getB
 Route::post('get_user_info', [App\Http\Controllers\UserController::class, 'getUserInfo']);
 Route::post('get_social_profile', [App\Http\Controllers\UserController::class, 'getSocialProfile']);
 Route::post('upload_cover', [App\Http\Controllers\UserController::class, 'uploadCover']);
+Route::post('upload_csv', [App\Http\Controllers\DashboardController::class, 'uploadCSV']);
 Route::post('edit-profile', [App\Http\Controllers\UserController::class, 'editProfile']);
 Route::post('get_notifysettings', [App\Http\Controllers\UserController::class, 'getNotifysettings']);
 Route::post('update_notifysettings', [App\Http\Controllers\UserController::class, 'updateNotifysettings']);

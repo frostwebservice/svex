@@ -29,6 +29,7 @@
 </style>
 @viteReactRefresh
 @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+<script src="https://www.paypal.com/sdk/js?client-id=AWKc2rUoaSJgs4_riYQQ6POri2NP3XqOU7lI4TxFugkmIaBvP7SAIVd4wgwKi9arbJ1tLF478aq6kJ5k"></script>
 </head>
 
 <body>

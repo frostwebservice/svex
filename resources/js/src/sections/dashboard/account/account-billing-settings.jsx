@@ -32,7 +32,7 @@ import $ from 'jquery';
 import { PropertyList } from '@/components/property-list';
 import { PropertyListItem } from '@/components/property-list-item';
 import { AccountPlanIcon } from './account-plan-icon';
-import { getBillingInfo } from '@/actions';
+// import { getBillingInfo } from '@/actions';
 import './bill.css';
 import OrderSummary from './payments/ordersummary';
 import PaypalForm from './payments/paypalForm';
@@ -85,7 +85,7 @@ const AccountBillingSettings = (props) => {
         user_email: JSON.parse(localStorage.getItem('email'))
       })
       .then((response) => {
-        dispatch(getBillingInfo({ email }));
+        // dispatch(getBillingInfo({ email }));
       })
       .catch((error) => {
         console.error('Error getting Notify Settings', error);
@@ -95,7 +95,7 @@ const AccountBillingSettings = (props) => {
   const email = JSON.parse(localStorage.getItem('email'));
 
   useEffect(() => {
-    dispatch(getBillingInfo({ email }));
+    // dispatch(getBillingInfo({ email }));
   }, [dispatch]);
   return (
     <Stack spacing={4} {...props}>

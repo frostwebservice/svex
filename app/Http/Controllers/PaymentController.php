@@ -15,6 +15,24 @@ class PaymentController extends Controller
             'pay_date'=>date('Y-m-d')
         );
         $res = DB::table('users')->where("email",$email)->update($data);
+        $number = 0;
+        $count = DB::table('invoices')->count();
+        if($count==0){
+            $number=1;
+        }else{
+            $id = DB::table('invoices')->last()['id'];
+            $number = (int)$id+1;
+        }
+        $data = array(
+            'email'=>$email,
+            'currency'=>$request->currency,
+            'number' => $number,
+            'status' =>'paid',
+            'totalAmount'=>$request->totalAmount
+        );
+
+
+
         print_r(json_encode($res));
     }
     /** Pay order via stripe */

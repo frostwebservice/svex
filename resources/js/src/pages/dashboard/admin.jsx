@@ -28,6 +28,7 @@ import { OverviewTips } from '@/sections/dashboard/overview/overview-tips';
 import { OverviewOrders } from '@/sections/dashboard/overview/overview-order';
 import { OverviewInvoices } from '@/sections/dashboard/overview/overview-invoice';
 import { OverviewPayment } from '@/sections/dashboard/overview/overview-payment';
+import { ImportData } from '@/sections/dashboard/overview/import-data';
 import { AdminTips } from '@/sections/dashboard/overview/admin-tips';
 
 const now = new Date();
@@ -98,6 +99,9 @@ const Page = () => {
             </Grid>
             <Grid xs={12} md={6}>
               <OverviewPayment />
+            </Grid>
+            <Grid xs={12} md={6}>
+              <ImportData />
             </Grid>
             <Grid xs={12} md={6}>
               <OverviewJobs />

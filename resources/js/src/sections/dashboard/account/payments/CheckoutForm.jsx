@@ -38,10 +38,13 @@ export default function CheckoutForm() {
     ) {
       setMessage(response.error.message);
     } else if (response.paymentIntent.id) {
+      console.log('called', response.paymentIntent.id);
       //display success message or redirect user
       axios
         .post('/api/update_paydate', {
-          email: email
+          email: email,
+          currency: '$',
+          totalAmount: '99.99'
         })
         .then((response) => {
           toast.success('Payment successfuly done and upgraded plan.');
