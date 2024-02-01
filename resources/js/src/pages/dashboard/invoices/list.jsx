@@ -31,8 +31,17 @@ const useInvoicesSearch = () => {
       startDate: undefined
     },
     page: 0,
-    rowsPerPage: 5
+    rowsPerPage: 5,
+    invoices: []
   });
+  useEffect(() => {
+    axios.post('/api/get_invoices', {}).then((response) => {
+      setState((prevState) => ({
+        ...prevState,
+        invoices: response.data
+      }));
+    });
+  }, []);
 
   const handleFiltersChange = useCallback((filters) => {
     setState((prevState) => ({
@@ -170,19 +179,12 @@ const Page = () => {
                         >
                           Filters
                         </Button>
-                        {/* <Button
-                          startIcon={
-                            <SvgIcon>
-                              <PlusIcon />
-                            </SvgIcon>
-                          }
-                          variant="contained"
-                        >
-                          New
-                        </Button> */}
                       </Stack>
                     </Stack>
-                    <InvoiceListSummary />
+                    <InvoiceListSummary
+                      items={invoicesStore.invoices}
+                      count={invoicesStore.invoicesCount}
+                    />
                     <InvoiceListTable
                       count={invoicesStore.invoicesCount}
                       group={group}

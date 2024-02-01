@@ -20,19 +20,17 @@ class PaymentController extends Controller
         if($count==0){
             $number=1;
         }else{
-            $id = DB::table('invoices')->last()['id'];
+            $id = DB::table('invoices')->latest()->first()->id;
             $number = (int)$id+1;
         }
         $data = array(
             'email'=>$email,
             'currency'=>$request->currency,
-            'number' => $number,
+            'number' => 'INV-'.$number,
             'status' =>'paid',
             'totalAmount'=>$request->totalAmount
         );
-
-
-
+        $res = DB::table('invoices')->insert($data);
         print_r(json_encode($res));
     }
     /** Pay order via stripe */

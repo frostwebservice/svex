@@ -21,6 +21,19 @@ class DashboardController extends Controller
     {
         return view('dashboard.index');
     }
+    public function get_invoices(Request $request){
+        $invs = DB::table('invoices')->get()->toArray();
+        foreach($invs as $key=>$inv){
+            $customer = array(
+                'email'=>$inv->email,
+                'name'=>DB::table('users')->where('email',$inv->email)->first()->fullname
+            );
+            $invs[$key]->customer = (object)$customer;
+            $invs[$key]->dueDate = $inv->created_at;
+            $invs[$key]->issueDate = $inv->created_at;
+        }
+        print_r(json_encode($invs));
+    }
     public function get_tips(Request $request){
         $tips = DB::table("tips")->get()->toArray();
         print_r(json_encode($tips));

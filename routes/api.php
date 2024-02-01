@@ -73,6 +73,7 @@ Route::post('get_paypal', [App\Http\Controllers\DashboardController::class, 'get
 Route::post('update_paypal', [App\Http\Controllers\DashboardController::class, 'update_paypal']);
 Route::post('get_stripe', [App\Http\Controllers\DashboardController::class, 'get_stripe']);
 Route::post('update_stripe', [App\Http\Controllers\DashboardController::class, 'update_stripe']);
+Route::post('get_invoices', [App\Http\Controllers\DashboardController::class, 'get_invoices']);
 Route::post('invite_influencer', [App\Http\Controllers\JobController::class, 'invite_influencer']);
 Route::post('invite_group', [App\Http\Controllers\JobController::class, 'invite_group']);
 Route::post('update_group', [App\Http\Controllers\FinderController::class, 'update_group']);

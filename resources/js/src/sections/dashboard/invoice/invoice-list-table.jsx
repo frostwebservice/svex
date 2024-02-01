@@ -22,18 +22,21 @@ import { paths } from '@/paths';
 import { getInitials } from '@/utils/get-initials';
 
 const groupInvoices = (invoices) => {
-  return invoices.reduce((acc, invoice) => {
-    const { status } = invoice;
+  return invoices.reduce(
+    (acc, invoice) => {
+      const { status } = invoice;
 
-    return {
-      ...acc,
-      [status]: [...acc[status], invoice]
-    };
-  }, {
-    canceled: [],
-    paid: [],
-    pending: []
-  });
+      return {
+        ...acc,
+        [status]: [...acc[status], invoice]
+      };
+    },
+    {
+      canceled: [],
+      paid: [],
+      pending: []
+    }
+  );
 };
 
 const statusColorsMap = {
@@ -47,13 +50,16 @@ const InvoiceRow = (props) => {
 
   const statusColor = statusColorsMap[invoice.status];
   const totalAmount = numeral(invoice.totalAmount).format('0,0.00');
-  const issueDate = invoice.issueDate && format(invoice.issueDate, 'dd/MM/yyyy');
-  const dueDate = invoice.dueDate && format(invoice.dueDate, 'dd/MM/yyyy');
+  const issueDate =
+    invoice.issueDate && format(Date.parse(invoice.issueDate), 'dd/MM/yyyy');
+  const dueDate =
+    invoice.dueDate && format(Date.parse(invoice.dueDate), 'dd/MM/yyyy');
 
   return (
     <TableRow
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-      {...other}>
+      {...other}
+    >
       <TableCell width="25%">
         <Stack
           alignItems="center"
@@ -76,16 +82,10 @@ const InvoiceRow = (props) => {
             {getInitials(invoice.customer.name)}
           </Avatar>
           <div>
-            <Typography
-              color="text.primary"
-              variant="subtitle2"
-            >
+            <Typography color="text.primary" variant="subtitle2">
               {invoice.number}
             </Typography>
-            <Typography
-              color="text.secondary"
-              variant="body2"
-            >
+            <Typography color="text.secondary" variant="body2">
               {invoice.customer.name}
             </Typography>
           </div>
@@ -98,31 +98,19 @@ const InvoiceRow = (props) => {
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="subtitle2">
-          Issued
-        </Typography>
-        <Typography
-          color="text.secondary"
-          variant="body2"
-        >
+        <Typography variant="subtitle2">Issued</Typography>
+        <Typography color="text.secondary" variant="body2">
           {issueDate}
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="subtitle2">
-          Due
-        </Typography>
-        <Typography
-          color="text.secondary"
-          variant="body2"
-        >
+        <Typography variant="subtitle2">Due</Typography>
+        <Typography color="text.secondary" variant="body2">
           {dueDate}
         </Typography>
       </TableCell>
       <TableCell align="right">
-        <SeverityPill color={statusColor}>
-          {invoice.status}
-        </SeverityPill>
+        <SeverityPill color={statusColor}>{invoice.status}</SeverityPill>
       </TableCell>
       <TableCell align="right">
         <IconButton
@@ -143,7 +131,7 @@ export const InvoiceListTable = (props) => {
     group = false,
     items = [],
     count = 0,
-    onPageChange = () => { },
+    onPageChange = () => {},
     onRowsPerPageChange,
     page = 0,
     rowsPerPage = 0
@@ -164,17 +152,9 @@ export const InvoiceListTable = (props) => {
           const hasInvoices = invoices.length > 0;
 
           return (
-            <Stack
-              key={groupTitle}
-              spacing={2}
-            >
-              <Typography
-                color="text.secondary"
-                variant="h6"
-              >
-                {groupTitle}
-                {' '}
-                ({count})
+            <Stack key={groupTitle} spacing={2}>
+              <Typography color="text.secondary" variant="h6">
+                {groupTitle} ({count})
               </Typography>
               {hasInvoices && (
                 <Card>
@@ -182,10 +162,7 @@ export const InvoiceListTable = (props) => {
                     <Table sx={{ minWidth: 600 }}>
                       <TableBody>
                         {invoices.map((invoice) => (
-                          <InvoiceRow
-                            key={invoice.id}
-                            invoice={invoice}
-                          />
+                          <InvoiceRow key={invoice.id} invoice={invoice} />
                         ))}
                       </TableBody>
                     </Table>
@@ -203,10 +180,7 @@ export const InvoiceListTable = (props) => {
         <Table>
           <TableBody>
             {items.map((invoice) => (
-              <InvoiceRow
-                key={invoice.id}
-                invoice={invoice}
-              />
+              <InvoiceRow key={invoice.id} invoice={invoice} />
             ))}
           </TableBody>
         </Table>

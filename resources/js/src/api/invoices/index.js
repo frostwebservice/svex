@@ -1,11 +1,11 @@
 import { endOfDay, startOfDay } from 'date-fns';
 import { deepCopy } from '@/utils/deep-copy';
 import { applyPagination } from '@/utils/apply-pagination';
-import { invoice, invoices } from './data';
+// import { invoice, invoices } from './data';
 
 class InvoicesApi {
   getInvoices(request = {}) {
-    const { filters, page, rowsPerPage } = request;
+    const { filters, page, rowsPerPage, invoices } = request;
 
     let data = deepCopy(invoices);
     let count = data.length;
@@ -13,7 +13,9 @@ class InvoicesApi {
     if (typeof filters !== 'undefined') {
       data = data.filter((invoice) => {
         if (typeof filters.query !== 'undefined' && filters.query !== '') {
-          const matched = invoice.number.toLowerCase().includes(filters.query.toLowerCase());
+          const matched = invoice.number
+            .toLowerCase()
+            .includes(filters.query.toLowerCase());
 
           if (!matched) {
             return false;
@@ -25,7 +27,8 @@ class InvoicesApi {
             return false;
           }
 
-          const matched = endOfDay(invoice.issueDate) >= startOfDay(filters.startDate);
+          const matched =
+            endOfDay(invoice.issueDate) >= startOfDay(filters.startDate);
 
           if (!matched) {
             return false;
@@ -37,14 +40,18 @@ class InvoicesApi {
             return false;
           }
 
-          const matched = startOfDay(invoice.issueDate) <= endOfDay(filters.endDate);
+          const matched =
+            startOfDay(invoice.issueDate) <= endOfDay(filters.endDate);
 
           if (!matched) {
             return false;
           }
         }
 
-        if (typeof filters.customers !== 'undefined' && filters.customers.length > 0) {
+        if (
+          typeof filters.customers !== 'undefined' &&
+          filters.customers.length > 0
+        ) {
           const matched = filters.customers.includes(invoice.customer.name);
 
           if (!matched) {
@@ -73,9 +80,9 @@ class InvoicesApi {
     });
   }
 
-  getInvoice(request) {
-    return Promise.resolve(deepCopy(invoice));
-  }
+  // getInvoice(request) {
+  //   return Promise.resolve(deepCopy(invoice));
+  // }
 }
 
 export const invoicesApi = new InvoicesApi();
