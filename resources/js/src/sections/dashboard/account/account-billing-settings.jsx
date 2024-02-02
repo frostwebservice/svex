@@ -5,6 +5,8 @@ import { format } from 'date-fns';
 import Edit02Icon from '@untitled-ui/icons-react/build/esm/Edit02';
 import PlusIcon from '@untitled-ui/icons-react/build/esm/Plus';
 import { connect, useDispatch } from 'react-redux';
+import { RouterLink } from '@/components/router-link';
+
 import {
   Box,
   Button,
@@ -59,13 +61,19 @@ const plans = [
 ];
 
 const AccountBillingSettings = (props) => {
-  const { plan, invoices = [], userinfo, billinginfo } = props;
+  const { plan, userinfo, billinginfo } = props;
   const [selectedPlan, setSelectedPlan] = useState(
     userinfo.paid == '1' ? 'standard' : 'startup'
   );
   const [currentPlan, setCurrentPlan] = useState(
     userinfo.paid == '1' ? 'standard' : 'startup'
   );
+  const [invoices, setInvoices] = useState([]);
+  useEffect(() => {
+    axios.post('/api/get_invoices', {}).then((response) => {
+      setInvoices(response.data);
+    });
+  }, []);
   const [isEdit, setIsEdit] = useState(false);
   const [billing, setBilling] = useState(billinginfo);
   const [paytype, setPaytype] = useState('paypal');
@@ -422,15 +430,22 @@ const AccountBillingSettings = (props) => {
           </TableHead>
           <TableBody>
             {invoices.map((invoice) => {
-              const createdAt = format(invoice.createdAt, 'dd MMM yyyy');
-              const amount = numeral(invoice.amount).format('$0,0.00');
+              const createdAt = format(
+                Date.parse(invoice.issueDate),
+                'dd MMM yyyy'
+              );
+              const amount = numeral(invoice.totalAmount).format('$0,0.00');
 
               return (
                 <TableRow key={invoice.id}>
                   <TableCell>{createdAt}</TableCell>
                   <TableCell>{amount}</TableCell>
                   <TableCell align="right">
-                    <Link color="inherit" underline="always" href="#">
+                    <Link
+                      color="inherit"
+                      component={RouterLink}
+                      href={'/dashboard/invoices/' + invoice.id}
+                    >
                       View Invoice
                     </Link>
                   </TableCell>
