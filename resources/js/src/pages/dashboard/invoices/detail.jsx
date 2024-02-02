@@ -27,24 +27,33 @@ import { getInitials } from '@/utils/get-initials';
 const useInvoice = () => {
   const isMounted = useMounted();
   const [invoice, setInvoice] = useState(null);
-
   const handleInvoiceGet = useCallback(async () => {
     try {
-      const response = await invoicesApi.getInvoice();
-
-      if (isMounted()) {
-        setInvoice(response);
-      }
+      axios
+        .post('/api/get_invoice_detail', {
+          id: window.location.pathname.split('/')[3]
+        })
+        .then((response) => {
+          if (isMounted()) {
+            let inv = response.data;
+            inv.dueDate = Date.parse(inv.dueDate);
+            inv.issueDate = Date.parse(inv.issueDate);
+            // console.log(inv);
+            setInvoice(inv);
+          }
+        });
     } catch (err) {
       console.error(err);
     }
   }, [isMounted]);
 
-  useEffect(() => {
+  useEffect(
+    () => {
       handleInvoiceGet();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []);
+    []
+  );
 
   return invoice;
 };
@@ -52,7 +61,7 @@ const useInvoice = () => {
 const Page = () => {
   const invoice = useInvoice();
   const dialog = useDialog();
-
+  console.log(invoice);
   usePageView();
 
   if (!invoice) {
@@ -70,10 +79,7 @@ const Page = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Stack
-            divider={<Divider />}
-            spacing={4}
-          >
+          <Stack divider={<Divider />} spacing={4}>
             <Stack spacing={4}>
               <div>
                 <Link
@@ -89,9 +95,7 @@ const Page = () => {
                   <SvgIcon sx={{ mr: 1 }}>
                     <ArrowLeftIcon />
                   </SvgIcon>
-                  <Typography variant="subtitle2">
-                    Invoices
-                  </Typography>
+                  <Typography variant="subtitle2">Invoices</Typography>
                 </Link>
               </div>
               <Stack
@@ -100,11 +104,7 @@ const Page = () => {
                 justifyContent="space-between"
                 spacing={4}
               >
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
+                <Stack alignItems="center" direction="row" spacing={2}>
                   <Avatar
                     sx={{
                       height: 42,
@@ -114,26 +114,14 @@ const Page = () => {
                     {getInitials(invoice.customer.name)}
                   </Avatar>
                   <div>
-                    <Typography variant="h4">
-                      {invoice.number}
-                    </Typography>
-                    <Typography
-                      color="text.secondary"
-                      variant="body2"
-                    >
+                    <Typography variant="h4">{invoice.number}</Typography>
+                    <Typography color="text.secondary" variant="body2">
                       {invoice.customer.name}
                     </Typography>
                   </div>
                 </Stack>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
-                  <Button
-                    color="inherit"
-                    onClick={dialog.handleOpen}
-                  >
+                <Stack alignItems="center" direction="row" spacing={2}>
+                  <Button color="inherit" onClick={dialog.handleOpen}>
                     Preview
                   </Button>
                   <PDFDownloadLink
@@ -141,10 +129,7 @@ const Page = () => {
                     fileName="invoice"
                     style={{ textDecoration: 'none' }}
                   >
-                    <Button
-                      color="primary"
-                      variant="contained"
-                    >
+                    <Button color="primary" variant="contained">
                       Download
                     </Button>
                   </PDFDownloadLink>

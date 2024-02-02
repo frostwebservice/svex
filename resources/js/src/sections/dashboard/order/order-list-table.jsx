@@ -7,9 +7,14 @@ import {
   TableBody,
   TableCell,
   TablePagination,
+  SvgIcon,
+  IconButton,
   TableRow,
   Typography
 } from '@mui/material';
+import { RouterLink } from '@/components/router-link';
+import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
+
 import { SeverityPill } from '@/components/severity-pill';
 
 const statusMap = {
@@ -23,7 +28,7 @@ export const OrderListTable = (props) => {
   const {
     count = 0,
     items = [],
-    onPageChange = () => { },
+    onPageChange = () => {},
     onRowsPerPageChange,
     onSelect,
     page = 0,
@@ -35,9 +40,14 @@ export const OrderListTable = (props) => {
       <Table>
         <TableBody>
           {items.map((order) => {
-            const createdAtMonth = format(order.createdAt, 'LLL').toUpperCase();
-            const createdAtDay = format(order.createdAt, 'd');
-            const totalAmount = numeral(order.totalAmount).format(`${order.currency}0,0.00`);
+            const createdAtMonth = format(
+              Date.parse(order.createdAt),
+              'LLL'
+            ).toUpperCase();
+            const createdAtDay = format(Date.parse(order.createdAt), 'd');
+            const totalAmount = numeral(order.totalAmount).format(
+              `${order.currency}0,0.00`
+            );
             const statusColor = statusMap[order.status] || 'warning';
 
             return (
@@ -55,46 +65,40 @@ export const OrderListTable = (props) => {
                 >
                   <Box
                     sx={{
-                      backgroundColor: (theme) => theme.palette.mode === 'dark'
-                        ? 'neutral.800'
-                        : 'neutral.200',
+                      backgroundColor: (theme) =>
+                        theme.palette.mode === 'dark'
+                          ? 'neutral.800'
+                          : 'neutral.200',
                       borderRadius: 2,
                       maxWidth: 'fit-content',
                       ml: 3,
                       p: 1
                     }}
                   >
-                    <Typography
-                      align="center"
-                      variant="subtitle2"
-                    >
+                    <Typography align="center" variant="subtitle2">
                       {createdAtMonth}
                     </Typography>
-                    <Typography
-                      align="center"
-                      variant="h6"
-                    >
+                    <Typography align="center" variant="h6">
                       {createdAtDay}
                     </Typography>
                   </Box>
                   <Box sx={{ ml: 2 }}>
-                    <Typography variant="subtitle2">
-                      {order.number}
-                    </Typography>
-                    <Typography
-                      color="text.secondary"
-                      variant="body2"
-                    >
-                      Total of
-                      {' '}
-                      {totalAmount}
+                    <Typography variant="subtitle2">{order.number}</Typography>
+                    <Typography color="text.secondary" variant="body2">
+                      Total of {totalAmount}
                     </Typography>
                   </Box>
                 </TableCell>
                 <TableCell align="right">
-                  <SeverityPill color={statusColor}>
-                    {order.status}
-                  </SeverityPill>
+                  <IconButton
+                    component={RouterLink}
+                    href={'/dashboard/invoices/' + order.id}
+                  >
+                    <Typography variant="subtitle2">View Invoice</Typography>
+                    <SvgIcon>
+                      <ArrowRightIcon />
+                    </SvgIcon>
+                  </IconButton>
                 </TableCell>
               </TableRow>
             );

@@ -1,7 +1,7 @@
 import ClockIcon from '@untitled-ui/icons-react/build/esm/Clock';
 import ReceiptCheckIcon from '@untitled-ui/icons-react/build/esm/ReceiptCheck';
 import ReceiptIcon from '@untitled-ui/icons-react/build/esm/Receipt';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Avatar,
   Card,
@@ -10,19 +10,27 @@ import {
   Typography,
   Unstable_Grid2 as Grid
 } from '@mui/material';
-
-export const InvoiceListSummary = (props) => {
-  const { count, items } = props;
+import { connect } from 'react-redux';
+const InvoiceListSummary = (props) => {
+  const { count, items, userinfo } = props;
   const { once, setOnce } = useState(0);
   const [total, setTotal] = useState(0);
-  if (once == 0) {
+  const [isadmin, setIsadmin] = useState(false);
+  useEffect(() => {
+    // if (userinfo.id) {
+    //   if (userinfo.is_admin != 1 && userinfo.paid != '1') {
+    //     setNsections(nsections.filter(removeAdmin));
+    //   } else if (userinfo.is_admin != 1 && userinfo.paid == '1') {
+    //     setNsections(nsections.filter(removeFinder));
+    //   }
+    // }
+  }, [userinfo]);
+  useEffect(() => {
     const sum = items.reduce((accumulator, object) => {
-      return accumulator + object.totalAmount;
+      return accumulator + Number(object.totalAmount);
     }, 0);
-    setTotal(sum);
-    setOnce(1);
-  }
-
+    setTotal(sum.toFixed(2));
+  }, [items]);
   return (
     <div>
       <Grid container spacing={3}>
@@ -109,3 +117,8 @@ export const InvoiceListSummary = (props) => {
     </div>
   );
 };
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+});
+
+export default connect(mapStateToProps)(InvoiceListSummary);

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
@@ -22,14 +22,14 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Scrollbar } from '@/components/scrollbar';
 
-const customers = [
-  'Blind Spots Inc.',
-  'Dispatcher Inc.',
-  'ACME SRL',
-  'Novelty I.S',
-  'Beauty Clinic SRL',
-  'Division Inc.'
-];
+// const customers = [
+//   'Blind Spots Inc.',
+//   'Dispatcher Inc.',
+//   'ACME SRL',
+//   'Novelty I.S',
+//   'Beauty Clinic SRL',
+//   'Division Inc.'
+// ];
 
 export const InvoiceListSidebar = (props) => {
   const {
@@ -42,70 +42,89 @@ export const InvoiceListSidebar = (props) => {
     open,
     ...other
   } = props;
+  const [customers, setCustomers] = useState([]);
+  useEffect(() => {
+    axios.post('/api/get_customers', {}).then((response) => {
+      setCustomers(response.data);
+    });
+  }, []);
   const queryRef = useRef(null);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 
-  const handleQueryChange = useCallback((event) => {
-    event.preventDefault();
-    onFiltersChange?.({
-      ...filters,
-      query: queryRef.current?.value || ''
-    });
-  }, [filters, onFiltersChange]);
+  const handleQueryChange = useCallback(
+    (event) => {
+      event.preventDefault();
+      onFiltersChange?.({
+        ...filters,
+        query: queryRef.current?.value || ''
+      });
+    },
+    [filters, onFiltersChange]
+  );
 
-  const handleStartDateChange = useCallback((date) => {
-    const newFilters = {
-      ...filters,
-      startDate: date || undefined
-    };
+  const handleStartDateChange = useCallback(
+    (date) => {
+      const newFilters = {
+        ...filters,
+        startDate: date || undefined
+      };
 
-    // Prevent end date to be before start date
-    if (newFilters.endDate && date && date > newFilters.endDate) {
-      newFilters.endDate = date;
-    }
+      // Prevent end date to be before start date
+      if (newFilters.endDate && date && date > newFilters.endDate) {
+        newFilters.endDate = date;
+      }
 
-    onFiltersChange?.(newFilters);
-  }, [filters, onFiltersChange]);
+      onFiltersChange?.(newFilters);
+    },
+    [filters, onFiltersChange]
+  );
 
-  const handleEndDateChange = useCallback((date) => {
-    const newFilters = {
-      ...filters,
-      endDate: date || undefined
-    };
+  const handleEndDateChange = useCallback(
+    (date) => {
+      const newFilters = {
+        ...filters,
+        endDate: date || undefined
+      };
 
-    // Prevent start date to be after end date
-    if (newFilters.startDate && date && date < newFilters.startDate) {
-      newFilters.startDate = date;
-    }
+      // Prevent start date to be after end date
+      if (newFilters.startDate && date && date < newFilters.startDate) {
+        newFilters.startDate = date;
+      }
 
-    onFiltersChange?.(newFilters);
-  }, [filters, onFiltersChange]);
+      onFiltersChange?.(newFilters);
+    },
+    [filters, onFiltersChange]
+  );
 
-  const handleCustomerToggle = useCallback((event) => {
-    let customers;
+  const handleCustomerToggle = useCallback(
+    (event) => {
+      let customers;
 
-    if (event.target.checked) {
-      customers = [
-        ...(filters.customers || []),
-        event.target.value
-      ];
+      if (event.target.checked) {
+        customers = [...(filters.customers || []), event.target.value];
+      } else {
+        customers = (filters.customers || []).filter(
+          (customer) => customer !== event.target.value
+        );
+      }
 
-    } else {
-      customers = (filters.customers || []).filter((customer) => customer !== event.target.value);
-    }
+      onFiltersChange?.({
+        ...filters,
+        customers: customers
+      });
+    },
+    [filters, onFiltersChange]
+  );
 
-    onFiltersChange?.({
-      ...filters,
-      customers: customers
-    });
-  }, [filters, onFiltersChange]);
-
-  const handleStatusChange = useCallback((event) => {
-    onFiltersChange?.({
-      ...filters,
-      status: event.target.checked ? 'paid' : undefined
-    });
-  }, [filters, onFiltersChange]);
+  const handleStatusChange = useCallback(
+    (event) => {
+      onFiltersChange?.({
+        ...filters,
+        status: event.target.checked ? 'paid' : undefined
+      });
+    },
+    [filters, onFiltersChange]
+  );
 
   const content = (
     <div>
@@ -247,7 +266,8 @@ export const InvoiceListSidebar = (props) => {
         SlideProps={{ container }}
         variant="persistent"
         sx={{ p: 3 }}
-        {...other}>
+        {...other}
+      >
         {content}
       </Drawer>
     );
@@ -276,7 +296,8 @@ export const InvoiceListSidebar = (props) => {
       }}
       SlideProps={{ container }}
       variant="temporary"
-      {...other}>
+      {...other}
+    >
       {content}
     </Drawer>
   );

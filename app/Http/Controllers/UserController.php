@@ -452,6 +452,14 @@ class UserController extends Controller
 		$user->save();
 		return response()->json(["status" => "success", "success" => true, "message" => "Success to upload"]);
 	}
+	public function getCustomers(Request $request){
+		$customers = DB::table('users')->select('fullname')->get()->toArray();
+		$arr = array();
+		foreach($customers as $key=>$customer){
+			array_push($arr,$customer->fullname);
+		}
+		print_r(json_encode($arr));
+	}
 	public function secondInfo(Request $request)
 	{
 		$count = count($request->nichecategory);

@@ -80,9 +80,10 @@ class InvoicesApi {
     });
   }
 
-  // getInvoice(request) {
-  //   return Promise.resolve(deepCopy(invoice));
-  // }
+  getInvoice(request = {}) {
+    const { invoice } = request;
+    return deepCopy(invoice);
+  }
 }
 
 export const invoicesApi = new InvoicesApi();

@@ -50,7 +50,8 @@ const sortOptions = [
 
 export const OrderListSearch = (props) => {
   const {
-    onFiltersChange, onSortChange,
+    onFiltersChange,
+    onSortChange,
     // sortBy = 'createdAt',
     sortDir = 'asc'
   } = props;
@@ -88,14 +89,17 @@ export const OrderListSearch = (props) => {
     }));
   }, []);
 
-  const handleSortChange = useCallback((event) => {
-    const sortDir = event.target.value;
-    onSortChange?.(sortDir);
-  }, [onSortChange]);
+  const handleSortChange = useCallback(
+    (event) => {
+      const sortDir = event.target.value;
+      onSortChange?.(sortDir);
+    },
+    [onSortChange]
+  );
 
   return (
     <div>
-      <Tabs
+      {/* <Tabs
         indicatorColor="primary"
         onChange={handleTabsChange}
         scrollButtons="auto"
@@ -112,7 +116,7 @@ export const OrderListSearch = (props) => {
           />
         ))}
       </Tabs>
-      <Divider />
+      <Divider /> */}
       <Stack
         alignItems="center"
         direction="row"
@@ -120,24 +124,20 @@ export const OrderListSearch = (props) => {
         gap={3}
         sx={{ p: 3 }}
       >
-        <Box
-          component="form"
-          onSubmit={handleQueryChange}
-          sx={{ flexGrow: 1 }}
-        >
+        <Box component="form" onSubmit={handleQueryChange} sx={{ flexGrow: 1 }}>
           <OutlinedInput
             defaultValue=""
             fullWidth
             inputProps={{ ref: queryRef }}
             name="orderNumber"
             placeholder="Search by order number"
-            startAdornment={(
+            startAdornment={
               <InputAdornment position="start">
                 <SvgIcon>
                   <SearchMdIcon />
                 </SvgIcon>
               </InputAdornment>
-            )}
+            }
           />
         </Box>
         <TextField
@@ -149,10 +149,7 @@ export const OrderListSearch = (props) => {
           value={sortDir}
         >
           {sortOptions.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-            >
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}

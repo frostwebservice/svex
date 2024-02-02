@@ -32,9 +32,11 @@ export const OrderDetails = (props) => {
 
   const align = lgUp ? 'horizontal' : 'vertical';
   const items = order.items || [];
-  const createdAt = format(order.createdAt, 'dd/MM/yyyy HH:mm');
+  const createdAt = format(Date.parse(order.createdAt), 'dd/MM/yyyy HH:mm');
   const statusColor = statusMap[order.status];
-  const totalAmount = numeral(order.totalAmount).format(`${order.currency}0,0.00`);
+  const totalAmount = numeral(order.totalAmount).format(
+    `${order.currency}0,0.00`
+  );
 
   return (
     <Stack spacing={6}>
@@ -45,21 +47,19 @@ export const OrderDetails = (props) => {
           justifyContent="space-between"
           spacing={3}
         >
-          <Typography variant="h6">
-            Details
-          </Typography>
-          <Button
+          <Typography variant="h6">Details</Typography>
+          {/* <Button
             color="inherit"
             onClick={onEdit}
             size="small"
-            startIcon={(
+            startIcon={
               <SvgIcon>
                 <Edit02Icon />
               </SvgIcon>
-            )}
+            }
           >
             Edit
-          </Button>
+          </Button> */}
         </Stack>
         <PropertyList>
           <PropertyListItem
@@ -82,30 +82,18 @@ export const OrderDetails = (props) => {
             divider
             label="Customer"
           >
-            <Typography
-              color="text.secondary"
-              variant="body2"
-            >
+            <Typography color="text.secondary" variant="body2">
               {order.customer.name}
             </Typography>
-            <Typography
-              color="text.secondary"
-              variant="body2"
-            >
+            <Typography color="text.secondary" variant="body2">
               {order.customer.address1}
             </Typography>
-            <Typography
-              color="text.secondary"
-              variant="body2"
-            >
+            {/* <Typography color="text.secondary" variant="body2">
               {order.customer.city}
             </Typography>
-            <Typography
-              color="text.secondary"
-              variant="body2"
-            >
+            <Typography color="text.secondary" variant="body2">
               {order.customer.country}
-            </Typography>
+            </Typography> */}
           </PropertyListItem>
           <PropertyListItem
             align={align}
@@ -128,29 +116,18 @@ export const OrderDetails = (props) => {
             label="Total Amount"
             value={totalAmount}
           />
-          <PropertyListItem
-            align={align}
-            disableGutters
-            divider
-            label="Status"
-          >
-            <SeverityPill color={statusColor}>
-              {order.status}
-            </SeverityPill>
+          <PropertyListItem align={align} disableGutters divider label="Status">
+            <SeverityPill color={statusColor}>{order.status}</SeverityPill>
           </PropertyListItem>
         </PropertyList>
-        <Stack
+        {/* <Stack
           alignItems="center"
           direction="row"
           flexWrap="wrap"
           justifyContent="flex-end"
           spacing={2}
         >
-          <Button
-            onClick={onApprove}
-            size="small"
-            variant="contained"
-          >
+          <Button onClick={onApprove} size="small" variant="contained">
             Approve
           </Button>
           <Button
@@ -161,46 +138,32 @@ export const OrderDetails = (props) => {
           >
             Reject
           </Button>
-        </Stack>
+        </Stack> */}
       </Stack>
       <Stack spacing={3}>
-        <Typography variant="h6">
-          Line items
-        </Typography>
+        <Typography variant="h6">Line items</Typography>
         <Scrollbar>
           <Table sx={{ minWidth: 400 }}>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  Description
-                </TableCell>
-                <TableCell>
-                  Billing Cycle
-                </TableCell>
-                <TableCell>
-                  Amount
-                </TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Billing Cycle</TableCell>
+                <TableCell>Amount</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((item) => {
-                const unitAmount = numeral(item.unitAmount).format(`${item.currency}0,0.00`);
+                const unitAmount = numeral(item.unitAmount).format(
+                  `${item.currency}0,0.00`
+                );
 
                 return (
                   <TableRow key={item.id}>
                     <TableCell>
-                      {item.name}
-                      {' '}
-                      x
-                      {' '}
-                      {item.quantity}
+                      {item.name} x {item.quantity}
                     </TableCell>
-                    <TableCell>
-                      {item.billingCycle}
-                    </TableCell>
-                    <TableCell>
-                      {unitAmount}
-                    </TableCell>
+                    <TableCell>{item.billingCycle}</TableCell>
+                    <TableCell>{unitAmount}</TableCell>
                   </TableRow>
                 );
               })}

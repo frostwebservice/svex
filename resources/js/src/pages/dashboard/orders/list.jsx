@@ -29,9 +29,17 @@ const useOrdersSearch = () => {
     page: 0,
     rowsPerPage: 5,
     sortBy: 'createdAt',
-    sortDir: 'desc'
+    sortDir: 'desc',
+    orders: []
   });
-
+  useEffect(() => {
+    axios.post('/api/get_orders', {}).then((response) => {
+      setState((prevState) => ({
+        ...prevState,
+        orders: response.data
+      }));
+    });
+  }, []);
   const handleFiltersChange = useCallback((filters) => {
     setState((prevState) => ({
       ...prevState,
@@ -162,21 +170,9 @@ const Page = () => {
                   <div>
                     <Typography variant="h4">Orders</Typography>
                   </div>
-                  <div>
-                    <Button
-                      startIcon={
-                        <SvgIcon>
-                          <PlusIcon />
-                        </SvgIcon>
-                      }
-                      variant="contained"
-                    >
-                      Add
-                    </Button>
-                  </div>
                 </Stack>
               </Box>
-              <Divider />
+
               <OrderListSearch
                 onFiltersChange={ordersSearch.handleFiltersChange}
                 onSortChange={ordersSearch.handleSortChange}

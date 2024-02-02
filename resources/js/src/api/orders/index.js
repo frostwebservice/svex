@@ -1,11 +1,11 @@
-import { order, orders } from './data';
+import { order } from './data';
 import { deepCopy } from '@/utils/deep-copy';
 import { applyPagination } from '@/utils/apply-pagination';
 import { applySort } from '@/utils/apply-sort';
 
 class OrdersApi {
   getOrders(request = {}) {
-    const { filters, page, rowsPerPage, sortBy, sortDir } = request;
+    const { filters, page, rowsPerPage, sortBy, sortDir, orders } = request;
 
     let data = deepCopy(orders);
     let count = data.length;

@@ -18,7 +18,7 @@ import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { InvoiceListContainer } from '@/sections/dashboard/invoice/invoice-list-container';
 import { InvoiceListSidebar } from '@/sections/dashboard/invoice/invoice-list-sidebar';
-import { InvoiceListSummary } from '@/sections/dashboard/invoice/invoice-list-summary';
+import InvoiceListSummary from '@/sections/dashboard/invoice/invoice-list-summary';
 import { InvoiceListTable } from '@/sections/dashboard/invoice/invoice-list-table';
 import { useSettings } from '@/hooks/use-settings';
 import './invoice.css';

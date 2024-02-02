@@ -34,6 +34,65 @@ class DashboardController extends Controller
         }
         print_r(json_encode($invs));
     }
+
+    public function get_orders(Request $request){
+        $invs = DB::table('invoices')->get()->toArray();
+        foreach($invs as $key=>$inv){
+            $customer = array(
+                'email'=>$inv->email,
+                'name'=>DB::table('users')->where('email',$inv->email)->first()->fullname,
+                'address1'=>DB::table('users')->where('email',$inv->email)->first()->companylocation,
+                'address2'=>DB::table('users')->where('email',$inv->email)->first()->companylocation,
+                'city'=>DB::table('users')->where('email',$inv->email)->first()->companylocation,
+                'country'=>DB::table('users')->where('email',$inv->email)->first()->companylocation
+            );
+            $items = array(
+                'id'=>$inv->id,
+                'currency'=>$inv->currency,
+                'billingCycle'=> 'monthly',
+                'name'=>'Standard Membership',
+                'quantity'=>1,
+                'unitAmount'=>$inv->totalAmount
+            );
+            $arr=array();
+            array_push($arr,(object)$items);
+            $invs[$key]->customer = (object)$customer;
+            $invs[$key]->items = $arr;
+            $invs[$key]->createdAt = $inv->created_at;
+            $invs[$key]->status = 'paid';
+        }
+        print_r(json_encode($invs));
+    }
+    public function get_invoice_detail(Request $request){
+        $id = $request->id;
+        $invoice = DB::table('invoices')->where('id',$id)->first();
+        $user = DB::table('users')->where('email',$invoice->email)->first();
+        $customer = array(
+            'email'=>$invoice->email,
+            'address'=>$user->companylocation,
+            'company'=>$user->companyname,
+            'name'=>$user->fullname,
+            'taxId'=>'' 
+        );
+        $items = array(
+            'id'=>$invoice->id,
+            'currency'=>$invoice->currency,
+            'description'=>'This was paid for standard membership subscription.',
+            'quantity'=>1,
+            'totalAmount'=>$invoice->totalAmount,
+            'unitAmount'=>$invoice->totalAmount
+        );
+        $arr=array();
+        array_push($arr,(object)$items);
+        $invoice->customer = (object)$customer;
+        $invoice->items = $arr;
+        $invoice->dueDate = $invoice->created_at;
+        $invoice->issueDate = $invoice->created_at;
+        $invoice->subtotalAmount = $invoice->totalAmount;
+        $invoice->taxAmount = 0;
+
+        print_r(json_encode($invoice));
+    }
     public function get_tips(Request $request){
         $tips = DB::table("tips")->get()->toArray();
         print_r(json_encode($tips));

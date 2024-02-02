@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('get_customers', [App\Http\Controllers\UserController::class, 'getCustomers']);
 Route::post('user-signup', [App\Http\Controllers\UserController::class, 'userSignUp']);
 Route::post('user-reset', [App\Http\Controllers\UserController::class, 'userReset']);
 Route::post('user-getuser', [App\Http\Controllers\UserController::class, 'getUsers']);
@@ -74,6 +75,8 @@ Route::post('update_paypal', [App\Http\Controllers\DashboardController::class, '
 Route::post('get_stripe', [App\Http\Controllers\DashboardController::class, 'get_stripe']);
 Route::post('update_stripe', [App\Http\Controllers\DashboardController::class, 'update_stripe']);
 Route::post('get_invoices', [App\Http\Controllers\DashboardController::class, 'get_invoices']);
+Route::post('get_orders', [App\Http\Controllers\DashboardController::class, 'get_orders']);
+Route::post('get_invoice_detail', [App\Http\Controllers\DashboardController::class, 'get_invoice_detail']);
 Route::post('invite_influencer', [App\Http\Controllers\JobController::class, 'invite_influencer']);
 Route::post('invite_group', [App\Http\Controllers\JobController::class, 'invite_group']);
 Route::post('update_group', [App\Http\Controllers\FinderController::class, 'update_group']);
