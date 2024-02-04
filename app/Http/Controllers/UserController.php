@@ -660,7 +660,7 @@ class UserController extends Controller
 			if (!is_null($password_status)) {
 
 				// check password correct
-				if ($email_status->password != md5($request->password)) {
+				if ($password_status=="passed"&&$email_status->password != md5($request->password)) {
 					return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
 
 				}
@@ -723,9 +723,10 @@ class UserController extends Controller
 						$browser = $value;
 					}
 				}
+				$type= $request->type?$request->type:"Credential login";
 				$history = array(
 					"user_email" => $request->email,
-					"type" => $request->type,
+					"type" => $type,
 					"ip_address" => $_SERVER['REMOTE_ADDR'],
 					"browser_info" => $browser,
 					"os_info" => $os_platform

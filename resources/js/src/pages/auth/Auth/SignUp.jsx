@@ -104,6 +104,7 @@ const Page = () => {
     onSubmit: values => {
 
       localStorage.setItem("email", JSON.stringify(values.email));
+
       if (verifyRecaptcha() == false) {
         alert("Please complete the reCAPTCHA");
         captchaRef.current.reset();
@@ -116,6 +117,7 @@ const Page = () => {
         .post("/api/user-signup", values)
         .then((response) => {
           if (response.data.status === 200 && response.data.success) {
+
             captchaRef.current.reset();
             setIsLoading(false)
             navigate('/auth/auth/SendEmail')
@@ -284,7 +286,7 @@ const Page = () => {
                 </FormHelperText>
               )}
               <div className='formGroup  px-2'>
-                <ReCAPTCHA sitekey={"6Lc7XpMoAAAAAHMk4iYPe73H2e6nfvMAeBKnhgzz"} type="image" size="normal" ref={captchaRef} onChange={handleRecaptchaChanged} />
+                <ReCAPTCHA sitekey={"6Lc162UpAAAAACCtQ1Nm1civc1xi3fJJwhWtlMwa"} type="image" size="normal" ref={captchaRef} onChange={handleRecaptchaChanged} />
               </div>
 
               <Button

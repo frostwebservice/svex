@@ -77,17 +77,18 @@ export const AuthProvider = (props) => {
       if (localStorage.getItem('time_token')) {
         var token = localStorage.getItem('time_token');
         var tokenObj = JSON.parse(token);
+        console.log("sdf");
         if (new Date().getTime() - tokenObj.time >= tokenObj.expire) {
-          // localStorage.removeItem('email')
+          localStorage.removeItem("email")
 
-          // localStorage.removeItem('time_token')
-          // dispatch({
-          //   type: ActionType.INITIALIZE,
-          //   payload: {
-          //     isAuthenticated: false,
-          //     user: null
-          //   }
-          // });
+          localStorage.removeItem('time_token')
+          dispatch({
+            type: ActionType.INITIALIZE,
+            payload: {
+              isAuthenticated: false,
+              user: null
+            }
+          });
           let obj = {
             time: new Date().getTime(),
             value: "email",
@@ -130,7 +131,7 @@ export const AuthProvider = (props) => {
 
       } else {
         // alert('localStorage has expired');
-        localStorage.removeItem('email')
+        // localStorage.removeItem('email')
 
         dispatch({
           type: ActionType.INITIALIZE,
@@ -203,11 +204,19 @@ export const AuthProvider = (props) => {
   }, [dispatch]);
 
   const signUp = useCallback(async (email, name, password) => {
+
     const { accessToken } = await authApi.signUp({ email, name, password });
     const user = await authApi.me({ accessToken });
 
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(accessToken));
-
+    let obj = {
+      time: new Date().getTime(),
+      value: "email",
+      expire: 3000000,
+    }
+    // You can only store strings
+    let objStr = JSON.stringify(obj);
+    localStorage.setItem("time_token", objStr);
     dispatch({
       type: ActionType.SIGN_UP,
       payload: {
