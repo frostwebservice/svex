@@ -27,116 +27,99 @@ var once = false;
 import { Scrollbar } from '@/components/scrollbar';
 const AccountSecuritySettings = (props) => {
   const dispatch = useDispatch();
-  const { userinfo } = props
-  const [oldpassword, Setoldpassword] = useState("");
-  const [newpassword, Setnewpassword] = useState("");
-  const [confirmpassword, Setconfirmpassword] = useState("");
+  const { userinfo } = props;
+  const [oldpassword, Setoldpassword] = useState('');
+  const [newpassword, Setnewpassword] = useState('');
+  const [confirmpassword, Setconfirmpassword] = useState('');
   const { loginEvents } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const email = JSON.parse(localStorage.getItem('email'));
   const sxColorApp = {
-    backgroundColor: userinfo.tfaapp == 0 ? "error.main" : "primary.main"
-  }
+    backgroundColor: userinfo.tfaapp == 0 ? 'error.main' : 'primary.main'
+  };
   const sxColorSms = {
-    backgroundColor: userinfo.tfasms == 0 ? "error.main" : "primary.main"
-  }
+    backgroundColor: userinfo.tfasms == 0 ? 'error.main' : 'primary.main'
+  };
 
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
-  const [message, SetMessage] = useState("")
+  const [message, SetMessage] = useState('');
   const handleEdit = () => {
     if (isEditing) {
       //save changes
-      if (oldpassword == "" || newpassword == "" || confirmpassword == "") {
-        SetMessage("You should input all fields!")
-        setShowAlert(true)
-        return
+      if (oldpassword == '' || newpassword == '' || confirmpassword == '') {
+        SetMessage('You should input all fields!');
+        setShowAlert(true);
+        return;
       }
       if (newpassword != confirmpassword) {
-        SetMessage("New password and confirm password not match!")
-        setShowAlert(true)
+        SetMessage('New password and confirm password not match!');
+        setShowAlert(true);
 
-        return
+        return;
       }
-      if (/^(?=.*[a-z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(newpassword)) {
-
-      }
-      else {
-        SetMessage("Must contain 8 characters, one uppercase, one lowercase, one number and one special case character")
-        setShowAlert(true)
-        return
+      if (
+        /^(?=.*[a-z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(
+          newpassword
+        )
+      ) {
+      } else {
+        SetMessage(
+          'Must contain 8 characters, one uppercase, one lowercase, one number and one special case character'
+        );
+        setShowAlert(true);
+        return;
       }
       axios
-        .post("/api/reset_account_password", { email, oldpassword, newpassword, confirmpassword })
+        .post('/api/reset_account_password', {
+          email,
+          oldpassword,
+          newpassword,
+          confirmpassword
+        })
         .then((response) => {
-
           if (response.data.status === 200) {
-            SetMessage("Password reset successfuly.")
-            setShowAlert(true)
+            SetMessage('Password reset successfuly.');
+            setShowAlert(true);
+          } else {
+            SetMessage('Old Password Is Wrong!');
+            setShowAlert(true);
           }
-          else {
-            SetMessage("Old Password Is Wrong!")
-            setShowAlert(true)
-          }
-
         });
     }
     setIsEditing((prevState) => !prevState);
-
-  }
+  };
   const handleApp = () => {
-    axios
-      .post("/api/handle_tfa", { email, "kind": "app" })
-      .then((response) => {
-        dispatch(getUserProfile({ email: email }));
-      });
-  }
+    axios.post('/api/handle_tfa', { email, kind: 'app' }).then((response) => {
+      dispatch(getUserProfile({ email: email }));
+    });
+  };
   const handleSms = () => {
-    axios
-      .post("/api/handle_tfa", { email, "kind": "sms" })
-      .then((response) => {
-        dispatch(getUserProfile({ email: email }));
-      });
-  }
+    axios.post('/api/handle_tfa', { email, kind: 'sms' }).then((response) => {
+      dispatch(getUserProfile({ email: email }));
+    });
+  };
   const [histories, setHistory] = useState([]);
   if (!once) {
-    axios
-      .post("/api/login_history", { email })
-      .then((response) => {
-
-        if (response.data.status === 200) {
-          setHistory(response.data.data)
-        }
-
-      });
-    once = true
+    axios.post('/api/login_history', { email }).then((response) => {
+      if (response.data.status === 200) {
+        setHistory(response.data.data);
+      }
+    });
+    once = true;
   }
-
-
 
   return (
     <Stack spacing={4}>
       <Card>
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              xs={12}
-              md={4}
-            >
-              <Typography variant="h6">
-                Change password
-              </Typography>
+          <Grid container spacing={3}>
+            <Grid xs={12} md={4}>
+              <Typography variant="h6">Change password</Typography>
             </Grid>
-            <Grid
-              xs={12}
-              sm={12}
-              md={8}
-            >
+            <Grid xs={12} sm={12} md={8}>
               <Stack
                 alignItems="center"
                 direction="row"
@@ -147,7 +130,10 @@ const AccountSecuritySettings = (props) => {
                   disabled={!isEditing}
                   label="Old Password"
                   value={oldpassword}
-                  onChange={(e) => { setShowAlert(false); Setoldpassword(e.target.value) }}
+                  onChange={(e) => {
+                    setShowAlert(false);
+                    Setoldpassword(e.target.value);
+                  }}
                   type="password"
                   defaultValue=""
                   sx={{
@@ -173,7 +159,10 @@ const AccountSecuritySettings = (props) => {
                 <TextField
                   disabled={!isEditing}
                   value={newpassword}
-                  onChange={(e) => { setShowAlert(false); Setnewpassword(e.target.value) }}
+                  onChange={(e) => {
+                    setShowAlert(false);
+                    Setnewpassword(e.target.value);
+                  }}
                   label="New Password"
                   type="password"
                   defaultValue=""
@@ -187,9 +176,7 @@ const AccountSecuritySettings = (props) => {
                   }}
                 />
 
-                <Button>
-                  {isEditing ? '' : ''}
-                </Button>
+                <Button>{isEditing ? '' : ''}</Button>
               </Stack>
               <Stack
                 alignItems="center"
@@ -199,7 +186,10 @@ const AccountSecuritySettings = (props) => {
               >
                 <TextField
                   disabled={!isEditing}
-                  onChange={(e) => { setShowAlert(false); Setconfirmpassword(e.target.value) }}
+                  onChange={(e) => {
+                    setShowAlert(false);
+                    Setconfirmpassword(e.target.value);
+                  }}
                   label="Confirm New Password"
                   value={confirmpassword}
                   type="password"
@@ -213,9 +203,7 @@ const AccountSecuritySettings = (props) => {
                     })
                   }}
                 />
-                <Button>
-                  {isEditing ? '' : ''}
-                </Button>
+                <Button>{isEditing ? '' : ''}</Button>
               </Stack>
               {showAlert && (
                 <Alert severity="info" onClose={handleCloseAlert}>
@@ -226,7 +214,7 @@ const AccountSecuritySettings = (props) => {
           </Grid>
         </CardContent>
       </Card>
-      <Card>
+      {/* <Card>
         <CardHeader title="Multi Factor Authentication" />
         <CardContent sx={{ pt: 0 }}>
           <Grid
@@ -371,7 +359,7 @@ const AccountSecuritySettings = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-      </Card>
+      </Card> */}
       <Card>
         <CardHeader
           title="Login history"
@@ -381,20 +369,26 @@ const AccountSecuritySettings = (props) => {
           <Table sx={{ minWidth: 500 }}>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  Login type
-                </TableCell>
-                <TableCell>
-                  IP Address
-                </TableCell>
-                <TableCell>
-                  Client
-                </TableCell>
+                <TableCell>Login type</TableCell>
+                <TableCell>IP Address</TableCell>
+                <TableCell>Client</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {histories.map((history) => {
-                const createdAt = ((Number(history.created_at.substring(11, 13)) > 12) ? Number(history.created_at.substring(11, 13)) - 12 : Number(history.created_at.substring(11, 13))) + history.created_at.substring(13, 16) + " " + ((Number(history.created_at.substring(11, 13)) >= 12) ? "PM" : "AM") + " " + history.created_at.substring(0, 10).replace(new RegExp('-', 'g'), '/')
+                const createdAt =
+                  (Number(history.created_at.substring(11, 13)) > 12
+                    ? Number(history.created_at.substring(11, 13)) - 12
+                    : Number(history.created_at.substring(11, 13))) +
+                  history.created_at.substring(13, 16) +
+                  ' ' +
+                  (Number(history.created_at.substring(11, 13)) >= 12
+                    ? 'PM'
+                    : 'AM') +
+                  ' ' +
+                  history.created_at
+                    .substring(0, 10)
+                    .replace(new RegExp('-', 'g'), '/');
 
                 return (
                   <TableRow
@@ -405,18 +399,17 @@ const AccountSecuritySettings = (props) => {
                       <Typography variant="subtitle2">
                         {history.type}
                       </Typography>
-                      <Typography
-                        variant="body2"
-                        color="body2"
-                      >
+                      <Typography variant="body2" color="body2">
                         on {createdAt}
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      {history.ip_address}
+                      {history.ip_address == '::1'
+                        ? 'localhost'
+                        : history.ip_address}
                     </TableCell>
                     <TableCell>
-                      {history.browser_info + "," + history.os_info}
+                      {history.browser_info + ',' + history.os_info}
                     </TableCell>
                   </TableRow>
                 );
@@ -432,8 +425,7 @@ const AccountSecuritySettings = (props) => {
 AccountSecuritySettings.propTypes = {
   loginEvents: PropTypes.array.isRequired
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   userinfo: state.profile.userinfo
 });
 export default connect(mapStateToProps)(AccountSecuritySettings);
-

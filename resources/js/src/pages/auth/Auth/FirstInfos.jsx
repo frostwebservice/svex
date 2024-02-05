@@ -5,11 +5,7 @@ import { isEmptyArray, useFormik } from 'formik';
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
 import { useSearchParams } from '@/hooks/use-search-params';
 import { useNavigate } from 'react-router-dom';
-import {
-  GeoapifyGeocoderAutocomplete,
-  GeoapifyContext
-} from '@geoapify/react-geocoder-autocomplete';
-import '@geoapify/geocoder-autocomplete/styles/minimal.css';
+
 import $ from 'jquery';
 import {
   Box,
@@ -25,15 +21,13 @@ import {
   Typography,
   CircularProgress
 } from '@mui/material';
-import { RouterLink } from '@/components/router-link';
 import { Seo } from '@/components/seo';
 import { paths } from '@/paths';
 import './Form.css';
 import { useDispatch, connect } from 'react-redux';
 
 import { getUserProfile } from '@/actions';
-import { set } from 'nprogress';
-
+import GoogleMaps from './places';
 const Page = (props) => {
   const validationSchema = Yup.object({
     firstname: Yup.string().max(255).required('This Field is required'),
@@ -47,7 +41,6 @@ const Page = (props) => {
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
   const [isLoading, setIsLoading] = useState(false);
-  const [menuclick, Setmenuclick] = useState(false);
   const [letter, setLetter] = useState('Save changes and NEXT');
   const email = JSON.parse(localStorage.getItem('email'));
   const dispatch = useDispatch();
@@ -55,86 +48,31 @@ const Page = (props) => {
     dispatch(getUserProfile({ email: email }));
   }, [dispatch]);
   const navigate = useNavigate();
-  const [templocation, setTemplocation] = useState('');
-  const [focused, SetFocused] = useState(false);
   const [haserror, SetHaserror] = useState(false);
-  const [clickonce, SetClickonce] = useState(false);
   const [renderkey, Setrenderkey] = useState('');
   const [initialValues, setInitialValues] = useState({
     firstname: '',
     lastname: '',
     phonenumber: '',
     companywebsite: '',
-    companylocation: '',
+    companylocation: null,
     companyname: '',
     email: ''
   });
   initialValues.email = email;
-
+  const getLocation = (v) => {
+    if (!v || v == '' || v == null) SetHaserror(true);
+    else {
+      setInitialValues({
+        ...formik.values,
+        companylocation: v.description
+      });
+      SetHaserror(false);
+    }
+  };
   const onCancel = () => {
     navigate(returnTo || paths.auth.auth.signin);
   };
-  function isEmpty(value) {
-    for (let prop in value) {
-      if (value.hasOwnProperty(prop)) return false;
-    }
-    return true;
-  }
-  const onPlaceSelect = (value) => {
-    console.log('select', value);
-    Setmenuclick(true);
-    if (value != null) {
-      setInitialValues({
-        ...formik.values,
-        companylocation: value.properties.formatted
-      });
-      SetHaserror(false);
-    } else {
-      setInitialValues({
-        ...formik.values,
-        companylocation: ''
-      });
-      SetHaserror(true);
-      SetFocused(false);
-    }
-  };
-  $('.geoapify-autocomplete-input').on('focusout', function () {
-    console.log('out1', initialValues.companylocation);
-    console.log('out2', $('.geoapify-autocomplete-input')[0].value);
-
-    if (
-      ($('.geoapify-autocomplete-input')[0].value == '' ||
-        $('.geoapify-autocomplete-input')[0].value == ' ') &&
-      (initialValues.companylocation === '' ||
-        !initialValues.companylocation ||
-        initialValues.companylocation === ' ')
-    ) {
-      setInitialValues({
-        ...formik.values,
-        companylocation: ''
-      });
-      SetHaserror(true);
-      SetFocused(false);
-      Setrenderkey(renderkey + 'a');
-    }
-    Setmenuclick(false);
-  });
-  const onUserInput = (value) => {
-    console.log('input', value);
-    SetFocused(true);
-    SetHaserror(false);
-    SetClickonce(true);
-    if (
-      document.getElementsByClassName('geoapify-autocomplete-input')[0].value ==
-      ''
-    ) {
-      document.getElementsByClassName('geoapify-autocomplete-input')[0].value =
-        ' ';
-    }
-  };
-
-  const onSuggectionChange = (value) => {};
-  const onClose = (value) => {};
 
   const formik = useFormik({
     initialValues,
@@ -142,21 +80,19 @@ const Page = (props) => {
     validationSchema,
     onSubmit: (values) => {
       if (
-        initialValues.companylocation === '' ||
+        initialValues.companylocation == '' ||
         !initialValues.companylocation ||
-        initialValues.companylocation === ' ' ||
-        !menuclick
+        initialValues.companylocation == ' ' ||
+        initialValues.companylocation == null
       ) {
         setInitialValues({
           ...formik.values,
           companylocation: ''
         });
         SetHaserror(true);
-        SetFocused(false);
         Setrenderkey(renderkey + 'a');
         return;
       }
-
       setIsLoading(true);
       setLetter('');
       axios.post('/api/first-Info', values).then((response) => {
@@ -183,18 +119,6 @@ const Page = (props) => {
     }
   });
   useEffect(() => {
-    let input = document.getElementsByClassName(
-      'geoapify-autocomplete-input'
-    )[0];
-    if (clickonce && initialValues.companylocation === '') {
-      input.setAttribute('required', '');
-      SetHaserror(true);
-    }
-
-    if (!initialValues.companylocation && clickonce) SetHaserror(true);
-    else SetHaserror(false);
-    if (focused) SetHaserror(false);
-
     if (!renderedonce && userinfo) {
       setInitialValues({
         ...initialValues,
@@ -206,39 +130,28 @@ const Page = (props) => {
         companyname: userinfo ? userinfo.companyname : ''
       });
       setRenderedonce(true);
-      document.getElementsByClassName('geoapify-autocomplete-input')[0].value =
-        userinfo ? userinfo.companylocation : '';
-      // if (userinfo.companylocation) document.getElementsByClassName('geoapify-autocomplete-input')[0].click();
     }
   });
-  const convertInput = () => {
-    document.getElementsByClassName('geoapify-autocomplete-input')[0].click();
-    document.getElementsByClassName('geoapify-autocomplete-input')[0].focus();
-  };
 
   return (
     <>
       <Seo title="Business Info" />
       <div className="firstinfo-card">
-        <Typography
-          color="primary"
-          variant="h4"
-          sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ mb: 5 }}
         >
-          LOGO
-        </Typography>
+          <img src="/longlogo.png" width={200} height={50} />
+        </Box>
         <Card
           sx={{ borderRadius: 2.5 }}
           className="mainCard card  px-4 pt-4 pb-3"
         >
           <CardContent className="container">
             <form noValidate onSubmit={formik.handleSubmit} className="row">
-              <Typography
-                color="black"
-                className="title largesize mb-1"
-
-                // variant="h4"
-              >
+              <Typography color="black" className="title largesize mb-1">
                 General Business Information
               </Typography>
               <Stack spacing={0} className="col-md-6 col-12">
@@ -356,7 +269,7 @@ const Page = (props) => {
               </Stack>
 
               <Stack spacing={0} className="col-md-6 col-12 ">
-                <div className="p-2" style={{ position: 'relative' }}>
+                {/* <div className="p-2" style={{ position: 'relative' }}>
                   <GeoapifyContext apiKey="1040c1c2e3e34b3b80b351a587232b75">
                     <GeoapifyGeocoderAutocomplete
                       placeholder=" "
@@ -383,6 +296,9 @@ const Page = (props) => {
                       ''
                     )}
                   </GeoapifyContext>
+                </div> */}
+                <div className="p-2 ">
+                  <GoogleMaps getLocation={getLocation} haserror={haserror} />
                 </div>
               </Stack>
 

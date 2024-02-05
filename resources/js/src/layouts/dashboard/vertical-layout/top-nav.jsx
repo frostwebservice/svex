@@ -112,6 +112,7 @@ export const TopNav = (props) => {
           >
             <Button
               // onClick={() => { alert("click") }}
+              className="custom-mailbox"
               component={RouterLink}
               href={paths.dashboard.mail}
               startIcon={(
@@ -123,7 +124,7 @@ export const TopNav = (props) => {
             >
             </Button>
           </Box>
-          <LanguageSwitch />
+          {/* <LanguageSwitch /> */}
           <NotificationsButton />
           {/* <ContactsButton /> */}
           <AccountButton />

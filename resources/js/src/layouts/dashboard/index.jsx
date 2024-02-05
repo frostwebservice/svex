@@ -6,31 +6,65 @@ import { HorizontalLayout } from './horizontal-layout';
 import { VerticalLayout } from './vertical-layout';
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { paths } from '@/paths';
+import { Chip, SvgIcon } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import HomeSmileIcon from '@/icons/untitled-ui/duocolor/home-smile';
+import { tokens } from '@/locales/tokens';
 var newsec = [{ items: [] }];
 const Layout = withAuthGuard((props) => {
+  const { t } = useTranslation();
   const settings = useSettings();
   const sections = useSections();
   const [nsections, setNsections] = useState(sections[0].items);
-  // const [newSec, setNewsec] = useState([]);
   const { userinfo } = props;
+
+  const [once, setOnce] = useState(false);
   const removeAdmin = (value) => {
-    return (
-      value.title != 'Admin Dashboard' &&
-      value.title != 'Influencer Finder Tool'
-    );
-  };
-  const removeFinder = (value) => {
-    return value.title != 'Admin Dashboard';
+    return value.title != 'Admin Panel';
   };
   useEffect(() => {
+    setNsections(sections[0].items);
     if (userinfo.id) {
-      if (userinfo.is_admin != 1 && userinfo.paid != '1') {
+      if (userinfo.is_admin == 1) {
+        let newItem = {
+          title: 'Admin Panel',
+          path: paths.dashboard.admin,
+          icon: (
+            <SvgIcon fontSize="small">
+              <HomeSmileIcon />
+            </SvgIcon>
+          ),
+          items: [
+            {
+              title: t(tokens.nav.admin),
+              path: paths.dashboard.admin
+            },
+            {
+              title: t(tokens.nav.usermanage),
+              path: paths.dashboard.usermanage.index
+            },
+            {
+              title: t(tokens.nav.orderList),
+              path: paths.dashboard.orders.index
+            },
+            {
+              title: t(tokens.nav.invoiceList),
+              path: paths.dashboard.invoices.index
+            },
+            {
+              title: 'Payment Gateway Settings',
+              path: '/dashboard/admin/payment'
+            }
+          ]
+        };
+        setNsections([newItem, ...nsections]);
+        setOnce(true);
+      } else {
         setNsections(nsections.filter(removeAdmin));
-      } else if (userinfo.is_admin != 1 && userinfo.paid == '1') {
-        setNsections(nsections.filter(removeFinder));
       }
     }
-  }, []);
+  }, [userinfo]);
 
   newsec[0]['items'] = nsections;
   if (settings.layout === 'horizontal') {

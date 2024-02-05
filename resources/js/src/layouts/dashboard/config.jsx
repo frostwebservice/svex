@@ -34,37 +34,7 @@ export const useSections = () => {
 
   return useMemo(() => {
     var items = [];
-    items.push({
-      title: 'Admin Panel',
-      path: paths.dashboard.admin,
-      icon: (
-        <SvgIcon fontSize="small">
-          <HomeSmileIcon />
-        </SvgIcon>
-      ),
-      items: [
-        {
-          title: t(tokens.nav.admin),
-          path: paths.dashboard.admin
-        },
-        {
-          title: t(tokens.nav.usermanage),
-          path: paths.dashboard.usermanage.index
-        },
-        {
-          title: t(tokens.nav.orderList),
-          path: paths.dashboard.orders.index
-        },
-        {
-          title: t(tokens.nav.invoiceList),
-          path: paths.dashboard.invoices.index
-        },
-        {
-          title: 'Payment Gateway Settings',
-          path: '/dashboard/admin/payment'
-        }
-      ]
-    });
+
     items.push({
       title: t(tokens.nav.overview),
       path: paths.dashboard.index,

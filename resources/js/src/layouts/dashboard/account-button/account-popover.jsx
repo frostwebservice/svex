@@ -31,8 +31,6 @@ const AccountPopover = (props) => {
   // console.log(useSelector(state => state.profile));
   // const profile_link = `/profile/${useSelector(state => state.profile.userinfo).firstname}-${useSelector(state => state.profile.userinfo).lastname}-${useSelector(state => state.profile.userinfo).id}`
 
-
-
   const handleLogout = useCallback(async () => {
     try {
       onClose?.();
@@ -85,9 +83,13 @@ const AccountPopover = (props) => {
       onClose={onClose}
       open={!!open}
       PaperProps={{ sx: { width: 200 } }}
-      {...other}>
+      {...other}
+    >
       <Box sx={{ pl: 2, pr: 2, pt: 2, pb: 2 }}>
-        <Typography variant="body1" style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
+        <Typography
+          variant="body1"
+          style={{ fontStyle: 'italic', fontWeight: 'bold' }}
+        >
           {userinfo ? userinfo.fullname : ''}
         </Typography>
         {/* <Typography
@@ -104,7 +106,13 @@ const AccountPopover = (props) => {
           // component={RouterLink}
           component="a"
           // href={paths.dashboard.social.profile}
-          href={userinfo ? `/profile/${userinfo.firstname}-${userinfo.lastname}-${userinfo.id}` : ''}
+          href={
+            userinfo
+              ? `/profile/${userinfo.firstname?.toLowerCase()}-${userinfo.lastname?.toLowerCase()}-${
+                  userinfo.id
+                }`
+              : ''
+          }
           onClick={onClose}
           sx={{
             borderRadius: 1,
@@ -118,11 +126,7 @@ const AccountPopover = (props) => {
             </SvgIcon>
           </ListItemIcon>
           <ListItemText
-            primary={(
-              <Typography variant="body1">
-                Profile
-              </Typography>
-            )}
+            primary={<Typography variant="body1">Profile</Typography>}
           />
         </ListItemButton>
         <ListItemButton
@@ -141,11 +145,7 @@ const AccountPopover = (props) => {
             </SvgIcon>
           </ListItemIcon>
           <ListItemText
-            primary={(
-              <Typography variant="body1">
-                Settings
-              </Typography>
-            )}
+            primary={<Typography variant="body1">Settings</Typography>}
           />
         </ListItemButton>
         <ListItemButton
@@ -164,11 +164,7 @@ const AccountPopover = (props) => {
             </SvgIcon>
           </ListItemIcon>
           <ListItemText
-            primary={(
-              <Typography variant="body1">
-                Billing
-              </Typography>
-            )}
+            primary={<Typography variant="body1">Billing</Typography>}
           />
         </ListItemButton>
       </Box>
@@ -180,11 +176,7 @@ const AccountPopover = (props) => {
           justifyContent: 'center'
         }}
       >
-        <Button
-          color="inherit"
-          onClick={handleLogout}
-          size="small"
-        >
+        <Button color="inherit" onClick={handleLogout} size="small">
           Logout
         </Button>
       </Box>
@@ -197,7 +189,7 @@ AccountPopover.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   userinfo: state.profile.userinfo
 });
 

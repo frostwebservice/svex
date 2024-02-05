@@ -10,7 +10,6 @@ const AccountButton = (props) => {
   const { userinfo } = props;
   const user = useMockedUser();
   const popover = usePopover();
-
   return (
     <>
       <Box
@@ -34,7 +33,7 @@ const AccountButton = (props) => {
             width: 32
           }}
           // src={user.avatar}
-          src={userinfo && userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+          src={userinfo && userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo?.fullname}&background=2970FF&color=fff&rounded=true`}
 
         >
           <SvgIcon>

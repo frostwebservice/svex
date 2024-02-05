@@ -73,9 +73,9 @@ export const PopoverContent = (props) => {
                   component={RouterLink}
                   href={
                     '/profile/' +
-                    user.firstname +
+                    user.firstname?.toLowerCase() +
                     '-' +
-                    user.lastname +
+                    user.lastname?.toLowerCase() +
                     '-' +
                     user.id
                   }

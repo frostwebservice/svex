@@ -650,7 +650,7 @@ class UserController extends Controller
 
 		if (!is_null($email_status)) {
 
-			if ($request->from == "success") {
+			if ($request->from == "success"||$request->from=="start") {
 				$password_status = User::where("email", $request->email)->first();
 			} else {
 				$password_status = "passed";

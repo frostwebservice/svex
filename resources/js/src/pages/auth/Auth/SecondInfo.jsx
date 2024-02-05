@@ -1,13 +1,13 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useSearchParams } from '@/hooks/use-search-params';
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
 import { connect, useDispatch } from 'react-redux';
-import { getUserProfile } from "../../../actions";
+import { getUserProfile } from '../../../actions';
 import { useNavigate } from 'react-router-dom';
 import Select from '@mui/material/Select';
-import "./Form.css";
+import './Form.css';
 import {
   Box,
   Button,
@@ -32,7 +32,7 @@ import FormControl from '@mui/material/FormControl';
 import { RouterLink } from '@/components/router-link';
 import { Seo } from '@/components/seo';
 import { paths } from '@/paths';
-import MultiSelectAll from "./MultiSelectAll";
+import MultiSelectAll from './MultiSelectAll';
 import { Alert } from '@mui/material';
 
 const ITEM_HEIGHT = 48;
@@ -41,9 +41,9 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
 const names = [
@@ -51,15 +51,24 @@ const names = [
   { label: 'Alcohol', value: 'Alcohol' },
   { label: 'Art', value: 'Art' },
   { label: 'Baby and Maternity', value: 'Baby and Maternity' },
-  { label: 'Blockchain and Cryptocurrency', value: 'Blockchain and Cryptocurrency' },
+  {
+    label: 'Blockchain and Cryptocurrency',
+    value: 'Blockchain and Cryptocurrency'
+  },
   { label: 'Books and Fiction', value: 'Books and Fiction' },
   { label: 'Business and Career', value: 'Business and Career' },
-  { label: 'Cameras, Photography and Videography', value: 'Cameras, Photography and Videography' },
+  {
+    label: 'Cameras, Photography and Videography',
+    value: 'Cameras, Photography and Videography'
+  },
   { label: 'Cars and Vehicles', value: 'Cars and Vehicles' },
   { label: 'Cooking and Recipes', value: 'Cooking and Recipes' },
   { label: 'Crafts and DIY', value: 'Crafts and DIY' },
   { label: 'Diet and Weight Loss', value: 'Diet and Weight Loss' },
-  { label: 'Digital Marketing and Making Money Online', value: 'Digital Marketing and Making Money Online' },
+  {
+    label: 'Digital Marketing and Making Money Online',
+    value: 'Digital Marketing and Making Money Online'
+  },
   { label: 'Exercise and Fitness', value: 'Exercise and Fitness' },
   { label: 'Farming', value: 'Farming' },
   { label: 'Gardening and Lawn Care', value: 'Gardening and Lawn Care' },
@@ -80,51 +89,37 @@ function getStyles(name, personName, theme) {
     fontWeight:
       personName.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
+        : theme.typography.fontWeightMedium
   };
 }
 const Page = (props) => {
-  const [tmpkey, setTempkey] = useState("1");
+  const [tmpkey, setTempkey] = useState('1');
   const [showAlert, setShowAlert] = useState(false);
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
-  const { userinfo } = props
+  const { userinfo } = props;
   const validationSchema = Yup.object({
-    budget: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
-    companysize: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
-    companyfounded: Yup
-      .string()
-      .max(255)
-      .required('This Field is required'),
-    aboutbusiness: Yup
-      .string()
-      .max(2550)
-      .required('This Field is required'),
-
+    budget: Yup.string().max(255).required('This Field is required'),
+    companysize: Yup.string().max(255).required('This Field is required'),
+    companyfounded: Yup.string().max(255).required('This Field is required'),
+    aboutbusiness: Yup.string().max(2550).required('This Field is required')
   });
   const [renderedonce, setRenderedonce] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserProfile({ email: email }));
-
-  }, [dispatch])
+  }, [dispatch]);
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
 
   const handleChange = (event) => {
     const {
-      target: { value },
+      target: { value }
     } = event;
     setPersonName(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === 'string' ? value.split(',') : value
     );
     // console.log(personName);
   };
@@ -132,7 +127,7 @@ const Page = (props) => {
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
   const [isLoading, setIsLoading] = useState(false);
-  const [letter, setLetter] = useState("Save changes and NEXT");
+  const [letter, setLetter] = useState('Save changes and NEXT');
   const email = JSON.parse(localStorage.getItem('email'));
   const navigate = useNavigate();
 
@@ -141,13 +136,13 @@ const Page = (props) => {
     companysize: '',
     companyfounded: '',
     aboutbusiness: '',
-    email: '',
+    email: ''
   });
   initialValues.email = email;
-  const [initialSelect, setInitialSelect] = useState([])
+  const [initialSelect, setInitialSelect] = useState([]);
   const onCancel = (e) => {
     navigate(returnTo || paths.auth.auth.signin);
-  }
+  };
 
   var nichesArr = [];
   const formik = useFormik({
@@ -155,50 +150,44 @@ const Page = (props) => {
     enableReinitialize: true,
 
     validationSchema,
-    onSubmit: values => {
-
+    onSubmit: (values) => {
       setIsLoading(true);
-      setLetter("");
+      setLetter('');
       values.nichecategory = currentSelection;
       // console.log("custom", initialSelect); return;
-      axios
-        .post("/api/second-Info", values)
-        .then((response) => {
-          if (response.data.status === 200) {
-            setInitialValues({
-              nichecategory: '',
-              budget: '',
-              companysize: '',
-              companyfounded: '',
-              aboutbusiness: '',
-              email: '',
-            })
-            navigate(returnTo || paths.auth.auth.socialHandle)
-            setLetter("Save changes and NEXT")
-            setIsLoading(false)
-          }
+      axios.post('/api/second-Info', values).then((response) => {
+        if (response.data.status === 200) {
+          setInitialValues({
+            nichecategory: '',
+            budget: '',
+            companysize: '',
+            companyfounded: '',
+            aboutbusiness: '',
+            email: ''
+          });
+          navigate(returnTo || paths.auth.auth.socialHandle);
+          setLetter('Save changes and NEXT');
+          setIsLoading(false);
+        }
 
-          if (response.data.status === "failed") {
-            setLetter("Save changes and NEXT")
-            setIsLoading(false);
-            setShowAlert(true)
-
-          }
-        });
+        if (response.data.status === 'failed') {
+          setLetter('Save changes and NEXT');
+          setIsLoading(false);
+          setShowAlert(true);
+        }
+      });
     }
   });
   useEffect(() => {
-
     if (!renderedonce && userinfo) {
-
       if (userinfo) {
         let tmpArr = [];
-        userinfo.niches.map(niche => {
-          tmpArr.push({ value: niche.niche, label: niche.niche })
-        })
-        setInitialSelect(tmpArr)
+        userinfo.niches.map((niche) => {
+          tmpArr.push({ value: niche.niche, label: niche.niche });
+        });
+        setInitialSelect(tmpArr);
         // renderBox()
-        setTempkey(tmpkey + "aa")
+        setTempkey(tmpkey + 'aa');
       }
 
       setInitialValues({
@@ -207,50 +196,48 @@ const Page = (props) => {
         budget: userinfo ? userinfo.budget : '',
         companysize: userinfo ? userinfo.companysize : '',
         companyfounded: userinfo ? userinfo.companyfounded : '',
-        aboutbusiness: userinfo ? userinfo.aboutbusiness : '',
-      })
-      if (userinfo.id != 0)
-        setRenderedonce(true);
-
+        aboutbusiness: userinfo ? userinfo.aboutbusiness : ''
+      });
+      if (userinfo.id != 0) setRenderedonce(true);
     }
-
   });
 
-  const [currentSelection, setCurrentSelection] = useState(
-    []
-  );
+  const [currentSelection, setCurrentSelection] = useState([]);
 
   const handleSelectionChange = (result) => {
-    console.log(result)
+    console.log(result);
     setCurrentSelection(result);
-
   };
   return (
     <>
       <Seo title="Business Info" />
       <div className="firstinfo-card">
-        <Typography color="primary" variant="h4" sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}>
-          LOGO
-        </Typography>
-        <Card sx={{ borderRadius: 2.5 }} className="mainCard card  px-4 pt-4 pb-3" >
-
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ mb: 5 }}
+        >
+          <img src="/longlogo.png" width={200} height={50} />
+        </Box>
+        <Card
+          sx={{ borderRadius: 2.5 }}
+          className="mainCard card  px-4 pt-4 pb-3"
+        >
           <CardContent className="container">
-            <form
-              noValidate
-              onSubmit={formik.handleSubmit}
-              className="row"
-            >
-              <Typography color='black'
+            <form noValidate onSubmit={formik.handleSubmit} className="row">
+              <Typography
+                color="black"
                 className="title largesize mb-1"
-              // variant="h4" 
+                // variant="h4"
               >
                 General Business Information
               </Typography>
               <Stack spacing={0} className="col-md-12 col-12">
-                <div className='p-1 '>
+                <div className="p-1 ">
                   <Grid item xs={12} sx={{ p: 0 }}>
                     <MultiSelectAll
-                      sx={{ maxheight: "700px" }}
+                      sx={{ maxheight: '700px' }}
                       items={names}
                       selectAllLabel="Select All"
                       value={initialSelect}
@@ -267,7 +254,7 @@ const Page = (props) => {
                 </div>
               </Stack>
               <Stack spacing={0} className="col-md-4 col-12">
-                <div className='p-1 '>
+                <div className="p-1 ">
                   <RedditTextField
                     variant="filled"
                     className="title-inter "
@@ -280,28 +267,34 @@ const Page = (props) => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.budget}
-                  /></div>
-
+                  />
+                </div>
               </Stack>
               <Stack spacing={0} className="col-md-4 col-12 ">
-                <div className='p-1 '>
+                <div className="p-1 ">
                   <RedditTextField
                     variant="filled"
                     className="title-inter "
                     style={{ marginTop: 11 }}
-                    error={!!(formik.touched.companysize && formik.errors.companysize)}
-                    helperText={formik.touched.companysize && formik.errors.companysize}
+                    error={
+                      !!(
+                        formik.touched.companysize && formik.errors.companysize
+                      )
+                    }
+                    helperText={
+                      formik.touched.companysize && formik.errors.companysize
+                    }
                     label="Company Size"
                     name="companysize"
                     fullWidth
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.companysize}
-                  /></div>
+                  />
+                </div>
               </Stack>
               <Stack spacing={0} className="col-md-4 col-12 ">
-
-                <div className='p-1  '>
+                <div className="p-1  ">
                   <RedditTextField
                     label="Company founded"
                     className="title-inter"
@@ -309,15 +302,23 @@ const Page = (props) => {
                     variant="filled"
                     fullWidth
                     style={{ marginTop: 11 }}
-                    error={!!(formik.touched.companyfounded && formik.errors.companyfounded)}
-                    helperText={formik.touched.companyfounded && formik.errors.companyfounded}
+                    error={
+                      !!(
+                        formik.touched.companyfounded &&
+                        formik.errors.companyfounded
+                      )
+                    }
+                    helperText={
+                      formik.touched.companyfounded &&
+                      formik.errors.companyfounded
+                    }
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     value={formik.values.companyfounded}
-                  /></div>
-
+                  />
+                </div>
               </Stack>
-              <div className='p-1 px-3  '>
+              <div className="p-1 px-3  ">
                 <RedditTextField
                   label="Bio"
                   className="title-inter "
@@ -326,12 +327,17 @@ const Page = (props) => {
                   multiline
                   inputProps={{
                     style: {
-                      height: "110px",
-                    },
+                      height: '110px'
+                    }
                   }}
                   fullWidth
                   style={{ marginTop: 11 }}
-                  error={!!(formik.touched.aboutbusiness && formik.errors.aboutbusiness)}
+                  error={
+                    !!(
+                      formik.touched.aboutbusiness &&
+                      formik.errors.aboutbusiness
+                    )
+                  }
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   // onClick={onbioClick}
@@ -341,7 +347,6 @@ const Page = (props) => {
               </div>
 
               <div className="row d-flex justify-content-end pt-4 px-1 title-inter ">
-
                 <Button
                   className="text-center m-2 w-25  btn btn-hover-outline mainButton smallsize cancel-button"
                   variant="text"
@@ -350,19 +355,21 @@ const Page = (props) => {
                   Cancel
                 </Button>
 
-
                 <Button
                   className="text-center   mx-8 w-50  mainButton background-blue smallsize firstinfo-button"
                   variant="contained"
-
                   sx={{
-                    width: 200, justifyContent: 'center',
-                    maxWidth: '260px', maxHeight: '48px', minWidth: '100px', minHeight: '48px'
+                    width: 200,
+                    justifyContent: 'center',
+                    maxWidth: '260px',
+                    maxHeight: '48px',
+                    minWidth: '100px',
+                    minHeight: '48px'
                   }}
-                  type="submit">
+                  type="submit"
+                >
                   <span className="ml-2"> {letter} </span>
                   {isLoading ? (
-
                     <CircularProgress color="inherit" size="2rem" />
                   ) : (
                     <span></span>
@@ -372,11 +379,11 @@ const Page = (props) => {
             </form>
           </CardContent>
         </Card>
-      </div >
+      </div>
     </>
   );
 };
 const mapStateToProps = (state) => ({
   userinfo: state.profile.userinfo
-})
+});
 export default connect(mapStateToProps)(Page);

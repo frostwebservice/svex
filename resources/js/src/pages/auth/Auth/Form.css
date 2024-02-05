@@ -1,17 +1,13 @@
 #app {
-  background-image: url("../Assets/SVG/gradient-bg.svg");
+  background-image: url('../Assets/SVG/gradient-bg.svg');
   background-repeat: no-repeat;
   display: flex;
   height: 100%;
 }
 
-
-input[type="password"] {
-
-
+input[type='password'] {
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: square;
-
 }
 
 .containers {
@@ -21,9 +17,11 @@ input[type="password"] {
   font-weight: 600;
   border: solid 1px;
   border-radius: 3%;
-  box-shadow: 7px -8px 11px -5px rgba(#195190FF);
+  box-shadow: 7px -8px 11px -5px rgba(#195190ff);
 }
-
+.skip-container {
+  padding-bottom: 0px !important;
+}
 .Tab {
   display: flex;
   justify-content: space-between;
@@ -31,7 +29,7 @@ input[type="password"] {
 
 .signUp,
 .signIn {
-  background-color: #A2A2A1FF;
+  background-color: #a2a2a1ff;
   width: 50%;
   font-size: 22px;
   color: #201f1f;
@@ -47,7 +45,7 @@ input[type="password"] {
 
 .activeLink {
   color: #fff;
-  background-color: #195190FF;
+  background-color: #195190ff;
 }
 
 .border-radiusImportant {
@@ -69,21 +67,20 @@ input[type="password"] {
       padding-top:100px;
     } */
 .left-img {
-  background-image: url("./images/started.png");
+  background-image: url('./images/started.png');
   /* background-size: cover; */
 
   width: 192px;
   height: 232px;
 }
 
-@media screen and (max-width:923px) {
-
+@media screen and (max-width: 923px) {
   .left-img {
     display: none;
   }
 }
 
-@media screen and (min-width:500px) {
+@media screen and (min-width: 500px) {
   .signup-page {
     width: 444px;
     padding: 0px !important;
@@ -102,17 +99,13 @@ input[type="password"] {
 .signin-page,
 .forgotpassword-page,
 .resetpassword-page {
-
   width: 620px;
   margin: auto;
-
 }
 
 .sendEmail-page {
-
   min-width: 444px;
   margin: auto;
-
 }
 
 .firstInfo-page,
@@ -123,14 +116,12 @@ input[type="password"] {
 }
 
 .trial-page {
-
   margin: auto !important;
 }
 
 .start-page {
   max-width: 879px;
   margin: auto;
-
 }
 
 .start-content {
@@ -152,35 +143,34 @@ a {
 }
 
 .largesize {
-  font-Size: 32px !important;
-  font-Weight: bold !important;
+  font-size: 32px !important;
+  font-weight: bold !important;
 }
 
 .bigsize {
-  font-Size: 32px !important;
-  font-Weight: 600 !important;
+  font-size: 32px !important;
+  font-weight: 600 !important;
 }
 
 .smallsize {
-  font-Size: 15px !important;
-  font-Weight: bold !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
 }
 
 .tinysize {
-  font-Size: 14px !important;
-  font-Weight: 500 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   color: black !important;
 }
 
 .title-inter {
-  font-Family: 'inter' !important;
+  font-family: 'inter' !important;
 }
 
 .smalltitle .MuiCardHeader-title {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-Size: 18px !important;
-  font-Weight: bold !important;
-
+  font-size: 18px !important;
+  font-weight: bold !important;
 }
 
 .skip-btn:hover {
@@ -192,23 +182,22 @@ a {
 }
 
 .transparent {
-  background-color: #FFFFFF00 !important;
+  background-color: #ffffff00 !important;
 }
 
 .transparent-mid {
-  background-color: #FFFFFFee !important;
+  background-color: #ffffffee !important;
 }
 
 .MuiButton-root,
 .mainButton {
   border-radius: 12px !important;
   height: 42px !important;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 .background-blue {
-  background-color: #2970FF !important;
-
+  background-color: #2970ff !important;
 }
 
 .multiselect-ok {
@@ -224,10 +213,9 @@ a {
   font-weight: bold;
   background-color: white;
   border: 1px solid lightblue;
-  color: #6366F1;
+  color: #6366f1;
   /* position: absolute;
   bottom: 20px; */
-
 }
 
 .trial-button:hover {
@@ -247,11 +235,11 @@ a {
 }
 
 .mainCard {
-  box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.03), 0 10px 10px 0 rgba(0, 0, 0, 0.03) !important;
+  box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.03),
+    0 10px 10px 0 rgba(0, 0, 0, 0.03) !important;
   border: 0px;
   margin: 0 auto;
   /* width: -webkit-fill-available; */
-
 }
 
 .trial-panel {
@@ -261,7 +249,6 @@ a {
 .later-btn {
   border: 1px solid blue;
   height: 48px !important;
-
 }
 
 .later-btn:hover {
@@ -269,7 +256,7 @@ a {
 }
 
 .success-img {
-  background-image: url("./images/successful.png");
+  background-image: url('./images/successful.png');
   width: 238px;
   height: 238px;
   margin: 0 auto;
@@ -281,18 +268,17 @@ a {
   font-size: 15px !important;
 }
 
-@media screen and (min-width:520px) {
+@media screen and (min-width: 520px) {
   .resend-button {
     width: 396px !important;
     margin: 0 auto;
   }
 }
 
-@media screen and (min-width:800px) {
-
+@media screen and (min-width: 800px) {
   .firstinfo-card {
     width: 693px !important;
-    margin: 0 auto
+    margin: 0 auto;
   }
 
   .trial-page {
@@ -301,8 +287,7 @@ a {
   }
 }
 
-@media screen and (min-width:536px) {
-
+@media screen and (min-width: 536px) {
   .firstinfo-button {
     width: 229px !important;
     height: 48px !important;
@@ -332,8 +317,7 @@ a {
   height: 48px !important;
 }
 
-@media screen and (max-width:548px) {
-
+@media screen and (max-width: 548px) {
   .mainButton {
     width: 100% !important;
   }
@@ -354,7 +338,7 @@ a {
 .geoapify-autocomplete-input {
   width: auto !important;
   height: 59.13px;
-  border: 3px solid #FaFaFa;
+  border: 3px solid #fafafa;
   border-radius: 7px;
   font-size: 14px;
   font-weight: 500;
@@ -369,7 +353,6 @@ a {
 .geoapify-autocomplete-input:required:invalid {
   border-color: red;
   border-width: 5px;
-
 }
 
 .location-bar {
@@ -423,7 +406,6 @@ a {
   border: 0;
   vertical-align: top;
   width: 100%;
-
 }
 
 .hidden-input {

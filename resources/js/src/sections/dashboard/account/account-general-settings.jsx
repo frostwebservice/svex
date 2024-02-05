@@ -284,7 +284,7 @@ const AccountGeneralSettings = (props) => {
                       <Avatar
                         key={key}
 
-                        src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.companyname}&background=2970FF&color=fff&rounded=true`}
+                        src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.fullname}&background=2970FF&color=fff&rounded=true`}
                         sx={{
                           height: 100,
                           width: 100
