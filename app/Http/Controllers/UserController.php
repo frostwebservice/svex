@@ -234,6 +234,7 @@ class UserController extends Controller
 	{
 		$email = $request->email;
 		$user = User::where("email", $email)->first();
+
 		$niches = User::where("email", $email)->first()->niches;
 		if(!$user->pay_date){
 			$paid = "0";

@@ -10,7 +10,7 @@ export const SplashScreen = () => (
       flexDirection: 'column',
       height: '100vh',
       justifyContent: 'center',
-      left: 0,
+      left: -150,
       p: 3,
       position: 'fixed',
       top: 0,
@@ -21,11 +21,11 @@ export const SplashScreen = () => (
     <Box
       sx={{
         display: 'inline-flex',
-        height: 48,
-        width: 48
+        height: 40,
+        width: 100
       }}
     >
-      <Logo />
+      <img src="/longlogo.png" />
     </Box>
   </Box>
 );

@@ -68,15 +68,16 @@ const AccountBillingSettings = (props) => {
   const [currentPlan, setCurrentPlan] = useState(
     userinfo.paid == '1' ? 'standard' : 'startup'
   );
+
   const [invoices, setInvoices] = useState([]);
   useEffect(() => {
     axios.post('/api/get_invoices', {}).then((response) => {
       setInvoices(response.data);
     });
-  }, []);
+  }, [userinfo]);
   const [isEdit, setIsEdit] = useState(false);
   const [billing, setBilling] = useState(billinginfo);
-  const [paytype, setPaytype] = useState('paypal');
+  const [paytype, setPaytype] = useState('stripe');
   const payNow = () => {
     $('#submit')[0].click();
   };
@@ -101,10 +102,13 @@ const AccountBillingSettings = (props) => {
   };
   const dispatch = useDispatch();
   const email = JSON.parse(localStorage.getItem('email'));
-
+  const cancelPay = () => {
+    setSelectedPlan('startup');
+  };
   useEffect(() => {
-    // dispatch(getBillingInfo({ email }));
-  }, [dispatch]);
+    setCurrentPlan(userinfo.paid == '1' ? 'standard' : 'startup');
+    setSelectedPlan(userinfo.paid == '1' ? 'standard' : 'startup');
+  }, [userinfo]);
   return (
     <Stack spacing={4} {...props}>
       <Card>
@@ -123,7 +127,7 @@ const AccountBillingSettings = (props) => {
                 return (
                   <Grid key={plan.id} xs={12} sm={4}>
                     <Card
-                      // onClick={() => setSelectedPlan(plan.id)}
+                      onClick={() => setSelectedPlan(plan.id)}
                       sx={{
                         cursor: 'pointer',
                         ...(isSelected && {
@@ -189,230 +193,59 @@ const AccountBillingSettings = (props) => {
             </Grid>
           </div>
           <Divider sx={{ my: 3 }} />
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              justifyContent: 'space-between'
-            }}
-          >
-            <Typography variant="h6">Billing details</Typography>
-
-            {/* <Button
-              color="inherit"
-              onClick={() => handleEdit(isEdit)}
-              startIcon={
-                <SvgIcon>{isEdit ? <PlusIcon /> : <Edit02Icon />}</SvgIcon>
-              }
-            >
-              {isEdit ? 'Save' : 'Edit'}
-            </Button> */}
-          </Box>
-          <TextField
-            sx={{ my: 2 }}
-            id="outlined-select-currency"
-            select
-            label="Select"
-            defaultValue="paypal"
-            onChange={(e) => handlePaytype(e.target.value)}
-            helperText="Please select your payment method."
-          >
-            <MenuItem value="paypal">Paypal</MenuItem>
-            <MenuItem value="stripe">Stripe</MenuItem>
-          </TextField>
-          {paytype == 'paypal' ? <PaypalForm /> : <></>}
-          {paytype == 'stripe' ? <OrderSummary /> : <></>}
-
-          {/* {isEdit ? (
-            <Box
-              sx={{
-                border: 1,
-                borderColor: 'divider',
-                borderRadius: 1,
-                mt: 3
-              }}
-            >
-              <Stack
-                alignItems="center"
-                direction="row"
-                spacing={2}
-                sx={{ m: 2 }}
-              >
-                <TextField
-                  value={billing.billing_name ? billing.billing_name : ''}
-                  onChange={(e) => {
-                    tmpBilling.billing_name = e.target.value;
-                    setBilling({
-                      ...billing,
-                      billing_name: e.target.value
-                    });
-                  }}
-                  label="Billing name"
-                  placeholder="Your Billing Name"
-                  // disabled={!editlast}
-                  sx={{
-                    flexGrow: 1,
-                    ...(!isEdit && {
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderStyle: 'dotted'
-                      }
-                    })
-                  }}
-                />
-              </Stack>
-              <Stack
-                alignItems="center"
-                direction="row"
-                sx={{ m: 2 }}
-                spacing={2}
-              >
-                <TextField
-                  value={billing.card_number ? billing.card_number : ''}
-                  onChange={(e) => {
-                    setBilling({
-                      ...billing,
-                      card_number: e.target.value
-                    });
-                  }}
-                  label="Card number"
-                  placeholder="Your Card Number"
-                  // disabled={!editlast}
-                  sx={{
-                    flexGrow: 1,
-                    ...(!isEdit && {
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderStyle: 'dotted'
-                      }
-                    })
-                  }}
-                />
-              </Stack>
-              <Stack
-                alignItems="center"
-                direction="row"
-                sx={{ m: 2 }}
-                spacing={2}
-              >
-                <TextField
-                  value={billing.country ? billing.country : ''}
-                  onChange={(e) => {
-                    setBilling({
-                      ...billing,
-                      country: e.target.value
-                    });
-                  }}
-                  label="Country"
-                  placeholder="Your Country"
-                  // disabled={!editlast}
-                  sx={{
-                    flexGrow: 1,
-                    ...(!isEdit && {
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderStyle: 'dotted'
-                      }
-                    })
-                  }}
-                />
-              </Stack>
-              <Stack
-                alignItems="center"
-                direction="row"
-                sx={{ m: 2 }}
-                spacing={2}
-              >
-                <TextField
-                  value={billing.zip_code ? billing.zip_code : ''}
-                  onChange={(e) => {
-                    setBilling({
-                      ...billing,
-                      zip_code: e.target.value
-                    });
-                  }}
-                  label="Zip / Postal code"
-                  placeholder="Your Zip / Postal code"
-                  // disabled={!editlast}
-                  sx={{
-                    flexGrow: 1,
-                    ...(!isEdit && {
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderStyle: 'dotted'
-                      }
-                    })
-                  }}
-                />
-              </Stack>
-            </Box>
+          {selectedPlan == 'startup' ? (
+            <></>
           ) : (
-            <Box
-              sx={{
-                border: 1,
-                borderColor: 'divider',
-                borderRadius: 1,
-                mt: 3
-              }}
-            >
-              <PropertyList>
-                <PropertyListItem
-                  align="horizontal"
-                  divider
-                  label="Billing name"
-                  value={
-                    billinginfo.billing_name
-                      ? billinginfo.billing_name
-                      : 'No billing name'
-                  }
-                />
-                <PropertyListItem
-                  align="horizontal"
-                  divider
-                  label="Card number"
-                  value={
-                    billinginfo.card_number
-                      ? billinginfo.card_number
-                      : 'No Card number'
-                  }
-                />
-                <PropertyListItem
-                  align="horizontal"
-                  divider
-                  label="Country"
-                  value={
-                    billinginfo.country
-                      ? billinginfo.country
-                      : 'No country name'
-                  }
-                />
-                <PropertyListItem
-                  align="horizontal"
-                  label="Zip / Postal code"
-                  value={
-                    billinginfo.zip_code
-                      ? billinginfo.zip_code
-                      : 'No zip/postal code'
-                  }
-                />
-              </PropertyList>
-            </Box>
-          )} */}
+            <>
+              <Box
+                sx={{
+                  alignItems: 'center',
+                  display: 'flex',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography variant="h6">Billing details</Typography>
+              </Box>
+              <TextField
+                sx={{ my: 2 }}
+                id="outlined-select-currency"
+                select
+                label="Select"
+                defaultValue="stripe"
+                onChange={(e) => handlePaytype(e.target.value)}
+                helperText="Please select your payment method."
+              >
+                <MenuItem value="stripe">Stripe</MenuItem>
+                <MenuItem value="paypal">Paypal</MenuItem>
+              </TextField>
+              {paytype == 'paypal' ? <PaypalForm /> : <></>}
+              {paytype == 'stripe' ? <OrderSummary /> : <></>}
 
-          <Typography color="text.secondary" variant="body2" sx={{ mt: 3 }}>
-            We cannot refund once you purchased a subscription, but you can
-            always
-            <Link href="#" sx={{ ml: '4px' }} underline="none" variant="body2">
-              Cancel
-            </Link>
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              mt: 3
-            }}
-          >
-            <Button variant="contained" onClick={payNow}>
-              Upgrade Plan
-            </Button>
-          </Box>
+              <Typography color="text.secondary" variant="body2" sx={{ mt: 3 }}>
+                We cannot refund once you purchased a subscription, but you can
+                always
+                <Link
+                  sx={{ ml: '4px' }}
+                  underline="none"
+                  variant="body2"
+                  onClick={cancelPay}
+                >
+                  Cancel
+                </Link>
+              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  mt: 3
+                }}
+              >
+                <Button variant="contained" onClick={payNow}>
+                  Upgrade Plan
+                </Button>
+              </Box>
+            </>
+          )}
         </CardContent>
       </Card>
       <Card>
@@ -435,22 +268,23 @@ const AccountBillingSettings = (props) => {
                 'dd MMM yyyy'
               );
               const amount = numeral(invoice.totalAmount).format('$0,0.00');
-
-              return (
-                <TableRow key={invoice.id}>
-                  <TableCell>{createdAt}</TableCell>
-                  <TableCell>{amount}</TableCell>
-                  <TableCell align="right">
-                    <Link
-                      color="inherit"
-                      component={RouterLink}
-                      href={'/dashboard/invoices/' + invoice.id}
-                    >
-                      View Invoice
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              );
+              if (invoice.email == JSON.parse(localStorage.getItem('email'))) {
+                return (
+                  <TableRow key={invoice.id}>
+                    <TableCell>{createdAt}</TableCell>
+                    <TableCell>{amount}</TableCell>
+                    <TableCell align="right">
+                      <Link
+                        color="inherit"
+                        component={RouterLink}
+                        href={'/dashboard/invoices/' + invoice.id}
+                      >
+                        View Invoice
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
             })}
           </TableBody>
         </Table>
