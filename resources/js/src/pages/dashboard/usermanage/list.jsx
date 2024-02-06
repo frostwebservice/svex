@@ -159,7 +159,6 @@ const Page = () => {
       $('.export')[0].click();
     }, '1000');
   };
-  console.log(csv);
   return (
     <>
       <Seo title="Dashboard: Customer List" />

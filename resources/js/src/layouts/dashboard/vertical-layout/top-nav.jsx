@@ -1,6 +1,13 @@
 import PropTypes from 'prop-types';
 import Menu01Icon from '@untitled-ui/icons-react/build/esm/Menu01';
-import { Box, IconButton, Stack, SvgIcon, useMediaQuery, Button } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Stack,
+  SvgIcon,
+  useMediaQuery,
+  Button
+} from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import AccountButton from '../account-button';
 import { ContactsButton } from '../contacts-button';
@@ -12,9 +19,9 @@ import Settings03Icon from '@untitled-ui/icons-react/build/esm/Settings03';
 import { getUserProfile } from '@/actions';
 const TOP_NAV_HEIGHT = 64;
 const SIDE_NAV_WIDTH = 280;
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import "../top.css"
+import '../top.css';
 import { RouterLink } from '@/components/router-link';
 import { paths } from '@/paths';
 
@@ -26,15 +33,14 @@ export const TopNav = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserProfile({ email }));
-
-
-  }, [dispatch])
+  }, [dispatch]);
   return (
     <Box
       component="header"
       sx={{
         backdropFilter: 'blur(6px)',
-        backgroundColor: (theme) => alpha(theme.palette.background.default, 0.8),
+        backgroundColor: (theme) =>
+          alpha(theme.palette.background.default, 0.8),
         position: 'sticky',
         left: {
           lg: `${SIDE_NAV_WIDTH}px`
@@ -45,7 +51,8 @@ export const TopNav = (props) => {
         },
         zIndex: (theme) => theme.zIndex.appBar
       }}
-      {...other}>
+      {...other}
+    >
       <Stack
         alignItems="center"
         direction="row"
@@ -56,12 +63,7 @@ export const TopNav = (props) => {
           px: 2
         }}
       >
-        <Stack
-          alignItems="center"
-          direction="row"
-          spacing={2}
-          sx={{ ml: 8 }}
-        >
+        <Stack alignItems="center" direction="row" spacing={2} sx={{ ml: 8 }}>
           {!lgUp && (
             <IconButton onClick={onMobileNavOpen}>
               <SvgIcon>
@@ -71,14 +73,8 @@ export const TopNav = (props) => {
           )}
           <SearchButton />
         </Stack>
-        <Stack
-          alignItems="center"
-          direction="row"
-          spacing={2}
-        >
-          <Tooltip title="Settings"
-            className="small-show"
-          >
+        <Stack alignItems="center" direction="row" spacing={2}>
+          <Tooltip title="Settings" className="small-show">
             <Box
               sx={{
                 backgroundColor: 'background.paper',
@@ -98,8 +94,10 @@ export const TopNav = (props) => {
                   color: 'primary.contrastText',
                   p: '4px'
                 }}
-                className='custom-setting'
-                onClick={() => { document.getElementsByClassName('realtooltip')[0].click() }}
+                className="custom-setting"
+                onClick={() => {
+                  document.getElementsByClassName('realtooltip')[0].click();
+                }}
               >
                 <SvgIcon>
                   <Settings03Icon />
@@ -107,22 +105,22 @@ export const TopNav = (props) => {
               </ButtonBase>
             </Box>
           </Tooltip>
-          <Box
-
-          >
+          <Box>
             <Button
               // onClick={() => { alert("click") }}
               className="custom-mailbox"
               component={RouterLink}
               href={paths.dashboard.mail}
-              startIcon={(
+              startIcon={
                 <>
-                  <img src="/assets/icons/mail.png" />
+                  <img
+                    src="/assets/icons/mail-empty.png"
+                    width={40}
+                    height={30}
+                  />
                 </>
-              )}
-
-            >
-            </Button>
+              }
+            ></Button>
           </Box>
           {/* <LanguageSwitch /> */}
           <NotificationsButton />

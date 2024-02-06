@@ -154,7 +154,6 @@ const Page = (props) => {
       setIsLoading(true);
       setLetter('');
       values.nichecategory = currentSelection;
-      // console.log("custom", initialSelect); return;
       axios.post('/api/second-Info', values).then((response) => {
         if (response.data.status === 200) {
           setInitialValues({
@@ -205,7 +204,6 @@ const Page = (props) => {
   const [currentSelection, setCurrentSelection] = useState([]);
 
   const handleSelectionChange = (result) => {
-    console.log(result);
     setCurrentSelection(result);
   };
   return (

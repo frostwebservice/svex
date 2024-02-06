@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import Camera01Icon from '@untitled-ui/icons-react/build/esm/Camera01';
 import User01Icon from '@untitled-ui/icons-react/build/esm/User01';
-import { useCallback, useState, useRef, useEffect, useReducer } from "react";
-import { connect, useDispatch } from 'react-redux'
-import TimezoneSelect from 'react-timezone-select'
+import { useCallback, useState, useRef, useEffect, useReducer } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import TimezoneSelect from 'react-timezone-select';
 import { useTheme } from '@mui/material/styles';
 
 import {
@@ -23,45 +23,44 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import "./account.css";
+import './account.css';
 import { useDialog } from '@/hooks/use-dialog';
 import { FileUploader } from '@/sections/dashboard/file-manager/file-uploader';
 import { useAuth } from '@/hooks/use-auth';
 import { getBrandProfile, getUserProfile } from '@/actions';
 import { useNavigate } from 'react-router-dom';
 
-import $ from 'jquery'
-var tmpFirst = "";
-var tmpLast = "";
-var tmpEmail = "";
-var tmpTimezone = "";
+import $ from 'jquery';
+var tmpFirst = '';
+var tmpLast = '';
+var tmpEmail = '';
+var tmpTimezone = '';
 var once = false;
 var coloronce = false;
 
 const AccountGeneralSettings = (props) => {
   const theme = useTheme();
-  const [_, forceUpdate] = useReducer(x => x + 1, 0);
-  const navigate = useNavigate()
+  const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const uploadDialog = useDialog();
   const auth = useAuth();
   const { avatar, userinfo } = props;
 
-  const [email, setEmail] = useState("");
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
-  const [selectedTimezone, setSelectedTimezone] = useState(userinfo.timezone ? userinfo.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone)
-  const [disableTimezone, setDisableTimezone] = useState(true)
+  const [email, setEmail] = useState('');
+  const [first, setFirst] = useState('');
+  const [last, setLast] = useState('');
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    userinfo.timezone
+      ? userinfo.timezone
+      : Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+  const [disableTimezone, setDisableTimezone] = useState(true);
   const [editemail, setEditemail] = useState(false);
   const [editfirst, setEditfirst] = useState(false);
   const [editlast, setEditlast] = useState(false);
   const [edittimezone, setEdittimezone] = useState(false);
-  const [timezonekey, setTimezonekey] = useState("")
-
-
-
-
-
+  const [timezonekey, setTimezonekey] = useState('');
 
   // setInterval(() => {
   //   if (theme.palette.mode == "dark") {
@@ -108,52 +107,47 @@ const AccountGeneralSettings = (props) => {
   const handleemail = useCallback((status) => {
     setEditemail((prevState) => !prevState);
     if (!status) return;
-
   }, []);
   const handlefirst = useCallback((status) => {
     setEditfirst((prevState) => !prevState);
     if (!status) return;
-
-
   }, []);
   const handlelast = useCallback((status) => {
     setEditlast((prevState) => !prevState);
     if (!status) return;
-
-
   }, []);
   const handletimezone = useCallback((status) => {
     setEdittimezone((prevState) => !prevState);
-    if (!status) setDisableTimezone(false)
-    else setDisableTimezone(true)
-
+    if (!status) setDisableTimezone(false);
+    else setDisableTimezone(true);
   }, []);
-  $(document).on("click", ".css-b62m3t-container", function (e) {
-    e.preventDefault()
-  })
+  $(document).on('click', '.css-b62m3t-container', function (e) {
+    e.preventDefault();
+  });
   const avatarUpload = () => {
-    uploadDialog.handleOpen()
-  }
-  const [key, setKey] = useState("")
+    uploadDialog.handleOpen();
+  };
+  const [key, setKey] = useState('');
   const onUpgrade = () => {
-    dispatch(getUserProfile({ email: JSON.parse(localStorage.getItem('email')) }));
+    dispatch(
+      getUserProfile({ email: JSON.parse(localStorage.getItem('email')) })
+    );
 
-    setKey(key + "a")
-  }
+    setKey(key + 'a');
+  };
   useEffect(() => {
-    if (first == "") {
+    if (first == '') {
       setEmail(tmpEmail);
       setFirst(tmpFirst);
       setLast(tmpLast);
-      setSelectedTimezone(tmpTimezone)
+      setSelectedTimezone(tmpTimezone);
     }
-    if (theme.palette.mode == "dark") {
-      $('.css-16xfy0z-control').addClass("custom-timezone");
-      $('.css-13cymwt-control').addClass("custom-timezone");
-    }
-    else {
-      $('.css-16xfy0z-control').removeClass("custom-timezone");
-      $('.css-13cymwt-control').removeClass("custom-timezone");
+    if (theme.palette.mode == 'dark') {
+      $('.css-16xfy0z-control').addClass('custom-timezone');
+      $('.css-13cymwt-control').addClass('custom-timezone');
+    } else {
+      $('.css-16xfy0z-control').removeClass('custom-timezone');
+      $('.css-13cymwt-control').removeClass('custom-timezone');
     }
   });
   const renderColor = () => {
@@ -167,7 +161,7 @@ const AccountGeneralSettings = (props) => {
     // }
     // setTimezonekey("a")
     forceUpdate();
-  }
+  };
   const saveChange = () => {
     let value = {
       user_email: JSON.parse(localStorage.getItem('email')),
@@ -175,56 +169,40 @@ const AccountGeneralSettings = (props) => {
       firstname: first,
       lastname: last,
       timezone: selectedTimezone
-    }
+    };
 
-    axios.post('/api/update_generalinfo', value)
-      .then(response => {
-        if (response.data.status == "failed") {
-          alert("Email is already exist! Please input another email address.")
-        }
-        else {
-          if (response.data.message == "changed") {
-            dispatch(getUserProfile({ email: JSON.parse(localStorage.getItem('email')) }))
+    axios
+      .post('/api/update_generalinfo', value)
+      .then((response) => {
+        if (response.data.status == 'failed') {
+          alert('Email is already exist! Please input another email address.');
+        } else {
+          if (response.data.message == 'changed') {
+            dispatch(
+              getUserProfile({
+                email: JSON.parse(localStorage.getItem('email'))
+              })
+            );
             auth.signOut();
-            navigate("/auth/auth/SignIn")
-
+            navigate('/auth/auth/SignIn');
           }
         }
-        console.log(response.data.message)
-
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error getting Notify Settings', error);
-      })
-  }
+      });
+  };
   return (
-    <Stack
-      spacing={4}
-      {...props}>
+    <Stack spacing={4} {...props}>
       <Card>
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              xs={12}
-              md={4}
-            >
-              <Typography variant="h6">
-                Personal Information
-              </Typography>
+          <Grid container spacing={3}>
+            <Grid xs={12} md={4}>
+              <Typography variant="h6">Personal Information</Typography>
             </Grid>
-            <Grid
-              xs={12}
-              md={8}
-            >
+            <Grid xs={12} md={8}>
               <Stack spacing={3}>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
+                <Stack alignItems="center" direction="row" spacing={2}>
                   <Box
                     sx={{
                       borderColor: 'neutral.300',
@@ -245,7 +223,8 @@ const AccountGeneralSettings = (props) => {
                       <Box
                         sx={{
                           alignItems: 'center',
-                          backgroundColor: (theme) => alpha(theme.palette.neutral[700], 0.5),
+                          backgroundColor: (theme) =>
+                            alpha(theme.palette.neutral[700], 0.5),
                           borderRadius: '50%',
                           color: 'common.white',
                           cursor: 'pointer',
@@ -283,8 +262,11 @@ const AccountGeneralSettings = (props) => {
                       </Box>
                       <Avatar
                         key={key}
-
-                        src={userinfo.avatar ? userinfo.avatar : `https://ui-avatars.com/api/?name=${userinfo.fullname}&background=2970FF&color=fff&rounded=true`}
+                        src={
+                          userinfo.avatar
+                            ? userinfo.avatar
+                            : `https://ui-avatars.com/api/?name=${userinfo.fullname}&background=2970FF&color=fff&rounded=true`
+                        }
                         sx={{
                           height: 100,
                           width: 100
@@ -296,25 +278,20 @@ const AccountGeneralSettings = (props) => {
                       </Avatar>
                     </Box>
                   </Box>
-                  <Button
-                    onClick={avatarUpload}
-                    color="inherit"
-                    size="small"
-                  >
+                  <Button onClick={avatarUpload} color="inherit" size="small">
                     Change
                   </Button>
                 </Stack>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
+                <Stack alignItems="center" direction="row" spacing={2}>
                   <TextField
                     value={first}
                     disabled={!editfirst}
-                    placeholder='Your First Name'
+                    placeholder="Your First Name"
                     label="First Name"
-                    onChange={(e) => { tmpFirst = e.target.value; setFirst(e.target.value); }}
+                    onChange={(e) => {
+                      tmpFirst = e.target.value;
+                      setFirst(e.target.value);
+                    }}
                     sx={{
                       flexGrow: 1,
                       ...(!editfirst && {
@@ -329,19 +306,18 @@ const AccountGeneralSettings = (props) => {
                     size="small"
                     onClick={() => handlefirst(editfirst)}
                   >
-                    {editfirst ? "Done" : "Edit"}
+                    {editfirst ? 'Done' : 'Edit'}
                   </Button>
                 </Stack>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
+                <Stack alignItems="center" direction="row" spacing={2}>
                   <TextField
                     value={last}
-                    onChange={(e) => { setLast(e.target.value); tmpLast = e.target.value }}
+                    onChange={(e) => {
+                      setLast(e.target.value);
+                      tmpLast = e.target.value;
+                    }}
                     label="Last Name"
-                    placeholder='Your Last Name'
+                    placeholder="Your Last Name"
                     disabled={!editlast}
                     sx={{
                       flexGrow: 1,
@@ -356,23 +332,20 @@ const AccountGeneralSettings = (props) => {
                     color="inherit"
                     size="small"
                     onClick={() => handlelast(editlast)}
-
                   >
-                    {editlast ? "Done" : "Edit"}
-
+                    {editlast ? 'Done' : 'Edit'}
                   </Button>
                 </Stack>
 
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={2}
-                >
+                <Stack alignItems="center" direction="row" spacing={2}>
                   <TextField
                     value={email}
                     disabled={!editemail}
-                    onChange={(e) => { setEmail(e.target.value); tmpEmail = e.target.value }}
-                    placeholder='Your Email Address'
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      tmpEmail = e.target.value;
+                    }}
+                    placeholder="Your Email Address"
                     label="Email Address"
                     required
                     sx={{
@@ -389,25 +362,25 @@ const AccountGeneralSettings = (props) => {
                     size="small"
                     onClick={() => handleemail(editemail)}
                   >
-                    {editemail ? "Done" : "Edit"}
-
+                    {editemail ? 'Done' : 'Edit'}
                   </Button>
                 </Stack>
                 <Stack
                   key={timezonekey}
                   alignItems="center"
                   direction="row"
-
                   className="custom-parent"
                   spacing={2}
                 >
                   <TimezoneSelect
                     label="Sdf"
                     labelStyle="altName"
-
-                    displayValue='UTC'
+                    displayValue="UTC"
                     value={selectedTimezone}
-                    onChange={(e) => { console.log(e); setSelectedTimezone(e.value); tmpTimezone = e.value; }}
+                    onChange={(e) => {
+                      setSelectedTimezone(e.value);
+                      tmpTimezone = e.value;
+                    }}
                     sx={{
                       flexGrow: 1,
                       ...(!edittimezone && {
@@ -417,26 +390,25 @@ const AccountGeneralSettings = (props) => {
                       })
                     }}
                     isDisabled={disableTimezone}
-
                   />
-                  <Typography className='timezone-label'
+                  <Typography
+                    className="timezone-label"
                     sx={{
                       fontSize: 11,
-                      color: (theme) => theme.palette.mode == "dark" ? '#6C737F' : '#6C737F'
+                      color: (theme) =>
+                        theme.palette.mode == 'dark' ? '#6C737F' : '#6C737F'
                     }}
-                  >Timezone</Typography>
+                  >
+                    Timezone
+                  </Typography>
                   <Button
                     color="inherit"
                     size="small"
                     onClick={() => handletimezone(edittimezone)}
                   >
-                    {edittimezone ? "Done" : "Edit"}
-
+                    {edittimezone ? 'Done' : 'Edit'}
                   </Button>
                 </Stack>
-
-
-
               </Stack>
             </Grid>
           </Grid>
@@ -446,7 +418,7 @@ const AccountGeneralSettings = (props) => {
         alignItems="right"
         direction="row"
         className="save-btn-container"
-      // spacing={2}
+        // spacing={2}
       >
         <Button
           size="small"
@@ -455,21 +427,18 @@ const AccountGeneralSettings = (props) => {
           variant="contained"
           className="title-inter smallsize save-btn"
           sx={{ py: 1, fontSize: 18, px: 5 }}
-
           onClick={saveChange}
         >
           <span className="ml-2"> Save Changes </span>
-
         </Button>
       </Stack>
       <FileUploader
         onClose={uploadDialog.handleClose}
         open={uploadDialog.open}
         onUpgrade={onUpgrade}
-      // kind={kind}
+        // kind={kind}
       />
     </Stack>
-
   );
 };
 
@@ -478,7 +447,7 @@ AccountGeneralSettings.propTypes = {
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   userinfo: state.profile.userinfo
 });
 

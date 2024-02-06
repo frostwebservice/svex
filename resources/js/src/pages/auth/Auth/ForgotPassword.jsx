@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
-import { Component, useState } from "react";
+import { Component, useState } from 'react';
 
 import { useFormik } from 'formik';
-import "./Form.css";
+import './Form.css';
 import { useSearchParams } from '@/hooks/use-search-params';
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
 
@@ -29,8 +29,7 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-  email: Yup
-    .string()
+  email: Yup.string()
     .email('Must be a valid email')
     .max(255)
     .required('Email is required')
@@ -39,37 +38,36 @@ const validationSchema = Yup.object({
 const Page = () => {
   const searchParams = useSearchParams();
   const returnTo = searchParams.get('returnTo');
-  const [start, setStart] = useState("Send Reset Link");
+  const [start, setStart] = useState('Send Reset Link');
   const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: values => {
-      localStorage.setItem("email", JSON.stringify(values.email));
-      setIsLoading(true)
-      setStart("")
+    onSubmit: (values) => {
+      localStorage.setItem('email', JSON.stringify(values.email));
+      setIsLoading(true);
+      setStart('');
 
       try {
-        axios.post('/api/send-reset', values)
-          .then((response) => {
-            console.log(response);
-          });
-        console.log('Send Reset sent');
+        axios.post('/api/send-reset', values).then((response) => {});
       } catch (error) {
         console.error('Error sending reset', error);
       }
 
-      setIsLoading(false)
-      setStart("Send Reset Link")
+      setIsLoading(false);
+      setStart('Send Reset Link');
     }
   });
-
 
   return (
     <>
       <Seo title="Forgot Password" />
       <div className="signup-page">
-        <Typography color="primary" variant="h4" sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}>
+        <Typography
+          color="primary"
+          variant="h4"
+          sx={{ pb: 1, fontWeight: 'bold', textAlign: 'center' }}
+        >
           LOGO
         </Typography>
         <Box sx={{ mb: 4 }}>
@@ -86,25 +84,22 @@ const Page = () => {
             <SvgIcon sx={{ mr: 1 }}>
               <ArrowLeftIcon />
             </SvgIcon>
-            <Typography variant="subtitle2">
-
-              SignIn
-
-            </Typography>
+            <Typography variant="subtitle2">SignIn</Typography>
           </Link>
         </Box>
 
-        <Card elevation={16} sx={{ borderRadius: 2.5 }} className="card  px-4 pt-4 pb-3">
+        <Card
+          elevation={16}
+          sx={{ borderRadius: 2.5 }}
+          className="card  px-4 pt-4 pb-3"
+        >
           <CardHeader
             sx={{ pb: 0 }}
             title="Forgot password"
             className="title  smalltitle signup-form-title"
           />
-          <CardContent className='signup-form'>
-            <form
-              noValidate
-              onSubmit={formik.handleSubmit}
-            >
+          <CardContent className="signup-form">
+            <form noValidate onSubmit={formik.handleSubmit}>
               <RedditTextField
                 className="title-inter mt-4"
                 autoFocus
@@ -129,7 +124,6 @@ const Page = () => {
               >
                 Send reset link
                 {isLoading ? (
-
                   <CircularProgress color="inherit" size="1.4rem" />
                 ) : (
                   <span></span>

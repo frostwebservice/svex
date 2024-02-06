@@ -105,11 +105,11 @@ export const useSections = () => {
         {
           title: t(tokens.nav.manage),
           path: paths.dashboard.jobs.index
-        },
-        {
-          title: t(tokens.nav.history),
-          path: paths.dashboard.jobs.companies.details
         }
+        // {
+        //   title: t(tokens.nav.history),
+        //   path: paths.dashboard.jobs.companies.details
+        // }
       ]
     });
     return [

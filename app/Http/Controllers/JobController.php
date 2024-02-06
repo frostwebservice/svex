@@ -154,6 +154,10 @@ class JobController extends Controller
         )
         ->get()
         ->toArray();
+        foreach($res as $key=>$value){
+            $cnt = DB::table('applicants')->where("job_id",$value->id)->where("invited",0)->count();
+            $res[$key]->cnt = $cnt;
+        }
         print_r(json_encode($res));
     }
 

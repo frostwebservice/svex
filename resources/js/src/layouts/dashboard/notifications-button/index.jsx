@@ -6,14 +6,20 @@ import { notifications as initialNotifications } from './notifications';
 import { NotificationsPopover } from './notifications-popover';
 
 const useNotifications = () => {
-  const [notifications, setNotifications] = useState(initialNotifications);
+  // const [notifications, setNotifications] = useState(initialNotifications);
+  const [notifications, setNotifications] = useState([]);
   const unread = useMemo(() => {
-    return notifications.reduce((acc, notification) => acc + (notification.read ? 0 : 1), 0);
+    return notifications.reduce(
+      (acc, notification) => acc + (notification.read ? 0 : 1),
+      0
+    );
   }, [notifications]);
 
   const handleRemoveOne = useCallback((notificationId) => {
     setNotifications((prevState) => {
-      return prevState.filter((notification) => notification.id !== notificationId);
+      return prevState.filter(
+        (notification) => notification.id !== notificationId
+      );
     });
   }, []);
 
@@ -36,19 +42,14 @@ const useNotifications = () => {
 
 export const NotificationsButton = () => {
   const popover = usePopover();
-  const { handleRemoveOne, handleMarkAllAsRead, notifications, unread } = useNotifications();
+  const { handleRemoveOne, handleMarkAllAsRead, notifications, unread } =
+    useNotifications();
 
   return (
-    <div className='small-show'>
+    <div className="small-show">
       <Tooltip title="Notifications">
-        <IconButton
-          ref={popover.anchorRef}
-          onClick={popover.handleOpen}
-        >
-          <Badge
-            color="error"
-            badgeContent={unread}
-          >
+        <IconButton ref={popover.anchorRef} onClick={popover.handleOpen}>
+          <Badge color="error" badgeContent={unread}>
             <SvgIcon>
               <Bell01Icon />
             </SvgIcon>

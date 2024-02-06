@@ -26,9 +26,9 @@ import { getUserProfile } from '@/actions';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 const JobCard = (props) => {
   const { job, active, openBar, userinfo, invite = false, ...other } = props;
+
   const dispatch = useDispatch();
   const email = JSON.parse(localStorage.getItem('email'));
-  console.log(userinfo);
   const handleChange = (job) => {
     axios
       .post('/api/update_jobactivity', {
@@ -199,11 +199,15 @@ const JobCard = (props) => {
                 '-' +
                 userinfo?.id
               }
-              src={job.avatar}
+              src={
+                job.avatar
+                  ? job.avatar
+                  : `https://ui-avatars.com/api/?name=${userinfo.fullname}&background=2970FF&color=fff&rounded=true`
+              }
               target="_target"
               variant="circle"
             >
-              {getInitials(job.firstname)}
+              {/* {getInitials(job.firstname)} */}
             </Avatar>
             <div>
               <Link
@@ -295,7 +299,7 @@ const JobCard = (props) => {
         </Stack>
         <Box sx={{ mt: 2 }}>
           <Card variant="outlined" {...other}>
-            <Stack divider={<Divider />}>
+            <Stack>
               <Stack
                 alignItems="flex-start"
                 direction="row"
@@ -303,17 +307,21 @@ const JobCard = (props) => {
                 justifyContent="space-between"
                 sx={{
                   px: 2,
-                  py: 1.5
+                  pt: 3
                 }}
               >
                 {/* <div className='top'> */}
-                <Typography variant="subtitle1" sx={{ fontSize: 16 }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontSize: 16, fontWeight: 600 }}
+                >
                   Job Title: {job.title}
                 </Typography>
                 <Stack
                   alignItems="center"
                   direction="row"
                   spacing={2}
+                  sx={{ mt: 1 }}
                   // className='right-panel'
                 >
                   <Typography
@@ -335,13 +343,13 @@ const JobCard = (props) => {
 
                 {/* </div> */}
               </Stack>
-              <Typography variant="inherit" sx={{ fontSize: 14, px: 2 }}>
+              <Typography variant="inherit" sx={{ fontSize: 14, px: 2, pb: 3 }}>
                 Job Brief: {job.brief}
               </Typography>
             </Stack>
           </Card>
           <Card sx={{ mt: 1 }} variant="outlined" {...other}>
-            <Stack divider={<Divider />}>
+            <Stack>
               <Stack
                 alignItems="center"
                 direction="row"
@@ -349,14 +357,19 @@ const JobCard = (props) => {
                 justifyContent="space-between"
                 sx={{
                   px: 2,
-                  py: 1.5
+                  pt: 2.5
                 }}
               >
                 <div>
-                  <Typography color="text.secondary" variant="caption">
+                  <Typography
+                    color="text.secondary"
+                    sx={{ lineHeight: 3 }}
+                    variant="caption"
+                  >
                     Niche • {job.niche}
                   </Typography>
                   <Typography
+                    sx={{ lineHeight: 3 }}
                     color="text.secondary"
                     variant="caption"
                     style={{ marginLeft: 40 }}
@@ -366,6 +379,7 @@ const JobCard = (props) => {
                   {renderSocial(job)}
                   <Typography
                     color="text.secondary"
+                    sx={{ lineHeight: 3 }}
                     style={{ marginLeft: 40 }}
                     variant="caption"
                   >
@@ -373,6 +387,7 @@ const JobCard = (props) => {
                   </Typography>
                   <Typography
                     color="text.secondary"
+                    sx={{ lineHeight: 3 }}
                     style={{ marginLeft: 40 }}
                     variant="caption"
                   >
@@ -382,6 +397,7 @@ const JobCard = (props) => {
                       : 'Content Creation & Shoutouts'}
                   </Typography>
                   <Typography
+                    sx={{ lineHeight: 3 }}
                     color="text.secondary"
                     style={{ marginLeft: 40 }}
                     variant="caption"
@@ -398,19 +414,21 @@ const JobCard = (props) => {
                 }}
                 sx={{
                   px: 2,
-                  py: 1.5
+                  py: 2.5
                 }}
               >
                 <Stack alignItems="center" direction="row" spacing={3}>
                   <Stack>
-                    <div style={{ fontWeight: 700, fontSize: 14 }}>25+</div>
+                    <div style={{ fontWeight: 600, fontSize: 14 }}>
+                      {job.cnt}
+                    </div>
                     <Typography color="text.secondary" variant="caption">
                       Number of Applicants
                     </Typography>
                   </Stack>
 
                   <Stack sx={{ ml: 5 }}>
-                    <div style={{ fontWeight: 700, fontSize: 14 }}>
+                    <div style={{ fontWeight: 600, fontSize: 14 }}>
                       Actively Hiring
                     </div>
                     <Typography color="text.secondary" variant="caption">

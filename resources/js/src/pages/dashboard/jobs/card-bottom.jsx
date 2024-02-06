@@ -92,8 +92,8 @@ export const CardBottom = (props) => {
           justifyContent="space-between"
           flexWrap="wrap"
           sx={{
-            px: 2,
-            py: 1.5
+            px: 1,
+            py: 1
           }}
         >
           <Stack
@@ -102,8 +102,7 @@ export const CardBottom = (props) => {
             justifyContent="space-between"
             flexWrap="wrap"
             sx={{
-              px: 2,
-              py: 1.5
+              px: 2
             }}
           >
             <Stack
@@ -120,7 +119,7 @@ export const CardBottom = (props) => {
                 color="text.primary"
                 noWrap
                 // variant="overline"
-                sx={{ fontSize: 14, fontWeight: 700 }}
+                sx={{ fontSize: 14, fontWeight: 600 }}
               >
                 {followers}
               </Typography>
@@ -147,7 +146,7 @@ export const CardBottom = (props) => {
                 color="text.primary"
                 noWrap
                 // variant="overline"
-                sx={{ fontSize: 14, fontWeight: 700 }}
+                sx={{ fontSize: 14, fontWeight: 600 }}
               >
                 {engagement}
               </Typography>
@@ -174,7 +173,7 @@ export const CardBottom = (props) => {
                 color="text.primary"
                 noWrap
                 // variant="overline"
-                sx={{ fontSize: 14, fontWeight: 700 }}
+                sx={{ fontSize: 14, fontWeight: 600 }}
               >
                 Categories
               </Typography>
@@ -202,7 +201,7 @@ export const CardBottom = (props) => {
                   color="text.primary"
                   noWrap
                   variant="overline"
-                  sx={{ fontSize: 14, fontWeight: 700 }}
+                  sx={{ fontSize: 14, fontWeight: 600 }}
                 >
                   {[
                     new Date(createdAt).getMonth() + 1,
@@ -352,7 +351,7 @@ export const CardBottom = (props) => {
                     variant="subtitle2"
                     sx={{
                       fontSize: 18,
-                      fontWeight: 700,
+                      fontWeight: 600,
                       paddingLeft: '20px',
                       py: 3
                     }}

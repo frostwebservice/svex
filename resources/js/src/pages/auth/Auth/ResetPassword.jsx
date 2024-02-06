@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import RedditTextField from '../../../frontendpage/TextfieldStyle';
 
-import "./Form.css";
+import './Form.css';
 import ArrowLeftIcon from '@untitled-ui/icons-react/build/esm/ArrowLeft';
 import {
   Box,
@@ -29,13 +29,11 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-  password: Yup
-    .string()
+  password: Yup.string()
     .min(7, 'Must be at least 7 characters')
     .max(255)
     .required('Required'),
-  passwordConfirm: Yup
-    .string()
+  passwordConfirm: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
     .required('Required')
 });
@@ -46,21 +44,16 @@ const Page = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
+      axios.post('/api/user-reset', values).then((response) => {
+        if (response.data.status === 200 && response.data.success) {
+          navigate('/auth/auth/SignIn');
+        }
 
-      axios
-        .post("/api/user-reset", values)
-        .then((response) => {
-          console.log(response);
-          if (response.data.status === 200 && response.data.success) {
-            navigate('/auth/auth/SignIn')
-
-          }
-
-          if (response.data.status === "failed") {
-            alert(response.data.message);
-          }
-        });
+        if (response.data.status === 'failed') {
+          alert(response.data.message);
+        }
+      });
     }
   });
 
@@ -82,24 +75,21 @@ const Page = () => {
             <SvgIcon sx={{ mr: 1 }}>
               <ArrowLeftIcon />
             </SvgIcon>
-            <Typography variant="subtitle2">
-              Dashboard
-            </Typography>
+            <Typography variant="subtitle2">Dashboard</Typography>
           </Link>
         </Box>
-        <Card elevation={16} sx={{ borderRadius: 5 }} className="card  px-4 pt-4 pb-3">
+        <Card
+          elevation={16}
+          sx={{ borderRadius: 5 }}
+          className="card  px-4 pt-4 pb-3"
+        >
           <CardHeader
             sx={{ pb: 0 }}
             title="Reset Password"
             className="title  smalltitle signup-form-title"
           />
-          <CardContent
-            className='signup-form'
-          >
-            <form
-              noValidate
-              onSubmit={formik.handleSubmit}
-            >
+          <CardContent className="signup-form">
+            <form noValidate onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
                 <RedditTextField
                   className="title-inter mt-4"
@@ -119,9 +109,17 @@ const Page = () => {
                   className="title-inter mt-4"
                   variant="filled"
                   style={{ marginTop: 11 }}
-                  error={!!(formik.touched.passwordConfirm && formik.errors.passwordConfirm)}
+                  error={
+                    !!(
+                      formik.touched.passwordConfirm &&
+                      formik.errors.passwordConfirm
+                    )
+                  }
                   fullWidth
-                  helperText={formik.touched.passwordConfirm && formik.errors.passwordConfirm}
+                  helperText={
+                    formik.touched.passwordConfirm &&
+                    formik.errors.passwordConfirm
+                  }
                   label="Password (Confirm)"
                   name="passwordConfirm"
                   onBlur={formik.handleBlur}

@@ -35,7 +35,6 @@ export default function EmailVerify(props) {
       axios
         .post('/api/resend-email', values)
         .then((response) => {
-          console.log(response);
           setShowAlert(true);
         })
         .catch((e) => {

@@ -7,7 +7,6 @@ import {
   Container,
   Card,
   Stack,
-
   TextField,
   Typography,
   Unstable_Grid2 as Grid
@@ -15,8 +14,8 @@ import {
 import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import { useSettings } from '@/hooks/use-settings';
-import "./inf_finder.css"
-import { useCallback, useState, useEffect } from 'react'
+import './inf_finder.css';
+import { useCallback, useState, useEffect } from 'react';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YoutubeIcon from '@mui/icons-material/Youtube';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -29,12 +28,13 @@ import YoutubeSearch from '@/sections/dashboard/academy/youtube-search';
 import TwitterSearch from '@/sections/dashboard/academy/twitter-search';
 import PinterestSearch from '@/sections/dashboard/academy/pinterest-search';
 import LinkedinSearch from '@/sections/dashboard/academy/linkedin-search';
-import { connect, useDispatch } from 'react-redux'
+import { connect, useDispatch } from 'react-redux';
+import Pagination from '@mui/material/Pagination';
+import usePagination from '@/utils/pagination';
 const now = new Date();
 
-const TiktokIcon = ({ color = "#000000" }) => {
+const TiktokIcon = ({ color = '#000000' }) => {
   return (
-
     <svg
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
@@ -49,31 +49,31 @@ const TiktokIcon = ({ color = "#000000" }) => {
 
 const Page = (props) => {
   const { results, runTab } = props;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const settings = useSettings();
   const [sortOptions, setSortOptions] = useState([]);
-  const [selectedSort, setSelectedSort] = useState("");
-  const [infcounter, setInfcounter] = useState(0)
-  const [infs, setInfs] = useState([])
-  const [changedFlag,setchangedFlag]=useState(true)
-  useEffect(()=>{
-    if (sortOptions[0]){
-      setSelectedSort(sortOptions[0].value)
+  const [selectedSort, setSelectedSort] = useState('');
+  const [infcounter, setInfcounter] = useState(0);
+  const [infs, setInfs] = useState([]);
+  const [changedFlag, setchangedFlag] = useState(true);
+  useEffect(() => {
+    if (sortOptions[0]) {
+      setSelectedSort(sortOptions[0].value);
     }
-  },[sortOptions])
-  useEffect(()=>{
-    if(results.searchresults&&results.searchresults.result.length){
-      let result = results.searchresults
-      setInfs(arrange(result.result,selectedSort))
+  }, [sortOptions]);
+  useEffect(() => {
+    if (results.searchresults && results.searchresults.result.length) {
+      let result = results.searchresults;
+      setInfs(arrange(result.result, selectedSort));
     }
-    let nextFlag = !changedFlag
-    setchangedFlag(nextFlag)
-  },[selectedSort])
+    let nextFlag = !changedFlag;
+    setchangedFlag(nextFlag);
+  }, [selectedSort]);
+
   useEffect(() => {
     if (results.searchresults) {
-      let result = results.searchresults
-      if (result.tab == "instagram") {
-       
+      let result = results.searchresults;
+      if (result.tab == 'instagram') {
         setSortOptions([
           {
             label: 'Follower Count(High to Low)',
@@ -91,14 +91,12 @@ const Page = (props) => {
             label: 'Avg Comments(High to Low)',
             value: 'avgcomments_order'
           }
-
-        ])
-        if (sortOptions[0]){
-          setSelectedSort(sortOptions[0].value)
-          setInfs(arrange(result.result,sortOptions[0].value))
+        ]);
+        if (sortOptions[0]) {
+          setSelectedSort(sortOptions[0].value);
+          setInfs(arrange(result.result, sortOptions[0].value));
         }
-      }
-      else if (result.tab == "tiktok") {
+      } else if (result.tab == 'tiktok') {
         setSortOptions([
           {
             label: 'Follower Count(High to Low)',
@@ -120,13 +118,11 @@ const Page = (props) => {
             label: 'Avg Comments(High to Low)',
             value: 'avgcomments_order'
           }
-
-        ])
+        ]);
         if (sortOptions[0])
-          setInfs(arrange(result.result,sortOptions[0].value))
-          setSelectedSort(sortOptions[0].value)
-      }
-      else if (result.tab == "youtube") {
+          setInfs(arrange(result.result, sortOptions[0].value));
+        setSelectedSort(sortOptions[0].value);
+      } else if (result.tab == 'youtube') {
         setSortOptions([
           {
             label: 'Follower Count(High to Low)',
@@ -148,13 +144,11 @@ const Page = (props) => {
             label: 'Avg Comments(High to Low)',
             value: 'avgcomments_order'
           }
-
-        ])
+        ]);
         if (sortOptions[0])
-          setInfs(arrange(result.result,sortOptions[0].value))
-          setSelectedSort(sortOptions[0].value)
-      }
-      else if (result.tab == "twitter") {
+          setInfs(arrange(result.result, sortOptions[0].value));
+        setSelectedSort(sortOptions[0].value);
+      } else if (result.tab == 'twitter') {
         setSortOptions([
           {
             label: 'Follower Count(High to Low)',
@@ -176,13 +170,11 @@ const Page = (props) => {
             label: 'Avg Comments(High to Low)',
             value: 'avgcomments_order'
           }
-
-        ])
+        ]);
         if (sortOptions[0])
-          setInfs(arrange(result.result,sortOptions[0].value))
-          setSelectedSort(sortOptions[0].value)
-      }
-      else if (result.tab == "pinterest") {
+          setInfs(arrange(result.result, sortOptions[0].value));
+        setSelectedSort(sortOptions[0].value);
+      } else if (result.tab == 'pinterest') {
         setSortOptions([
           {
             label: 'Follower Count(High to Low)',
@@ -204,13 +196,11 @@ const Page = (props) => {
             label: 'Avg Comments(High to Low)',
             value: 'avgcomments_order'
           }
-
-        ])
+        ]);
         if (sortOptions[0])
-          setInfs(arrange(result.result,sortOptions[0].value))
-          setSelectedSort(sortOptions[0].value)
-      }
-      else if (result.tab == "linkedin") {
+          setInfs(arrange(result.result, sortOptions[0].value));
+        setSelectedSort(sortOptions[0].value);
+      } else if (result.tab == 'linkedin') {
         setSortOptions([
           {
             label: 'Follower Count(High to Low)',
@@ -236,31 +226,27 @@ const Page = (props) => {
             label: 'Avg Comments(High to Low)',
             value: 'avgcomments_order'
           }
-
-        ])
+        ]);
         if (sortOptions[0])
-          setInfs(arrange(result.result,sortOptions[0].value))
-          setSelectedSort(sortOptions[0].value)
+          setInfs(arrange(result.result, sortOptions[0].value));
+        setSelectedSort(sortOptions[0].value);
       }
-      setInfcounter(result.result.length)
-   
+      setInfcounter(result.result.length);
     }
-
-  }, [dispatch, results])
-  const arrange = (array,option)=>{
-    // return array
-    if(option=="") return array;
-    if(option=="follower_order")
-      return [...array].sort( (a,b) => b.follower_count - a.follower_count );
-    else if(option=="engagement_order")
-      return [...array].sort( (a,b) => b.engagement_rate - a.engagement_rate );
-    else if(option=="avglikes_order")
-      return [...array].sort( (a,b) => b.avg_like - a.avg_like );
-    else if(option=="avgcomments_order")
-      return [...array].sort( (a,b) => b.avg_comment - a.avg_comment );
-    else if(option=="connections_order")
-      return [...array].sort( (a,b) => b.connections - a.connections );
-  }
+  }, [dispatch, results]);
+  const arrange = (array, option) => {
+    if (option == '') return array;
+    if (option == 'follower_order')
+      return [...array].sort((a, b) => b.follower_count - a.follower_count);
+    else if (option == 'engagement_order')
+      return [...array].sort((a, b) => b.engagement_rate - a.engagement_rate);
+    else if (option == 'avglikes_order')
+      return [...array].sort((a, b) => b.avg_like - a.avg_like);
+    else if (option == 'avgcomments_order')
+      return [...array].sort((a, b) => b.avg_comment - a.avg_comment);
+    else if (option == 'connections_order')
+      return [...array].sort((a, b) => b.connections - a.connections);
+  };
   usePageView();
 
   const handleTabsChange = useCallback((event, value) => {
@@ -268,50 +254,88 @@ const Page = (props) => {
   }, []);
 
   const handleSortChange = (value) => {
-    setSelectedSort(value)
-  }
+    setSelectedSort(value);
+  };
   const tabs = [
-    { label: "Instagram", value: "instagram" },
-    { label: "Tiktok", value: "tiktok" },
-    { label: "Youtube", value: "youtube" },
-    { label: "Twitter", value: "twitter" },
-    { label: "Pinterest", value: "pinterest" },
-    { label: "Linkedin", value: "linkedin" },
-  ]
-  const [currentTab, setCurrentTab] = useState("instagram");
+    { label: 'Instagram', value: 'instagram' },
+    { label: 'Tiktok', value: 'tiktok' },
+    { label: 'Youtube', value: 'youtube' },
+    { label: 'Twitter', value: 'twitter' },
+    { label: 'Pinterest', value: 'pinterest' },
+    { label: 'Linkedin', value: 'linkedin' }
+  ];
+  const [currentTab, setCurrentTab] = useState('instagram');
   const renderLabel = (type) => {
-    if (type == "Instagram") return (<><InstagramIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Youtube") return (<><YoutubeIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Tiktok") return (<><TiktokIcon color={currentTab == "tiktok" ? "#2970FF" : "grey"} style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Twitter") return (<><TwitterIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Pinterest") return (<><PinterestIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-    if (type == "Linkedin") return (<><LinkedinIcon style={{ display: "inline-block" }} /> <span>{type}</span></>);
-
-
-  }
+    if (type == 'Instagram')
+      return (
+        <>
+          <InstagramIcon style={{ display: 'inline-block' }} />{' '}
+          <span>{type}</span>
+        </>
+      );
+    if (type == 'Youtube')
+      return (
+        <>
+          <YoutubeIcon style={{ display: 'inline-block' }} />{' '}
+          <span>{type}</span>
+        </>
+      );
+    if (type == 'Tiktok')
+      return (
+        <>
+          <TiktokIcon
+            color={currentTab == 'tiktok' ? '#2970FF' : 'grey'}
+            style={{ display: 'inline-block' }}
+          />{' '}
+          <span>{type}</span>
+        </>
+      );
+    if (type == 'Twitter')
+      return (
+        <>
+          <TwitterIcon style={{ display: 'inline-block' }} />{' '}
+          <span>{type}</span>
+        </>
+      );
+    if (type == 'Pinterest')
+      return (
+        <>
+          <PinterestIcon style={{ display: 'inline-block' }} />{' '}
+          <span>{type}</span>
+        </>
+      );
+    if (type == 'Linkedin')
+      return (
+        <>
+          <LinkedinIcon style={{ display: 'inline-block' }} />{' '}
+          <span>{type}</span>
+        </>
+      );
+  };
   useEffect(() => {
     if (runTab) {
       if (runTab.runsavestate) {
-        if (runTab.runsavestate.tab != "") {
-          setCurrentTab(runTab.runsavestate.tab)
+        if (runTab.runsavestate.tab != '') {
+          setCurrentTab(runTab.runsavestate.tab);
         }
       }
-
     }
+  }, [runTab]);
 
-  }, [runTab])
+  const [page, setPage] = useState(1);
+  const PER_PAGE = 10;
 
+  const count = Math.ceil(infs.length / PER_PAGE);
+  const _DATA = usePagination(infs, PER_PAGE);
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
 
   return (
     <>
       <Seo title="Dashboard: Influencer Finder Tool" />
-      <Box
-        component="main"
-        sx={{ flexGrow: 1 }}
-        style={{
-        }}
-      >
-
+      <Box component="main" sx={{ flexGrow: 1 }} style={{}}>
         <Box
           sx={{
             backgroundColor: 'primary.darkest',
@@ -320,13 +344,11 @@ const Page = (props) => {
             marginBottom: '90px'
           }}
         >
-
-
           <Container
             maxWidth={settings.stretch ? false : 'xl'}
             style={{
               position: 'inherit',
-              bottom: "-76px"
+              bottom: '-76px'
             }}
           >
             <Typography
@@ -341,7 +363,8 @@ const Page = (props) => {
               sx={{ mt: 1, mb: 6 }}
               style={{ fontSize: 18, textAlign: 'center' }}
             >
-              Easily search and filter for influencers that fit your brand’s needs.
+              Easily search and filter for influencers that fit your brand’s
+              needs.
             </Typography>
             <Card>
               <Tabs
@@ -357,7 +380,7 @@ const Page = (props) => {
               >
                 {tabs.map((tab) => (
                   <Tab
-                    className='custom-tab'
+                    className="custom-tab"
                     sx={{ fontSize: 18 }}
                     key={tab.value}
                     label={renderLabel(tab.label)}
@@ -366,40 +389,23 @@ const Page = (props) => {
                 ))}
               </Tabs>
               <Box>
-                {currentTab == 'instagram' && (
-                  <InstagramSearch />
-                )}
-                {currentTab == 'youtube' && (
-                  <YoutubeSearch />
-                )}
-                {currentTab == 'tiktok' && (
-                  <TiktokSearch />
-                )}
-                {currentTab == 'twitter' && (
-                  <TwitterSearch />
-                )}
-                {currentTab == 'pinterest' && (
-                  <PinterestSearch />
-                )}
-                {currentTab == 'linkedin' && (
-                  <LinkedinSearch />
-                )}
+                {currentTab == 'instagram' && <InstagramSearch />}
+                {currentTab == 'youtube' && <YoutubeSearch />}
+                {currentTab == 'tiktok' && <TiktokSearch />}
+                {currentTab == 'twitter' && <TwitterSearch />}
+                {currentTab == 'pinterest' && <PinterestSearch />}
+                {currentTab == 'linkedin' && <LinkedinSearch />}
               </Box>
-
-
             </Card>
-
-
           </Container>
         </Box>
-        <Container maxWidth={settings.stretch ? false : 'xl'} >
-
+        <Container maxWidth={settings.stretch ? false : 'xl'}>
           <Stack
             alignItems="center"
             direction="row"
             flexWrap="wrap"
             spacing={3}
-            sx={{ px: 3,pt:5 }}
+            sx={{ px: 3, pt: 5 }}
           >
             <Box
               component="form"
@@ -414,13 +420,23 @@ const Page = (props) => {
                 {infcounter} Influencers found
               </Typography>
             </Box>
-            <Box sx={{
-              display: 'flex'
-            }}>
-              <span style={{
-                fontWeight: 500, whiteSpace: 'normal', marginRight: 15, display: 'flex'
-                , alignItems: 'center', mr: 5
-              }}>Sort by</span>
+            <Box
+              sx={{
+                display: 'flex'
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: 500,
+                  whiteSpace: 'normal',
+                  marginRight: 15,
+                  display: 'flex',
+                  alignItems: 'center',
+                  mr: 5
+                }}
+              >
+                Sort by
+              </span>
               <TextField
                 sx={{ minWidth: '200px' }}
                 label="Sort By"
@@ -429,13 +445,10 @@ const Page = (props) => {
                 value={selectedSort}
                 select
                 SelectProps={{ native: true }}
-              // value={`${sortBy}|${sortDir}`}
+                // value={`${sortBy}|${sortDir}`}
               >
                 {sortOptions.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
+                  <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
@@ -443,24 +456,31 @@ const Page = (props) => {
             </Box>
           </Stack>
           <Box key={changedFlag} sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
-
-            {infs.map((inf) => (
-              <InfCard
-                key={inf.id}
-                influencer={inf}
-                currentTab={currentTab}
-              />
-            ))}
-
+            {_DATA.currentData().map((data) => {
+              return (
+                <InfCard
+                  key={data.id}
+                  influencer={data}
+                  currentTab={currentTab}
+                />
+              );
+            })}
           </Box>
+          <Pagination
+            count={count}
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
         </Container>
       </Box>
     </>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   results: state.searchresult,
   runTab: state.runsavestate
-})
-export default connect(mapStateToProps)(Page);  
+});
+export default connect(mapStateToProps)(Page);

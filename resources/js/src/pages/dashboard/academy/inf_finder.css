@@ -1,113 +1,115 @@
 .MuiInputLabel-root {
-    font-size: 11px !important;
+  font-size: 11px !important;
 }
 
 .MuiTabs-scroller {
-    border-bottom: 1px solid #F2F4F7;
+  border-bottom: 1px solid #f2f4f7;
 }
 
 .custom-tab {
-    display: block;
-    min-width: 150px;
+  display: block;
+  min-width: 150px;
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1350px) {
-    .res-btn {
-        font-size: 0.8em
-    }
+  .res-btn {
+    font-size: 0.8em;
+  }
 }
 
-
+.MuiPagination-ul {
+  justify-content: center;
+  margin-bottom: 30px;
+}
 @media screen and (min-width: 600px) and (max-width: 1070px) {
-    .custom-grid1 {
-        width: 50%
-    }
+  .custom-grid1 {
+    width: 50%;
+  }
 
-    .hidden-grid {
-        display: none
-    }
+  .hidden-grid {
+    display: none;
+  }
 }
 
 .res-btn {
-    height: 53.13px !important
+  height: 53.13px !important;
 }
 
 .right-btn {
-    height: 53.13px !important;
-    font-size: 14px;
-    margin-bottom: 0px;
+  height: 53.13px !important;
+  font-size: 14px;
+  margin-bottom: 0px;
 }
-.create-btn{
-    margin-bottom:-40px;
+.create-btn {
+  margin-bottom: -40px;
 }
 .right-btn:hover {
-    color: lightgrey
+  color: lightgrey;
 }
 
 .shower-reach {
-    display: none;
+  display: none;
 }
 
 .ql-toolbar {
-    display: none;
+  display: none;
 }
 
 @media screen and (max-width: 514px) {
-    .right-btn {
-        margin-bottom: 15px !important;
-    }
-    .create-btn{
-        margin-top:20px;
-        width: -webkit-fill-available;
-    }
-    .create-parent{
-        width:100%;
-    }
-    .mass-btn{
-        margin-left:0px!important;
-        
-    }
-    .right-panel {
-        display: grid;
-        width: -webkit-fill-available;
-    }
+  .right-btn {
+    margin-bottom: 15px !important;
+  }
+  .create-btn {
+    margin-top: 20px;
+    width: -webkit-fill-available;
+  }
+  .create-parent {
+    width: 100%;
+  }
+  .mass-btn {
+    margin-left: 0px !important;
+  }
+  .right-panel {
+    display: grid;
+    width: -webkit-fill-available;
+  }
 }
 
 .location-pointer {
-    display: inline-block !important;
-    background-image: url(./img/locationpointer.png);
-    width: 9px;
-    height: 12px;
-    margin-right: 12px;
+  display: inline-block !important;
+  background-image: url(./img/locationpointer.png);
+  width: 9px;
+  height: 12px;
+  margin-right: 12px;
 }
 
 .verified-image {
-    background-image: url("/assets/icons/verified.png");
-    width: 14px;
-    height: 14px;
-    background-size: cover;
-    display: inline-block;
-    margin-left: 10px;
+  background-image: url('/assets/icons/verified.png');
+  width: 14px;
+  height: 14px;
+  background-size: cover;
+  display: inline-block;
+  margin-left: 10px;
 }
 
 .custom-reach {
-    border: 1px solid #2970FF;
-    border-radius: 6px;
+  border: 1px solid #2970ff;
+  border-radius: 6px;
 }
 
 .reach-arrow {
-    background-image: url('/assets/stats/reach-arrow.png');
-    width: 32px;
-    height: 20px;
-    background-size: cover;
-    margin-left: 5px;
-    margin-right: 10px;
+  background-image: url('/assets/stats/reach-arrow.png');
+  width: 32px;
+  height: 20px;
+  background-size: cover;
+  margin-left: 5px;
+  margin-right: 10px;
 }
 
 .custom-grid-item {
-    padding: 10px;
+  padding: 10px;
 }
 
 .vertical-dots {
-    height: fit-content
+  height: fit-content;
 }

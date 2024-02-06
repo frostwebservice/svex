@@ -30,6 +30,7 @@ import { useState, useCallback } from 'react';
 import { OutreachMemberCard } from './outreach-member-card';
 import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useDialog } from '@/hooks/use-dialog';
 import JobListCard from '../../../sections/dashboard/jobs/job-list-card';
 
@@ -68,6 +69,7 @@ export const OutreachCard = (props) => {
   const handleInvite = () => {
     jobDialog.handleOpen();
   };
+  const deleteGroup = () => {};
   return (
     <Card {...other} style={{ marginTop: 30 }}>
       <JobListCard
@@ -175,6 +177,12 @@ export const OutreachCard = (props) => {
             >
               <SvgIcon fontSize="small">
                 <ModeEditIcon />
+              </SvgIcon>
+            </IconButton>
+
+            <IconButton edge="end" onClick={deleteGroup}>
+              <SvgIcon fontSize="small">
+                <DeleteOutlineOutlinedIcon />
               </SvgIcon>
             </IconButton>
             <Button

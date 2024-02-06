@@ -103,7 +103,6 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
     }
   };
   const onOKClicked = () => {
-    console.log('ok');
     document
       .getElementsByClassName('MuiAutocomplete-popupIndicator')[0]
       .click();

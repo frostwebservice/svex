@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Dialog, DialogContent, IconButton, Stack, SvgIcon, Typography } from '@mui/material';
+import {
+  Dialog,
+  DialogContent,
+  IconButton,
+  Stack,
+  SvgIcon,
+  Typography
+} from '@mui/material';
 import { FileDropzone } from '@/components/file-dropzone';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 
@@ -30,28 +37,19 @@ export const FileUploader = (props) => {
     setFiles([]);
   }, []);
   const onUpload = () => {
-    console.log(files[0]);
-    const data = new FormData()
-    data.append('file', files[0])
-    data.append('email', email)
-    data.append('kind', kind)
-    let url = "/api/upload_cover";
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('email', email);
+    data.append('kind', kind);
+    let url = '/api/upload_cover';
 
-    axios.post(url, data, {
-    })
-      .then(res => {
-        onUpgrade()
-        onClose();
-      })
-
-  }
+    axios.post(url, data, {}).then((res) => {
+      onUpgrade();
+      onClose();
+    });
+  };
   return (
-    <Dialog
-      fullWidth
-      maxWidth="sm"
-      open={open}
-      onClose={onClose}
-    >
+    <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose}>
       <Stack
         alignItems="center"
         direction="row"
@@ -62,13 +60,8 @@ export const FileUploader = (props) => {
           py: 2
         }}
       >
-        <Typography variant="h6">
-          Upload Files
-        </Typography>
-        <IconButton
-          color="inherit"
-          onClick={onClose}
-        >
+        <Typography variant="h6">Upload Files</Typography>
+        <IconButton color="inherit" onClick={onClose}>
           <SvgIcon>
             <XIcon />
           </SvgIcon>

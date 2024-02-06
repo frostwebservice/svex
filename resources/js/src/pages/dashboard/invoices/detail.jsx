@@ -61,7 +61,6 @@ const useInvoice = () => {
 const Page = () => {
   const invoice = useInvoice();
   const dialog = useDialog();
-  console.log(invoice);
   usePageView();
 
   if (!invoice) {

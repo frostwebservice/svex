@@ -43,7 +43,6 @@ export const Announcements = (props) => {
   }
   const [page, setPage] = useState(1);
   const PER_PAGE = 3;
-
   const count = Math.ceil(announcements.length / PER_PAGE);
   const _DATA = usePagination(announcements, PER_PAGE);
 

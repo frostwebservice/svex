@@ -25,9 +25,7 @@ export const ImportData = (props) => {
   const onUpgrade = (res) => {
     toast.success(res);
   };
-  const importDB = () => {
-    console.log(type);
-  };
+  const importDB = () => {};
   const handleType = (v) => {
     setType(v);
   };

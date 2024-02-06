@@ -10,7 +10,6 @@ import {
 import * as React from 'react';
 import { useState } from 'react';
 var once = false;
-// console.log("called")
 var tmpData = {
   app_message: 0,
   app_job: 0,
@@ -24,7 +23,6 @@ var tmpData = {
   mail_job: 0
 };
 export const AccountNotificationsSettings = () => {
-  console.log('basic', tmpData);
   const [notifysettings, SetNotifysettings] = useState(tmpData);
   if (!once) {
     axios
@@ -32,9 +30,6 @@ export const AccountNotificationsSettings = () => {
         user_email: JSON.parse(localStorage.getItem('email'))
       })
       .then((response) => {
-        console.log('tmpData', tmpData);
-        console.log('res', response.data.data);
-
         const res = response.data.data;
         if (
           res.app_message != tmpData.app_message ||
@@ -79,7 +74,6 @@ export const AccountNotificationsSettings = () => {
       });
   }
   const handleChange = (kind) => {
-    console.log(kind);
     switch (kind) {
       case 'app_message':
         notifysettings.app_message = notifysettings.app_message == 1 ? 0 : 1;

@@ -1,11 +1,33 @@
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import { useState, useEffect } from 'react';
-import { Box, Button, Card, Stack, SvgIcon, TextField, Unstable_Grid2 as Grid, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  Stack,
+  SvgIcon,
+  TextField,
+  Unstable_Grid2 as Grid,
+  Checkbox,
+  FormGroup,
+  FormControlLabel
+} from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { categoryOptions, locationOptions, followersFromOptions, followersToOptions, ageOptions, genderOptions, languageOptions, engagementOptions, avglikesOptions, avgcommentsOptions } from './data'
+import {
+  categoryOptions,
+  locationOptions,
+  followersFromOptions,
+  followersToOptions,
+  ageOptions,
+  genderOptions,
+  languageOptions,
+  engagementOptions,
+  avglikesOptions,
+  avgcommentsOptions
+} from './data';
 const platformOptions = ['Web', 'Node.js', 'Python', 'C#'];
-import { useDispatch, connect } from "react-redux";
+import { useDispatch, connect } from 'react-redux';
 import { getSearchs } from '@/actions';
 import { useDialog } from '@/hooks/use-dialog';
 import { doSearch } from '@/actions';
@@ -128,6 +150,9 @@ const InstagramSearch = (props) => {
   const onSearch = () => {
     dispatch(doSearch(email, searchParams));
   };
+  useEffect(() => {
+    dispatch(doSearch(email, searchParams));
+  }, []);
   useEffect(() => {
     if (
       runTab &&
@@ -659,8 +684,8 @@ const InstagramSearch = (props) => {
     </>
   );
 };
-const mapStateToProps = state => ({
-    searchs: state.searchs.searchs,
-    runTab: state.runsavestate
-})
+const mapStateToProps = (state) => ({
+  searchs: state.searchs.searchs,
+  runTab: state.runsavestate
+});
 export default connect(mapStateToProps)(InstagramSearch);
