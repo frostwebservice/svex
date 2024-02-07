@@ -45,9 +45,7 @@ const JobCard = (props) => {
     else if (job.revenue) return job.revenue;
     else if (job.custom) return job.custom;
     else {
-      if (job.paid == 'maxbudget') return 'Max Budget';
-      else if (job.paid == 'flexible') return 'Flexible';
-      else return 'Budget Range';
+      return job.paid;
     }
   };
   const getPaymentType = (job) => {
@@ -65,9 +63,9 @@ const JobCard = (props) => {
     }
     return res;
   };
-  const timeSince = (date) => {
+  const timeSince = (date1, date2) => {
     var seconds = Math.floor(
-      (new Date().getTime() - new Date(date).getTime()) / 1000
+      (new Date(date2) - new Date(date1).getTime()) / 1000
     );
 
     var interval = seconds / 31536000;
@@ -329,7 +327,7 @@ const JobCard = (props) => {
                     variant="caption"
                     style={{ fontSize: 12 }}
                   >
-                    {timeSince(job.created_at)} ago
+                    {timeSince(job.created_at, job.time)} ago
                   </Typography>
                   <Button
                     size="small"

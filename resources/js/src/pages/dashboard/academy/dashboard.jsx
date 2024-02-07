@@ -48,6 +48,14 @@ const TiktokIcon = ({ color = '#000000' }) => {
 };
 
 const Page = (props) => {
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   const { results, runTab } = props;
   const dispatch = useDispatch();
   const settings = useSettings();

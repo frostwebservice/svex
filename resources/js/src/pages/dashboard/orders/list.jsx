@@ -123,6 +123,13 @@ const useCurrentOrder = (orders, orderId) => {
 };
 
 const Page = () => {
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   const rootRef = useRef(null);
   const ordersSearch = useOrdersSearch();
   const ordersStore = useOrdersStore(ordersSearch.state);
@@ -148,7 +155,6 @@ const Page = () => {
   return (
     <>
       <Seo title="Dashboard: Order List" />
-
       <Box
         component="main"
         ref={rootRef}

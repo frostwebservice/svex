@@ -20,11 +20,13 @@ const useLabels = () => {
     dispatch(thunks.getLabels());
   }, [dispatch]);
 
-  useEffect(() => {
-    handleLabelsGet();
-  },
+  useEffect(
+    () => {
+      handleLabelsGet();
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []);
+    []
+  );
 
   return labels;
 };
@@ -47,11 +49,13 @@ const useComposer = () => {
     }));
   }, []);
 
-  const handleClose = useCallback(() => {
-    setState(initialState);
-  },
+  const handleClose = useCallback(
+    () => {
+      setState(initialState);
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []);
+    []
+  );
 
   const handleMaximize = useCallback(() => {
     setState((prevState) => ({
@@ -112,11 +116,13 @@ const useSidebar = () => {
     }
   }, [mdUp]);
 
-  useEffect(() => {
-    handleScreenResize();
-  },
+  useEffect(
+    () => {
+      handleScreenResize();
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [mdUp]);
+    [mdUp]
+  );
 
   const handleToggle = useCallback(() => {
     setOpen((prevState) => !prevState);
@@ -134,6 +140,14 @@ const useSidebar = () => {
 };
 
 const Page = () => {
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   const rootRef = useRef(null);
   const searchParams = useSearchParams();
   const emailId = searchParams.get('emailId');
@@ -184,7 +198,6 @@ const Page = () => {
               <MailThread
                 currentLabelId={currentLabelId}
                 onSidebarToggle={sidebar.handleToggle}
-
                 emailId={emailId}
               />
             )}
@@ -193,7 +206,6 @@ const Page = () => {
                 currentLabelId={currentLabelId}
                 onSidebarToggle={sidebar.handleToggle}
                 onCompose={tcomposer.handleOpen}
-
               />
             )}
           </MailContainer>

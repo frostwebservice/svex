@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import ChevronLeftIcon from '@untitled-ui/icons-react/build/esm/ChevronLeft';
 import ChevronRightIcon from '@untitled-ui/icons-react/build/esm/ChevronRight';
 import {
@@ -8,6 +8,8 @@ import {
   IconButton,
   Stack,
   SvgIcon,
+  InputAdornment,
+  OutlinedInput,
   Tabs,
   Tab,
   Card,
@@ -21,13 +23,13 @@ import { Seo } from '@/components/seo';
 import { useMounted } from '@/hooks/use-mounted';
 import { usePageView } from '@/hooks/use-page-view';
 import { paths } from '@/paths';
-import  JobCard  from '@/sections/dashboard/jobs/company-card';
+import JobCard from '@/sections/dashboard/jobs/company-card';
 import { JobListSearch } from '@/sections/dashboard/jobs/job-list-search';
 import { useSettings } from '@/hooks/use-settings';
 import SearchMdIcon from '@untitled-ui/icons-react/build/esm/SearchMd';
 import { getJobs } from '@/actions';
 import { useDispatch } from 'react-redux';
-import "./manage.css";
+import './manage.css';
 import { connect } from 'react-redux';
 const useCompanies = () => {
   const isMounted = useMounted();
@@ -44,33 +46,64 @@ const useCompanies = () => {
       console.error(err);
     }
   }, [isMounted]);
-
-  useEffect(() => {
-    handleCompaniesGet();
-  },
+  useEffect(
+    () => {
+      handleCompaniesGet();
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []);
+    []
+  );
 
   return companies;
 };
 const tabs = [
-  { label: "All", value: "all" },
-  { label: "Active", value: "active" },
-  { label: "Archived", value: "archived" },
-] 
+  { label: 'All', value: 'all' },
+  { label: 'Active', value: 'active' },
+  { label: 'Archived', value: 'archived' }
+];
 const Page = (props) => {
-  const {jobs} = props;
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
+  const { jobs } = props;
+  const [viewJobs, setviewJobs] = useState([]);
   const companies = useCompanies();
   const settings = useSettings();
-  const email = JSON.parse(localStorage.getItem('email'))
-  const [currentTab, setCurrentTab] = useState("all");
+  const email = JSON.parse(localStorage.getItem('email'));
+  const [currentTab, setCurrentTab] = useState('all');
   const handleTabsChange = useCallback((event, value) => {
     setCurrentTab(value);
   }, []);
   const dispatch = useDispatch();
   usePageView();
   useEffect(() => {
-    dispatch(getJobs(email,1));
+    setviewJobs(jobs);
+  }, [jobs]);
+  useEffect(() => {
+    dispatch(getJobs(email, 1));
+  }, []);
+  const queryRef = useRef(null);
+  const handleQueryChange = useCallback((event) => {
+    event.preventDefault();
+    const query = queryRef.current?.value || '';
+    let data = jobs.filter((job) => {
+      if (typeof query !== 'undefined' && query !== '') {
+        const containsQuery = (job.title || '')
+          .toLowerCase()
+          .includes(query.toLowerCase());
+
+        if (!containsQuery) {
+          return false;
+        }
+      }
+      return true;
+    });
+    setviewJobs(data);
   }, []);
   return (
     <>
@@ -82,10 +115,8 @@ const Page = (props) => {
           py: 8
         }}
       >
-        <Container  maxWidth={settings.stretch ? false : 'xl'}>
-          <Typography variant="h4">
-            Manage Jobs
-          </Typography>
+        <Container maxWidth={settings.stretch ? false : 'xl'}>
+          <Typography variant="h4">Manage Jobs</Typography>
           <Stack
             alignItems="center"
             justifyContent="space-between"
@@ -109,7 +140,7 @@ const Page = (props) => {
               >
                 {tabs.map((tab) => (
                   <Tab
-                    className='custom-tab'
+                    className="custom-tab"
                     sx={{ fontSize: 18 }}
                     key={tab.value}
                     label={tab.label}
@@ -121,147 +152,91 @@ const Page = (props) => {
             <Stack
               alignItems="center"
               direction="row"
+              className="part"
               spacing={2}
               sx={{ p: 1 }}
-              className='part'
             >
-              <SvgIcon>
-                <SearchMdIcon />
-              </SvgIcon>
-              <Box sx={{ flexGrow: 1 }}>
-                <Input
-                  disableUnderline
+              <Box
+                component="form"
+                onSubmit={handleQueryChange}
+                sx={{ flexGrow: 1 }}
+              >
+                <OutlinedInput
+                  defaultValue=""
                   fullWidth
+                  inputProps={{ ref: queryRef }}
+                  name="jobtitle"
                   placeholder="Search any of the jobs you have posted..."
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <SvgIcon>
+                        <SearchMdIcon />
+                      </SvgIcon>
+                    </InputAdornment>
+                  }
                 />
               </Box>
             </Stack>
           </Stack>
-            <Box>
-              {currentTab == 'all' && (
-                <>
-                  <Stack
-                    spacing={4}
-                  >
-
-                    {jobs?.map((job) => (
-                      <JobCard
-                        key={job.id}
-                        job={job}
-                        active="all"
-                        openBar={true}
-                      />
-                    ))}
-                    {/* <Stack
-                      alignItems="center"
-                      direction="row"
-                      justifyContent="flex-end"
-                      spacing={2}
-                      sx={{
-                        px: 3,
-                        py: 2
-                      }}
-                    >
-                      <IconButton disabled>
-                        <SvgIcon fontSize="small">
-                          <ChevronLeftIcon />
-                        </SvgIcon>
-                      </IconButton>
-                      <IconButton>
-                        <SvgIcon fontSize="small">
-                          <ChevronRightIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </Stack> */}
-                  </Stack>
-                </>
-              )}
-              {currentTab == 'active' && (
-                <>
-                  <Stack
-                    spacing={4}
-                  >
-
-                    {jobs?.map((job) => job.is_active==1?(
+          <Box>
+            {currentTab == 'all' && (
+              <>
+                <Stack spacing={4}>
+                  {viewJobs?.map((job) => (
+                    <JobCard
+                      key={job.id}
+                      job={job}
+                      active="all"
+                      openBar={true}
+                    />
+                  ))}
+                </Stack>
+              </>
+            )}
+            {currentTab == 'active' && (
+              <>
+                <Stack spacing={4}>
+                  {viewJobs?.map((job) =>
+                    job.is_active == 1 ? (
                       <JobCard
                         key={job.id}
                         job={job}
                         openBar={true}
                         active="active"
                       />
-                    ):(<></>))}
-                    {/* <Stack
-                      alignItems="center"
-                      direction="row"
-                      justifyContent="flex-end"
-                      spacing={2}
-                      sx={{
-                        px: 3,
-                        py: 2
-                      }}
-                    >
-                      <IconButton disabled>
-                        <SvgIcon fontSize="small">
-                          <ChevronLeftIcon />
-                        </SvgIcon>
-                      </IconButton>
-                      <IconButton>
-                        <SvgIcon fontSize="small">
-                          <ChevronRightIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </Stack> */}
-                  </Stack>
-                </>
-              )}
-              {currentTab == 'archived' && (
-                <>
-             
-                  <Stack
-                    spacing={4}
-                  >
-
-                    {jobs?.map((job) => job.is_active==0?(
+                    ) : (
+                      <></>
+                    )
+                  )}
+                </Stack>
+              </>
+            )}
+            {currentTab == 'archived' && (
+              <>
+                <Stack spacing={4}>
+                  {viewJobs?.map((job) =>
+                    job.is_active == 0 ? (
                       <JobCard
                         key={job.id}
                         job={job}
                         openBar={true}
                         active="archived"
                       />
-                    ):(<></>))}
-                    {/* <Stack
-                      alignItems="center"
-                      direction="row"
-                      justifyContent="flex-end"
-                      spacing={2}
-                      sx={{
-                        px: 3,
-                        py: 2
-                      }}
-                    >
-                      <IconButton disabled>
-                        <SvgIcon fontSize="small">
-                          <ChevronLeftIcon />
-                        </SvgIcon>
-                      </IconButton>
-                      <IconButton>
-                        <SvgIcon fontSize="small">
-                          <ChevronRightIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </Stack> */}
-                  </Stack>
-             
-                </>
-              )}
-            </Box>
+                    ) : (
+                      <></>
+                    )
+                  )}
+                </Stack>
+              </>
+            )}
+          </Box>
         </Container>
       </Box>
     </>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   jobs: state.jobs.jobs
 });
 

@@ -114,6 +114,14 @@ const useCustomersIds = (customers = []) => {
 };
 
 const Page = () => {
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   const customersSearch = useCustomersSearch();
   const customersStore = useCustomersStore(customersSearch.state);
   const customersIds = useCustomersIds(customersStore.customers);

@@ -30,7 +30,14 @@ const Page = () => {
   const settings = useSettings();
 
   usePageView();
-
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   return (
     <>
       <Seo title="Dashboard: Overview" />

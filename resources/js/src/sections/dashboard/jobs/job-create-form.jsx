@@ -1,22 +1,32 @@
-import { useCallback, useMemo, useState,useEffect } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import CheckIcon from '@untitled-ui/icons-react/build/esm/Check';
-import { Avatar, Step, StepContent, StepLabel, Stepper, SvgIcon, Stack,Button,Typography } from '@mui/material';
+import {
+  Avatar,
+  Step,
+  StepContent,
+  StepLabel,
+  Stepper,
+  SvgIcon,
+  Stack,
+  Button,
+  Typography
+} from '@mui/material';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
 
 import { JobFinalStep } from './job-final-step';
 import { JobPreview } from './job-preview';
-import  JobBriefSummeryStep  from './job-briefsummery-step';
-import  JobSocialDetailStep  from './job-social-detail-step';
-import  JobCompensationStep  from './job-compensation-step';
-import  JobShotoutStep  from './job-shotout-step';
-import  JobExclusionStep  from './job-exclusions-step';
-import JobShareStep  from './job-share-step';
+import JobBriefSummeryStep from './job-briefsummery-step';
+import JobSocialDetailStep from './job-social-detail-step';
+import JobCompensationStep from './job-compensation-step';
+import JobShotoutStep from './job-shotout-step';
+import JobExclusionStep from './job-exclusions-step';
+import JobShareStep from './job-share-step';
 import axios from 'axios';
 import { updateJob } from '@/actions';
 import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import "./create.css";
+import './create.css';
 const StepIcon = (props) => {
   const { active, completed, icon } = props;
 
@@ -34,135 +44,130 @@ const StepIcon = (props) => {
       }}
       variant="rounded"
     >
-      {completed
-        ? (
-          <SvgIcon>
-            <CheckIcon />
-          </SvgIcon>
-        )
-        : icon}
+      {completed ? (
+        <SvgIcon>
+          <CheckIcon />
+        </SvgIcon>
+      ) : (
+        icon
+      )}
     </Avatar>
   );
 };
 const JobCreateForm = (props) => {
-  const {job,isEdit,jobID} = props;
+  const { job, isEdit, jobID } = props;
   const [activeStep, setActiveStep] = useState(0);
   const [review, setReview] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const [lasthidden,setlasthidden] = useState("span");
-  const email = JSON.parse(localStorage.getItem('email'))
-  const [socialtypes,setSocialTypes] = useState([])
-  const [checkEdit,setCheckEdit] = useState(false);
-  const navigate = useNavigate()
-  const [temp,setTemp] = useState({
-    email:"email",
-    test:"sdf"
-  })
+  const [lasthidden, setlasthidden] = useState('span');
+  const email = JSON.parse(localStorage.getItem('email'));
+  const [socialtypes, setSocialTypes] = useState([]);
+  const [checkEdit, setCheckEdit] = useState(false);
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch()
-  if(!checkEdit&&isEdit){
+  const dispatch = useDispatch();
+  if (!checkEdit && isEdit) {
     setReview(isEdit);
-    setCheckEdit(true)
+    setCheckEdit(true);
   }
-  const updateValue = (which,value) => {
-    dispatch(updateJob(which,value))
-  }
+  const updateValue = (which, value) => {
+    dispatch(updateJob(which, value));
+  };
 
   const handleNext = useCallback(() => {
     setActiveStep((prevState) => prevState + 1);
-
   }, []);
-  useEffect(()=>{
-    if(activeStep==6||review) {
+  useEffect(() => {
+    if (activeStep == 6 || review) {
       setReview(true);
-      setlasthidden("none")
+      setlasthidden('none');
     }
-    updateValue("email",email)
-  },[activeStep])
+    updateValue('email', email);
+  }, [activeStep]);
   const handleBack = useCallback(() => {
     setActiveStep((prevState) => prevState - 1);
   }, []);
   const handleReview = useCallback(() => {
     setReview(true);
-    setlasthidden("none")
-  })
+    setlasthidden('none');
+  });
   const handleUpdate = () => {
-    axios.post("/api/update_job", {job:job,jobID:jobID}, {
-    }).then(res => {
-      updateValue("email","");
-      updateValue("title","");
-      updateValue("brief","");
-      updateValue("niche","Acne and Skin Care");
-      updateValue("shoutoutonly","shoutoutonly");
-      updateValue("typesarray",[]);
-      updateValue("socialtypes","");
-      updateValue("ig","");
-      updateValue("tt","");
-      updateValue("yt","");
-      updateValue("tw","");
-      updateValue("pt","");
-      updateValue("li","");
-      updateValue("bw","");
-      updateValue("payselected","paid");
-      updateValue("paid","maxbudget");
-      updateValue("barter","");
-      updateValue("revenue","");
-      updateValue("custom","");
-      updateValue("businessurl","");
-      updateValue("socialhandle","");
-      updateValue("images","");
-      updateValue("videos","");
-      updateValue("articles","");
-      updateValue("totalreach","all");
-      updateValue("location","all");
-      updateValue("gender","all");
-      updateValue("agerange","all");
-      updateValue("engagementrate","all");
-      updateValue("favorites","");
-      updateValue("outreachgroups","");
-      navigate("/dashboard/jobs")
-    })
-  }
+    axios
+      .post('/api/update_job', { job: job, jobID: jobID }, {})
+      .then((res) => {
+        updateValue('email', '');
+        updateValue('title', '');
+        updateValue('brief', '');
+        updateValue('niche', 'Acne and Skin Care');
+        updateValue('shoutoutonly', 'shoutoutonly');
+        updateValue('typesarray', []);
+        updateValue('favarray', []);
+        updateValue('socialtypes', '');
+        updateValue('ig', '');
+        updateValue('tt', '');
+        updateValue('yt', '');
+        updateValue('tw', '');
+        updateValue('pt', '');
+        updateValue('li', '');
+        updateValue('bw', '');
+        updateValue('payselected', 'paid');
+        updateValue('paid', 'Under 10USD');
+        updateValue('barter', '');
+        updateValue('revenue', '');
+        updateValue('custom', '');
+        updateValue('businessurl', '');
+        updateValue('socialhandle', '');
+        updateValue('images', '');
+        updateValue('videos', '');
+        updateValue('articles', '');
+        updateValue('totalreach', 'all');
+        updateValue('location', 'all');
+        updateValue('gender', 'all');
+        updateValue('agerange', 'all');
+        updateValue('engagementrate', 'all');
+        updateValue('favorites', '');
+        updateValue('outreachgroups', '');
+        navigate('/dashboard/jobs');
+      });
+  };
   const handleComplete = () => {
-
-    axios.post("/api/create_job", {job}, {
-    }).then(res => {
-      updateValue("email","");
-      updateValue("title","");
-      updateValue("brief","");
-      updateValue("niche","Acne and Skin Care");
-      updateValue("shoutoutonly","shoutoutonly");
-      updateValue("typesarray",[]);
-      updateValue("socialtypes","");
-      updateValue("ig","");
-      updateValue("tt","");
-      updateValue("yt","");
-      updateValue("tw","");
-      updateValue("pt","");
-      updateValue("li","");
-      updateValue("bw","");
-      updateValue("payselected","paid");
-      updateValue("paid","maxbudget");
-      updateValue("barter","");
-      updateValue("revenue","");
-      updateValue("custom","");
-      updateValue("businessurl","");
-      updateValue("socialhandle","");
-      updateValue("images","");
-      updateValue("videos","");
-      updateValue("articles","");
-      updateValue("totalreach","all");
-      updateValue("location","all");
-      updateValue("gender","all");
-      updateValue("agerange","all");
-      updateValue("engagementrate","all");
-      updateValue("favorites","");
-      updateValue("outreachgroups","");
-      navigate("/dashboard/jobs")
-    })
-
-  }
-
+    axios.post('/api/create_job', { job }, {}).then((res) => {
+      updateValue('email', '');
+      updateValue('title', '');
+      updateValue('brief', '');
+      updateValue('niche', 'Acne and Skin Care');
+      updateValue('shoutoutonly', 'shoutoutonly');
+      updateValue('favarray', []);
+      updateValue('typesarray', []);
+      updateValue('socialtypes', '');
+      updateValue('ig', '');
+      updateValue('tt', '');
+      updateValue('yt', '');
+      updateValue('tw', '');
+      updateValue('pt', '');
+      updateValue('li', '');
+      updateValue('bw', '');
+      updateValue('payselected', 'paid');
+      updateValue('paid', 'Under 10USD');
+      updateValue('barter', '');
+      updateValue('revenue', '');
+      updateValue('custom', '');
+      updateValue('businessurl', '');
+      updateValue('socialhandle', '');
+      updateValue('images', '');
+      updateValue('videos', '');
+      updateValue('articles', '');
+      updateValue('totalreach', 'all');
+      updateValue('location', 'all');
+      updateValue('gender', 'all');
+      updateValue('agerange', 'all');
+      updateValue('engagementrate', 'all');
+      updateValue('favorites', '');
+      updateValue('outreachgroups', '');
+      navigate('/dashboard/jobs');
+    });
+  };
+  console.log(job);
   const steps = useMemo(() => {
     return [
       {
@@ -183,9 +188,9 @@ const JobCreateForm = (props) => {
             onBack={handleBack}
             onNext={handleNext}
             isReview={review}
-            updateValue = {updateValue}
-            socialtypes ={socialtypes}
-            setSocialTypes = {setSocialTypes}
+            updateValue={updateValue}
+            socialtypes={socialtypes}
+            setSocialTypes={setSocialTypes}
           />
         )
       },
@@ -196,7 +201,7 @@ const JobCreateForm = (props) => {
             onBack={handleBack}
             isReview={review}
             onNext={handleNext}
-            updateValue = {updateValue}
+            updateValue={updateValue}
           />
         )
       },
@@ -207,7 +212,7 @@ const JobCreateForm = (props) => {
             isReview={review}
             onBack={handleBack}
             onNext={handleNext}
-            updateValue = {updateValue}
+            updateValue={updateValue}
           />
         )
       },
@@ -218,7 +223,7 @@ const JobCreateForm = (props) => {
             isReview={review}
             onBack={handleBack}
             onNext={handleNext}
-            updateValue = {updateValue}
+            updateValue={updateValue}
           />
         )
       },
@@ -229,18 +234,18 @@ const JobCreateForm = (props) => {
             isReview={review}
             onBack={handleBack}
             onNext={handleNext}
-            updateValue = {updateValue}
+            updateValue={updateValue}
           />
         )
       },
       {
         label: 'Review',
         content: (
-        <JobFinalStep
+          <JobFinalStep
             isReview={review}
             onBack={handleBack}
             onNext={handleComplete}
-            onUpdate = {handleUpdate}
+            onUpdate={handleUpdate}
             isEdit={isEdit}
           />
         )
@@ -265,17 +270,12 @@ const JobCreateForm = (props) => {
       }}
     >
       {steps.map((step, index) => {
-        const isCurrentStep = ((activeStep === index));
- 
-        return index<6?(
-          <Step key={step.label}
-            expanded={review}
-          >
+        const isCurrentStep = activeStep === index;
+
+        return index < 6 ? (
+          <Step key={step.label} expanded={review}>
             <StepLabel StepIconComponent={StepIcon}>
-              <Typography
-                sx={{ ml: 2 }}
-                variant="overline"
-              >
+              <Typography sx={{ ml: 2 }} variant="overline">
                 {step.label}
               </Typography>
             </StepLabel>
@@ -292,39 +292,35 @@ const JobCreateForm = (props) => {
               {step.content}
             </StepContent>
           </Step>
-        ):
-        (
-        <Step key={step.label}
-          expanded={review}
-          >
-          <StepLabel StepIconComponent={StepIcon} sx={{display:lasthidden}}>
-            <Typography
-              sx={{ ml: 2 }}
-              variant="overline"
+        ) : (
+          <Step key={step.label} expanded={review}>
+            <StepLabel
+              StepIconComponent={StepIcon}
+              sx={{ display: lasthidden }}
             >
-              {step.label}
-            </Typography>
-          </StepLabel>
-          <StepContent
-            sx={{
-              borderLeftColor: 'divider',
-              borderLeftWidth: 2,
-              ml: '20px',
-              ...(isCurrentStep && {
-                py: 4
-              })
-            }}
-          >
-            {step.content}
-          </StepContent>
-        </Step>
-
-        )
+              <Typography sx={{ ml: 2 }} variant="overline">
+                {step.label}
+              </Typography>
+            </StepLabel>
+            <StepContent
+              sx={{
+                borderLeftColor: 'divider',
+                borderLeftWidth: 2,
+                ml: '20px',
+                ...(isCurrentStep && {
+                  py: 4
+                })
+              }}
+            >
+              {step.content}
+            </StepContent>
+          </Step>
+        );
       })}
     </Stepper>
   );
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   job: state.job
 });
 

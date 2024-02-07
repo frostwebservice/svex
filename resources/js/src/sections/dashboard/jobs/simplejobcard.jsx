@@ -39,9 +39,12 @@ const SimpleJobCard = (props) => {
   };
   const getBudget = () => {
     if (job && job[0]) {
-      if (job[0].paid == 'flexible') return 'Flexible';
-      if (job[0].paid == 'maxbudget') return 'Max Budget';
-      if (job[0].paid == 'Budget Range') return 'Budget Range';
+      if (job[0].barter) return job[0].barter;
+      else if (job[0].revenue) return job[0].revenue;
+      else if (job[0].custom) return job[0].custom;
+      else {
+        return job[0].paid;
+      }
     }
   };
   const getJobID = () => {
@@ -49,11 +52,10 @@ const SimpleJobCard = (props) => {
       return job[0].id;
     }
   };
-  const timeSince = (date = new Date()) => {
+  const timeSince = (date1, date2) => {
     var seconds = Math.floor(
-      (new Date().getTime() - new Date(date).getTime()) / 1000
+      (new Date(date2) - new Date(date1).getTime()) / 1000
     );
-
     var interval = seconds / 31536000;
 
     if (interval > 1) {
@@ -125,7 +127,7 @@ const SimpleJobCard = (props) => {
               sx={{ lineHeight: 2 }}
               variant="caption"
             >
-              Number of applicants • 15 - 20
+              Number of applicants • {job && job[0]?.cnt}
             </Typography>
 
             <Typography
@@ -170,7 +172,7 @@ const SimpleJobCard = (props) => {
             variant="caption"
             style={{ fontSize: 12, minWidth: 100 }}
           >
-            {timeSince(job && job[0]?.created_at)} ago
+            {timeSince(job && job[0]?.created_at, job && job[0]?.time)} ago
           </Typography>
           {offer ? (
             <Button

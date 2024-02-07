@@ -25,6 +25,14 @@ import { RouterLink } from '@/components/router-link';
 const now = new Date();
 
 const OutreachGroups = (props) => {
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   const { groups } = props;
   const settings = useSettings();
   usePageView();

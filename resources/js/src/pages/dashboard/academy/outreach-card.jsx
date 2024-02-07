@@ -69,14 +69,32 @@ export const OutreachCard = (props) => {
   const handleInvite = () => {
     jobDialog.handleOpen();
   };
-  const deleteGroup = () => {};
+  const deleteGroup = (group) => {
+    if (group[0].group_id) {
+      axios
+        .post('/api/delete_group', {
+          id: group[0].group_id
+        })
+        .then((response) => {
+          reRender();
+        });
+    } else {
+      axios
+        .post('/api/delete_group', {
+          id: group[0]['id']
+        })
+        .then((response) => {
+          reRender();
+        });
+    }
+  };
   return (
     <Card {...other} style={{ marginTop: 30 }}>
       <JobListCard
         onClose={jobDialog.handleClose}
         open={jobDialog.open}
         isGroup={true}
-        groupID={company[0]['id']}
+        groupID={company[0]?.id}
         order={order}
       />
       <Dialog open={open} onClose={handleClose}>
@@ -179,12 +197,16 @@ export const OutreachCard = (props) => {
                 <ModeEditIcon />
               </SvgIcon>
             </IconButton>
+            {order == 0 ? (
+              <></>
+            ) : (
+              <IconButton edge="end" onClick={() => deleteGroup(company)}>
+                <SvgIcon fontSize="small">
+                  <DeleteOutlineOutlinedIcon />
+                </SvgIcon>
+              </IconButton>
+            )}
 
-            <IconButton edge="end" onClick={deleteGroup}>
-              <SvgIcon fontSize="small">
-                <DeleteOutlineOutlinedIcon />
-              </SvgIcon>
-            </IconButton>
             <Button
               onClick={handleInvite}
               size="small"

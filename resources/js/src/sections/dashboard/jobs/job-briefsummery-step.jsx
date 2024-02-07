@@ -1,26 +1,47 @@
-import { useCallback, useState,useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import { Button, Card, Box, Radio, RadioGroup, Stack, FormControlLabel, SvgIcon, Typography, TextField,Unstable_Grid2 as Grid } from '@mui/material';
+import {
+  Button,
+  Card,
+  Box,
+  Radio,
+  RadioGroup,
+  Stack,
+  FormControlLabel,
+  SvgIcon,
+  Typography,
+  TextField,
+  Unstable_Grid2 as Grid
+} from '@mui/material';
 // import Radio from '@mui/material/Radio';
 // import RadioGroup from '@mui/material/RadioGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 import { connect } from 'react-redux';
 
-const currencies =  [
+const currencies = [
   { label: 'Acne and Skin Care', value: 'Acne and Skin Care' },
   { label: 'Alcohol', value: 'Alcohol' },
   { label: 'Art', value: 'Art' },
   { label: 'Baby and Maternity', value: 'Baby and Maternity' },
-  { label: 'Blockchain and Cryptocurrency', value: 'Blockchain and Cryptocurrency' },
+  {
+    label: 'Blockchain and Cryptocurrency',
+    value: 'Blockchain and Cryptocurrency'
+  },
   { label: 'Books and Fiction', value: 'Books and Fiction' },
   { label: 'Business and Career', value: 'Business and Career' },
-  { label: 'Cameras, Photography and Videography', value: 'Cameras, Photography and Videography' },
+  {
+    label: 'Cameras, Photography and Videography',
+    value: 'Cameras, Photography and Videography'
+  },
   { label: 'Cars and Vehicles', value: 'Cars and Vehicles' },
   { label: 'Cooking and Recipes', value: 'Cooking and Recipes' },
   { label: 'Crafts and DIY', value: 'Crafts and DIY' },
   { label: 'Diet and Weight Loss', value: 'Diet and Weight Loss' },
-  { label: 'Digital Marketing and Making Money Online', value: 'Digital Marketing and Making Money Online' },
+  {
+    label: 'Digital Marketing and Making Money Online',
+    value: 'Digital Marketing and Making Money Online'
+  },
   { label: 'Exercise and Fitness', value: 'Exercise and Fitness' },
   { label: 'Farming', value: 'Farming' },
   { label: 'Gardening and Lawn Care', value: 'Gardening and Lawn Care' },
@@ -55,49 +76,56 @@ const categoryOptions = [
 ];
 
 const JobBriefSummeryStep = (props) => {
-  const { onBack, onNext,isReview,updateValue,job, ...other } = props;
-
+  const { onBack, onNext, isReview, updateValue, job, ...other } = props;
   const [category, setCategory] = useState(categoryOptions[1].value);
   const [content, setContent] = useState('');
-  const [tempKey,setTempKey] = useState(true);
+  const [tempKey, setTempKey] = useState(true);
+  const [titleError, setTitleError] = useState(false);
+  const [briefError, setBriefError] = useState(false);
   const handleContentChange = useCallback((value) => {
     setContent(value);
   }, []);
   const handleCategoryChange = useCallback((category) => {
     setCategory(category);
   }, []);
-  useEffect(() =>{
-    if(tempKey){
+  useEffect(() => {
+    if (tempKey) {
       setTempKey(!tempKey);
-
     }
-  },[job])
+  }, [job]);
+  const goNext = () => {
+    if (job.title == '') setTitleError(true);
+    if (job.brief == '') setBriefError(true);
+    if (job.title != '' && job.brief != '') onNext();
+  };
   return (
     <Stack
-
       key={tempKey}
       spacing={3}
       // sx={{ width: '44.6rem' }}
-      {...other}>
+      {...other}
+    >
       <div>
-        <Typography variant="h6"
-          sx={{ mb: '1rem' }}
-        >
+        <Typography variant="h6" sx={{ mb: '1rem' }}>
           I am looking for...
         </Typography>
         <TextField
           fullWidth
           label="Job Title"
           value={job.title}
+          error={titleError}
           name="jobTitle"
           placeholder="Discribe your job in brief"
           inputProps={{
             style: {
-              height: "24px",
-              fontSize: "18px"
-            },
+              height: '24px',
+              fontSize: '18px'
+            }
           }}
-          onChange= {(e)=>updateValue("title",e.target.value)}
+          onChange={(e) => {
+            if (e.target.value != '') setTitleError(false);
+            updateValue('title', e.target.value);
+          }}
         />
       </div>
 
@@ -106,34 +134,38 @@ const JobBriefSummeryStep = (props) => {
           label="Job Brief"
           name="jobbrief"
           variant="filled"
+          error={briefError}
           placeholder="Describe your goals and objectives of this job and what you require from an Influencer"
           multiline
           value={job.brief}
-          onChange= {(e)=>updateValue("brief",e.target.value)}
+          onChange={(e) => {
+            if (e.target.value != '') setBriefError(false);
+            updateValue('brief', e.target.value);
+          }}
           fullWidth
           inputProps={{
             style: {
-              height: "48px",
-              fontSize: "18px",
-              fontWeight: "500",
-              lineHeight: "24px"
-            },
+              height: '48px',
+              fontSize: '18px',
+              fontWeight: '500',
+              lineHeight: '24px'
+            }
           }}
         />
         <TextField
           inputProps={{
             style: {
-              height: "24px",
-              fontSize: "18px"
-            },
+              height: '24px',
+              fontSize: '18px'
+            }
           }}
           select
           value={job.niche}
-          onChange= {(e)=>updateValue("niche",e.target.value)}
+          onChange={(e) => updateValue('niche', e.target.value)}
           label="Niche"
           fullWidth
           SelectProps={{
-            native: true,
+            native: true
           }}
           variant="filled"
         >
@@ -144,63 +176,72 @@ const JobBriefSummeryStep = (props) => {
           ))}
         </TextField>
         <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={job.shoutoutonly}
-              value={job.shoutoutonly}
-              onChange = {(e)=>updateValue("shoutoutonly",e.target.value)}
-              name="shoutout-group"
-            >
-        <Stack direction="row">
-
-          <Grid
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue={job.shoutoutonly}
+          value={job.shoutoutonly}
+          onChange={(e) => updateValue('shoutoutonly', e.target.value)}
+          name="shoutout-group"
+        >
+          <Stack direction="row">
+            <Grid
               disableEqualOverflow
               container
               spacing={{
                 xs: 3,
                 lg: 4
               }}
-              style={{margin:0,width:'100%'}}
+              style={{ margin: 0, width: '100%' }}
             >
-
-              <Grid xs={12} md={6} sx={{padding:0}}>
+              <Grid xs={12} md={6} sx={{ padding: 0 }}>
                 <Card
                   spacing={3}
                   sx={{
-                  
-                    padding:'15px 25px',
-                    borderRadius: '1rem', alignItems: 'center', display:'flex',mb:2
+                    padding: '15px 25px',
+                    borderRadius: '1rem',
+                    alignItems: 'center',
+                    display: 'flex',
+                    mb: 2
                   }}
                 >
-                  <FormControlLabel value="shoutoutonly" control={<Radio />} label="Shoutout Only" />
+                  <FormControlLabel
+                    value="shoutoutonly"
+                    control={<Radio />}
+                    label="Shoutout Only"
+                  />
                 </Card>
-                </Grid> 
-                <Grid xs={12} md={6} sx={{py:0}}>
+              </Grid>
+              <Grid xs={12} md={6} sx={{ py: 0 }}>
                 <Card
-
                   sx={{
-                    padding:'15px 25px',
-                    borderRadius: '1rem',  alignItems: 'center', display:'flex',mb:2
-                  }}>
-                  <FormControlLabel value="contentshoutout" control={<Radio />} label="Content Creation & Shoutouts" />
+                    padding: '15px 25px',
+                    borderRadius: '1rem',
+                    alignItems: 'center',
+                    display: 'flex',
+                    mb: 2
+                  }}
+                >
+                  <FormControlLabel
+                    value="contentshoutout"
+                    control={<Radio />}
+                    label="Content Creation & Shoutouts"
+                  />
                 </Card>
-                </Grid>
-
-          </Grid>
-        </Stack>
+              </Grid>
+            </Grid>
+          </Stack>
         </RadioGroup>
-
       </Stack>
 
-      <div style={{marginTop:15}}> 
+      <div style={{ marginTop: 15 }}>
         <Button
-          endIcon={(
+          endIcon={
             <SvgIcon>
               <ArrowRightIcon />
             </SvgIcon>
-          )}
-          className={isReview?"review-hidden":""}
-          sx={{px:5,py:2,fontSize:18}}
-          onClick={onNext}
+          }
+          className={isReview ? 'review-hidden' : ''}
+          sx={{ px: 5, py: 2, fontSize: 18 }}
+          onClick={goNext}
           variant="contained"
         >
           Continue
@@ -214,7 +255,7 @@ JobBriefSummeryStep.propTypes = {
   onBack: PropTypes.func,
   onNext: PropTypes.func
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   job: state.job
 });
 

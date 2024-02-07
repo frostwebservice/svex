@@ -109,6 +109,14 @@ const useInvoicesStore = (searchState) => {
 };
 
 const Page = () => {
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   const rootRef = useRef(null);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const invoicesSearch = useInvoicesSearch();

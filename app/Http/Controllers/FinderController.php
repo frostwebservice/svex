@@ -27,6 +27,12 @@ class FinderController extends Controller
         $res = DB::table("outreachs")->where('id',$request->id)->update($data);
         print_r($res);
     }
+    public function delete_group(Request $request){
+        $id = $request->id;
+        $res = DB::table("outreachs")->where("id",$id)->delete();
+        $res = DB::table("group_infs")->where("group_id",$id)->delete();
+        print_r(json_encode($res));
+    }
     public function findWithParams(Request $request)
     {
         $email = $request->email;

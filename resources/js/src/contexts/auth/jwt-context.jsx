@@ -1,8 +1,10 @@
 import { createContext, useCallback, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { authApi } from '@/api/auth';
+import { useAuth } from '@/hooks/use-auth';
 import { Issuer } from '@/utils/auth';
-
+import { useNavigate } from 'react-router-dom';
+import { useRouter } from '@/hooks/use-router';
 const STORAGE_KEY = 'accessToken';
 
 var ActionType;
@@ -69,6 +71,9 @@ export const AuthContext = createContext({
 export const AuthProvider = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
+  const auth = useAuth();
+  const router = useRouter();
 
   const initialize = useCallback(async () => {
     try {
@@ -77,6 +82,36 @@ export const AuthProvider = (props) => {
         var token = localStorage.getItem('time_token');
         var tokenObj = JSON.parse(token);
         if (new Date().getTime() - tokenObj.time >= tokenObj.expire) {
+          // switch (auth.issuer) {
+          //   case Issuer.Amplify: {
+          //     await auth.signOut();
+          //     break;
+          //   }
+
+          //   case Issuer.Auth0: {
+          //     await auth.logout();
+          //     break;
+          //   }
+
+          //   case Issuer.Firebase: {
+          //     await auth.signOut();
+          //     break;
+          //   }
+
+          //   case Issuer.JWT: {
+          //     await auth.signOut();
+          //     break;
+          //   }
+          //   case Issuer.Auth: {
+          //     await auth.signOut();
+          //     break;
+          //   }
+
+          //   default: {
+          //     console.warn('Using an unknown Auth Issuer, did not log out');
+          //   }
+          // }
+          // router.push('/');
           localStorage.removeItem('email');
 
           localStorage.removeItem('time_token');
@@ -87,23 +122,7 @@ export const AuthProvider = (props) => {
               user: null
             }
           });
-          let obj = {
-            time: new Date().getTime(),
-            value: 'email',
-            expire: 3000000
-          };
-          // You can only store strings
-          let objStr = JSON.stringify(obj);
-          localStorage.setItem('time_token', objStr);
-          const user = await authApi.me({ accessToken });
-          // const user = null;
-          dispatch({
-            type: ActionType.INITIALIZE,
-            payload: {
-              isAuthenticated: true,
-              user
-            }
-          });
+          router.push('/');
         } else {
           let obj = {
             time: new Date().getTime(),
@@ -124,9 +143,6 @@ export const AuthProvider = (props) => {
           });
         }
       } else {
-        // alert('localStorage has expired');
-        // localStorage.removeItem('email')
-
         dispatch({
           type: ActionType.INITIALIZE,
           payload: {

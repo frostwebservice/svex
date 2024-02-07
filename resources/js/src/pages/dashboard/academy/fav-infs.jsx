@@ -20,13 +20,12 @@ import {
 import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import { useSettings } from '@/hooks/use-settings';
-import "./inf_finder.css"
-import { useCallback, useState } from 'react'
+import './inf_finder.css';
+import { useCallback, useState } from 'react';
 import { InfCard } from './inf_card';
 import { useEffect } from 'react';
 import { getFavs } from '@/actions';
-import { useDispatch, connect } from "react-redux";
-
+import { useDispatch, connect } from 'react-redux';
 
 const now = new Date();
 
@@ -50,15 +49,23 @@ const sortOptions = [
 ];
 
 const Favinfs = (props) => {
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   const { results, runTab } = props;
-  const [infs, setInfs] = useState([])
-  const dispatch = useDispatch()
+  const [infs, setInfs] = useState([]);
+  const dispatch = useDispatch();
   const settings = useSettings();
-  const [counter, setCounter] = useState(0)
-  const [sortOrder, setSortOrder] = useState("follower_order")
+  const [counter, setCounter] = useState(0);
+  const [sortOrder, setSortOrder] = useState('follower_order');
   usePageView();
   const email = JSON.parse(localStorage.getItem('email'));
-  const [changedFlag,setchangedFlag]=useState(true)
+  const [changedFlag, setchangedFlag] = useState(true);
 
   const handleSortChange = (order) => {
     setSortOrder(order);
@@ -66,50 +73,44 @@ const Favinfs = (props) => {
 
   useEffect(() => {
     dispatch(getFavs({ email: email }));
-
-  }, [dispatch])
+  }, [dispatch]);
   useEffect(() => {
     if (results.favs) {
-      let result = results.favs
-      setInfs(result)
-      setCounter(result.length)
+      let result = results.favs;
+      setInfs(result);
+      setCounter(result.length);
     }
-
-  }, [results])
+  }, [results]);
   useEffect(() => {
-    if (sortOrder == "follower_order") {
+    if (sortOrder == 'follower_order') {
       let sorted = infs.sort((a, b) => {
-        return b.data[0].follower_count - a.data[0].follower_count
-      })
-      setInfs(sorted)
-    } else if (sortOrder == "engagement_order") {
+        return b.data[0].follower_count - a.data[0].follower_count;
+      });
+      setInfs(sorted);
+    } else if (sortOrder == 'engagement_order') {
       let sorted = infs.sort((a, b) => {
-        return b.data[0].engagement_rate - a.data[0].engagement_rate
-      })
-      setInfs(sorted)
-    } else if (sortOrder == "avglikes_order") {
+        return b.data[0].engagement_rate - a.data[0].engagement_rate;
+      });
+      setInfs(sorted);
+    } else if (sortOrder == 'avglikes_order') {
       let sorted = infs.sort((a, b) => {
-        return b.data[0].avg_like - a.data[0].avg_like
-      })
-      setInfs(sorted)
-    } else if (sortOrder == "avgcomments_order") {
+        return b.data[0].avg_like - a.data[0].avg_like;
+      });
+      setInfs(sorted);
+    } else if (sortOrder == 'avgcomments_order') {
       let sorted = infs.sort((a, b) => {
-        return b.data[0].avg_comment - a.data[0].avg_comment
-      })
-      setInfs(sorted)
+        return b.data[0].avg_comment - a.data[0].avg_comment;
+      });
+      setInfs(sorted);
     }
-    let nextFlag = !changedFlag
-    setchangedFlag(nextFlag)
-
-  }, [sortOrder])
+    let nextFlag = !changedFlag;
+    setchangedFlag(nextFlag);
+  }, [sortOrder]);
   return (
     <>
       <Seo title="Dashboard: Favorite Influencers" />
-      <Box
-        component="main"
-        sx={{ flexGrow: 1 }}
-      >
-        <Container maxWidth={settings.stretch ? false : 'xl'} >
+      <Box component="main" sx={{ flexGrow: 1 }}>
+        <Container maxWidth={settings.stretch ? false : 'xl'}>
           <Typography variant="h4" sx={{ mt: 8, mb: 4, fontSize: '32px' }}>
             Favorite Influencers
           </Typography>
@@ -118,7 +119,7 @@ const Favinfs = (props) => {
             direction="row"
             flexWrap="wrap"
             spacing={3}
-          // sx={{ p: 3 }}
+            // sx={{ p: 3 }}
           >
             <Box
               component="form"
@@ -133,13 +134,23 @@ const Favinfs = (props) => {
                 {counter} Influencers found
               </Typography>
             </Box>
-            <Box sx={{
-              display: 'flex'
-            }}>
-              <span style={{
-                fontWeight: 500, whiteSpace: 'normal', marginRight: 15, display: 'flex'
-                , alignItems: 'center', mr: 5
-              }}>Sort by</span>
+            <Box
+              sx={{
+                display: 'flex'
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: 500,
+                  whiteSpace: 'normal',
+                  marginRight: 15,
+                  display: 'flex',
+                  alignItems: 'center',
+                  mr: 5
+                }}
+              >
+                Sort by
+              </span>
               <TextField
                 label="Sort By"
                 name="sort"
@@ -149,10 +160,7 @@ const Favinfs = (props) => {
                 value={sortOrder}
               >
                 {sortOptions.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
+                  <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
@@ -160,7 +168,6 @@ const Favinfs = (props) => {
             </Box>
           </Stack>
           <Box key={changedFlag} sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
-
             {infs.map((inf) => (
               <InfCard
                 key={inf.id}
@@ -168,15 +175,13 @@ const Favinfs = (props) => {
                 currentTab={inf.tab}
               />
             ))}
-
           </Box>
         </Container>
       </Box>
     </>
   );
 };
-const mapStateToProps = state => ({
-  results: state.favs,
-})
+const mapStateToProps = (state) => ({
+  results: state.favs
+});
 export default connect(mapStateToProps)(Favinfs);
-

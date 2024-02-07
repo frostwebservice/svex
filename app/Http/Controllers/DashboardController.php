@@ -160,10 +160,7 @@ class DashboardController extends Controller
     }
     public function uploadCSV(Request $request)
 	{
-		if ($request->kind == "instagram")
-			$path = $request->file('file')->store('public/covers');
-		else
-			$path = $request->file('file')->store('public/avatars');
+
 		$user = User::where('email', $request->email)->first();
 
         $file = $request->file('file');

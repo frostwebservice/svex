@@ -17,6 +17,14 @@ import './account.css';
 const Payment = () => {
   usePageView();
   const settings = useSettings();
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   return (
     <>
       <Seo title="Dashboard: Payment Settings" />

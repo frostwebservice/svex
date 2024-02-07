@@ -37,6 +37,7 @@ Route::post('get_user_info', [App\Http\Controllers\UserController::class, 'getUs
 Route::post('get_social_profile', [App\Http\Controllers\UserController::class, 'getSocialProfile']);
 Route::post('upload_cover', [App\Http\Controllers\UserController::class, 'uploadCover']);
 Route::post('upload_csv', [App\Http\Controllers\DashboardController::class, 'uploadCSV']);
+Route::post('upload_shoutout', [App\Http\Controllers\JobController::class, 'uploadShoutout']);
 Route::post('edit-profile', [App\Http\Controllers\UserController::class, 'editProfile']);
 Route::post('get_notifysettings', [App\Http\Controllers\UserController::class, 'getNotifysettings']);
 Route::post('update_notifysettings', [App\Http\Controllers\UserController::class, 'updateNotifysettings']);
@@ -65,6 +66,7 @@ Route::post('get_invited', [App\Http\Controllers\JobController::class, 'get_invi
 Route::post('get_current_job', [App\Http\Controllers\JobController::class, 'get_current_job']);
 Route::post('update_jobactivity', [App\Http\Controllers\JobController::class, 'update_jobactivity']);
 Route::post('hire_inf', [App\Http\Controllers\JobController::class, 'hire_inf']);
+Route::post('get_files', [App\Http\Controllers\JobController::class, 'get_files']);
 Route::post('get_tips', [App\Http\Controllers\DashboardController::class, 'get_tips']);
 Route::post('update_tips', [App\Http\Controllers\DashboardController::class, 'update_tips']);
 Route::post('get_announcements', [App\Http\Controllers\DashboardController::class, 'get_announcements']);
@@ -80,6 +82,7 @@ Route::post('get_invoice_detail', [App\Http\Controllers\DashboardController::cla
 Route::post('invite_influencer', [App\Http\Controllers\JobController::class, 'invite_influencer']);
 Route::post('invite_group', [App\Http\Controllers\JobController::class, 'invite_group']);
 Route::post('update_group', [App\Http\Controllers\FinderController::class, 'update_group']);
+Route::post('delete_group', [App\Http\Controllers\FinderController::class, 'delete_group']);
 Route::post('add_group', [App\Http\Controllers\FinderController::class, 'add_group']);
 Route::post('delete_user_group', [App\Http\Controllers\FinderController::class, 'delete_user_group']);
 

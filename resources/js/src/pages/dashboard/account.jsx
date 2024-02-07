@@ -1,6 +1,14 @@
 import { useCallback, useState } from 'react';
 import { subDays, subHours, subMinutes, subMonths } from 'date-fns';
-import { Box, Container, Divider, Stack, Tab, Tabs, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  Divider,
+  Stack,
+  Tab,
+  Tabs,
+  Typography
+} from '@mui/material';
 import { Seo } from '@/components/seo';
 import { useMockedUser } from '@/hooks/use-mocked-user';
 import { usePageView } from '@/hooks/use-page-view';
@@ -10,7 +18,7 @@ import { AccountNotificationsSettings } from '@/sections/dashboard/account/accou
 import { useSettings } from '@/hooks/use-settings';
 import AccountTeamSettings from '@/sections/dashboard/account/account-team-settings';
 import AccountSecuritySettings from '@/sections/dashboard/account/account-security-settings';
-import "./account.css";
+import './account.css';
 
 const now = new Date();
 
@@ -23,6 +31,14 @@ const tabs = [
 ];
 
 const Page = () => {
+  let obj = {
+    time: new Date().getTime(),
+    value: 'email',
+    expire: 3000000
+  };
+  // You can only store strings
+  let objStr = JSON.stringify(obj);
+  localStorage.setItem('time_token', objStr);
   const user = useMockedUser();
   const [currentTab, setCurrentTab] = useState('general');
   const settings = useSettings();
@@ -43,14 +59,9 @@ const Page = () => {
           py: 8
         }}
       >
-        <Container  maxWidth={settings.stretch ? false : 'xl'}>
-          <Stack
-            spacing={3}
-            sx={{ mb: 3 }}
-          >
-            <Typography variant="h4">
-              Account
-            </Typography>
+        <Container maxWidth={settings.stretch ? false : 'xl'}>
+          <Stack spacing={3} sx={{ mb: 3 }}>
+            <Typography variant="h4">Account</Typography>
             <div>
               <Tabs
                 indicatorColor="primary"
@@ -61,11 +72,7 @@ const Page = () => {
                 variant="scrollable"
               >
                 {tabs.map((tab) => (
-                  <Tab
-                    key={tab.value}
-                    label={tab.label}
-                    value={tab.value}
-                  />
+                  <Tab key={tab.value} label={tab.label} value={tab.value} />
                 ))}
               </Tabs>
               <Divider />
@@ -124,14 +131,20 @@ const Page = () => {
               loginEvents={[
                 {
                   id: '1bd6d44321cb78fd915462fa',
-                  createdAt: subDays(subHours(subMinutes(now, 5), 7), 1).getTime(),
+                  createdAt: subDays(
+                    subHours(subMinutes(now, 5), 7),
+                    1
+                  ).getTime(),
                   ip: '95.130.17.84',
                   type: 'Credential login',
                   userAgent: 'Chrome, Mac OS 10.15.7'
                 },
                 {
                   id: 'bde169c2fe9adea5d4598ea9',
-                  createdAt: subDays(subHours(subMinutes(now, 25), 9), 1).getTime(),
+                  createdAt: subDays(
+                    subHours(subMinutes(now, 25), 9),
+                    1
+                  ).getTime(),
                   ip: '95.130.17.84',
                   type: 'Credential login',
                   userAgent: 'Chrome, Mac OS 10.15.7'

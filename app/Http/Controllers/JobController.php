@@ -46,6 +46,23 @@ class JobController extends Controller
         print_r(json_encode($res));
 
     }
+    public function uploadShoutout(Request $request){
+        $len = $request->len;
+        $res = "";
+        for($i=0;$i<$len;$i++){
+            $file = $request->file('file'.$i);
+            if($file){
+                $filename = $file->getClientOriginalName();
+                $location = 'shoutouts'; 
+                $file->move($location, $filename);
+                $ins = DB::table($request->kind)->insert(array("location"=>$filename));
+                $id = DB::table($request->kind)->orderBy('id','desc')->first()->id;
+                if($i==$len-1)$res = $res.$id;
+                else $res = $res.$id.",";
+            }
+        }
+        print_r(json_encode($res));
+    }
     public function invite_group(Request $request){
         $data = array(
             'job_id'=>$request->job_id,
@@ -111,6 +128,19 @@ class JobController extends Controller
     public function get_current_job(Request $request){
         $jobId = $request->jobId;
         $job = DB::table("jobs")->where('id',$jobId)->get()->toArray()[0];
+        $favorites = $job->favorites;
+        $favorites = explode(",",$favorites);
+        $arr = array();
+        foreach($favorites as $key=>$value){
+            $fav = DB::table("favorites")->where("id",$value)->first();
+            if(isset($fav)){
+                $name = DB::table("influencers_".$fav->tab)->where("id",$fav->inf_id)->first()->username;
+                array_push($arr,array("value"=>$value,"label"=>$name));
+            }
+            
+        }
+        $job->favarray = $arr;
+
         print_r(json_encode($job));
     }
     public function get_invited(Request $request){
@@ -128,6 +158,7 @@ class JobController extends Controller
         
         $data = $request->job;
         unset($data["typesarray"]);
+        unset($data["favarray"]);
         unset($data["payselected"]);
         $res = DB::table("jobs")->insert($data);
         print_r($res);
@@ -137,6 +168,7 @@ class JobController extends Controller
         $jobID = $request->jobID;
         $data = $request->job;
         unset($data["typesarray"]);
+        unset($data["favarray"]);
         unset($data["payselected"]);
         $res = DB::table("jobs")->where("id",$jobID)->update($data);
         print_r($res);
@@ -157,9 +189,26 @@ class JobController extends Controller
         foreach($res as $key=>$value){
             $cnt = DB::table('applicants')->where("job_id",$value->id)->where("invited",0)->count();
             $res[$key]->cnt = $cnt;
+            $res[$key]->time = date('Y-m-d H:i:s');
         }
+
         print_r(json_encode($res));
     }
+    public function get_files(Request $request){
+        $kind=$request->kind;
+        $ids = $request->arr;
+        $files = array();
+        if($ids[0]!=''){
+            foreach($ids as $key=>$id){
+                $file = DB::table($kind)->where("id",$id)->first()->location;
+                array_push($files,array('filename'=>$file,'fid'=>$id));
+            }
+            print_r(json_encode($files));
+        }
+        else{
+            print_r(json_encode(array()));
+        }
 
+    }
 
 }
