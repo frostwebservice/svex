@@ -41,7 +41,7 @@ class UserController extends Controller
 		}
 		$user_status = User::where("fullname", $request->name)->first();
 
-		$pure['fullname']=$request->namae;
+		$pure['fullname']=str_replace(" ","",$request->name);
 		$pure['password']=$request->password;
 		$pure['email']=$request->email;
 		$pure['phonenumber']="";
