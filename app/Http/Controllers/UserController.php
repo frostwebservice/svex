@@ -19,9 +19,10 @@ class UserController extends Controller
 {
 	//
 	private $status_code = 200;
-	public function create_purelyuser(){
+	public function create_purelyuser($user){
 		$purelyMail = new PurelyMailService();
-		$purelyMail->createUser($user);
+		$res=$purelyMail->createUser($user);
+		return $res;
 	}
 	public function userSignUp(Request $request)
 	{
@@ -40,12 +41,24 @@ class UserController extends Controller
 		}
 		$user_status = User::where("fullname", $request->name)->first();
 
+		$pure['fullname']=$request->namae;
+		$pure['password']=$request->password;
+		$pure['email']=$request->email;
+		$pure['phonenumber']="";
+
+
 		if (!is_null($user_status)) {
 			return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! username already registered"]);
 		}
 
 		$user = User::create($userDataArray);
-
+		$purely_status = $this->create_purelyuser($pure);
+		if($purely_status['type']=="success") {
+			//success creation of auto email
+		}
+		else{
+			//error creation of auto email
+		}
 		if (!is_null($user)) {
 
 			$user->generateVerificationToken();

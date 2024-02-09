@@ -1,4 +1,3 @@
-
 <?php
 namespace App\Providers;
 
@@ -22,14 +21,14 @@ class PurelyMailService
     public function createUser($user): array
     {
         $userData = [
-            "userName" => Str::replace(' ', '', $user->fullname),
+            "userName" => Str::replace(' ', '', $user['fullname']),
             "domainName" => "socialvex.net",
-            "password" => $user->password,
+            "password" => $user['password'],
             "enablePasswordReset" => true,
-            "recoveryEmail" => $user->email,
-            "recoveryEmailDescription" => $user->email,
-            "recoveryPhone" => $user->phonenumber,
-            "recoveryPhoneDescription" => $user->phonenumber,
+            "recoveryEmail" => $user['email'],
+            "recoveryEmailDescription" => $user['email'],
+            "recoveryPhone" => $user['phonenumber'],
+            "recoveryPhoneDescription" => $user['phonenumber'],
             "enableSearchIndexing" => true,
             "sendWelcomeEmail" => true
         ];
