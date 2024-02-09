@@ -25,7 +25,7 @@ const VerticalLayoutContainer = styled('div')({
 });
 
 export const VerticalLayout = (props) => {
-  const { children, sections, navColor } = props;
+  const { children, userinfo, sections, navColor } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const mobileNav = useMobileNav();
 
@@ -33,10 +33,7 @@ export const VerticalLayout = (props) => {
     <>
       <TopNav onMobileNavOpen={mobileNav.handleOpen} />
       {lgUp && (
-        <SideNav
-          color={navColor}
-          sections={sections}
-        />
+        <SideNav userinfo={userinfo} color={navColor} sections={sections} />
       )}
       {!lgUp && (
         <MobileNav
@@ -47,9 +44,7 @@ export const VerticalLayout = (props) => {
         />
       )}
       <VerticalLayoutRoot>
-        <VerticalLayoutContainer>
-          {children}
-        </VerticalLayoutContainer>
+        <VerticalLayoutContainer>{children}</VerticalLayoutContainer>
       </VerticalLayoutRoot>
     </>
   );

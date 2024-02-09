@@ -39,7 +39,7 @@ export default function Stripe({ total }) {
     <>
       {stripePromise && clientSecret && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm />
+          <CheckoutForm amount={total} />
         </Elements>
       )}
     </>

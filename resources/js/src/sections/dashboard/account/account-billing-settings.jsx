@@ -31,43 +31,36 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import $ from 'jquery';
-import { PropertyList } from '@/components/property-list';
-import { PropertyListItem } from '@/components/property-list-item';
 import { AccountPlanIcon } from './account-plan-icon';
-// import { getBillingInfo } from '@/actions';
 import './bill.css';
 import OrderSummary from './payments/ordersummary';
 import PaypalForm from './payments/paypalForm';
 
-var tmpBilling = {
-  billing_name: '',
-  card_number: '',
-  country: '',
-  zip_code: ''
-};
 const plans = [
   {
-    id: 'startup',
-    icon: <AccountPlanIcon name="startup" />,
-    name: 'Free Plan',
+    id: 'trial',
+    icon: <AccountPlanIcon name="trial" />,
+    name: 'Trial',
     price: 0
   },
   {
-    id: 'standard',
-    icon: <AccountPlanIcon name="standard" />,
-    name: 'Standard',
-    price: 99
+    id: 'essential',
+    icon: <AccountPlanIcon name="essential" />,
+    name: 'Essential',
+    price: 49
+  },
+  {
+    id: 'premium',
+    icon: <AccountPlanIcon name="premium" />,
+    name: 'Premium',
+    price: 129
   }
 ];
 
 const AccountBillingSettings = (props) => {
-  const { plan, userinfo, billinginfo } = props;
-  const [selectedPlan, setSelectedPlan] = useState(
-    userinfo.paid == '1' ? 'standard' : 'startup'
-  );
-  const [currentPlan, setCurrentPlan] = useState(
-    userinfo.paid == '1' ? 'standard' : 'startup'
-  );
+  const { userinfo } = props;
+  const [selectedPlan, setSelectedPlan] = useState('');
+  const [currentPlan, setCurrentPlan] = useState('');
 
   const [invoices, setInvoices] = useState([]);
   useEffect(() => {
@@ -75,8 +68,7 @@ const AccountBillingSettings = (props) => {
       setInvoices(response.data);
     });
   }, [userinfo]);
-  const [isEdit, setIsEdit] = useState(false);
-  const [billing, setBilling] = useState(billinginfo);
+
   const [paytype, setPaytype] = useState('stripe');
   const payNow = () => {
     $('#submit')[0].click();
@@ -84,30 +76,23 @@ const AccountBillingSettings = (props) => {
   const handlePaytype = (p) => {
     setPaytype(p);
   };
-  const handleEdit = (status) => {
-    setBilling(billinginfo);
-    setIsEdit((prevState) => !prevState);
-    if (!status) return;
-    axios
-      .post('/api/update_billing_info', {
-        value: billing,
-        user_email: JSON.parse(localStorage.getItem('email'))
-      })
-      .then((response) => {
-        // dispatch(getBillingInfo({ email }));
-      })
-      .catch((error) => {
-        console.error('Error getting Notify Settings', error);
-      });
-  };
+
   const dispatch = useDispatch();
   const email = JSON.parse(localStorage.getItem('email'));
   const cancelPay = () => {
     setSelectedPlan('startup');
   };
   useEffect(() => {
-    setCurrentPlan(userinfo.paid == '1' ? 'standard' : 'startup');
-    setSelectedPlan(userinfo.paid == '1' ? 'standard' : 'startup');
+    if (userinfo.paid == '0') {
+      setCurrentPlan('trial');
+      setSelectedPlan('trial');
+    } else if (userinfo.paid == '1') {
+      setCurrentPlan('essential');
+      setSelectedPlan('essential');
+    } else if (userinfo.paid == '2') {
+      setCurrentPlan('premium');
+      setSelectedPlan('premium');
+    }
   }, [userinfo]);
   return (
     <Stack spacing={4} {...props}>
@@ -193,7 +178,7 @@ const AccountBillingSettings = (props) => {
             </Grid>
           </div>
           <Divider sx={{ my: 3 }} />
-          {selectedPlan == 'startup' ? (
+          {selectedPlan == 'trial' ? (
             <></>
           ) : (
             <>
@@ -218,8 +203,22 @@ const AccountBillingSettings = (props) => {
                 <MenuItem value="stripe">Stripe</MenuItem>
                 <MenuItem value="paypal">Paypal</MenuItem>
               </TextField>
-              {paytype == 'paypal' ? <PaypalForm /> : <></>}
-              {paytype == 'stripe' ? <OrderSummary /> : <></>}
+              {paytype == 'paypal' ? (
+                <PaypalForm
+                  key={selectedPlan}
+                  amount={selectedPlan == 'essential' ? '49' : '129'}
+                />
+              ) : (
+                <></>
+              )}
+              {paytype == 'stripe' ? (
+                <OrderSummary
+                  key={selectedPlan}
+                  amount={selectedPlan == 'essential' ? '49' : '129'}
+                />
+              ) : (
+                <></>
+              )}
 
               <Typography color="text.secondary" variant="body2" sx={{ mt: 3 }}>
                 We cannot refund once you purchased a subscription, but you can

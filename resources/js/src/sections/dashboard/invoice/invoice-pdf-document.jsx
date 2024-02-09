@@ -244,7 +244,11 @@ export const InvoicePdfDocument = (props) => {
                   <Text style={styles.body2}>{index + 1}</Text>
                 </View>
                 <View style={styles.itemDescription}>
-                  <Text style={styles.body2}>{item.description}</Text>
+                  <Text style={styles.body2}>
+                    {'This was paid for ' +
+                      (item.unitAmount == '49' ? 'essential' : 'premium') +
+                      ' membership subscription.'}
+                  </Text>
                 </View>
                 <View style={styles.itemQty}>
                   <Text style={styles.body2}>{item.quantity}</Text>

@@ -37,8 +37,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import toast from 'react-hot-toast';
+import { getUserProfile } from '@/actions';
 const PinterestSearch = (props) => {
-  const { searchs, runTab } = props;
+  const { searchs, runTab, userinfo } = props;
   const email = JSON.parse(localStorage.getItem('email'));
   const [selectedSearch, setSelectedSearch] = useState('');
   const dispatch = useDispatch();
@@ -73,6 +75,22 @@ const PinterestSearch = (props) => {
   };
   const runSearch = () => {
     if (selectedSearch > 0) {
+      if (userinfo.is_admin != '1') {
+        if (userinfo.paid == '1' && userinfo.search_cnt >= 50) {
+          toast.error(
+            'You are trying to run 51th search this month.\n Please upgrade your membership. \n ' +
+              userinfo.time +
+              'days left by renewal date.'
+          );
+          return;
+        } else if (userinfo.paid == '0' && userinfo.search_cnt >= 5) {
+          toast.error(
+            'Trial user cannot run over 5 searchs .\n Please upgrade your membership.'
+          );
+          return;
+        }
+      }
+
       searchs.map((search) => {
         if (search.id == selectedSearch) {
           let temp = {
@@ -148,10 +166,26 @@ const PinterestSearch = (props) => {
     verified: false
   });
   const onSearch = () => {
+    if (userinfo.is_admin != '1') {
+      if (userinfo.paid == '1' && userinfo.search_cnt >= 50) {
+        toast.error(
+          'You are trying to run 51th search this month.\n Please upgrade your membership. \n ' +
+            userinfo.time +
+            'days left by renewal date.'
+        );
+        return;
+      } else if (userinfo.paid == '0' && userinfo.search_cnt >= 5) {
+        toast.error(
+          'Trial user cannot run over 5 searchs .\n Please upgrade your membership.'
+        );
+        return;
+      }
+    }
+
     dispatch(doSearch(email, searchParams));
   };
   useEffect(() => {
-    dispatch(doSearch(email, searchParams));
+    dispatch(doSearch(email, searchParams, 'all'));
   }, []);
   useEffect(() => {
     if (
@@ -262,9 +296,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.keywords}
-                onChange={(e) =>
-                  setSearchParams({ ...searchParams, keywords: e.target.value })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      keywords: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Search"
                 name="keywords"
@@ -298,9 +341,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.location}
-                onChange={(e) =>
-                  setSearchParams({ ...searchParams, location: e.target.value })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      location: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Location"
                 name="location"
@@ -319,9 +371,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.language}
-                onChange={(e) =>
-                  setSearchParams({ ...searchParams, language: e.target.value })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      language: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Language"
                 name="language"
@@ -340,12 +401,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.followers_from}
-                onChange={(e) =>
-                  setSearchParams({
-                    ...searchParams,
-                    followers_from: e.target.value
-                  })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      followers_from: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Followers"
                 name="followers_from"
@@ -381,12 +448,18 @@ const PinterestSearch = (props) => {
               </span>
               <TextField
                 value={searchParams.followers_to}
-                onChange={(e) =>
-                  setSearchParams({
-                    ...searchParams,
-                    followers_to: e.target.value
-                  })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      followers_to: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Followers"
                 name="followers_to"
@@ -405,9 +478,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.age}
-                onChange={(e) =>
-                  setSearchParams({ ...searchParams, age: e.target.value })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      age: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Age"
                 name="age"
@@ -426,9 +508,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.gender}
-                onChange={(e) =>
-                  setSearchParams({ ...searchParams, gender: e.target.value })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      gender: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Gender"
                 name="gender"
@@ -447,12 +538,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.engagement}
-                onChange={(e) =>
-                  setSearchParams({
-                    ...searchParams,
-                    engagement: e.target.value
-                  })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      engagement: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Engagement rate"
                 name="engagement"
@@ -471,9 +568,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.avg_like}
-                onChange={(e) =>
-                  setSearchParams({ ...searchParams, avg_like: e.target.value })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      avg_like: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Avg likes range"
                 name="avg_like"
@@ -492,12 +598,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.avg_comment}
-                onChange={(e) =>
-                  setSearchParams({
-                    ...searchParams,
-                    avg_comment: e.target.value
-                  })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      avg_comment: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Avg comments range"
                 name="avg_comment"
@@ -540,9 +652,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.username}
-                onChange={(e) =>
-                  setSearchParams({ ...searchParams, username: e.target.value })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      username: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Search"
                 name="username"
@@ -555,9 +676,18 @@ const PinterestSearch = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <TextField
                 value={searchParams.url}
-                onChange={(e) =>
-                  setSearchParams({ ...searchParams, url: e.target.value })
-                }
+                onChange={(e) => {
+                  if (userinfo.paid != '0')
+                    setSearchParams({
+                      ...searchParams,
+                      url: e.target.value
+                    });
+                  else {
+                    toast.error(
+                      'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                    );
+                  }
+                }}
                 fullWidth
                 label="Search"
                 name="url"
@@ -573,12 +703,18 @@ const PinterestSearch = (props) => {
               control={
                 <Checkbox
                   value={searchParams.hasPhone}
-                  onChange={(e) =>
-                    setSearchParams({
-                      ...searchParams,
-                      hasPhone: !searchParams.hasPhone
-                    })
-                  }
+                  onChange={(e) => {
+                    if (userinfo.paid != '0')
+                      setSearchParams({
+                        ...searchParams,
+                        hasPhone: !searchParams.hasPhone
+                      });
+                    else {
+                      toast.error(
+                        'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                      );
+                    }
+                  }}
                   checked={searchParams.hasPhone == 1 ? true : false}
                 />
               }
@@ -588,12 +724,18 @@ const PinterestSearch = (props) => {
               control={
                 <Checkbox
                   value={searchParams.verified}
-                  onChange={(e) =>
-                    setSearchParams({
-                      ...searchParams,
-                      verified: !searchParams.verified
-                    })
-                  }
+                  onChange={(e) => {
+                    if (userinfo.paid != '0')
+                      setSearchParams({
+                        ...searchParams,
+                        verified: !searchParams.verified
+                      });
+                    else {
+                      toast.error(
+                        'Trial user is allowed to use only category option for searching .\n Please upgrade your membership.'
+                      );
+                    }
+                  }}
                   checked={searchParams.verified == 1 ? true : false}
                 />
               }
@@ -690,6 +832,7 @@ const PinterestSearch = (props) => {
 };
 const mapStateToProps = (state) => ({
   searchs: state.searchs.searchs,
-  runTab: state.runsavestate
+  runTab: state.runsavestate,
+  userinfo: state.profile.userinfo
 });
 export default connect(mapStateToProps)(PinterestSearch);

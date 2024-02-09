@@ -160,7 +160,10 @@ export const OrderDetails = (props) => {
                 return (
                   <TableRow key={item.id}>
                     <TableCell>
-                      {item.name} x {item.quantity}
+                      {item.unitAmount == '49'
+                        ? 'Essential Membership'
+                        : 'Premium Membership'}{' '}
+                      x {item.quantity}
                     </TableCell>
                     <TableCell>{item.billingCycle}</TableCell>
                     <TableCell>{unitAmount}</TableCell>

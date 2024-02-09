@@ -60,6 +60,7 @@ const OutreachGroups = (props) => {
         setOpen(false);
       });
   };
+
   return (
     <>
       <Seo title="Dashboard: Outreach Groups" />

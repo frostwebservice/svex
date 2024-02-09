@@ -31,6 +31,9 @@ import LinkedinSearch from '@/sections/dashboard/academy/linkedin-search';
 import { connect, useDispatch } from 'react-redux';
 import Pagination from '@mui/material/Pagination';
 import usePagination from '@/utils/pagination';
+import { getUserProfile } from '@/actions';
+import toast from 'react-hot-toast';
+
 const now = new Date();
 
 const TiktokIcon = ({ color = '#000000' }) => {
@@ -56,7 +59,7 @@ const Page = (props) => {
   // You can only store strings
   let objStr = JSON.stringify(obj);
   localStorage.setItem('time_token', objStr);
-  const { results, runTab } = props;
+  const { results, runTab, userinfo } = props;
   const dispatch = useDispatch();
   const settings = useSettings();
   const [sortOptions, setSortOptions] = useState([]);
@@ -64,12 +67,37 @@ const Page = (props) => {
   const [infcounter, setInfcounter] = useState(0);
   const [infs, setInfs] = useState([]);
   const [changedFlag, setchangedFlag] = useState(true);
+  const email = JSON.parse(localStorage.getItem('email'));
   useEffect(() => {
     if (sortOptions[0]) {
       setSelectedSort(sortOptions[0].value);
     }
   }, [sortOptions]);
   useEffect(() => {
+    if (selectedSort != 'follower_order' && selectedSort != '') {
+      if (userinfo.is_admin != '1') {
+        if (userinfo.paid == '1' && userinfo.search_cnt >= 50) {
+          toast.error(
+            'You are trying to run 51th search this month.\n Please upgrade your membership. \n ' +
+              userinfo.time +
+              'days left by renewal date.'
+          );
+          return;
+        } else if (userinfo.paid == '0' && userinfo.search_cnt >= 5) {
+          toast.error(
+            'Trial user cannot run over 5 searchs .\n Please upgrade your membership.'
+          );
+          return;
+        }
+      }
+      axios
+        .post('/api/update_search_cnt', { email: email })
+        .then((response) => {
+          dispatch(getUserProfile({ email: email }));
+        })
+        .catch((e) => {});
+    }
+
     if (results.searchresults && results.searchresults.result.length) {
       let result = results.searchresults;
       setInfs(arrange(result.result, selectedSort));
@@ -241,6 +269,8 @@ const Page = (props) => {
       }
       setInfcounter(result.result.length);
     }
+
+    dispatch(getUserProfile({ email: email }));
   }, [dispatch, results]);
   const arrange = (array, option) => {
     if (option == '') return array;
@@ -426,6 +456,17 @@ const Page = (props) => {
                 variant="body2"
               >
                 {infcounter} Influencers found
+                {userinfo.paid == '0' ? (
+                  <Typography
+                    // color="#00359E"
+                    sx={{ mt: 1, fontSize: 14, fontWeight: 400 }}
+                    variant="body2"
+                  >
+                    Trial user can see only 10 influencers
+                  </Typography>
+                ) : (
+                  ''
+                )}
               </Typography>
             </Box>
             <Box
@@ -464,7 +505,7 @@ const Page = (props) => {
             </Box>
           </Stack>
           <Box key={changedFlag} sx={{ p: 0.5 }} style={{ boxShadow: 'none' }}>
-            {_DATA.currentData().map((data) => {
+            {_DATA.currentData().map((data, index) => {
               return (
                 <InfCard
                   key={data.id}
@@ -475,7 +516,7 @@ const Page = (props) => {
             })}
           </Box>
           <Pagination
-            count={count}
+            count={userinfo.paid == '0' ? 1 : count}
             page={page}
             variant="outlined"
             shape="rounded"
@@ -489,6 +530,7 @@ const Page = (props) => {
 
 const mapStateToProps = (state) => ({
   results: state.searchresult,
-  runTab: state.runsavestate
+  runTab: state.runsavestate,
+  userinfo: state.profile.userinfo
 });
 export default connect(mapStateToProps)(Page);

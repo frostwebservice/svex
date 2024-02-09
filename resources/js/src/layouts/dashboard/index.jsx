@@ -10,6 +10,7 @@ import { paths } from '@/paths';
 import { Chip, SvgIcon } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import HomeSmileIcon from '@/icons/untitled-ui/duocolor/home-smile';
+import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 import { tokens } from '@/locales/tokens';
 var newsec = [{ items: [] }];
 const Layout = withAuthGuard((props) => {
@@ -32,7 +33,7 @@ const Layout = withAuthGuard((props) => {
           path: paths.dashboard.admin,
           icon: (
             <SvgIcon fontSize="small">
-              <HomeSmileIcon />
+              <DashboardCustomizeOutlinedIcon />
             </SvgIcon>
           ),
           items: [
@@ -72,13 +73,19 @@ const Layout = withAuthGuard((props) => {
       <HorizontalLayout
         sections={newsec}
         navColor={settings.navColor}
+        userinfo={userinfo}
         {...props}
       />
     );
   }
 
   return (
-    <VerticalLayout sections={newsec} navColor={settings.navColor} {...props} />
+    <VerticalLayout
+      userinfo={userinfo}
+      sections={newsec}
+      navColor={settings.navColor}
+      {...props}
+    />
   );
 });
 

@@ -149,7 +149,11 @@ export const InvoicePreview = (props) => {
             return (
               <TableRow key={item.id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{item.description}</TableCell>
+                <TableCell>
+                  {'This was paid for ' +
+                    (item.unitAmount == '49' ? 'essential' : 'premium') +
+                    ' membership subscription.'}
+                </TableCell>
                 <TableCell>{item.quantity}</TableCell>
                 <TableCell>{unitAmount}</TableCell>
                 <TableCell align="right">{totalAmount}</TableCell>

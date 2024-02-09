@@ -5,7 +5,8 @@ const PayPalButton = paypal.Buttons.driver('react', { React, ReactDOM });
 import toast from 'react-hot-toast';
 import { getUserProfile } from '@/actions';
 import { connect, useDispatch } from 'react-redux';
-const PaypalForm = () => {
+const PaypalForm = (props) => {
+  const { amount } = props;
   const [show, setShow] = useState(false);
   const [success, setSuccess] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState('');
@@ -26,7 +27,7 @@ const PaypalForm = () => {
             description: 'Social Vex',
             amount: {
               currency_code: 'USD',
-              value: 99.99
+              value: amount
             }
           }
         ]
@@ -57,7 +58,7 @@ const PaypalForm = () => {
         .post('/api/update_paydate', {
           email: email,
           currency: '$',
-          totalAmount: '99.99'
+          totalAmount: amount
         })
         .then((response) => {
           toast.success('Payment successfuly done and upgraded plan.');

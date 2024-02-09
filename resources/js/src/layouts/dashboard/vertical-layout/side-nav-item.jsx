@@ -137,10 +137,7 @@ export const SideNavItem = (props) => {
             {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
           </SvgIcon>
         </ButtonBase>
-        <Collapse
-          in={open}
-          sx={{ mt: 0.5 }}
-        >
+        <Collapse in={open} sx={{ mt: 0.5 }}>
           {children}
         </Collapse>
       </li>
@@ -152,14 +149,14 @@ export const SideNavItem = (props) => {
   const linkProps = path
     ? external
       ? {
-        component: 'a',
-        href: path,
-        target: '_blank'
-      }
+          component: 'a',
+          href: path,
+          target: '_blank'
+        }
       : {
-        component: RouterLink,
-        href: path
-      }
+          component: RouterLink,
+          href: path
+        }
     : {};
 
   return (
@@ -185,7 +182,8 @@ export const SideNavItem = (props) => {
             backgroundColor: 'var(--nav-item-hover-bg)'
           }
         }}
-        {...linkProps}>
+        {...linkProps}
+      >
         {startIcon && (
           <Box
             component="span"
@@ -224,10 +222,7 @@ export const SideNavItem = (props) => {
           {title}
         </Box>
         {label && (
-          <Box
-            component="span"
-            sx={{ ml: 2 }}
-          >
+          <Box component="span" sx={{ ml: 2 }}>
             {label}
           </Box>
         )}

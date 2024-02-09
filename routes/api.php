@@ -34,6 +34,9 @@ Route::post('send-reset', [App\Http\Controllers\UserController::class, 'sendRese
 Route::post("resend-email", [App\Http\Controllers\UserController::class, 'resendVerify']);
 Route::post('get_brand_info', [App\Http\Controllers\UserController::class, 'getBrandInfo']);
 Route::post('get_user_info', [App\Http\Controllers\UserController::class, 'getUserInfo']);
+Route::post('update_search_cnt', [App\Http\Controllers\FinderController::class, 'update_search_cnt']);
+
+
 Route::post('get_social_profile', [App\Http\Controllers\UserController::class, 'getSocialProfile']);
 Route::post('upload_cover', [App\Http\Controllers\UserController::class, 'uploadCover']);
 Route::post('upload_csv', [App\Http\Controllers\DashboardController::class, 'uploadCSV']);

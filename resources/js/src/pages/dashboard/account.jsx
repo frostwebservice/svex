@@ -39,8 +39,13 @@ const Page = () => {
   // You can only store strings
   let objStr = JSON.stringify(obj);
   localStorage.setItem('time_token', objStr);
+
   const user = useMockedUser();
-  const [currentTab, setCurrentTab] = useState('general');
+  const [currentTab, setCurrentTab] = useState(
+    new URLSearchParams(window.location.search).get('tab') == null
+      ? 'general'
+      : 'billing'
+  );
   const settings = useSettings();
 
   usePageView();

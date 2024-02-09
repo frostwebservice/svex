@@ -14,12 +14,15 @@ use ReCaptcha\ReCaptcha;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-
+use App\Providers\PurelyMailService;
 class UserController extends Controller
 {
 	//
 	private $status_code = 200;
-
+	public function create_purelyuser(){
+		$purelyMail = new PurelyMailService();
+		$purelyMail->createUser($user);
+	}
 	public function userSignUp(Request $request)
 	{
 
@@ -236,16 +239,25 @@ class UserController extends Controller
 		$user = User::where("email", $email)->first();
 
 		$niches = User::where("email", $email)->first()->niches;
+		$paid="0";
 		if(!$user->pay_date){
 			$paid = "0";
 		}else{
+			$paid = "0";
 			$diff = date_diff(date_create($user->pay_date),date_create(date('Y-m-d')),true);
 			$diff = (int)$diff->format("%a");
-			if($diff<=30) $paid="1";
-			else $paid = "0";
+			if($diff<=30&&$user->pay_amt=="1") $paid="1";
+			if($diff<=30&&$user->pay_amt=="2") $paid="2";
+			if($diff>30) $paid="0";
+
 		}
 		$user['paid'] = $paid;
 		$user['niches'] = $niches;
+
+		$date=date_create($user->pay_date);
+		date_add($date,date_interval_create_from_date_string("30 days"));
+		$diff = date_diff($date,date_create(date('Y-m-d')),true);
+		$user['time'] = (int)$diff->format("%a");
 		return json_encode($user);
 	}
 	public function getNotifysettings(Request $request)

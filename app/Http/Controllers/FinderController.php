@@ -38,7 +38,18 @@ class FinderController extends Controller
         $email = $request->email;
         $params = $request->searchParams;
         $infs = $this->callSearch($email, $params);
+        if($request->type=="count"){
+            $search_cnt = DB::table("users")->where("email",$request->email)->first()->search_cnt+1;
+            $res = DB::table("users")->where("email",$request->email)->update(array("search_cnt"=>$search_cnt));
+        }
+
         return json_encode($infs);
+    }
+    public function update_search_cnt(Request $request){
+        $email = $request->email;
+        $search_cnt = DB::table("users")->where("email",$request->email)->first()->search_cnt+1;
+        $res = DB::table("users")->where("email",$request->email)->update(array("search_cnt"=>$search_cnt));
+        print_r(json_encode($search_cnt));
     }
     public function add_group(Request $request){
         $data = array(
@@ -91,6 +102,8 @@ class FinderController extends Controller
             "email"=>$request->email
         );
         $res= DB::table("outreachs")->insert($data);
+        $group_cnt = DB::table("users")->where("email",$request->email)->first()->group_cnt+1;
+        $res = DB::table("users")->where("email",$request->email)->update(array("group_cnt"=>$group_cnt));
         return json_encode($res);
     }
     public function callSearch($email, $params)

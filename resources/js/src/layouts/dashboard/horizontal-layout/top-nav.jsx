@@ -1,7 +1,16 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Menu01Icon from '@untitled-ui/icons-react/build/esm/Menu01';
-import { Box, IconButton, Stack, SvgIcon, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Stack,
+  SvgIcon,
+  ButtonBase,
+  Tooltip,
+  useMediaQuery,
+  Button
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Logo } from '@/components/logo';
 import { RouterLink } from '@/components/router-link';
@@ -11,9 +20,12 @@ import { paths } from '@/paths';
 import AccountButton from '../account-button';
 import { ContactsButton } from '../contacts-button';
 import { LanguageSwitch } from '../language-switch';
+import Settings03Icon from '@untitled-ui/icons-react/build/esm/Settings03';
+
 import { NotificationsButton } from '../notifications-button';
-import  TenantSwitch  from '../tenant-switch';
+import TenantSwitch from '../tenant-switch';
 import { TopNavSection } from './top-nav-section';
+import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined';
 
 const useCssVars = (color) => {
   const theme = useTheme();
@@ -146,7 +158,7 @@ const useCssVars = (color) => {
 };
 
 export const TopNav = (props) => {
-  const { color = 'evident', onMobileNav, sections = [] } = props;
+  const { color = 'evident', userinfo, onMobileNav, sections = [] } = props;
   const pathname = usePathname();
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
   const cssVars = useCssVars(color);
@@ -177,11 +189,7 @@ export const TopNav = (props) => {
           py: 1
         }}
       >
-        <Stack
-          alignItems="center"
-          direction="row"
-          spacing={2}
-        >
+        <Stack alignItems="center" direction="row" spacing={2}>
           {!mdUp && (
             <IconButton onClick={onMobileNav}>
               <SvgIcon>
@@ -207,14 +215,58 @@ export const TopNav = (props) => {
           </Box>
           <TenantSwitch />
         </Stack>
-        <Stack
-          alignItems="center"
-          direction="row"
-          spacing={2}
-        >
-          <LanguageSwitch />
+        <Stack alignItems="center" direction="row" spacing={2}>
+          {/* <LanguageSwitch /> */}
+          <Tooltip title="Settings" className="small-show">
+            <Box
+              sx={{
+                backgroundColor: 'background.paper',
+                borderRadius: '50%',
+                // bottom: 0,
+                boxShadow: 16,
+                margin: (theme) => theme.spacing(1),
+                // position: 'fixed',
+                // right: 0,
+                zIndex: (theme) => theme.zIndex.speedDial
+              }}
+            >
+              <ButtonBase
+                sx={{
+                  backgroundColor: 'primary.main',
+                  borderRadius: '50%',
+                  color: 'primary.contrastText',
+                  p: '4px'
+                }}
+                className="custom-setting"
+                onClick={() => {
+                  document.getElementsByClassName('realtooltip')[0].click();
+                }}
+              >
+                <SvgIcon>
+                  <Settings03Icon />
+                </SvgIcon>
+              </ButtonBase>
+            </Box>
+          </Tooltip>
+          <Box>
+            <Button
+              // onClick={() => { alert("click") }}
+              className="custom-mailbox"
+              component={RouterLink}
+              href={paths.dashboard.mail}
+              startIcon={
+                <>
+                  <img
+                    src="/assets/icons/mail-empty.png"
+                    width={40}
+                    height={30}
+                  />
+                </>
+              }
+            ></Button>
+          </Box>
           <NotificationsButton />
-          <ContactsButton />
+          {/* <ContactsButton /> */}
           <AccountButton />
         </Stack>
       </Stack>
@@ -251,6 +303,107 @@ export const TopNav = (props) => {
                   subheader={section.subheader}
                 />
               ))}
+              {userinfo.paid == 0 ? (
+                <Stack direction="row" sx={{ px: 2 }}>
+                  <Box
+                    component="span"
+                    sx={{
+                      alignItems: 'center',
+                      color: 'var(--nav-item-icon-color)',
+                      display: 'inline-flex',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <SvgIcon>
+                      <CardMembershipOutlinedIcon />
+                    </SvgIcon>
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      color: 'white',
+                      flexGrow: 1,
+                      fontFamily: (theme) => theme.typography.fontFamily,
+                      fontSize: 14,
+                      fontWeight: 600,
+                      ml: 1
+                      // lineHeight: '24px',
+                      // whiteSpace: 'nowrap'
+                    }}
+                  >
+                    Trial Account
+                    <Link
+                      style={{ marginLeft: 9, color: 'white' }}
+                      to="/dashboard/account?tab=billing"
+                      underline="always"
+                    >
+                      Upgrade
+                    </Link>
+                  </Box>
+                </Stack>
+              ) : userinfo.paid == 1 ? (
+                <Stack direction="row" sx={{ px: 2 }}>
+                  <Box
+                    component="span"
+                    sx={{
+                      alignItems: 'center',
+                      color: 'var(--nav-item-icon-color)',
+                      display: 'inline-flex',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <SvgIcon>
+                      <CardMembershipOutlinedIcon />
+                    </SvgIcon>
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      color: 'white',
+                      flexGrow: 1,
+                      fontFamily: (theme) => theme.typography.fontFamily,
+                      fontSize: 14,
+                      fontWeight: 600,
+                      ml: 1
+                      // lineHeight: '24px',
+                      // whiteSpace: 'nowrap'
+                    }}
+                  >
+                    Essential Member
+                  </Box>
+                </Stack>
+              ) : (
+                <Stack direction="row" sx={{ px: 2 }}>
+                  <Box
+                    component="span"
+                    sx={{
+                      alignItems: 'center',
+                      color: 'var(--nav-item-icon-color)',
+                      display: 'inline-flex',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <SvgIcon>
+                      <CardMembershipOutlinedIcon />
+                    </SvgIcon>
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      color: 'white',
+                      flexGrow: 1,
+                      fontFamily: (theme) => theme.typography.fontFamily,
+                      fontSize: 14,
+                      fontWeight: 600,
+                      ml: 1
+                      // lineHeight: '24px',
+                      // whiteSpace: 'nowrap'
+                    }}
+                  >
+                    Premium Member
+                  </Box>
+                </Stack>
+              )}
             </Stack>
           </Scrollbar>
         </Box>

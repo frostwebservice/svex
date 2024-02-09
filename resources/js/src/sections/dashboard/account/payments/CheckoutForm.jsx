@@ -4,7 +4,8 @@ import { useStripe, useElements } from '@stripe/react-stripe-js';
 import toast from 'react-hot-toast';
 import { getUserProfile } from '@/actions';
 import { connect, useDispatch } from 'react-redux';
-export default function CheckoutForm() {
+export default function CheckoutForm(props) {
+  const { amount } = props;
   const stripe = useStripe();
   const elements = useElements();
 
@@ -44,7 +45,7 @@ export default function CheckoutForm() {
         .post('/api/update_paydate', {
           email: email,
           currency: '$',
-          totalAmount: '99.99'
+          totalAmount: amount
         })
         .then((response) => {
           toast.success('Payment successfuly done and upgraded plan.');

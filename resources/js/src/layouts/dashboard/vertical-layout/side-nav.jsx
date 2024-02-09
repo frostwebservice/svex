@@ -1,18 +1,29 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import File04Icon from '@untitled-ui/icons-react/build/esm/File04';
-import { Box, Button, Drawer, Stack, SvgIcon, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Drawer,
+  Stack,
+  SvgIcon,
+  Typography,
+  ButtonBase
+} from '@mui/material';
+import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Logo } from '@/components/logo';
 import { RouterLink } from '@/components/router-link';
 import { Scrollbar } from '@/components/scrollbar';
 import { usePathname } from '@/hooks/use-pathname';
 import { paths } from '@/paths';
+import { Link } from 'react-router-dom';
 import TenantSwitch from '../tenant-switch';
 import { SideNavSection } from './side-nav-section';
-
+// import { AccountPlanIcon } from '@/sections/dashboard/account/account-plan-icon';
+import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined';
 const SIDE_NAV_WIDTH = 280;
-
+import { connect } from 'react-redux';
 const useCssVars = (color) => {
   const theme = useTheme();
 
@@ -142,9 +153,13 @@ const useCssVars = (color) => {
 };
 
 export const SideNav = (props) => {
-  const { color = 'evident', sections = [] } = props;
+  const { color = 'evident', userinfo, sections = [] } = props;
+  const [tempkey, SetTempkey] = useState(0);
   const pathname = usePathname();
   const cssVars = useCssVars(color);
+  useEffect(() => {
+    SetTempkey(tempkey + 1);
+  }, [userinfo]);
 
   return (
     <Drawer
@@ -195,6 +210,7 @@ export const SideNav = (props) => {
             <TenantSwitch sx={{ flexGrow: 1 }} />
           </Stack>
           <Stack
+            key={tempkey}
             component="nav"
             spacing={2}
             sx={{
@@ -210,33 +226,108 @@ export const SideNav = (props) => {
                 subheader={section.subheader}
               />
             ))}
+            {userinfo.paid == 0 ? (
+              <Stack direction="row" sx={{ px: 2 }}>
+                <Box
+                  component="span"
+                  sx={{
+                    alignItems: 'center',
+                    color: 'var(--nav-item-icon-color)',
+                    display: 'inline-flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <SvgIcon>
+                    <CardMembershipOutlinedIcon />
+                  </SvgIcon>
+                </Box>
+                <Box
+                  component="span"
+                  sx={{
+                    color: 'white',
+                    flexGrow: 1,
+                    fontFamily: (theme) => theme.typography.fontFamily,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    ml: 1
+                    // lineHeight: '24px',
+                    // whiteSpace: 'nowrap'
+                  }}
+                >
+                  Trial Account
+                  <Link
+                    style={{ marginLeft: 9, color: 'white' }}
+                    to="/dashboard/account?tab=billing"
+                    underline="always"
+                  >
+                    Upgrade
+                  </Link>
+                </Box>
+              </Stack>
+            ) : userinfo.paid == 1 ? (
+              <Stack direction="row" sx={{ px: 2 }}>
+                <Box
+                  component="span"
+                  sx={{
+                    alignItems: 'center',
+                    color: 'var(--nav-item-icon-color)',
+                    display: 'inline-flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <SvgIcon>
+                    <CardMembershipOutlinedIcon />
+                  </SvgIcon>
+                </Box>
+                <Box
+                  component="span"
+                  sx={{
+                    color: 'white',
+                    flexGrow: 1,
+                    fontFamily: (theme) => theme.typography.fontFamily,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    ml: 1
+                    // lineHeight: '24px',
+                    // whiteSpace: 'nowrap'
+                  }}
+                >
+                  Essential Member
+                </Box>
+              </Stack>
+            ) : (
+              <Stack direction="row" sx={{ px: 2 }}>
+                <Box
+                  component="span"
+                  sx={{
+                    alignItems: 'center',
+                    color: 'var(--nav-item-icon-color)',
+                    display: 'inline-flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <SvgIcon>
+                    <CardMembershipOutlinedIcon />
+                  </SvgIcon>
+                </Box>
+                <Box
+                  component="span"
+                  sx={{
+                    color: 'white',
+                    flexGrow: 1,
+                    fontFamily: (theme) => theme.typography.fontFamily,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    ml: 1
+                    // lineHeight: '24px',
+                    // whiteSpace: 'nowrap'
+                  }}
+                >
+                  Premium Member
+                </Box>
+              </Stack>
+            )}
           </Stack>
-          {/* <Box sx={{ p: 3 }}>
-            <Typography variant="subtitle1">
-              Need help?
-            </Typography>
-            <Typography
-              color="neutral.400"
-              sx={{ mb: 2 }}
-              variant="body2"
-            >
-              Please check our docs.
-            </Typography>
-            <Button
-              component="a"
-              fullWidth
-              href={paths.docs}
-              startIcon={(
-                <SvgIcon>
-                  <File04Icon />
-                </SvgIcon>
-              )}
-              target="_blank"
-              variant="contained"
-            >
-              Documentation
-            </Button>
-          </Box> */}
         </Stack>
       </Scrollbar>
     </Drawer>

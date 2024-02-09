@@ -148,7 +148,7 @@ const AccountPopover = (props) => {
             primary={<Typography variant="body1">Settings</Typography>}
           />
         </ListItemButton>
-        <ListItemButton
+        {/* <ListItemButton
           component={RouterLink}
           href={paths.dashboard.index}
           onClick={onClose}
@@ -166,7 +166,7 @@ const AccountPopover = (props) => {
           <ListItemText
             primary={<Typography variant="body1">Billing</Typography>}
           />
-        </ListItemButton>
+        </ListItemButton> */}
       </Box>
       <Divider sx={{ my: '0 !important', borderColor: 'lightgrey' }} />
       <Box

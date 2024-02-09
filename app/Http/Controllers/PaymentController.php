@@ -11,8 +11,15 @@ class PaymentController extends Controller
 {
     public function updatePayment(Request $request){
         $email= $request->email;
+        $pay_amt = 0;
+        if($request->totalAmount=='49') $pay_amt=1; 
+        if($request->totalAmount=='129') $pay_amt=2; 
         $data=array(
-            'pay_date'=>date('Y-m-d')
+            'pay_date'=>date('Y-m-d'),
+            'pay_amt'=>$pay_amt,
+            'message_cnt'=>0,
+            'search_cnt'=>0,
+            'group_cnt'=>0
         );
         $res = DB::table('users')->where("email",$email)->update($data);
         $number = 0;

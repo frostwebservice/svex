@@ -19,7 +19,7 @@ const HorizontalLayoutContainer = styled('div')({
 });
 
 export const HorizontalLayout = (props) => {
-  const { children, navColor, sections } = props;
+  const { children, navColor, sections, userinfo } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const mobileNav = useMobileNav();
 
@@ -27,6 +27,7 @@ export const HorizontalLayout = (props) => {
     <>
       <TopNav
         color={navColor}
+        userinfo={userinfo}
         onMobileNav={mobileNav.handleOpen}
         sections={sections}
       />
@@ -39,9 +40,7 @@ export const HorizontalLayout = (props) => {
         />
       )}
       <HorizontalLayoutRoot>
-        <HorizontalLayoutContainer>
-          {children}
-        </HorizontalLayoutContainer>
+        <HorizontalLayoutContainer>{children}</HorizontalLayoutContainer>
       </HorizontalLayoutRoot>
     </>
   );

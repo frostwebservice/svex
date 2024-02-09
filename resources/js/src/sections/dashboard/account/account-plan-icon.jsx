@@ -7,7 +7,7 @@ export const AccountPlanIcon = (props) => {
   const fillColor = theme.palette.primary.main;
 
   switch (name) {
-    case 'startup':
+    case 'trial':
       return (
         <svg
           fill="none"
@@ -22,7 +22,7 @@ export const AccountPlanIcon = (props) => {
           />
         </svg>
       );
-    case 'standard':
+    case 'essential':
       return (
         <svg
           fill="none"
@@ -42,7 +42,7 @@ export const AccountPlanIcon = (props) => {
           />
         </svg>
       );
-    case 'business':
+    case 'premium':
       return (
         <svg
           fill="none"

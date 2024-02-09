@@ -16,15 +16,7 @@ const InvoiceListSummary = (props) => {
   const { once, setOnce } = useState(0);
   const [total, setTotal] = useState(0);
   const [isadmin, setIsadmin] = useState(false);
-  useEffect(() => {
-    // if (userinfo.id) {
-    //   if (userinfo.is_admin != 1 && userinfo.paid != '1') {
-    //     setNsections(nsections.filter(removeAdmin));
-    //   } else if (userinfo.is_admin != 1 && userinfo.paid == '1') {
-    //     setNsections(nsections.filter(removeFinder));
-    //   }
-    // }
-  }, [userinfo]);
+  useEffect(() => {}, [userinfo]);
   useEffect(() => {
     const sum = items.reduce((accumulator, object) => {
       return accumulator + Number(object.totalAmount);
