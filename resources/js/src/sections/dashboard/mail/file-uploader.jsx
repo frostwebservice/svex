@@ -12,10 +12,10 @@ import { FileDropzone } from '@/components/file-dropzone';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 
 export const FileUploader = (props) => {
-  const { onClose, open = false, onUpgrade, kind } = props;
+  const { onClose, open = false, onUpgrade } = props;
   const [files, setFiles] = useState([]);
   useEffect(() => {
-    setFiles([]);
+    // setFiles([]);
   }, [open]);
 
   const handleDrop = useCallback((newFiles) => {
@@ -41,15 +41,16 @@ export const FileUploader = (props) => {
     for (let i = 0; i < len; i++) {
       data.append('file' + i, files[i]);
     }
-    data.append('email', email);
-    data.append('kind', kind);
     data.append('len', len);
-    console.log(data);
-    let url = '/api/upload_shoutout';
-    axios.post(url, data, {}).then((res) => {
-      onUpgrade(kind, res.data);
-      onClose();
-    });
+    onUpgrade(data);
+    setFiles([]);
+    onClose();
+    // let url = '/api/upload_shoutout';
+    // axios.post(url, data, {}).then((res) => {
+    //   onUpgrade(res.data);
+    //   setFiles([]);
+    //   onClose();
+    // });
   };
   return (
     <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose}>

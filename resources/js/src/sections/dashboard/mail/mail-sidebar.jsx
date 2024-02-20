@@ -22,8 +22,7 @@ const groupLabels = (labels) => {
   const groups = {
     system: [],
     template: [],
-    custom: [],
-
+    custom: []
   };
 
   labels.forEach((label) => {
@@ -31,8 +30,7 @@ const groupLabels = (labels) => {
       groups.system.push(label);
     } else if (label.type === 'template') {
       groups.template.push(label);
-    }
-    else {
+    } else {
       groups.custom.push(label);
     }
   });
@@ -41,21 +39,34 @@ const groupLabels = (labels) => {
 };
 
 export const MailSidebar = (props) => {
-  const { currentLabelId = 'inbox', container, labels, onClose, onCompose, open, ...other } = props;
+  const {
+    currentLabelId = 'inbox',
+    container,
+    labels,
+    unread,
+    onClose,
+    onCompose,
+    open,
+    ...other
+  } = props;
   const router = useRouter();
   const mdUp = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
-  const handleLabelSelect = useCallback((label) => {
-    if (!mdUp) {
-      onClose?.();
-    }
+  const handleLabelSelect = useCallback(
+    (label) => {
+      if (!mdUp) {
+        onClose?.();
+      }
 
-    const href = label.id !== 'inbox'
-      ? paths.dashboard.mail + `?label=${label.id}`
-      : paths.dashboard.mail;
+      const href =
+        label.id !== 'inbox'
+          ? paths.dashboard.mail + `?label=${label.id}`
+          : paths.dashboard.mail;
 
-    router.push(href);
-  }, [router, mdUp, onClose]);
+      router.push(href);
+    },
+    [router, mdUp, onClose]
+  );
 
   // Maybe use memo
   const groupedLabels = groupLabels(labels);
@@ -71,10 +82,7 @@ export const MailSidebar = (props) => {
           px: 2
         }}
       >
-        <Typography
-          variant="h5"
-          sx={{ flexGrow: 1 }}
-        >
+        <Typography variant="h5" sx={{ flexGrow: 1 }}>
           Mailbox
         </Typography>
         {!mdUp && (
@@ -89,11 +97,11 @@ export const MailSidebar = (props) => {
         <Button
           fullWidth
           onClick={onCompose}
-          startIcon={(
+          startIcon={
             <SvgIcon>
               <PlusIcon />
             </SvgIcon>
-          )}
+          }
           sx={{ mt: 2 }}
           variant="contained"
         >
@@ -110,15 +118,12 @@ export const MailSidebar = (props) => {
           <Fragment key={type}>
             {type === 'template' && (
               <ListSubheader disableSticky={true}>
-                <Typography
-                  color="text.secondary"
-                  variant="overline"
-                >
+                <Typography color="text.secondary" variant="overline">
                   Templates
                 </Typography>
               </ListSubheader>
             )}
-            {type === 'custom' && (
+            {/* {type === 'custom' && (
               <ListSubheader disableSticky={true}>
                 <Typography
                   color="text.secondary"
@@ -127,7 +132,7 @@ export const MailSidebar = (props) => {
                   Labels
                 </Typography>
               </ListSubheader>
-            )}
+            )} */}
             <List disablePadding>
               {groupedLabels[type].map((label) => {
                 const isActive = currentLabelId === label.id;
@@ -135,6 +140,7 @@ export const MailSidebar = (props) => {
                   <MailLabel
                     active={isActive}
                     key={label.id}
+                    unread={unread}
                     label={label}
                     onClick={() => handleLabelSelect(label)}
                   />
@@ -160,7 +166,8 @@ export const MailSidebar = (props) => {
         }}
         SlideProps={{ container }}
         variant="persistent"
-        {...other}>
+        {...other}
+      >
         {content}
       </Drawer>
     );
@@ -189,7 +196,8 @@ export const MailSidebar = (props) => {
       }}
       SlideProps={{ container }}
       variant="temporary"
-      {...other}>
+      {...other}
+    >
       {content}
     </Drawer>
   );

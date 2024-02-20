@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   Button
 } from '@mui/material';
+import Badge from '@mui/material/Badge';
 import { alpha } from '@mui/material/styles';
 import AccountButton from '../account-button';
 import { ContactsButton } from '../contacts-button';
@@ -24,11 +25,26 @@ import { useEffect } from 'react';
 import '../top.css';
 import { RouterLink } from '@/components/router-link';
 import { paths } from '@/paths';
-
+import { useSelector } from '@/store';
+import { useState } from 'react';
 export const TopNav = (props) => {
   const { onMobileNavOpen, ...other } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const email = JSON.parse(localStorage.getItem('email'));
+  const mails = useSelector((state) => state.mail.emails);
+  const [mailCnt, setMailCnt] = useState(0);
+
+  useEffect(() => {
+    if (mails.allIds.length != 0) {
+      let cnt = 0;
+      mails.allIds.map((emailId) => {
+        if (!mails.byId[emailId].isUnread.seen) {
+          cnt++;
+        }
+      });
+      setMailCnt(cnt);
+    }
+  }, [mails]);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -107,17 +123,26 @@ export const TopNav = (props) => {
           </Tooltip>
           <Box>
             <Button
-              // onClick={() => { alert("click") }}
               className="custom-mailbox"
               component={RouterLink}
               href={paths.dashboard.mail}
               startIcon={
                 <>
-                  <img
-                    src="/assets/icons/mail-empty.png"
-                    width={40}
-                    height={30}
-                  />
+                  {mailCnt == 0 ? (
+                    <img
+                      src="/assets/icons/mail-empty.png"
+                      width={40}
+                      height={30}
+                    />
+                  ) : (
+                    <Badge badgeContent={mailCnt} color="primary">
+                      <img
+                        src="/assets/icons/mail.png"
+                        width={40}
+                        height={30}
+                      />
+                    </Badge>
+                  )}
                 </>
               }
             ></Button>

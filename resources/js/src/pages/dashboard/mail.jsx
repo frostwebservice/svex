@@ -3,7 +3,7 @@ import { Box, Divider, useMediaQuery } from '@mui/material';
 import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import { useSearchParams } from '@/hooks/use-search-params';
-import { MailComposer } from '@/sections/dashboard/mail/mail-composer';
+import MailComposer from '@/sections/dashboard/mail/mail-composer';
 import { TemplateComposer } from '@/sections/dashboard/mail/template-composer';
 import { MailThread } from '@/sections/dashboard/mail/mail-thread';
 import { MailContainer } from '@/sections/dashboard/mail/mail-container';
@@ -11,6 +11,8 @@ import { MailList } from '@/sections/dashboard/mail/mail-list';
 import { MailSidebar } from '@/sections/dashboard/mail/mail-sidebar';
 import { useDispatch, useSelector } from '@/store';
 import { thunks } from '@/thunks/mail';
+import { connect } from 'react-redux';
+import { toast } from 'react-hot-toast';
 
 const useLabels = () => {
   const dispatch = useDispatch();
@@ -37,11 +39,14 @@ const useComposer = () => {
     isOpen: false,
     message: '',
     subject: '',
-    to: ''
+    to: '',
+    loading: false,
+    data: new FormData()
   };
+  const dispatch = useDispatch();
 
   const [state, setState] = useState(initialState);
-
+  const folder = useSearchParams().get('label') || 'inbox';
   const handleOpen = useCallback(() => {
     setState((prevState) => ({
       ...prevState,
@@ -49,13 +54,9 @@ const useComposer = () => {
     }));
   }, []);
 
-  const handleClose = useCallback(
-    () => {
-      setState(initialState);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  const handleClose = useCallback(() => {
+    setState(initialState);
+  }, []);
 
   const handleMaximize = useCallback(() => {
     setState((prevState) => ({
@@ -70,12 +71,17 @@ const useComposer = () => {
       isFullScreen: false
     }));
   }, []);
-
+  const handleAttach = useCallback((data) => {
+    setState((prevState) => ({
+      ...prevState,
+      data: data
+    }));
+  }, []);
   const handleMessageChange = useCallback((message) => {
-    // setState((prevState) => ({
-    //   ...prevState,
-    //   message
-    // }));
+    setState((prevState) => ({
+      ...prevState,
+      message
+    }));
   }, []);
 
   const handleSubjectChange = useCallback((subject) => {
@@ -91,14 +97,48 @@ const useComposer = () => {
       to
     }));
   }, []);
+  const handleSubmit = () => {
+    setState((prevState) => ({
+      ...prevState,
+      loading: true
+    }));
+    state.data.append('to', state.to);
+    state.data.append('subject', state.subject);
+    state.data.append('message', state.message);
+    state.data.append('email', JSON.parse(localStorage.getItem('email')));
 
+    axios
+      .post('/api/send_mail', state.data, {})
+      .then((response) => {
+        toast.success('Message Sent Successfuly.');
+
+        dispatch(
+          thunks.getEmails({
+            label: folder,
+            email: JSON.parse(localStorage.getItem('email'))
+          })
+        );
+        setState((prevState) => ({
+          ...prevState,
+          loading: false,
+          subject: '',
+          to: '',
+          message: '',
+          isOpen: false,
+          data: new FormData()
+        }));
+      })
+      .catch((e) => {});
+  };
   return {
     ...state,
     handleClose,
     handleMaximize,
     handleMessageChange,
     handleMinimize,
+    handleSubmit,
     handleOpen,
+    handleAttach,
     handleSubjectChange,
     handleToChange
   };
@@ -139,7 +179,16 @@ const useSidebar = () => {
   };
 };
 
-const Page = () => {
+const Page = (props) => {
+  const { emails } = props;
+  const [rerender, setRerender] = useState(false);
+  useEffect(() => {
+    let cnt = 0;
+    emails.allIds.map((emailId) => {
+      if (!emails.byId[emailId].isUnread.seen) cnt++;
+    });
+    disCount(cnt);
+  }, [emails]);
   let obj = {
     time: new Date().getTime(),
     value: 'email',
@@ -156,7 +205,10 @@ const Page = () => {
   const composer = useComposer();
   const tcomposer = useComposer();
   const sidebar = useSidebar();
-
+  const [unread, setUnread] = useState(0);
+  const disCount = (cnt) => {
+    setUnread(cnt);
+  };
   usePageView();
 
   const view = emailId ? 'details' : 'list';
@@ -189,6 +241,7 @@ const Page = () => {
             container={rootRef.current}
             currentLabelId={currentLabelId}
             labels={labels}
+            unread={unread}
             onClose={sidebar.handleClose}
             onCompose={composer.handleOpen}
             open={sidebar.open}
@@ -206,6 +259,7 @@ const Page = () => {
                 currentLabelId={currentLabelId}
                 onSidebarToggle={sidebar.handleToggle}
                 onCompose={tcomposer.handleOpen}
+                disCount={disCount}
               />
             )}
           </MailContainer>
@@ -219,9 +273,12 @@ const Page = () => {
         onMessageChange={composer.handleMessageChange}
         onMinimize={composer.handleMinimize}
         onSubjectChange={composer.handleSubjectChange}
+        onSubmit={composer.handleSubmit}
+        onAttach={composer.handleAttach}
         onToChange={composer.handleToChange}
         open={composer.isOpen}
         subject={composer.subject}
+        loading={composer.loading}
         to={composer.to}
       />
       <TemplateComposer
@@ -240,5 +297,8 @@ const Page = () => {
     </>
   );
 };
+const mapStateToProps = (state) => ({
+  emails: state.mail.emails
+});
 
-export default Page;
+export default connect(mapStateToProps)(Page);

@@ -21,15 +21,40 @@ import { useMockedUser } from '@/hooks/use-mocked-user';
 import { useRouter } from '@/hooks/use-router';
 import { paths } from '@/paths';
 import { Issuer } from '@/utils/auth';
-import { useSelector, connect } from 'react-redux';
+import { connect } from 'react-redux';
+import { useDispatch, useSelector } from '@/store';
+import { thunks } from '@/thunks/mail';
+import { useSearchParams } from '@/hooks/use-search-params';
+
 const AccountPopover = (props) => {
   const { anchorEl, userinfo, onClose, open, ...other } = props;
   const router = useRouter();
   const auth = useAuth();
   const user = useMockedUser();
+  const dispatch = useDispatch();
+  const mails = useSelector((state) => state.mail.emails);
 
-  // console.log(useSelector(state => state.profile));
-  // const profile_link = `/profile/${useSelector(state => state.profile.userinfo).firstname}-${useSelector(state => state.profile.userinfo).lastname}-${useSelector(state => state.profile.userinfo).id}`
+  // const displayBadge = () => {
+  useEffect(() => {
+    dispatch(
+      thunks.getEmails({
+        label: 'inbox',
+        email: JSON.parse(localStorage.getItem('email'))
+      })
+    );
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(
+        thunks.getEmails({
+          label: 'inbox',
+          email: JSON.parse(localStorage.getItem('email'))
+        })
+      );
+    }, '18000000');
+  }, [mails]);
+  // };
+  // setInterval(displayBadge, 30000);
 
   const handleLogout = useCallback(async () => {
     try {
@@ -92,20 +117,11 @@ const AccountPopover = (props) => {
         >
           {userinfo ? userinfo.fullname : ''}
         </Typography>
-        {/* <Typography
-          color="text.secondary"
-          variant="body2"
-        >
-          {userinfo ? userinfo.email : ''}
-
-        </Typography> */}
       </Box>
       <Divider style={{ borderColor: 'lightgrey' }} />
       <Box sx={{ p: 1 }}>
         <ListItemButton
-          // component={RouterLink}
           component="a"
-          // href={paths.dashboard.social.profile}
           href={
             userinfo
               ? `/profile/${userinfo.firstname?.toLowerCase()}-${userinfo.lastname?.toLowerCase()}-${
@@ -148,25 +164,6 @@ const AccountPopover = (props) => {
             primary={<Typography variant="body1">Settings</Typography>}
           />
         </ListItemButton>
-        {/* <ListItemButton
-          component={RouterLink}
-          href={paths.dashboard.index}
-          onClick={onClose}
-          sx={{
-            borderRadius: 1,
-            px: 1,
-            py: 0.5
-          }}
-        >
-          <ListItemIcon>
-            <SvgIcon fontSize="small">
-              <CreditCard01Icon />
-            </SvgIcon>
-          </ListItemIcon>
-          <ListItemText
-            primary={<Typography variant="body1">Billing</Typography>}
-          />
-        </ListItemButton> */}
       </Box>
       <Divider sx={{ my: '0 !important', borderColor: 'lightgrey' }} />
       <Box

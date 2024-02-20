@@ -36,8 +36,11 @@ export const TemplateItem = (props) => {
     },
     [onSelect, onDeselect]
   );
-  const createdAt = format(email.createdAt, 'MMM dd');
-  const templateCreatedAt = format(email.createdAt, 'MMM dd, hh:mm aa');
+  const createdAt = format(new Date(email.createdAt), 'MMM dd');
+  const templateCreatedAt = format(
+    new Date(email.createdAt),
+    'MMM dd, hh:mm aa'
+  );
   const hasAnyAttachments = !!(
     email.attachments && email.attachments.length > 0
   );

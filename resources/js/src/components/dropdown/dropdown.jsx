@@ -12,23 +12,29 @@ export const Dropdown = (props) => {
     setAnchorEl(event.currentTarget);
   }, []);
 
-  const handleTriggerLeave = useCallback((_) => {
-    cleanupRef.current = setTimeout(() => {
-      setAnchorEl(null);
-    }, delay);
-  }, [delay]);
+  const handleTriggerLeave = useCallback(
+    (_) => {
+      cleanupRef.current = setTimeout(() => {
+        setAnchorEl(null);
+      }, delay);
+    },
+    [delay]
+  );
 
   const handleMenuEnter = useCallback((_) => {
     clearTimeout(cleanupRef.current);
   }, []);
 
-  const handleMenuLeave = useCallback((_) => {
-    cleanupRef.current = setTimeout(() => {
-      setAnchorEl(null);
-    }, delay);
-  }, [delay]);
+  const handleMenuLeave = useCallback(
+    (_) => {
+      cleanupRef.current = setTimeout(() => {
+        setAnchorEl(null);
+      }, delay);
+    },
+    [delay]
+  );
 
-  const open = !!(anchorEl);
+  const open = !!anchorEl;
 
   return (
     <DropdownContext.Provider

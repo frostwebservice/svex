@@ -41,7 +41,7 @@ const getColor = (label) => {
 };
 
 export const MailLabel = (props) => {
-  const { active, label, ...other } = props;
+  const { active, unread, label, ...other } = props;
 
   const icon = getIcon(label);
   const color = getColor(label);
@@ -56,7 +56,8 @@ export const MailLabel = (props) => {
           mt: 1
         }
       }}
-      {...other}>
+      {...other}
+    >
       <ButtonBase
         sx={{
           borderRadius: 1,
@@ -86,15 +87,10 @@ export const MailLabel = (props) => {
         >
           {icon}
         </SvgIcon>
-        <Box sx={{ flexGrow: 1 }}>
-          {label.name}
-        </Box>
-        {showUnreadCount && (
-          <Typography
-            color="inherit"
-            variant="subtitle2"
-          >
-            {label.unreadCount}
+        <Box sx={{ flexGrow: 1 }}>{label.name}</Box>
+        {unread != 0 && label.id == 'inbox' && (
+          <Typography color="inherit" variant="subtitle2">
+            {unread}
           </Typography>
         )}
       </ButtonBase>

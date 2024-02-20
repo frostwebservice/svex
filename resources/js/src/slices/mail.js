@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { objFromArray } from '@/utils/obj-from-array';
+import { objFromArrayMail } from '@/utils/obj-from-array-mail';
 
 const initialState = {
   emails: {
@@ -16,7 +16,7 @@ const reducers = {
   getEmails(state, action) {
     const emails = action.payload;
 
-    state.emails.byId = objFromArray(emails);
+    state.emails.byId = objFromArrayMail(emails);
     state.emails.allIds = Object.keys(state.emails.byId);
   },
   getEmail(state, action) {

@@ -18,25 +18,57 @@ import {
 } from '@mui/material';
 import { RouterLink } from '@/components/router-link';
 import { getInitials } from '@/utils/get-initials';
-// import { create } from '@mui/material/styles/createTransitions';
+import { useRouter } from '@/hooks/use-router';
+import { thunks } from '@/thunks/mail';
+import { useDispatch, useSelector } from '@/store';
 
 export const MailItem = (props) => {
-  const { email, onDeselect, onSelect, onCompose, selected, href, ...other } = props;
+  const { email, onDeselect, onSelect, onCompose, selected, href, ...other } =
+    props;
+  const dispatch = useDispatch();
+
   const searchParams = useSearchParams();
   const currentLabelId = searchParams.get('label') || undefined;
-
-  const handleSelectToggle = useCallback((event) => {
-    if (event.target.checked) {
-      onSelect?.();
-    } else {
-      onDeselect?.();
-    }
-  }, [onSelect, onDeselect]);
-  const createdAt = format(email.createdAt, 'MMM dd');
-  const templateCreatedAt = format(email.createdAt, 'MMM dd, hh:mm aa');
-  const hasAnyAttachments = !!(email.attachments && email.attachments.length > 0);
-  const hasManyAttachments = !!(email.attachments && email.attachments.length > 1);
-
+  const handleSelectToggle = useCallback(
+    (event) => {
+      if (event.target.checked) {
+        onSelect?.();
+      } else {
+        onDeselect?.();
+      }
+    },
+    [onSelect, onDeselect]
+  );
+  const createdAt = format(new Date(email.createdAt), 'MMM dd');
+  const templateCreatedAt = format(
+    new Date(email.createdAt),
+    'MMM dd, hh:mm aa'
+  );
+  const hasAnyAttachments = !!(
+    email.attachments && email.attachments.length > 0
+  );
+  const hasManyAttachments = !!(
+    email.attachments && email.attachments.length > 1
+  );
+  const router = useRouter();
+  const doFav = (flag, uid, realfolder, folder) => {
+    axios
+      .post('/api/update_fav', {
+        uid: uid,
+        flag: flag,
+        email: JSON.parse(localStorage.getItem('email')),
+        label: realfolder
+      })
+      .then((response) => {
+        dispatch(
+          thunks.getEmails({
+            label: folder,
+            email: JSON.parse(localStorage.getItem('email'))
+          })
+        );
+      })
+      .catch((e) => {});
+  };
   return (
     <Box
       sx={{
@@ -70,7 +102,8 @@ export const MailItem = (props) => {
           }
         })
       }}
-      {...other}>
+      {...other}
+    >
       <Box
         sx={{
           alignItems: 'center',
@@ -81,15 +114,16 @@ export const MailItem = (props) => {
           mr: 1
         }}
       >
-        <Checkbox
-          checked={selected}
-          onChange={handleSelectToggle}
-        />
+        <Checkbox checked={selected} onChange={handleSelectToggle} />
         <Tooltip title="Starred">
-          <IconButton>
+          <IconButton
+            onClick={() =>
+              doFav(email.favorite, email.id, email.realfolder, email.folder)
+            }
+          >
             <SvgIcon
               sx={{
-                ...(email.isStarred && {
+                ...(email.favorite && {
                   color: 'warning.main',
                   '& path': {
                     fill: (theme) => theme.palette.warning.main,
@@ -102,32 +136,14 @@ export const MailItem = (props) => {
             </SvgIcon>
           </IconButton>
         </Tooltip>
-        {/* <Tooltip title="Important">
-          <IconButton>
-            <SvgIcon
-              sx={{
-                ...(email.isImportant && {
-                  color: 'warning.main',
-                  '& path': {
-                    fill: (theme) => theme.palette.warning.main,
-                    fillOpacity: 1
-                  }
-                })
-              }}
-            >
-              <BookmarkIcon />
-            </SvgIcon>
-          </IconButton>
-        </Tooltip> */}
       </Box>
       <Box
         component={RouterLink}
         href={href}
-
         sx={{
           alignItems: 'center',
           cursor: 'pointer',
-          display: 'flex',
+          display: 'contents',
           flexGrow: 1,
           flexWrap: {
             xs: 'wrap',
@@ -137,32 +153,62 @@ export const MailItem = (props) => {
           textDecoration: 'none'
         }}
       >
-        <Box
-          // onClick={onCompose}
+        {email.realfolder == 'inbox' ? (
+          <Box
+            // onClick={onCompose}
 
-          sx={{
-            alignItems: 'center',
-            display: 'flex'
-          }}
-        >
-          <Avatar src={email.from.avatar || undefined}>
-            {getInitials(email.from.name)}
-          </Avatar>
-          <Typography
-            color="text.primary"
             sx={{
-              width: 120,
-              ml: 2,
-              ...(!email.isUnread && {
-                fontWeight: 600
-              })
+              alignItems: 'center',
+              display: 'flex'
             }}
-            noWrap
-            variant="body2"
           >
-            {email.from.name}
-          </Typography>
-        </Box>
+            <Avatar
+              src={`https://ui-avatars.com/api/?name=${email.from.email}&background=2970FF&color=fff&rounded=true`}
+            ></Avatar>
+            <Typography
+              color="text.primary"
+              sx={{
+                width: 120,
+                ml: 2,
+                ...(!email.isUnread && {
+                  fontWeight: 600
+                })
+              }}
+              noWrap
+              variant="body2"
+            >
+              {email.from.email}
+            </Typography>
+          </Box>
+        ) : (
+          <Box
+            // onClick={onCompose}
+
+            sx={{
+              alignItems: 'center',
+              display: 'flex'
+            }}
+          >
+            <Avatar
+              src={`https://ui-avatars.com/api/?name=${email.to[0].name[0].mail}&background=2970FF&color=fff&rounded=true`}
+            ></Avatar>
+            <Typography
+              color="text.primary"
+              sx={{
+                width: 120,
+                ml: 2,
+                ...(!email.isUnread && {
+                  fontWeight: 600
+                })
+              }}
+              noWrap
+              variant="body2"
+            >
+              {email.to[0].name.map((person) => person.mail)}
+            </Typography>
+          </Box>
+        )}
+
         <Box
           sx={{
             // flexGrow: 1,
@@ -179,7 +225,7 @@ export const MailItem = (props) => {
             //   xs: '100%',
             //   md: 'auto'
             // }
-            width: 'fit-content'
+            width: '-webkit-fill-available'
           }}
         >
           <Box
@@ -190,42 +236,62 @@ export const MailItem = (props) => {
               width: '100%'
             }}
           >
+            {email.isUnread.seen == 'Seen' ? (
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontWeight: 400,
+                  minWidth: 100,
+                  maxWidth: 400,
+                  mr: 1
+                }}
+                noWrap
+                variant="body2"
+              >
+                {email.subject}
+              </Typography>
+            ) : (
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontWeight: 700,
+                  minWidth: 100,
+                  maxWidth: 400,
+                  mr: 1
+                }}
+                noWrap
+                variant="body2"
+              >
+                {email.subject}
+              </Typography>
+            )}
             <Typography
-              color="text.primary"
-              sx={{
-                fontWeight: 600,
-                minWidth: 100,
-                maxWidth: 400,
-                mr: 1
-              }}
-              noWrap
-              variant="body2"
-            >
-              {email.subject}
-            </Typography>
-            <Typography
+              className="inline-item"
               color="text.secondary"
               noWrap
               variant="body2"
             >
-              —
-              {email.message}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: email.message
+                }}
+              />
             </Typography>
           </Box>
           {hasAnyAttachments && (
             <Box sx={{ mt: 1, maxWidth: 800 }}>
               <Chip
-                icon={(
+                icon={
                   <SvgIcon>
                     <Attachment01Icon />
                   </SvgIcon>
-                )}
+                }
                 label={email.attachments[0].name}
                 size="small"
               />
               {hasManyAttachments && (
                 <Chip
-                  label="+1"
+                  label={'+' + (email.attachments.length - 1).toString()}
                   size="small"
                   sx={{ ml: 1 }}
                 />
@@ -233,7 +299,7 @@ export const MailItem = (props) => {
             </Box>
           )}
         </Box>
-        <Box>
+        <Box sx={{ margin: 'auto' }}>
           <Typography
             color="text.secondary"
             variant="caption"
@@ -248,12 +314,11 @@ export const MailItem = (props) => {
               width: '100%'
             }}
           >
-            {currentLabelId && currentLabelId.search("template") >= 0 ? "Last used-" + templateCreatedAt : createdAt}
-            {/* {createdAt} */}
+            {currentLabelId && currentLabelId.search('template') >= 0
+              ? 'Last used-' + templateCreatedAt
+              : createdAt}
           </Typography>
         </Box>
-
-
       </Box>
     </Box>
   );

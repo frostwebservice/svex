@@ -20,28 +20,9 @@ const TenantSwitch = (props) => {
             Dashboard
           </Typography>
         </Box>
-        {/* <IconButton
-          onClick={popover.handleOpen}
-          ref={popover.anchorRef}
-        >
-          <SvgIcon sx={{ fontSize: 16 }}>
-            <ChevronDownIcon />
-          </SvgIcon>
-        </IconButton> */}
       </Stack>
-      {/* <TenantPopover
-        anchorEl={popover.anchorRef.current}
-        onChange={popover.handleClose}
-        onClose={popover.handleClose}
-        open={popover.open}
-        tenants={tenants}
-      /> */}
     </>
   );
-};
-
-TenantSwitch.propTypes = {
-  sx: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

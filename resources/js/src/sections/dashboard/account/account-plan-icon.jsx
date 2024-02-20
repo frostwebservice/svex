@@ -73,5 +73,5 @@ export const AccountPlanIcon = (props) => {
 };
 
 AccountPlanIcon.propTypes = {
-  name: PropTypes.oneOf(['startup', 'standard', 'business']).isRequired
+  name: PropTypes.oneOf(['trial', 'essential', 'premium']).isRequired
 };

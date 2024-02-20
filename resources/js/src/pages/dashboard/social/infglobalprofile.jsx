@@ -34,36 +34,37 @@ import './profile.css';
 import { getSocialProfile } from '@/actions';
 import { useDispatch, connect } from 'react-redux';
 import { useSettings } from '@/hooks/use-settings';
-import { MailComposer } from '@/sections/dashboard/mail/mail-composer';
+import MailComposer from '@/sections/dashboard/mail/mail-composer';
 import { useDialog } from '@/hooks/use-dialog';
 import JobListCard from '../../../sections/dashboard/jobs/job-list-card';
 import GroupListCard from '../../../sections/dashboard/jobs/group-list-card';
+import '@/sections/dashboard/mail/mail.css';
+import { toast } from 'react-hot-toast';
+
 const useComposer = () => {
   const initialState = {
     isFullScreen: false,
     isOpen: false,
     message: '',
     subject: '',
-    toemail: '',
-    to: ''
+    to: '',
+    loading: false,
+    data: new FormData()
   };
+  const dispatch = useDispatch();
 
   const [state, setState] = useState(initialState);
 
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     setState((prevState) => ({
       ...prevState,
       isOpen: true
     }));
-  };
+  }, []);
 
-  const handleClose = useCallback(
-    () => {
-      setState(initialState);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  const handleClose = useCallback(() => {
+    setState(initialState);
+  }, []);
 
   const handleMaximize = useCallback(() => {
     setState((prevState) => ({
@@ -78,12 +79,17 @@ const useComposer = () => {
       isFullScreen: false
     }));
   }, []);
-
+  const handleAttach = useCallback((data) => {
+    setState((prevState) => ({
+      ...prevState,
+      data: data
+    }));
+  }, []);
   const handleMessageChange = useCallback((message) => {
-    // setState((prevState) => ({
-    //   ...prevState,
-    //   message
-    // }));
+    setState((prevState) => ({
+      ...prevState,
+      message
+    }));
   }, []);
 
   const handleSubjectChange = useCallback((subject) => {
@@ -94,19 +100,53 @@ const useComposer = () => {
   }, []);
 
   const handleToChange = useCallback((to) => {
+    console.log(to);
     setState((prevState) => ({
       ...prevState,
       to
     }));
   }, []);
+  const handleSubmit = () => {
+    setState((prevState) => ({
+      ...prevState,
+      loading: true
+    }));
+    state.data.append('to', state.to);
+    state.data.append('subject', state.subject);
+    state.data.append('message', state.message);
+    state.data.append('email', JSON.parse(localStorage.getItem('email')));
+    axios
+      .post('/api/send_mail', state.data, {})
+      .then((response) => {
+        setState((prevState) => ({
+          ...prevState,
+          loading: false,
+          subject: '',
+          to: '',
+          message: '',
+          isOpen: false,
+          data: new FormData()
+        }));
+        toast.success('Message Sent Successfuly.');
 
+        dispatch(
+          thunks.getEmails({
+            label: useSearchParams().get('label') || 'inbox',
+            email: JSON.parse(localStorage.getItem('email'))
+          })
+        );
+      })
+      .catch((e) => {});
+  };
   return {
     ...state,
     handleClose,
     handleMaximize,
     handleMessageChange,
     handleMinimize,
+    handleSubmit,
     handleOpen,
+    handleAttach,
     handleSubjectChange,
     handleToChange
   };
@@ -578,7 +618,12 @@ const Page = (props) => {
                       Invite To Project
                     </Button>
                     <Button
-                      onClick={composer.handleOpen}
+                      onClick={() => {
+                        composer.handleToChange(
+                          tmp && tmp.public_email ? tmp.public_email : ''
+                        );
+                        composer.handleOpen();
+                      }}
                       size="small"
                       className="social-btn small-button"
                       startIcon={
@@ -622,7 +667,12 @@ const Page = (props) => {
                       Invite To Project
                     </Button>
                     <Button
-                      onClick={composer.handleOpen}
+                      onClick={() => {
+                        composer.handleToChange(
+                          tmp && tmp.public_email ? tmp.public_email : ''
+                        );
+                        composer.handleOpen();
+                      }}
                       size="small"
                       className="social-btn small-button"
                       startIcon={
@@ -712,15 +762,18 @@ const Page = (props) => {
         maximize={composer.isFullScreen}
         message={composer.message}
         onClose={composer.handleClose}
+        // onMaximize={composer.handleMaximize}
         onMessageChange={composer.handleMessageChange}
         onMinimize={composer.handleMinimize}
         onSubjectChange={composer.handleSubjectChange}
+        onSubmit={composer.handleSubmit}
+        onAttach={composer.handleAttach}
         onToChange={composer.handleToChange}
         open={composer.isOpen}
         subject={composer.subject}
-        to={tmp && tmp.full_name ? tmp.full_name : ''}
+        loading={composer.loading}
+        to={composer.to}
         avatar={tmp && tmp.profile_pic_url_hd ? tmp.profile_pic_url_hd : ''}
-        toemail={tmp && tmp.public_email ? tmp.public_email : ''}
       />
     </>
   );

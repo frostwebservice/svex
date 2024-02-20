@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
 const GroupListCard = (props) => {
   const {
@@ -34,6 +35,7 @@ const GroupListCard = (props) => {
   const dispatch = useDispatch();
   const email = JSON.parse(localStorage.getItem('email'));
   const [groups, setGroups] = useState([]);
+  console.log(groups);
   useEffect(() => {
     axios
       .post('/api/getoutreachs', {
@@ -53,6 +55,8 @@ const GroupListCard = (props) => {
         tab: currentTab
       })
       .then((response) => {
+        toast.success('Successfuly added to outreach group.');
+
         onClose();
       })
       .catch((e) => {});
@@ -105,7 +109,7 @@ const GroupListCard = (props) => {
                       // className='right-panel'
                     >
                       <Button
-                        onClick={() => AddGroup(group[0].id)}
+                        onClick={() => AddGroup(group[0].group_id)}
                         variant="contained"
                         size="small"
                         style={{ fontSize: 14 }}

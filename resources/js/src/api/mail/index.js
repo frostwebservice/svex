@@ -1,61 +1,90 @@
 import { deepCopy } from '@/utils/deep-copy';
 import { emails, labels } from './data';
-
+var tempEmails = [];
 class MailApi {
   getLabels(request) {
     return Promise.resolve(deepCopy(labels));
   }
 
   getEmails(request) {
-    const { label } = request;
+    const { label, email } = request;
 
     return new Promise((resolve, reject) => {
       try {
         // Initially we make a copy of all emails.
         // On a real server this will be different since there will be a real DB query.
-        const clonedEmails = deepCopy(emails);
+        if (label == 'inbox' || label == 'sent' || label == 'favorites') {
+          axios
+            .post('/api/get_emails', {
+              email: email,
+              label: label
+            })
+            .then((response) => {
+              const clonedEmails = response.data;
+              tempEmails = response.data;
+              let filteredEmails = [];
 
-        let filteredEmails = [];
+              // Get all user custom labels
+              const customLabels = labels.reduce((acc, label) => {
+                if (label.type === 'custom') {
+                  acc.push(label.id);
+                }
 
-        // Get all user custom labels
-        const customLabels = labels.reduce((acc, label) => {
-          if (label.type === 'custom') {
-            acc.push(label.id);
-          }
+                return acc;
+              }, []);
 
-          return acc;
-        }, []);
+              if (label && customLabels.includes(label)) {
+                filteredEmails = clonedEmails.filter((email) =>
+                  email.labelIds.includes(label)
+                );
+              } else {
+                switch (label) {
+                  case undefined:
+                  case 'inbox':
+                    filteredEmails = clonedEmails.filter(
+                      (email) => email.folder === 'inbox'
+                    );
+                    break;
+                  case 'template1':
+                    filteredEmails = clonedEmails.filter(
+                      (email) => email.folder === 'template1'
+                    );
+                    break;
+                  case 'all':
+                    filteredEmails = [...clonedEmails];
+                    break;
+                  case 'sent':
+                    filteredEmails = clonedEmails.filter(
+                      (email) => email.folder === 'sent'
+                    );
+                    break;
+                  case 'trash':
+                    filteredEmails = clonedEmails.filter(
+                      (email) => email.folder === label
+                    );
+                    break;
+                  case 'favorites':
+                    filteredEmails = clonedEmails.filter(
+                      (email) => email.folder === 'favorites'
+                    );
+                    break;
+                  case 'important':
+                    filteredEmails = clonedEmails.filter(
+                      (email) => email.isImportant
+                    );
+                    break;
+                  default:
+                  // Do nothing
+                }
+              }
 
-        if (label && customLabels.includes(label)) {
-          filteredEmails = clonedEmails.filter((email) => email.labelIds.includes(label));
-        } else {
-          switch (label) {
-            case undefined:
-            case 'inbox':
-              filteredEmails = clonedEmails.filter((email) => email.folder === 'inbox');
-              break;
-            case 'template1':
-              filteredEmails = clonedEmails.filter((email) => email.folder === 'template1');
-              break;
-            case 'all':
-              filteredEmails = [...clonedEmails];
-              break;
-            case 'sent':
-            case 'trash':
-              filteredEmails = clonedEmails.filter((email) => email.folder === label);
-              break;
-            case 'starred':
-              filteredEmails = clonedEmails.filter((email) => email.isStarred);
-              break;
-            case 'important':
-              filteredEmails = clonedEmails.filter((email) => email.isImportant);
-              break;
-            default:
-            // Do nothing
-          }
+              filteredEmails.sort((a, b) =>
+                a.createdAt < b.createdAt ? 1 : -1
+              );
+
+              resolve(filteredEmails);
+            });
         }
-
-        resolve(filteredEmails);
       } catch (err) {
         console.error('[Mail Api]: ', err);
         reject(new Error('Internal server error'));
@@ -68,8 +97,7 @@ class MailApi {
 
     return new Promise((resolve, reject) => {
       try {
-        const clonedEmails = deepCopy(emails);
-
+        const clonedEmails = tempEmails;
         // Find the mail
         const email = clonedEmails.find((email) => email.id === emailId);
 

@@ -28,19 +28,149 @@ import MessageChatSquareIcon from '@untitled-ui/icons-react/build/esm/MessageCha
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import { useState, useCallback } from 'react';
 import { OutreachMemberCard } from './outreach-member-card';
+import { useDispatch, connect } from 'react-redux';
+
 import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useDialog } from '@/hooks/use-dialog';
+import MailComposer from '@/sections/dashboard/mail/mail-composer';
 import JobListCard from '../../../sections/dashboard/jobs/job-list-card';
+import '@/sections/dashboard/mail/mail.css';
+import { toast } from 'react-hot-toast';
 
+const useComposer = () => {
+  const initialState = {
+    isFullScreen: false,
+    isOpen: false,
+    message: '',
+    subject: '',
+    to: '',
+    loading: false,
+    data: new FormData()
+  };
+  const dispatch = useDispatch();
+
+  const [state, setState] = useState(initialState);
+
+  const handleOpen = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      isOpen: true
+    }));
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setState(initialState);
+  }, []);
+
+  const handleMaximize = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      isFullScreen: true
+    }));
+  }, []);
+
+  const handleMinimize = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      isFullScreen: false
+    }));
+  }, []);
+  const handleAttach = useCallback((data) => {
+    setState((prevState) => ({
+      ...prevState,
+      data: data
+    }));
+  }, []);
+  const handleMessageChange = useCallback((message) => {
+    setState((prevState) => ({
+      ...prevState,
+      message
+    }));
+  }, []);
+
+  const handleSubjectChange = useCallback((subject) => {
+    setState((prevState) => ({
+      ...prevState,
+      subject
+    }));
+  }, []);
+
+  const handleToChange = useCallback((to) => {
+    setState((prevState) => ({
+      ...prevState,
+      to
+    }));
+  }, []);
+  const handleSubmit = () => {
+    setState((prevState) => ({
+      ...prevState,
+      loading: true
+    }));
+    state.data.append('to', state.to);
+    state.data.append('subject', state.subject);
+    state.data.append('message', state.message);
+    state.data.append('email', JSON.parse(localStorage.getItem('email')));
+    axios
+      .post('/api/send_mail', state.data, {})
+      .then((response) => {
+        setState((prevState) => ({
+          ...prevState,
+          loading: false,
+          subject: '',
+          to: '',
+          message: '',
+          isOpen: false,
+          data: new FormData()
+        }));
+        toast.success('Message Sent Successfuly.');
+
+        dispatch(
+          thunks.getEmails({
+            label: useSearchParams().get('label') || 'inbox',
+            email: JSON.parse(localStorage.getItem('email'))
+          })
+        );
+      })
+      .catch((e) => {});
+  };
+  return {
+    ...state,
+    handleClose,
+    handleMaximize,
+    handleMessageChange,
+    handleMinimize,
+    handleSubmit,
+    handleOpen,
+    handleAttach,
+    handleSubjectChange,
+    handleToChange
+  };
+};
 const now = new Date();
 
 export const OutreachCard = (props) => {
   const { company, order, reRender, ...other } = props;
   const [isLiked, setIsLiked] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const composer = useComposer();
+  const handleMass = () => {
+    let massTo = '';
+    let group = company;
+    if (group && group[0]?.detail == null) composer.handleToChange('');
+    else if (group && group[0]?.detail != null) {
+      group.map((gp, index) => {
+        if (index == group.length - 1) {
+          massTo += gp.detail.public_email;
+        } else {
+          massTo += gp.detail.public_email + ',';
+        }
+      });
+    }
+    composer.handleToChange(massTo);
+    composer.handleOpen();
+  };
   const [group, setGroup] = useState({
     id: '',
     group_name: '',
@@ -221,8 +351,7 @@ export const OutreachCard = (props) => {
               Invite To Project
             </Button>
             <Button
-              component={RouterLink}
-              href={paths.dashboard.chat}
+              onClick={handleMass}
               size="small"
               className="right-btn mass-btn"
               startIcon={
@@ -253,16 +382,7 @@ export const OutreachCard = (props) => {
             Influeners in this group
           </Typography>
         </Stack>
-        <Stack
-        // alignItems="center"
-        // direction="row"
-        // flexWrap="wrap"
-        // justifyContent="space-between"
-        // sx={{
-        //     px: 2,
-        //     py: 1.5
-        // }}
-        >
+        <Stack>
           {company[0] && company[0].detail == null ? (
             <></>
           ) : (
@@ -275,6 +395,23 @@ export const OutreachCard = (props) => {
           )}
         </Stack>
       </CardContent>
+      <MailComposer
+        maximize={composer.isFullScreen}
+        message={composer.message}
+        onClose={composer.handleClose}
+        // onMaximize={composer.handleMaximize}
+        onMessageChange={composer.handleMessageChange}
+        onMinimize={composer.handleMinimize}
+        onSubjectChange={composer.handleSubjectChange}
+        onSubmit={composer.handleSubmit}
+        onAttach={composer.handleAttach}
+        onToChange={composer.handleToChange}
+        open={composer.isOpen}
+        subject={composer.subject}
+        loading={composer.loading}
+        to={composer.to}
+        // avatar={tmp && tmp.profile_pic_url_hd ? tmp.profile_pic_url_hd : ''}
+      />
     </Card>
   );
 };

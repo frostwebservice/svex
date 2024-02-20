@@ -39,7 +39,7 @@ export default function CheckoutForm(props) {
     ) {
       setMessage(response.error.message);
     } else if (response.paymentIntent.id) {
-      console.log('called', response.paymentIntent.id);
+      console.log(response.paymentIntent.id);
       //display success message or redirect user
       axios
         .post('/api/update_paydate', {

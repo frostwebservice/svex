@@ -1,11 +1,11 @@
 const now = new Date();
 
 export const labels = [
-  {
-    id: 'all',
-    name: 'All Mail',
-    type: 'system'
-  },
+  // {
+  //   id: 'all',
+  //   name: 'All Mail',
+  //   type: 'system'
+  // },
   {
     id: 'inbox',
     name: 'Inbox',
@@ -57,42 +57,42 @@ export const labels = [
   // },
   {
     id: 'template1',
-    name: 'Template A',
+    name: 'Template',
     totalCount: 2,
     type: 'template',
-    unreadCount: 1
-  },
-  {
-    id: 'template2',
-    name: 'Template B',
-    totalCount: 1,
-    type: 'template',
-    unreadCount: 0
-  },
-  {
-    id: 'work',
-    color: '#43A048',
-    name: 'Work',
-    totalCount: 1,
-    type: 'custom',
-    unreadCount: 0
-  },
-  {
-    id: 'business',
-    color: '#1E88E5',
-    name: 'Business',
-    totalCount: 2,
-    type: 'custom',
-    unreadCount: 1
-  },
-  {
-    id: 'personal',
-    color: '#FB8A00',
-    name: 'Personal',
-    totalCount: 1,
-    type: 'custom',
     unreadCount: 0
   }
+  // {
+  //   id: 'template2',
+  //   name: 'Template B',
+  //   totalCount: 1,
+  //   type: 'template',
+  //   unreadCount: 0
+  // }
+  // {
+  //   id: 'work',
+  //   color: '#43A048',
+  //   name: 'Work',
+  //   totalCount: 1,
+  //   type: 'custom',
+  //   unreadCount: 0
+  // },
+  // {
+  //   id: 'business',
+  //   color: '#1E88E5',
+  //   name: 'Business',
+  //   totalCount: 2,
+  //   type: 'custom',
+  //   unreadCount: 1
+  // },
+  // {
+  //   id: 'personal',
+  //   color: '#FB8A00',
+  //   name: 'Personal',
+  //   totalCount: 1,
+  //   type: 'custom',
+  //   unreadCount: 0
+  // }
 ];
 
 export const emails = [
