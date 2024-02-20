@@ -37,7 +37,7 @@ const AccountPopover = (props) => {
   // const displayBadge = () => {
   useEffect(() => {
     dispatch(
-      thunks.getEmails({
+      thunks.getCntEmails({
         label: 'inbox',
         email: JSON.parse(localStorage.getItem('email'))
       })
@@ -46,7 +46,7 @@ const AccountPopover = (props) => {
   useEffect(() => {
     setTimeout(() => {
       dispatch(
-        thunks.getEmails({
+        thunks.getCntEmails({
           label: 'inbox',
           email: JSON.parse(localStorage.getItem('email'))
         })

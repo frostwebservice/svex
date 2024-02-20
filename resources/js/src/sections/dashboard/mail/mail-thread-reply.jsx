@@ -43,6 +43,7 @@ const MailThreadReply = (props) => {
   const [content, setContent] = useState();
   const email = JSON.parse(localStorage.getItem('email'));
   const [message, setMessage] = useState('');
+  const [inlineImgs, setInlineImgs] = useState([]);
   const [data, setData] = useState(new FormData());
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -59,8 +60,7 @@ const MailThreadReply = (props) => {
     if (message == '') setEditorState(EditorState.createEmpty());
   }, [message]);
   const updateImageEntities = async (contentState) => {
-    let newContentState = contentState;
-
+    // let newContentState = contentState;
     contentState.getBlockMap().forEach((contentBlock) => {
       contentBlock.findEntityRanges(
         (character) => {
@@ -76,6 +76,10 @@ const MailThreadReply = (props) => {
             .getEntityAt(start);
           const entity = contentState.getEntity(entityKey);
           const data = entity.getData();
+          if (inlineImgs.includes(data.src)) return;
+          let inline = inlineImgs;
+          inline.push(data.src);
+          setInlineImgs(inline);
           if (data.src.includes('blob:http')) {
             axios({
               method: 'get',
@@ -86,16 +90,28 @@ const MailThreadReply = (props) => {
               reader.readAsDataURL(response.data);
               reader.onloadend = function () {
                 var base64data = reader.result;
-                data.src = base64data;
+
+                axios
+                  .post('/api/upload_inline', {
+                    uri: data.src.split('/')[3],
+                    data: base64data
+                  })
+                  .then((response) => {
+                    let inline = inlineImgs;
+                    inline.push(data.src + '.' + response.data);
+                    setInlineImgs(inline);
+                    console.log(response.data);
+                  })
+                  .catch((e) => {});
+                // data.src = base64data;
               };
             });
-
-            return;
+            // return;
           }
         }
       );
     });
-    setEditorState(EditorState.createWithContent(newContentState));
+    // setEditorState(EditorState.createWithContent(newContentState));
   };
 
   const _uploadimagecallback = (file) => {
@@ -143,12 +159,14 @@ const MailThreadReply = (props) => {
     data.append('subject', subject);
     data.append('message', message);
     data.append('email', email);
+    data.append('inlineImgs', inlineImgs);
 
     axios
       .post('/api/send_mail', data, {})
       .then((response) => {
         setLoading(false);
         setMessage('');
+        setInlineImgs([]);
         setData(new FormData());
         toast.success('Message Sent Successfuly.');
         dispatch(

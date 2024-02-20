@@ -39,6 +39,7 @@ const useComposer = () => {
     isOpen: false,
     message: '',
     subject: '',
+    inlineImgs: [],
     to: '',
     loading: false,
     data: new FormData()
@@ -83,7 +84,21 @@ const useComposer = () => {
       message
     }));
   }, []);
-
+  const handleInlineImgsChange = useCallback((img) => {
+    let inline = state.inlineImgs;
+    if (inline.includes(img)) return;
+    inline.push(img);
+    setState((prevState) => ({
+      ...prevState,
+      inlineImgs: inline
+    }));
+  }, []);
+  const handleInlineImgsInit = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      inlineImgs: []
+    }));
+  }, []);
   const handleSubjectChange = useCallback((subject) => {
     setState((prevState) => ({
       ...prevState,
@@ -106,12 +121,12 @@ const useComposer = () => {
     state.data.append('subject', state.subject);
     state.data.append('message', state.message);
     state.data.append('email', JSON.parse(localStorage.getItem('email')));
+    state.data.append('inlineImgs', state.inlineImgs);
 
     axios
       .post('/api/send_mail', state.data, {})
       .then((response) => {
         toast.success('Message Sent Successfuly.');
-
         dispatch(
           thunks.getEmails({
             label: folder,
@@ -123,6 +138,7 @@ const useComposer = () => {
           loading: false,
           subject: '',
           to: '',
+          inlineImgs: [],
           message: '',
           isOpen: false,
           data: new FormData()
@@ -136,6 +152,8 @@ const useComposer = () => {
     handleMaximize,
     handleMessageChange,
     handleMinimize,
+    handleInlineImgsChange,
+    handleInlineImgsInit,
     handleSubmit,
     handleOpen,
     handleAttach,
@@ -180,15 +198,15 @@ const useSidebar = () => {
 };
 
 const Page = (props) => {
-  const { emails } = props;
+  const { emails, cntemails } = props;
   const [rerender, setRerender] = useState(false);
   useEffect(() => {
     let cnt = 0;
-    emails.allIds.map((emailId) => {
-      if (!emails.byId[emailId].isUnread.seen) cnt++;
+    cntemails.allIds.map((emailId) => {
+      if (!cntemails.byId[emailId].isUnread.seen) cnt++;
     });
     disCount(cnt);
-  }, [emails]);
+  }, [cntemails]);
   let obj = {
     time: new Date().getTime(),
     value: 'email',
@@ -273,9 +291,12 @@ const Page = (props) => {
         onMessageChange={composer.handleMessageChange}
         onMinimize={composer.handleMinimize}
         onSubjectChange={composer.handleSubjectChange}
+        onInlineImgsChange={composer.handleInlineImgsChange}
         onSubmit={composer.handleSubmit}
         onAttach={composer.handleAttach}
         onToChange={composer.handleToChange}
+        handleInlineImgsInit={composer.handleInlineImgsInit}
+        inlineImgs={composer.inlineImgs}
         open={composer.isOpen}
         subject={composer.subject}
         loading={composer.loading}
@@ -298,7 +319,8 @@ const Page = (props) => {
   );
 };
 const mapStateToProps = (state) => ({
-  emails: state.mail.emails
+  emails: state.mail.emails,
+  cntemails: state.mail.cntemails
 });
 
 export default connect(mapStateToProps)(Page);

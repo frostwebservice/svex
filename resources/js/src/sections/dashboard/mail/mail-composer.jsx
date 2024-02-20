@@ -61,6 +61,9 @@ const MailComposer = (props) => {
     onAttach,
     loading,
     onToChange,
+    onInlineImgsChange,
+    inlineImgs,
+    handleInlineImgsInit,
     onSubmit,
     open = false,
     subject = '',
@@ -190,8 +193,7 @@ const MailComposer = (props) => {
   }
 
   const updateImageEntities = async (contentState) => {
-    let newContentState = contentState;
-
+    // let newContentState = contentState;
     contentState.getBlockMap().forEach((contentBlock) => {
       contentBlock.findEntityRanges(
         (character) => {
@@ -207,6 +209,8 @@ const MailComposer = (props) => {
             .getEntityAt(start);
           const entity = contentState.getEntity(entityKey);
           const data = entity.getData();
+          if (inlineImgs.includes(data.src)) return;
+          onInlineImgsChange(data.src);
           if (data.src.includes('blob:http')) {
             axios({
               method: 'get',
@@ -217,16 +221,27 @@ const MailComposer = (props) => {
               reader.readAsDataURL(response.data);
               reader.onloadend = function () {
                 var base64data = reader.result;
-                data.src = base64data;
+
+                axios
+                  .post('/api/upload_inline', {
+                    uri: data.src.split('/')[3],
+                    data: base64data
+                  })
+                  .then((response) => {
+                    onInlineImgsChange(data.src + '.' + response.data);
+
+                    console.log(response.data);
+                  })
+                  .catch((e) => {});
+                // data.src = base64data;
               };
             });
-
-            return;
+            // return;
           }
         }
       );
     });
-    setEditorState(EditorState.createWithContent(newContentState));
+    // setEditorState(EditorState.createWithContent(newContentState));
   };
 
   const _uploadimagecallback = (file) => {

@@ -31,7 +31,7 @@ export const TopNav = (props) => {
   const { onMobileNavOpen, ...other } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const email = JSON.parse(localStorage.getItem('email'));
-  const mails = useSelector((state) => state.mail.emails);
+  const mails = useSelector((state) => state.mail.cntemails);
   const [mailCnt, setMailCnt] = useState(0);
 
   useEffect(() => {

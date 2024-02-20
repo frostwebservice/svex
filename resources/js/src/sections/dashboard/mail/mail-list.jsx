@@ -138,6 +138,12 @@ export const MailList = (props) => {
               email: JSON.parse(localStorage.getItem('email'))
             })
           );
+          dispatch(
+            thunks.getCntEmails({
+              label: 'inbox',
+              email: JSON.parse(localStorage.getItem('email'))
+            })
+          );
         })
         .catch((e) => {});
     }
@@ -165,23 +171,26 @@ export const MailList = (props) => {
   };
 
   const queryRef = useRef(null);
-  const handleQueryChange = useCallback((event) => {
-    event.preventDefault();
-    const query = queryRef.current?.value || '';
-    let data = emails.allIds.filter((emailId) => {
-      if (typeof query !== 'undefined' && query !== '') {
-        const containsQuery = (emails.byId[emailId].subject || '')
-          .toLowerCase()
-          .includes(query.toLowerCase());
-
-        if (!containsQuery) {
-          return false;
+  const handleQueryChange = useCallback(
+    (event) => {
+      event.preventDefault();
+      const query = queryRef.current?.value || '';
+      let data = emails.allIds.filter((emailId) => {
+        if (typeof query !== 'undefined' && query !== '') {
+          console.log('called');
+          const containsQuery = (emails.byId[emailId].subject || '')
+            .toLowerCase()
+            .includes(query.toLowerCase());
+          if (!containsQuery) {
+            return false;
+          }
         }
-      }
-      return true;
-    });
-    setViewMails(data);
-  }, []);
+        return true;
+      });
+      setViewMails(data);
+    },
+    [emails]
+  );
 
   return (
     <Stack

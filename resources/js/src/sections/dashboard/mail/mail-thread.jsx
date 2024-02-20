@@ -8,7 +8,7 @@ import { MailThreadAttachments } from './mail-thread-attachments';
 import { MailThreadMessage } from './mail-thread-message';
 import MailThreadReply from './mail-thread-reply';
 import { MailThreadToolbar } from './mail-thread-toolbar';
-
+import { useNavigate } from 'react-router-dom';
 const useEmail = (emailId) => {
   const dispatch = useDispatch();
   const email = useSelector((state) => state.mail.emails.byId[emailId]);
@@ -18,13 +18,15 @@ const useEmail = (emailId) => {
 export const MailThread = (props) => {
   const { emailId, currentLabelId, onSidebarToggle } = props;
   const email = useEmail(emailId);
-  if (!email) {
-    return null;
-  }
+  const navigate = useNavigate();
   const backHref =
     currentLabelId && currentLabelId !== 'inbox'
       ? paths.dashboard.mail + `?label=${currentLabelId}`
       : paths.dashboard.mail;
+  if (!email) {
+    navigate(backHref);
+    return null;
+  }
 
   const hasMessage = !!email.message;
   const hasAttachments = email.attachments && email.attachments.length > 0;
