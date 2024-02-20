@@ -94,3 +94,12 @@ Route::post('payByStripe',[App\Http\Controllers\PaymentController::class,'payByS
 Route::post('get_stripe_info',[App\Http\Controllers\PaymentController::class,'getStripeInfo']);
 Route::post('get_paypal_info',[App\Http\Controllers\PaymentController::class,'getPaypalInfo']);
 Route::post('update_paydate',[App\Http\Controllers\PaymentController::class,'updatePayment']);
+
+
+Route::post('get_emails',[App\Http\Controllers\MailController::class,'get_emails']);
+Route::post('unread_set',[App\Http\Controllers\MailController::class,'unread_set']);
+Route::post('del_mail',[App\Http\Controllers\MailController::class,'del_mail']);
+Route::post('update_fav',[App\Http\Controllers\MailController::class,'update_fav']);
+Route::post('send_mail',[App\Http\Controllers\MailController::class,'send_mail']);
+Route::post('upload_inline',[App\Http\Controllers\MailController::class,'upload_inline']);
+

@@ -1,0 +1,3 @@
+<div>
+    {!! $items['message'] !!}
+</div>

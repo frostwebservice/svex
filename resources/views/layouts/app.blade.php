@@ -36,5 +36,7 @@
     @yield('content')
 
 </body>
-
+<script>
+      const global = globalThis;
+</script>
 </html>
