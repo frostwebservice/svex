@@ -24,10 +24,14 @@ const Layout = withAuthGuard((props) => {
   const removeAdmin = (value) => {
     return value.title != 'Admin Panel';
   };
+  console.log(nsections);
   useEffect(() => {
-    setNsections(sections[0].items);
+    // setNsections(sections[0].items);
     if (userinfo.id) {
       if (userinfo.is_admin == 1) {
+        for (let i = 0; i < nsections.length; i++) {
+          if (nsections[i]['title'] == 'Admin Panel') return;
+        }
         let newItem = {
           title: 'Admin Panel',
           path: paths.dashboard.admin,

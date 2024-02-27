@@ -1,10 +1,29 @@
 import PropTypes from 'prop-types';
 import ArrowRightIcon from '@untitled-ui/icons-react/build/esm/ArrowRight';
-import { Box, Button, Card, CardActions, Divider, Stack, SvgIcon, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  Divider,
+  Stack,
+  SvgIcon,
+  Typography
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 export const OverviewDoneTasks = (props) => {
   const { amount } = props;
-  const navigate = useNavigate()
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
+    axios
+      .post('/api/get_total_infs', {})
+      .then((response) => {
+        setTotal(response.data);
+      })
+      .catch((e) => {});
+  }, []);
+  const navigate = useNavigate();
   return (
     <Card>
       <Stack
@@ -20,23 +39,14 @@ export const OverviewDoneTasks = (props) => {
         }}
       >
         <div>
-          <img
-            src="/assets/iconly/iconly-glass-tick.svg"
-            width={48}
-          />
+          <img src="/assets/iconly/iconly-glass-tick.svg" width={48} />
         </div>
         <Box sx={{ flexGrow: 1 }}>
-          <Typography
-            color="text.secondary"
-            variant="body2"
-          >
+          <Typography color="text.secondary" variant="body2">
             Fresh Influencers
           </Typography>
-          <Typography
-            color="text.primary"
-            variant="h4"
-          >
-            {amount}
+          <Typography color="text.primary" variant="h4">
+            {total}
           </Typography>
         </Box>
       </Stack>
@@ -44,13 +54,13 @@ export const OverviewDoneTasks = (props) => {
       <CardActions>
         <Button
           color="inherit"
-          endIcon={(
+          endIcon={
             <SvgIcon>
               <ArrowRightIcon />
             </SvgIcon>
-          )}
+          }
           size="small"
-          onClick={()=>navigate("/inf-finder")}
+          onClick={() => navigate('/inf-finder')}
         >
           Search All Influencers
         </Button>

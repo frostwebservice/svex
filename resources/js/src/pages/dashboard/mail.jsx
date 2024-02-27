@@ -42,6 +42,7 @@ const useComposer = () => {
     subject: '',
     inlineImgs: [],
     to: '',
+    toDisplay: '',
     loading: false,
     data: new FormData()
   };
@@ -113,6 +114,12 @@ const useComposer = () => {
       to
     }));
   }, []);
+  const handleDisplayChange = useCallback((toDisplay) => {
+    setState((prevState) => ({
+      ...prevState,
+      toDisplay
+    }));
+  }, []);
   const handleSubmit = () => {
     setState((prevState) => ({
       ...prevState,
@@ -163,7 +170,8 @@ const useComposer = () => {
     handleOpen,
     handleAttach,
     handleSubjectChange,
-    handleToChange
+    handleToChange,
+    handleDisplayChange
   };
 };
 
@@ -300,6 +308,7 @@ const Page = (props) => {
         onSubmit={composer.handleSubmit}
         onAttach={composer.handleAttach}
         onToChange={composer.handleToChange}
+        onDisplayChange={composer.handleDisplayChange}
         handleInlineImgsInit={composer.handleInlineImgsInit}
         inlineImgs={composer.inlineImgs}
         open={composer.isOpen}

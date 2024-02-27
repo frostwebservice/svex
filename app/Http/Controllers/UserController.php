@@ -811,7 +811,7 @@ class UserController extends Controller
 		//     return response()->json(["status" => "failed", "validation_error" => $validator->errors()]);
 		// }
 
-		// $pure['fullname']="danwholesale@socialvex.net";
+		// $pure['fullname']="admin@socialvex.net";
 		// $pure['password']="123456789";
 		// $pure['email']=$request->email;
 		// $pure['phonenumber']="";
@@ -819,9 +819,9 @@ class UserController extends Controller
 
 		// $purely_status = $this->delete_purelyuser($pure);
 		// print_r($purely_status);
-		// $pure['fullname']="danwholesale";
+		// $pure['fullname']="svexau97";
 		// $pure['password']="123456789";
-		// $pure['email']="kramer97@gmail.com";
+		// $pure['email']="svexadm@socialvex.com";
 		// $pure['phonenumber']="";
 
 		// $purely_status = $this->create_purelyuser($pure);

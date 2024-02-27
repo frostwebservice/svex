@@ -94,7 +94,7 @@ export const MailList = (props) => {
   const { currentLabelId, disCount, onSidebarToggle, onCompose, ...other } =
     props;
   const emails = useEmails(currentLabelId);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const labels = useSelector((state) => state.mail.labels);
   const [read, setRead] = useState(0);
@@ -102,7 +102,7 @@ export const MailList = (props) => {
   const [sentfav, setSentfav] = useState([]);
   useEffect(() => {
     setRead(1);
-    // setLoading(true);
+    setLoading(true);
   }, [currentLabelId]);
   const {
     handleDeselectAll,

@@ -34,7 +34,8 @@ import './profile.css';
 import { getSocialProfile } from '@/actions';
 import { useDispatch, connect } from 'react-redux';
 import { useSettings } from '@/hooks/use-settings';
-import MailComposer from '@/sections/dashboard/mail/mail-composer';
+
+import InfComposer from '@/sections/dashboard/mail/inf-composer';
 import { useDialog } from '@/hooks/use-dialog';
 import JobListCard from '../../../sections/dashboard/jobs/job-list-card';
 import GroupListCard from '../../../sections/dashboard/jobs/group-list-card';
@@ -48,6 +49,7 @@ const useComposer = () => {
     message: '',
     subject: '',
     to: '',
+    toDisplay: '',
     loading: false,
     data: new FormData()
   };
@@ -62,6 +64,13 @@ const useComposer = () => {
     }));
   }, []);
 
+  const handleDisplayChange = useCallback((toDisplay) => {
+    setState((prevState) => ({
+      ...prevState,
+
+      toDisplay
+    }));
+  }, []);
   const handleClose = useCallback(() => {
     setState(initialState);
   }, []);
@@ -148,7 +157,8 @@ const useComposer = () => {
     handleOpen,
     handleAttach,
     handleSubjectChange,
-    handleToChange
+    handleToChange,
+    handleDisplayChange
   };
 };
 const tabs = [{ label: 'Overview', value: 'infoverview' }];
@@ -622,6 +632,9 @@ const Page = (props) => {
                         composer.handleToChange(
                           tmp && tmp.public_email ? tmp.public_email : ''
                         );
+                        composer.handleDisplayChange(
+                          tmp && tmp.full_name ? tmp.full_name : ''
+                        );
                         composer.handleOpen();
                       }}
                       size="small"
@@ -758,7 +771,7 @@ const Page = (props) => {
           </Box>
         </Container>
       </Box>
-      <MailComposer
+      <InfComposer
         maximize={composer.isFullScreen}
         message={composer.message}
         onClose={composer.handleClose}
@@ -769,10 +782,12 @@ const Page = (props) => {
         onSubmit={composer.handleSubmit}
         onAttach={composer.handleAttach}
         onToChange={composer.handleToChange}
+        onDisplayChange={composer.handleDisplayChange}
         open={composer.isOpen}
         subject={composer.subject}
         loading={composer.loading}
         to={composer.to}
+        toDisplay={composer.toDisplay}
         avatar={tmp && tmp.profile_pic_url_hd ? tmp.profile_pic_url_hd : ''}
       />
     </>

@@ -22,7 +22,7 @@ import MessageChatSquareIcon from '@untitled-ui/icons-react/build/esm/MessageCha
 import HeartIcon from '@untitled-ui/icons-react/build/esm/Heart';
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MailComposer from '@/sections/dashboard/mail/mail-composer';
+import InfComposer from '@/sections/dashboard/mail/inf-composer';
 import { useDispatch } from 'react-redux';
 import { getFavs } from '@/actions';
 import '@/sections/dashboard/mail/mail.css';
@@ -34,6 +34,7 @@ const useComposer = () => {
     message: '',
     subject: '',
     to: '',
+    toDisplay: '',
     loading: false,
     data: new FormData()
   };
@@ -91,6 +92,12 @@ const useComposer = () => {
       to
     }));
   }, []);
+  const handleDisplayChange = useCallback((toDisplay) => {
+    setState((prevState) => ({
+      ...prevState,
+      toDisplay
+    }));
+  }, []);
   const handleSubmit = () => {
     setState((prevState) => ({
       ...prevState,
@@ -100,6 +107,7 @@ const useComposer = () => {
     state.data.append('subject', state.subject);
     state.data.append('message', state.message);
     state.data.append('email', JSON.parse(localStorage.getItem('email')));
+
     axios
       .post('/api/send_mail', state.data, {})
       .then((response) => {
@@ -133,7 +141,8 @@ const useComposer = () => {
     handleOpen,
     handleAttach,
     handleSubjectChange,
-    handleToChange
+    handleToChange,
+    handleDisplayChange
   };
 };
 export const InfCard = (props) => {
@@ -358,6 +367,7 @@ export const InfCard = (props) => {
                   <Button
                     onClick={() => {
                       composer.handleToChange(influencer.public_email);
+                      composer.handleDisplayChange(influencer.full_name);
                       composer.handleOpen();
                     }}
                     size="small"
@@ -402,6 +412,7 @@ export const InfCard = (props) => {
                   <Button
                     onClick={() => {
                       composer.handleToChange(influencer.public_email);
+                      composer.handleDisplayChange(influencer.public_email);
                       composer.handleOpen();
                     }}
                     size="small"
@@ -433,7 +444,7 @@ export const InfCard = (props) => {
         </CardContent>
       </Card>
 
-      <MailComposer
+      <InfComposer
         maximize={composer.isFullScreen}
         message={composer.message}
         onClose={composer.handleClose}
@@ -444,10 +455,12 @@ export const InfCard = (props) => {
         onSubmit={composer.handleSubmit}
         onAttach={composer.handleAttach}
         onToChange={composer.handleToChange}
+        onDisplayChange={composer.handleDisplayChange}
         open={composer.isOpen}
         subject={composer.subject}
         loading={composer.loading}
         to={composer.to}
+        toDisplay={composer.toDisplay}
         avatar={influencer.profile_pic_url_hd}
       />
     </>

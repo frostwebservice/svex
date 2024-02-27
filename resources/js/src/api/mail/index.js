@@ -20,7 +20,11 @@ class MailApi {
               label: label
             })
             .then((response) => {
-              const clonedEmails = response.data;
+              const removedWelcomeEmails = response.data.filter(
+                (email) => email.subject != 'Welcome to Purelymail!'
+              );
+
+              const clonedEmails = removedWelcomeEmails;
               tempEmails = response.data;
               let filteredEmails = [];
 

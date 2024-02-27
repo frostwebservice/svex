@@ -33,6 +33,40 @@ class FinderController extends Controller
         $res = DB::table("group_infs")->where("group_id",$id)->delete();
         print_r(json_encode($res));
     }
+    public function get_possible_infs(Request $request){
+        $infs = array();
+        $igs = DB::table('influencers_instagram')->select('public_email')->distinct()->get()->toArray();
+        $yts = DB::table('influencers_youtube')->select('public_email')->distinct()->get()->toArray();
+        $tts = DB::table('influencers_tiktok')->select('public_email')->distinct()->get()->toArray();
+        $tws = DB::table('influencers_twitter')->select('public_email')->distinct()->get()->toArray();
+        $pts = DB::table('influencers_pinterest')->select('public_email')->distinct()->get()->toArray();
+        foreach($igs as $ig){
+            if(!in_array($ig->public_email, $infs, true)&&$ig->public_email!=""){
+                array_push($infs, $ig->public_email);
+            }
+        }
+        foreach($tts as $tt){
+            if(!in_array($tt->public_email, $infs, true)&&$tt->public_email!=""){
+                array_push($infs, $tt->public_email);
+            }
+        }
+        foreach($yts as $yt){
+            if(!in_array($yt->public_email, $infs, true)&&$yt->public_email!=""){
+                array_push($infs, $yt->public_email);
+            }
+        }
+        foreach($tws as $tw){
+            if(!in_array($tw->public_email, $infs, true)&&$tw->public_email!=""){
+                array_push($infs, $tw->public_email);
+            }
+        }
+        foreach($pts as $pt){
+            if(!in_array($pt->public_email, $infs, true)&&$pt->public_email!=""){
+                array_push($infs, $pt->public_email);
+            }
+        }
+        print_r(json_encode($infs));
+    }
     public function findWithParams(Request $request)
     {
         $email = $request->email;
@@ -44,6 +78,17 @@ class FinderController extends Controller
         }
 
         return json_encode($infs);
+    }
+    public function get_total_infs(Request $request){
+        $total = 0;
+        $ig = DB::table('influencers_instagram')->count();
+        $tt = DB::table('influencers_tiktok')->count();
+        $yt = DB::table('influencers_youtube')->count();
+        $pt = DB::table('influencers_pinterest')->count();
+        $tw = DB::table('influencers_twitter')->count();
+        $total = $ig+$tt+$yt+$tw+$pt;
+        print_r(json_encode($total));
+
     }
     public function update_search_cnt(Request $request){
         $email = $request->email;

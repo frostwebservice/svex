@@ -36,6 +36,7 @@ Route::post("resend-email", [App\Http\Controllers\UserController::class, 'resend
 Route::post('get_brand_info', [App\Http\Controllers\UserController::class, 'getBrandInfo']);
 Route::post('get_user_info', [App\Http\Controllers\UserController::class, 'getUserInfo']);
 Route::post('update_search_cnt', [App\Http\Controllers\FinderController::class, 'update_search_cnt']);
+Route::post('get_total_infs', [App\Http\Controllers\FinderController::class, 'get_total_infs']);
 
 
 Route::post('get_social_profile', [App\Http\Controllers\UserController::class, 'getSocialProfile']);
@@ -103,4 +104,5 @@ Route::post('del_mail',[App\Http\Controllers\MailController::class,'del_mail']);
 Route::post('update_fav',[App\Http\Controllers\MailController::class,'update_fav']);
 Route::post('send_mail',[App\Http\Controllers\MailController::class,'send_mail']);
 Route::post('upload_inline',[App\Http\Controllers\MailController::class,'upload_inline']);
+Route::post('get_possible_infs',[App\Http\Controllers\FinderController::class,'get_possible_infs']);
 

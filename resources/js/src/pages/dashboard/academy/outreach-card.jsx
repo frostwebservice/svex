@@ -34,7 +34,8 @@ import { subDays, subHours, subMinutes, subSeconds } from 'date-fns';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useDialog } from '@/hooks/use-dialog';
-import MailComposer from '@/sections/dashboard/mail/mail-composer';
+
+import InfComposer from '@/sections/dashboard/mail/inf-composer';
 import JobListCard from '../../../sections/dashboard/jobs/job-list-card';
 import '@/sections/dashboard/mail/mail.css';
 import { toast } from 'react-hot-toast';
@@ -46,6 +47,7 @@ const useComposer = () => {
     message: '',
     subject: '',
     to: '',
+    toDisplay: '',
     loading: false,
     data: new FormData()
   };
@@ -60,6 +62,13 @@ const useComposer = () => {
     }));
   }, []);
 
+  const handleDisplayChange = useCallback((toDisplay) => {
+    setState((prevState) => ({
+      ...prevState,
+
+      toDisplay
+    }));
+  }, []);
   const handleClose = useCallback(() => {
     setState(initialState);
   }, []);
@@ -145,7 +154,8 @@ const useComposer = () => {
     handleOpen,
     handleAttach,
     handleSubjectChange,
-    handleToChange
+    handleToChange,
+    handleDisplayChange
   };
 };
 const now = new Date();
@@ -157,9 +167,12 @@ export const OutreachCard = (props) => {
   const composer = useComposer();
   const handleMass = () => {
     let massTo = '';
+    let massToDisplay = '';
     let group = company;
-    if (group && group[0]?.detail == null) composer.handleToChange('');
-    else if (group && group[0]?.detail != null) {
+    if (group && group[0]?.detail == null) {
+      composer.handleToChange('');
+      composer.handleDisplayChange('');
+    } else if (group && group[0]?.detail != null) {
       group.map((gp, index) => {
         if (index == group.length - 1) {
           massTo += gp.detail.public_email;
@@ -167,8 +180,16 @@ export const OutreachCard = (props) => {
           massTo += gp.detail.public_email + ',';
         }
       });
+      group.map((gp, index) => {
+        if (index == group.length - 1) {
+          massToDisplay += gp.detail.full_name;
+        } else {
+          massToDisplay += gp.detail.full_name + ',';
+        }
+      });
     }
     composer.handleToChange(massTo);
+    composer.handleDisplayChange(massToDisplay);
     composer.handleOpen();
   };
   const [group, setGroup] = useState({
@@ -395,7 +416,7 @@ export const OutreachCard = (props) => {
           )}
         </Stack>
       </CardContent>
-      <MailComposer
+      <InfComposer
         maximize={composer.isFullScreen}
         message={composer.message}
         onClose={composer.handleClose}
@@ -406,10 +427,12 @@ export const OutreachCard = (props) => {
         onSubmit={composer.handleSubmit}
         onAttach={composer.handleAttach}
         onToChange={composer.handleToChange}
+        onDisplayChange={composer.handleDisplayChange}
         open={composer.isOpen}
         subject={composer.subject}
         loading={composer.loading}
         to={composer.to}
+        toDisplay={composer.toDisplay}
         // avatar={tmp && tmp.profile_pic_url_hd ? tmp.profile_pic_url_hd : ''}
       />
     </Card>

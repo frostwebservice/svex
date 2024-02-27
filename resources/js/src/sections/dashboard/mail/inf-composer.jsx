@@ -54,7 +54,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const MailComposer = (props) => {
+const InfComposer = (props) => {
   const {
     maximize = false,
     message = '',
@@ -89,25 +89,20 @@ const MailComposer = (props) => {
   const email = JSON.parse(localStorage.getItem('email'));
   const [selectedGroup, setSelectedGroup] = useState(0);
   const [groups, setGroups] = useState([]);
-  const [infaddresses, setInfAddresses] = useState([]);
   useEffect(() => {
     axios.post('/api/getoutreachs', { email: email }, {}).then((res) => {
       setGroups(res.data);
     });
   }, []);
-  useEffect(() => {
-    axios
-      .post('/api/get_possible_infs', {})
-      .then((response) => {
-        setInfAddresses(response.data);
-      })
-      .catch((e) => {});
-  }, []);
+
   useEffect(() => {
     let massTo = '';
+    let massToDisplay = '';
     let group = groups[selectedGroup];
-    if (group && group[0]?.detail == null) onToChange('');
-    else if (group && group[0]?.detail != null) {
+    if (group && group[0]?.detail == null) {
+      onToChange('');
+      onDisplayChange('');
+    } else if (group && group[0]?.detail != null) {
       group.map((gp, index) => {
         if (index == group.length - 1) {
           massTo += gp.detail.public_email;
@@ -115,8 +110,16 @@ const MailComposer = (props) => {
           massTo += gp.detail.public_email + ',';
         }
       });
+      group.map((gp, index) => {
+        if (index == group.length - 1) {
+          massToDisplay += gp.detail.full_name;
+        } else {
+          massToDisplay += gp.detail.full_name + ',';
+        }
+      });
     }
     onToChange(massTo);
+    onDisplayChange(massToDisplay);
   }, [selectedGroup]);
   const attachUpload = () => {
     uploadDialog.handleOpen();
@@ -156,9 +159,12 @@ const MailComposer = (props) => {
   useEffect(() => {
     if (isOutreach) {
       let massTo = '';
+      let massToDisplay = '';
       let group = groups[selectedGroup];
-      if (group && group[0]?.detail == null) onToChange('');
-      else if (group && group[0]?.detail != null) {
+      if (group && group[0]?.detail == null) {
+        onToChange('');
+        onDisplayChange('');
+      } else if (group && group[0]?.detail != null) {
         group.map((gp, index) => {
           if (index == group.length - 1) {
             massTo += gp.detail.public_email;
@@ -166,8 +172,16 @@ const MailComposer = (props) => {
             massTo += gp.detail.public_email + ',';
           }
         });
+        group.map((gp, index) => {
+          if (index == group.length - 1) {
+            massToDisplay += gp.detail.full_name;
+          } else {
+            massToDisplay += gp.detail.full_name + ',';
+          }
+        });
       }
       onToChange(massTo);
+      onDisplayChange(massToDisplay);
     } else {
       onToChange?.('');
     }
@@ -197,11 +211,6 @@ const MailComposer = (props) => {
     }
     if (subject == '') {
       toast.error('You should input Subject field.');
-      return;
-    }
-    if (infaddresses.includes(to) == false) {
-      toast.error('You should input known email address of influencers');
-      onToChange('');
       return;
     }
 
@@ -291,10 +300,6 @@ const MailComposer = (props) => {
   $('.rdw-remove-wrapper').on('click', function () {
     uploadDialog.handleOpen();
   });
-
-  $('.suggestion input').on('focus', function () {
-    $('#suggestion')[0].style.display = 'none';
-  });
   return (
     <Portal>
       <Backdrop open={maximize} />
@@ -337,7 +342,7 @@ const MailComposer = (props) => {
           }}
           justifyContent="space-between"
         >
-          <Stack justifyContent="flex-start" sx={{ minWidth: '200px' }}>
+          <Stack justifyContent="flex-start" sx={{ minWidth: '70%' }}>
             <Stack
               alignItems="center"
               direction="row"
@@ -380,25 +385,13 @@ const MailComposer = (props) => {
               ) : (
                 <Input
                   disableUnderline
+                  readOnly
                   fullWidth
-                  onChange={handleToChange}
+                  //   onChange={handleToChange}
                   placeholder="Input Address To"
-                  value={to}
-                  list="suggestion"
-                  className="suggestion"
-                  inputProps={{ list: 'suggestion' }}
+                  value={toDisplay}
                 />
               )}
-              <datalist id="suggestion">
-                {infaddresses.map((address, index) => {
-                  //Parsing the array and displaying suggestion with option tag
-                  return (
-                    <option key={index} value={address}>
-                      {address}
-                    </option>
-                  );
-                })}
-              </datalist>
             </Stack>
 
             <Stack
@@ -540,7 +533,7 @@ const MailComposer = (props) => {
   );
 };
 
-MailComposer.propTypes = {
+InfComposer.propTypes = {
   maximize: PropTypes.bool,
   message: PropTypes.string,
   onClose: PropTypes.func,
@@ -556,4 +549,4 @@ MailComposer.propTypes = {
 const mapStateToProps = (state) => ({
   userinfo: state.profile.userinfo
 });
-export default connect(mapStateToProps)(MailComposer);
+export default connect(mapStateToProps)(InfComposer);

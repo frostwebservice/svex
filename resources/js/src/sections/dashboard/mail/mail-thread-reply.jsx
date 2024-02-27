@@ -34,6 +34,7 @@ import { useDispatch, useSelector } from '@/store';
 import { toast } from 'react-hot-toast';
 import { getUserProfile } from '@/actions';
 import { thunks } from '@/thunks/mail';
+import $ from 'jquery';
 const MailThreadReply = (props) => {
   const { from, to, subject, userinfo } = props;
   const fileRef = useRef(null);
@@ -181,6 +182,9 @@ const MailThreadReply = (props) => {
       })
       .catch((e) => {});
   };
+  $('.rdw-remove-wrapper').on('click', function () {
+    uploadDialog.handleOpen();
+  });
   return (
     <>
       <Box sx={{ p: 3 }} {...props}>
@@ -194,11 +198,22 @@ const MailThreadReply = (props) => {
               toolbarClassName="toolbar-class"
               onEditorStateChange={onEditorStateChange}
               toolbar={{
-                options: ['image', 'link', 'emoji'],
-                link: { options: ['link'] },
+                options: ['image', 'link', 'emoji', 'remove'],
+                link: {
+                  options: ['link'],
+                  link: {
+                    icon: '/assets/icons/link.png'
+                  }
+                },
+                emoji: { icon: '/assets/icons/smile.png' },
                 image: {
+                  icon: '/assets/icons/image.png',
                   uploadCallback: _uploadimagecallback,
                   previewImage: true
+                },
+                remove: {
+                  icon: '/assets/icons/attach.png',
+                  title: 'Attach'
                 }
               }}
             />
@@ -215,13 +230,13 @@ const MailThreadReply = (props) => {
                 spacing={1}
                 sx={{ ml: 17 }}
               >
-                <Tooltip title="Attach file">
+                {/* <Tooltip title="Attach file">
                   <IconButton size="small" onClick={attachUpload}>
                     <SvgIcon>
                       <Attachment01Icon />
                     </SvgIcon>
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
               </Stack>
               <div>
                 <LoadingButton

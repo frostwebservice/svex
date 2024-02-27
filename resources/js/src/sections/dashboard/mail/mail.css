@@ -28,11 +28,24 @@
   margin: 20px;
   overflow: hidden;
   height: inherit;
-  .editor-class {
-    overflow: auto;
-    height: 95%;
-    width: 100%;
-  }
+  border: 0.5px solid #f2f4f7;
+  border-radius: 5px;
+}
+/* #suggestion {
+  position: absolute;
+  left: 0;
+  background-color: white;
+  border: 1px solid blue;
+  border-radius: 0 0 5px 5px;
+  border-top: none;
+  font-family: sans-serif;
+  width: 350px;
+  padding: 5px;
+} */
+.editor-class {
+  overflow: auto;
+  height: 95%;
+  width: 100%;
 }
 .rdw-link-modal {
   height: fit-content;
@@ -46,11 +59,17 @@
 .rdw-option-wrapper {
   background: none;
 }
+input::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
 .reply-wrapper .toolbar-class {
   bottom: -58px !important;
 }
 .rdw-option-wrapper img {
   width: 23px;
+}
+.rdw-link-modal-btn {
+  color: black;
 }
 .toolbar-class {
   position: absolute;
@@ -66,12 +85,21 @@
 .rdw-link-modal-label {
   color: black;
 }
+.rdw-link-modal-input {
+  background-color: white;
+  color: black;
+}
+.rdw-image-modal-btn {
+  color: black;
+}
 .rdw-link-modal-target-option span {
   color: black;
 }
+.rdw-image-modal-size-input {
+  background-color: white;
+  color: black;
+}
 .reply-class {
-  border: 1px solid rgb(204, 204, 204);
-  border-radius: 5px;
   padding: 5px;
 }
 .reply-wrapper {
