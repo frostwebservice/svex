@@ -24,6 +24,11 @@ class UserController extends Controller
 		$res=$purelyMail->createUser($user);
 		return $res;
 	}
+	public function delete_purelyuser($user){
+		$purelyMail = new PurelyMailService();
+		$res=$purelyMail->deleteUser($user);
+		return $res;
+	}
 	public function userSignUp(Request $request)
 	{
 
@@ -40,6 +45,14 @@ class UserController extends Controller
 			return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! email already registered"]);
 		}
 		$user_status = User::where("fullname", $request->name)->first();
+
+		$pure['fullname']=str_replace(" ","",$request->name)."@socialvex.net";
+		// $pure['password']="123456789";
+		// $pure['email']=$request->email;
+		// $pure['phonenumber']="";
+
+
+		$purely_status = $this->delete_purelyuser($pure);
 
 		$pure['fullname']=str_replace(" ","",$request->name);
 		$pure['password']="123456789";
@@ -667,7 +680,153 @@ class UserController extends Controller
 		//     return response()->json(["status" => "failed", "validation_error" => $validator->errors()]);
 		// }
 
+		// $pure['fullname']="danwholesale@socialvex.net";
+		// $pure['password']="123456789";
+		// $pure['email']=$request->email;
+		// $pure['phonenumber']="";
 
+
+		// $purely_status = $this->delete_purelyuser($pure);
+		// print_r($purely_status);
+		// $pure['fullname']="danwholesale";
+		// $pure['password']="123456789";
+		// $pure['email']="kramer97@gmail.com";
+		// $pure['phonenumber']="";
+
+		// $purely_status = $this->create_purelyuser($pure);
+		// print_r($purely_status);
+		// die();
+		// check if entered email exists in db
+		$email_status = User::where("email", $request->email)->first();
+
+
+		// if email exists then we will check password for the same email
+		
+		if (!is_null($email_status)) {
+			if($email_status->is_admin==1) 
+				return response()->json(["status" => "failed", "success" => false, "message" => "Restricted login from here with this credential"]);
+				
+			if ($request->from == "success"||$request->from=="start") {
+				$password_status = User::where("email", $request->email)->first();
+			} else {
+				$password_status = "passed";
+			}
+
+			// if password is correct
+			if (!is_null($password_status)) {
+
+				// check password correct
+				if ($password_status=="passed"&&$email_status->password != md5($request->password)) {
+					return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
+
+				}
+				$user = $this->userDetail($request->email);
+				//api_token generate
+				$api_token = Str::random(60);
+				$user->api_token = $api_token;
+				$user->save();
+				//login history
+
+				$user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+				$os_platform = "Bilinmeyen İşletim Sistemi";
+				$os_array = array(
+					'/windows nt 10/i' => 'Windows 10',
+					'/windows nt 6.3/i' => 'Windows 8.1',
+					'/windows nt 6.2/i' => 'Windows 8',
+					'/windows nt 6.1/i' => 'Windows 7',
+					'/windows nt 6.0/i' => 'Windows Vista',
+					'/windows nt 5.2/i' => 'Windows Server 2003/XP x64',
+					'/windows nt 5.1/i' => 'Windows XP',
+					'/windows xp/i' => 'Windows XP',
+					'/windows nt 5.0/i' => 'Windows 2000',
+					'/windows me/i' => 'Windows ME',
+					'/win98/i' => 'Windows 98',
+					'/win95/i' => 'Windows 95',
+					'/win16/i' => 'Windows 3.11',
+					'/macintosh|mac os x/i' => 'Mac OS X',
+					'/mac_powerpc/i' => 'Mac OS 9',
+					'/linux/i' => 'Linux',
+					'/ubuntu/i' => 'Ubuntu',
+					'/iphone/i' => 'iPhone',
+					'/ipod/i' => 'iPod',
+					'/ipad/i' => 'iPad',
+					'/android/i' => 'Android',
+					'/blackberry/i' => 'BlackBerry',
+					'/webos/i' => 'Mobile'
+				);
+
+				foreach ($os_array as $regex => $value) {
+					if (preg_match($regex, $user_agent)) {
+						$os_platform = $value;
+					}
+				}
+				$browser_array = array(
+					'/msie/i' => 'Internet Explorer',
+					'/firefox/i' => 'Firefox',
+					'/safari/i' => 'Safari',
+					'/chrome/i' => 'Chrome',
+					'/edge/i' => 'Edge',
+					'/opera/i' => 'Opera',
+					'/netscape/i' => 'Netscape',
+					'/maxthon/i' => 'Maxthon',
+					'/konqueror/i' => 'Konqueror',
+					'/mobile/i' => 'Handheld Browser'
+				);
+
+				foreach ($browser_array as $regex => $value) {
+					if (preg_match($regex, $user_agent)) {
+						$browser = $value;
+					}
+				}
+				$type= $request->type?$request->type:"Credential login";
+				$history = array(
+					"user_email" => $request->email,
+					"type" => $type,
+					"ip_address" => $_SERVER['REMOTE_ADDR'],
+					"browser_info" => $browser,
+					"os_info" => $os_platform
+				);
+
+				$historyInsert = LoginHistory::create($history);
+				return response()->json(["status" => $this->status_code, "success" => true, "message" => "You have logged in successfully", "data" => $user]);
+			} else {
+				return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Incorrect password."]);
+			}
+		} else {
+			return response()->json(["status" => "failed", "success" => false, "message" => "Unable to login. Email doesn't exist."]);
+		}
+	}
+	public function adminLogin(Request $request)
+	{
+
+		// $validator          =       Validator::make($request->all(),
+		//     [
+		//         "email"             =>          "required|email",
+		//         "password"          =>          "required"
+		//     ]
+		// );
+
+		// if($validator->fails()) {
+		//     return response()->json(["status" => "failed", "validation_error" => $validator->errors()]);
+		// }
+
+		// $pure['fullname']="danwholesale@socialvex.net";
+		// $pure['password']="123456789";
+		// $pure['email']=$request->email;
+		// $pure['phonenumber']="";
+
+
+		// $purely_status = $this->delete_purelyuser($pure);
+		// print_r($purely_status);
+		// $pure['fullname']="danwholesale";
+		// $pure['password']="123456789";
+		// $pure['email']="kramer97@gmail.com";
+		// $pure['phonenumber']="";
+
+		// $purely_status = $this->create_purelyuser($pure);
+		// print_r($purely_status);
+		// die();
 		// check if entered email exists in db
 		$email_status = User::where("email", $request->email)->first();
 

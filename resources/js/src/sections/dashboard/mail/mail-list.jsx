@@ -94,7 +94,7 @@ export const MailList = (props) => {
   const { currentLabelId, disCount, onSidebarToggle, onCompose, ...other } =
     props;
   const emails = useEmails(currentLabelId);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const labels = useSelector((state) => state.mail.labels);
   const [read, setRead] = useState(0);
@@ -102,7 +102,7 @@ export const MailList = (props) => {
   const [sentfav, setSentfav] = useState([]);
   useEffect(() => {
     setRead(1);
-    setLoading(true);
+    // setLoading(true);
   }, [currentLabelId]);
   const {
     handleDeselectAll,
@@ -177,7 +177,6 @@ export const MailList = (props) => {
       const query = queryRef.current?.value || '';
       let data = emails.allIds.filter((emailId) => {
         if (typeof query !== 'undefined' && query !== '') {
-          console.log('called');
           const containsQuery = (emails.byId[emailId].subject || '')
             .toLowerCase()
             .includes(query.toLowerCase());

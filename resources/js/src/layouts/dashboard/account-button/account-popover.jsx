@@ -51,7 +51,7 @@ const AccountPopover = (props) => {
           email: JSON.parse(localStorage.getItem('email'))
         })
       );
-    }, '18000000');
+    }, '15000');
   }, [mails]);
   // };
   // setInterval(displayBadge, 30000);

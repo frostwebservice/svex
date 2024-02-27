@@ -56,7 +56,7 @@ export const labels = [
   //   unreadCount: 1
   // },
   {
-    id: 'template1',
+    id: 'template',
     name: 'Template',
     totalCount: 2,
     type: 'template',

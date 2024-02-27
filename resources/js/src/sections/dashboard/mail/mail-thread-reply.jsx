@@ -32,7 +32,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useSearchParams } from '@/hooks/use-search-params';
 import { useDispatch, useSelector } from '@/store';
 import { toast } from 'react-hot-toast';
-
+import { getUserProfile } from '@/actions';
+import { thunks } from '@/thunks/mail';
 const MailThreadReply = (props) => {
   const { from, to, subject, userinfo } = props;
   const fileRef = useRef(null);
@@ -100,7 +101,6 @@ const MailThreadReply = (props) => {
                     let inline = inlineImgs;
                     inline.push(data.src + '.' + response.data);
                     setInlineImgs(inline);
-                    console.log(response.data);
                   })
                   .catch((e) => {});
                 // data.src = base64data;
@@ -164,10 +164,6 @@ const MailThreadReply = (props) => {
     axios
       .post('/api/send_mail', data, {})
       .then((response) => {
-        setLoading(false);
-        setMessage('');
-        setInlineImgs([]);
-        setData(new FormData());
         toast.success('Message Sent Successfuly.');
         dispatch(
           thunks.getEmails({
@@ -175,6 +171,13 @@ const MailThreadReply = (props) => {
             email: JSON.parse(localStorage.getItem('email'))
           })
         );
+        dispatch(
+          getUserProfile({ email: JSON.parse(localStorage.getItem('email')) })
+        );
+        setLoading(false);
+        setMessage('');
+        setInlineImgs([]);
+        setData(new FormData());
       })
       .catch((e) => {});
   };

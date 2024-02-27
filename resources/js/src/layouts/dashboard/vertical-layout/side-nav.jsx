@@ -226,7 +226,10 @@ export const SideNav = (props) => {
                 subheader={section.subheader}
               />
             ))}
-            {userinfo.paid == 0 ? (
+
+            {userinfo.is_admin == 1 ? (
+              <></>
+            ) : userinfo.paid == 0 ? (
               <Stack direction="row" sx={{ px: 2 }}>
                 <Box
                   component="span"

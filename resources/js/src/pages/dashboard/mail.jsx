@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from '@/store';
 import { thunks } from '@/thunks/mail';
 import { connect } from 'react-redux';
 import { toast } from 'react-hot-toast';
+import { getUserProfile } from '@/actions';
 
 const useLabels = () => {
   const dispatch = useDispatch();
@@ -133,6 +134,10 @@ const useComposer = () => {
             email: JSON.parse(localStorage.getItem('email'))
           })
         );
+        dispatch(
+          getUserProfile({ email: JSON.parse(localStorage.getItem('email')) })
+        );
+
         setState((prevState) => ({
           ...prevState,
           loading: false,

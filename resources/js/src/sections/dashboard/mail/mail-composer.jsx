@@ -1,6 +1,9 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Attachment01Icon from '@untitled-ui/icons-react/build/esm/Attachment01';
+import ImageSearchOutlinedIcon from '@mui/icons-material/ImageSearchOutlined';
+import InsertLinkOutlinedIcon from '@mui/icons-material/InsertLinkOutlined';
+import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
 import Expand01Icon from '@untitled-ui/icons-react/build/esm/Expand01';
 import Image01Icon from '@untitled-ui/icons-react/build/esm/Image01';
 import Minimize01Icon from '@untitled-ui/icons-react/build/esm/Minimize01';
@@ -43,6 +46,8 @@ import { useEffect } from 'react';
 import { FileUploader } from './file-uploader';
 import { useDialog } from '@/hooks/use-dialog';
 import { connect } from 'react-redux';
+import $ from 'jquery';
+import { render } from 'nprogress';
 const useStyles = makeStyles(() => ({
   noBorder: {
     border: 'none'
@@ -229,8 +234,6 @@ const MailComposer = (props) => {
                   })
                   .then((response) => {
                     onInlineImgsChange(data.src + '.' + response.data);
-
-                    console.log(response.data);
                   })
                   .catch((e) => {});
                 // data.src = base64data;
@@ -253,7 +256,20 @@ const MailComposer = (props) => {
       resolve({ data: { link: imageobject.localsrc } });
     });
   };
-
+  const imageClick = () => {
+    // $('.rdw-image-wrapper').attr('aria-expanded', 'true');
+  };
+  const linkClick = () => {
+    // $('.rdw-link-wrapper').toggle();
+  };
+  const emojiClick = () => {
+    // $('.rdw-emoji-wrapper:last').trigger('click');
+    // var emoji = $('.rdw-emoji-wrapper')[0];
+    // $(emoji).trigger('click');
+  };
+  $('.rdw-remove-wrapper').on('click', function () {
+    uploadDialog.handleOpen();
+  });
   return (
     <Portal>
       <Backdrop open={maximize} />
@@ -402,9 +418,23 @@ const MailComposer = (props) => {
           toolbarClassName="toolbar-class"
           onEditorStateChange={onEditorStateChange}
           toolbar={{
-            options: ['image', 'link', 'emoji'],
-            link: { options: ['link'] },
-            image: { uploadCallback: _uploadimagecallback, previewImage: true }
+            options: ['image', 'link', 'emoji', 'remove'],
+            link: {
+              options: ['link'],
+              link: {
+                icon: '/assets/icons/link.png'
+              }
+            },
+            emoji: { icon: '/assets/icons/smile.png' },
+            image: {
+              icon: '/assets/icons/image.png',
+              uploadCallback: _uploadimagecallback,
+              previewImage: true
+            },
+            remove: {
+              icon: '/assets/icons/attach.png',
+              title: 'Attach'
+            }
           }}
         />
         <Divider />
@@ -419,16 +449,38 @@ const MailComposer = (props) => {
             alignItems="center"
             direction="row"
             spacing={1}
-            sx={{ ml: 17 }}
+            sx={{ ml: 27 }}
           >
+            {/* <Tooltip title="Image">
+              <IconButton size="small" onClick={imageClick}>
+                <SvgIcon>
+                  <ImageSearchOutlinedIcon />
+                </SvgIcon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Link">
+              <IconButton size="small" onClick={linkClick}>
+                <SvgIcon>
+                  <InsertLinkOutlinedIcon />
+                </SvgIcon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Emoji">
+              <IconButton size="small" onClick={emojiClick}>
+                <SvgIcon>
+                  <SentimentSatisfiedOutlinedIcon />
+                </SvgIcon>
+              </IconButton>
+            </Tooltip>
             <Tooltip title="Attach file">
               <IconButton size="small" onClick={attachUpload}>
                 <SvgIcon>
                   <Attachment01Icon />
                 </SvgIcon>
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
           </Stack>
+
           <div>
             <LoadingButton
               loading={loading}
