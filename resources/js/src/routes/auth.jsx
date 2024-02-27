@@ -6,11 +6,17 @@ import { Layout as AuthLayout } from '@/layouts/auth/classic-layout';
 import { Issuer } from '@/utils/auth';
 
 // Amplify
-const AmplifyConfirmRegisterPage = lazy(() => import('@/pages/auth/amplify/confirm-register'));
-const AmplifyForgotPasswordPage = lazy(() => import('@/pages/auth/amplify/forgot-password'));
+const AmplifyConfirmRegisterPage = lazy(() =>
+  import('@/pages/auth/amplify/confirm-register')
+);
+const AmplifyForgotPasswordPage = lazy(() =>
+  import('@/pages/auth/amplify/forgot-password')
+);
 const AmplifyLoginPage = lazy(() => import('@/pages/auth/amplify/login'));
 const AmplifyRegisterPage = lazy(() => import('@/pages/auth/amplify/register'));
-const AmplifyResetPasswordPage = lazy(() => import('@/pages/auth/amplify/reset-password'));
+const AmplifyResetPasswordPage = lazy(() =>
+  import('@/pages/auth/amplify/reset-password')
+);
 
 // Auth0
 const Auth0CallbackPage = lazy(() => import('@/pages/auth/auth0/callback'));
@@ -18,20 +24,29 @@ const Auth0LoginPage = lazy(() => import('@/pages/auth/auth0/login'));
 
 // Firebase
 const FirebaseLoginPage = lazy(() => import('@/pages/auth/firebase/login'));
-const FirebaseRegisterPage = lazy(() => import('@/pages/auth/firebase/register'));
+const FirebaseRegisterPage = lazy(() =>
+  import('@/pages/auth/firebase/register')
+);
 
 // auth
-const AuthSignInPage = lazy(() => import('@/pages/auth/auth/SignIn'));
-const AuthSignUpPage = lazy(() => import('@/pages/auth/auth/SignUp'));
+const AuthSignInPage = lazy(() => import('@/pages/auth/auth/signin'));
+const AuthAdminPage = lazy(() => import('@/pages/auth/auth/admin'));
+const AuthSignUpPage = lazy(() => import('@/pages/auth/auth/signup'));
 const AuthFirstInfoPage = lazy(() => import('@/pages/auth/auth/FirstInfos'));
 const AuthSuccessfulPage = lazy(() => import('@/pages/auth/auth/Successful'));
-const AuthForgotPasswordPage = lazy(() => import('@/pages/auth/auth/ForgotPassword'));
-const AuthResetPasswordPage = lazy(() => import('@/pages/auth/auth/ResetPassword'));
+const AuthForgotPasswordPage = lazy(() =>
+  import('@/pages/auth/auth/ForgotPassword')
+);
+const AuthResetPasswordPage = lazy(() =>
+  import('@/pages/auth/auth/ResetPassword')
+);
 const AuthSecondInfoPage = lazy(() => import('@/pages/auth/auth/SecondInfo'));
 const AuthSendEmailPage = lazy(() => import('@/pages/auth/auth/SendEmail'));
 const AuthStartPage = lazy(() => import('@/pages/auth/auth/Start'));
 const AuthTrialPage = lazy(() => import('@/pages/auth/auth/Trial'));
-const AuthSocialHandlePage = lazy(() => import('@/pages/auth/auth/SocialHandle'));
+const AuthSocialHandlePage = lazy(() =>
+  import('@/pages/auth/auth/SocialHandle')
+);
 
 // JWT
 const JwtLoginPage = lazy(() => import('@/pages/auth/jwt/login'));
@@ -47,6 +62,10 @@ export const authRoutes = [
   {
     path: 'auth',
     children: [
+      {
+        path: 'admin',
+        element: <AuthAdminPage />
+      },
       {
         path: 'amplify',
         element: (
@@ -166,7 +185,7 @@ export const authRoutes = [
           {
             path: 'register/step-5',
             element: <JwtRegisterStepFive />
-          },
+          }
         ]
       },
       {
@@ -224,7 +243,7 @@ export const authRoutes = [
           {
             path: 'successful',
             element: <AuthSuccessfulPage />
-          },
+          }
         ]
       }
     ]

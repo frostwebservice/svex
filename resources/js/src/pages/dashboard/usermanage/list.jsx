@@ -20,6 +20,8 @@ import { CustomerListSearch } from '@/sections/dashboard/customer/customer-list-
 import { UsermanageListTable } from '@/sections/dashboard/usermanage/usermanage_list_table';
 import { useSettings } from '@/hooks/use-settings';
 import { ExportJsonCsv } from 'react-export-json-csv';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 const useCustomersSearch = () => {
   const [state, setState] = useState({
@@ -113,7 +115,12 @@ const useCustomersIds = (customers = []) => {
   }, [customers]);
 };
 
-const Page = () => {
+const Page = (props) => {
+  const { userinfo } = props;
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userinfo.is_admin == 0) navigate('/dashboard');
+  }, [userinfo]);
   let obj = {
     time: new Date().getTime(),
     value: 'email',
@@ -231,4 +238,7 @@ const Page = () => {
   );
 };
 
-export default Page;
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+});
+export default connect(mapStateToProps)(Page);

@@ -12,9 +12,12 @@ import { Seo } from '@/components/seo';
 import { usePageView } from '@/hooks/use-page-view';
 import { PaymentEditForm } from './payment-edit';
 import { useSettings } from '@/hooks/use-settings';
-
+import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './account.css';
-const Payment = () => {
+const Payment = (props) => {
+  const { userinfo } = props;
   usePageView();
   const settings = useSettings();
   let obj = {
@@ -22,6 +25,10 @@ const Payment = () => {
     value: 'email',
     expire: 3000000
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userinfo.is_admin == 0) navigate('/dashboard');
+  }, [userinfo]);
   // You can only store strings
   let objStr = JSON.stringify(obj);
   localStorage.setItem('time_token', objStr);
@@ -66,4 +73,7 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+});
+export default connect(mapStateToProps)(Payment);

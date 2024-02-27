@@ -9,8 +9,8 @@ export const paths = {
       login: '/auth/auth0/login'
     },
     auth: {
-      signin: '/auth/auth/SignIn',
-      signup: '/auth/auth/SignUp',
+      signin: '/auth/auth/signin',
+      signup: '/auth/auth/signup',
       firstInfos: '/auth/auth/FirstInfos',
       secondInfos: '/auth/auth/SecondInfo',
       sendemail: '/auth/auth/SendEmail',
@@ -19,7 +19,7 @@ export const paths = {
       trial: '/auth/auth/trial',
       forgotPassword: '/auth/auth/ForgotPassword',
       resetPassword: '/auth/auth/ResetPassword',
-      successful: '/auth/auth/Successful',
+      successful: '/auth/auth/Successful'
     },
     jwt: {
       login: '/auth/jwt/login',
@@ -29,7 +29,7 @@ export const paths = {
       step2: '/auth/jwt/register/step-2',
       step3: '/auth/jwt/register/step-3',
       step4: '/auth/jwt/register/step-4',
-      step5: '/auth/jwt/register/step-5',
+      step5: '/auth/jwt/register/step-5'
     },
     firebase: {
       login: '/auth/firebase/login',
@@ -67,8 +67,7 @@ export const paths = {
   },
   profile: {
     brand: '',
-    influencer: '',
-
+    influencer: ''
   },
   academy: {
     index: '/inf-finder',

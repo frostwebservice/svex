@@ -184,7 +184,7 @@ const AccountGeneralSettings = (props) => {
               })
             );
             auth.signOut();
-            navigate('/auth/auth/SignIn');
+            navigate('/auth/auth/signin');
           }
         }
       })

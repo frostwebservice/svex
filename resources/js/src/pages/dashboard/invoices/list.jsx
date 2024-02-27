@@ -21,6 +21,8 @@ import { InvoiceListSidebar } from '@/sections/dashboard/invoice/invoice-list-si
 import InvoiceListSummary from '@/sections/dashboard/invoice/invoice-list-summary';
 import { InvoiceListTable } from '@/sections/dashboard/invoice/invoice-list-table';
 import { useSettings } from '@/hooks/use-settings';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import './invoice.css';
 const useInvoicesSearch = () => {
   const [state, setState] = useState({
@@ -108,7 +110,12 @@ const useInvoicesStore = (searchState) => {
   };
 };
 
-const Page = () => {
+const Page = (props) => {
+  const { userinfo } = props;
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userinfo.is_admin == 0) navigate('/dashboard');
+  }, [userinfo]);
   let obj = {
     time: new Date().getTime(),
     value: 'email',
@@ -215,4 +222,7 @@ const Page = () => {
   );
 };
 
-export default Page;
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+});
+export default connect(mapStateToProps)(Page);

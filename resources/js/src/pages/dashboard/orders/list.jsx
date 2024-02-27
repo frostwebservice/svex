@@ -20,6 +20,8 @@ import { OrderListSearch } from '@/sections/dashboard/order/order-list-search';
 import { OrderListTable } from '@/sections/dashboard/order/order-list-table';
 import { useSettings } from '@/hooks/use-settings';
 import './order.css';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 const useOrdersSearch = () => {
   const [state, setState] = useState({
     filters: {
@@ -122,7 +124,12 @@ const useCurrentOrder = (orders, orderId) => {
   }, [orders, orderId]);
 };
 
-const Page = () => {
+const Page = (props) => {
+  const { userinfo } = props;
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userinfo.is_admin == 0) navigate('/dashboard');
+  }, [userinfo]);
   let obj = {
     time: new Date().getTime(),
     value: 'email',
@@ -210,4 +217,7 @@ const Page = () => {
   );
 };
 
-export default Page;
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+});
+export default connect(mapStateToProps)(Page);

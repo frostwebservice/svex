@@ -30,10 +30,13 @@ import { OverviewInvoices } from '@/sections/dashboard/overview/overview-invoice
 import { OverviewPayment } from '@/sections/dashboard/overview/overview-payment';
 import { ImportData } from '@/sections/dashboard/overview/import-data';
 import { AdminTips } from '@/sections/dashboard/overview/admin-tips';
-
+import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const now = new Date();
 
-const Page = () => {
+const Page = (props) => {
+  const { userinfo } = props;
   const settings = useSettings();
   let obj = {
     time: new Date().getTime(),
@@ -44,7 +47,10 @@ const Page = () => {
   let objStr = JSON.stringify(obj);
   localStorage.setItem('time_token', objStr);
   usePageView();
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userinfo.is_admin == 0) navigate('/dashboard');
+  }, [userinfo]);
   return (
     <>
       <Seo title="Dashboard: Overview" />
@@ -122,5 +128,7 @@ const Page = () => {
     </>
   );
 };
-
-export default Page;
+const mapStateToProps = (state) => ({
+  userinfo: state.profile.userinfo
+});
+export default connect(mapStateToProps)(Page);

@@ -47,7 +47,7 @@ const Page = () => {
     onSubmit: (values) => {
       axios.post('/api/user-reset', values).then((response) => {
         if (response.data.status === 200 && response.data.success) {
-          navigate('/auth/auth/SignIn');
+          navigate('/auth/auth/signin');
         }
 
         if (response.data.status === 'failed') {

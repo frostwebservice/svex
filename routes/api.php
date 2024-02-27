@@ -26,6 +26,7 @@ Route::post('first-Info', [App\Http\Controllers\UserController::class, 'firstInf
 Route::post('social-Info', [App\Http\Controllers\UserController::class, 'socialInfo']);
 Route::post('second-Info', [App\Http\Controllers\UserController::class, 'secondInfo']);
 Route::post("user-signin", [App\Http\Controllers\UserController::class, 'userLogin']);
+Route::post("admin-signin", [App\Http\Controllers\UserController::class, 'adminLogin']);
 Route::post("user-trial", [App\Http\Controllers\UserController::class, 'usertrial']);
 Route::get("user/{email}", [App\Http\Controllers\UserController::class, 'userDetail']);
 Route::post("verify-recaptcha", [App\Http\Controllers\RecaptchaController::class, 'verifyRecaptcha']);

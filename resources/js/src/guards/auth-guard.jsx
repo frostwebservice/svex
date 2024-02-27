@@ -22,23 +22,26 @@ export const AuthGuard = (props) => {
   const navigate = useNavigate();
 
   const check = useCallback(() => {
-
     if (!isAuthenticated) {
-      const searchParams = new URLSearchParams({ returnTo: window.location.href }).toString();
+      const searchParams = new URLSearchParams({
+        returnTo: window.location.href
+      }).toString();
       const href = loginPaths[issuer] + `?${searchParams}`;
       // alert("sdf")
-      navigate("/auth/auth/SignIn");
+      navigate('/auth/auth/signin');
     } else {
       setChecked(true);
     }
   }, [isAuthenticated, issuer, router]);
 
   // Only check on mount, this allows us to redirect the user manually when auth state changes
-  useEffect(() => {
-    check();
-  },
+  useEffect(
+    () => {
+      check();
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []);
+    []
+  );
 
   if (!checked) {
     return null;
