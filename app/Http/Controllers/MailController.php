@@ -471,6 +471,7 @@ class MailController extends Controller
         $message = $request->message;
         $inlines = explode(",",$request->inlineImgs);
         foreach($inlines as $key=>$inline){
+            if($inline=='') break;
             $last = explode("/",$inline)[3];
             if(isset(explode(".",$last)[1])){
 
@@ -480,6 +481,18 @@ class MailController extends Controller
                 // $message= str_replace($first,"http://app.socialvex.com/longlogo.png",$message);
             }
         }
+        //living server
+        // foreach($inlines as $key=>$inline){
+        //     if($inline=='') break;
+        //     $last = explode("/",$inline)[3];
+        //     if(isset(explode(".",$last)[1])){
+
+        //         $first = explode(".",$inline)[0].".".explode(".",$inline)[1].".".explode(".",$inline)[2];
+        //         //replace first with last value;
+        //         $message= str_replace($first,$this->url->to('/')."/inlines/".$last,$message);
+        //         // $message= str_replace($first,"http://app.socialvex.com/longlogo.png",$message);
+        //     }
+        // }
         // print_r($message);
         // die();
         $to_arr = explode(",",$request->to);

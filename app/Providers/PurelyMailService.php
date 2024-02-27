@@ -16,6 +16,7 @@ class PurelyMailService
         $this->apiToken = 'pm-live-0c65ed72-897d-4943-9f80-e7d6ea11e4ee';
         
         $this->apiUrl = 'https://purelymail.com/api/v0/createUser';
+        $this->deleteUrl = 'https://purelymail.com/api/v0/deleteUser';
     }
 
     public function createUser($user): array
@@ -43,6 +44,21 @@ class PurelyMailService
         return $response->json();
     }
 
+    public function deleteUser($user): array
+    {
+        $userData = [
+            "userName" => Str::replace(' ', '', $user['fullname']),
+        ];
+        $response = $this->delete($userData);
+
+        if ($response->failed()) {
+            // Handle error
+            throw new \Exception('Failed to delete PurelyMail user.');
+        }
+
+        return $response->json();
+    }
+
     protected function execute(array $data): Response
     {
         return Http::withHeaders([
@@ -50,5 +66,13 @@ class PurelyMailService
             'Purelymail-Api-Token' => $this->apiToken,
             'Content-Type' => 'application/json',
             ])->post($this->apiUrl, $data);
+    }
+    protected function delete(array $data): Response
+    {
+        return Http::withHeaders([
+            'accept' => 'application/json',
+            'Purelymail-Api-Token' => $this->apiToken,
+            'Content-Type' => 'application/json',
+            ])->post($this->deleteUrl, $data);
     }
 }
