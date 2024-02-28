@@ -401,7 +401,7 @@ export const TopNav = (props) => {
                     Essential Member
                   </Box>
                 </Stack>
-              ) : (
+              ) : userinfo.paid == 2 ? (
                 <Stack direction="row" sx={{ px: 2 }}>
                   <Box
                     component="span"
@@ -432,6 +432,8 @@ export const TopNav = (props) => {
                     Premium Member
                   </Box>
                 </Stack>
+              ) : (
+                <></>
               )}
             </Stack>
           </Scrollbar>

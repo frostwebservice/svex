@@ -23,7 +23,7 @@ import { Seo } from '@/components/seo';
 // import { paths } from 'src/paths';
 
 const initialValues = {
-  email: localStorage.getItem('email'),
+  email: JSON.parse(localStorage.getItem('email')),
   password: '',
   passwordConfirm: ''
 };

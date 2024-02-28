@@ -43,7 +43,7 @@ const Page = () => {
   const [letter, setLetter] = useState('Log In');
   const { signIn } = useAuth();
   const [initialValues, setInitialValues] = useState({
-    email: 'svexadm@socialvex.com',
+    email: '',
     password: '',
     type: 'Admin login'
   });
@@ -143,17 +143,17 @@ const Page = () => {
                 <RedditTextField
                   className="title-inter mt-3"
                   variant="filled"
-                  //   error={!!(formik.touched.email && formik.errors.email)}
+                  error={!!(formik.touched.email && formik.errors.email)}
                   fullWidth
-                  //   helperText={formik.touched.email && formik.errors.email}
+                  helperText={formik.touched.email && formik.errors.email}
                   label="Email Address"
                   name="email"
-                  //   onBlur={formik.handleBlur}
-                  //   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
                   type="text"
-                  value="Admin"
-                  disabled={true}
-                  //   value={formik.values.email}
+                  // value="Admin"
+                  // disabled={true}
+                  value={formik.values.email}
                 />
                 <RedditTextField
                   className="title-inter mt-3"

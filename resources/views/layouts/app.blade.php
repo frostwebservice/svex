@@ -9,7 +9,7 @@
 
 <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link rel="icon" href="http://5.161.209.30/favicon-32x32.png" width="30px" height="30px" type="image/x-icon">
+    <link rel="icon" href="https://app.socialvex.com/favicon-32x32.png" width="30px" height="30px" type="image/x-icon">
     <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">

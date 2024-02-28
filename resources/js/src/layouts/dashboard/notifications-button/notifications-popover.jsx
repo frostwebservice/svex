@@ -20,9 +20,60 @@ import {
   Typography
 } from '@mui/material';
 import { Scrollbar } from '@/components/scrollbar';
+import { useState, useEffect, useCallback } from 'react';
+import { useSelector } from '@/store';
+import { subDays, subHours } from 'date-fns';
 
+const now = new Date();
 const renderContent = (notification) => {
   switch (notification.type) {
+    case 'unread_mail': {
+      const createdAt = format(notification.createdAt, 'MMM dd, h:mm a');
+
+      return (
+        <>
+          <ListItemAvatar sx={{ mt: 0.5 }}>
+            <Avatar src={notification.avatar}>
+              <SvgIcon>
+                <User01Icon />
+              </SvgIcon>
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={
+              <Box
+                sx={{
+                  alignItems: 'center',
+                  display: 'flex',
+                  flexWrap: 'wrap'
+                }}
+              >
+                <Typography sx={{ mr: 0.5 }} variant="subtitle2">
+                  {notification.author}
+                </Typography>
+                <Typography sx={{ mr: 0.5 }} variant="body2">
+                  Unread Messages
+                </Typography>
+                <Link
+                  href="/dashboard/mail"
+                  underline="always"
+                  variant="body2"
+                  target="_blank"
+                >
+                  {notification.job}
+                </Link>
+              </Box>
+            }
+            secondary={
+              <Typography color="text.secondary" variant="caption">
+                {createdAt}
+              </Typography>
+            }
+            sx={{ my: 0 }}
+          />
+        </>
+      );
+    }
     case 'job_add': {
       const createdAt = format(notification.createdAt, 'MMM dd, h:mm a');
 
@@ -36,7 +87,7 @@ const renderContent = (notification) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={(
+            primary={
               <Box
                 sx={{
                   alignItems: 'center',
@@ -44,35 +95,22 @@ const renderContent = (notification) => {
                   flexWrap: 'wrap'
                 }}
               >
-                <Typography
-                  sx={{ mr: 0.5 }}
-                  variant="subtitle2"
-                >
+                <Typography sx={{ mr: 0.5 }} variant="subtitle2">
                   {notification.author}
                 </Typography>
-                <Typography
-                  sx={{ mr: 0.5 }}
-                  variant="body2"
-                >
+                <Typography sx={{ mr: 0.5 }} variant="body2">
                   added a new job
                 </Typography>
-                <Link
-                  href="#"
-                  underline="always"
-                  variant="body2"
-                >
+                <Link href="#" underline="always" variant="body2">
                   {notification.job}
                 </Link>
               </Box>
-            )}
-            secondary={(
-              <Typography
-                color="text.secondary"
-                variant="caption"
-              >
+            }
+            secondary={
+              <Typography color="text.secondary" variant="caption">
                 {createdAt}
               </Typography>
-            )}
+            }
             sx={{ my: 0 }}
           />
         </>
@@ -91,7 +129,7 @@ const renderContent = (notification) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={(
+            primary={
               <Box
                 sx={{
                   alignItems: 'center',
@@ -99,25 +137,19 @@ const renderContent = (notification) => {
                   flexWrap: 'wrap'
                 }}
               >
-                <Typography
-                  variant="subtitle2"
-                  sx={{ mr: 0.5 }}
-                >
+                <Typography variant="subtitle2" sx={{ mr: 0.5 }}>
                   New feature!
                 </Typography>
                 <Typography variant="body2">
                   {notification.description}
                 </Typography>
               </Box>
-            )}
-            secondary={(
-              <Typography
-                color="text.secondary"
-                variant="caption"
-              >
+            }
+            secondary={
+              <Typography color="text.secondary" variant="caption">
                 {createdAt}
               </Typography>
-            )}
+            }
             sx={{ my: 0 }}
           />
         </>
@@ -136,7 +168,7 @@ const renderContent = (notification) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary={(
+            primary={
               <Box
                 sx={{
                   alignItems: 'center',
@@ -145,35 +177,22 @@ const renderContent = (notification) => {
                   m: 0
                 }}
               >
-                <Typography
-                  sx={{ mr: 0.5 }}
-                  variant="subtitle2"
-                >
+                <Typography sx={{ mr: 0.5 }} variant="subtitle2">
                   {notification.author}
                 </Typography>
-                <Typography
-                  sx={{ mr: 0.5 }}
-                  variant="body2"
-                >
+                <Typography sx={{ mr: 0.5 }} variant="body2">
                   created
                 </Typography>
-                <Link
-                  href="#"
-                  underline="always"
-                  variant="body2"
-                >
+                <Link href="#" underline="always" variant="body2">
                   {notification.company}
                 </Link>
               </Box>
-            )}
-            secondary={(
-              <Typography
-                color="text.secondary"
-                variant="caption"
-              >
+            }
+            secondary={
+              <Typography color="text.secondary" variant="caption">
                 {createdAt}
               </Typography>
-            )}
+            }
             sx={{ my: 0 }}
           />
         </>
@@ -187,16 +206,68 @@ const renderContent = (notification) => {
 export const NotificationsPopover = (props) => {
   const {
     anchorEl,
-    notifications,
+    // notifications,
     onClose,
     onMarkAllAsRead,
-    onRemoveOne,
+    // onRemoveOne,
     open = false,
     ...other
   } = props;
+  const [notifications, setNotifications] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(true);
+  const mails = useSelector((state) => state.mail.cntemails);
+  const onRemoveOne = useCallback((notificationId) => {
+    setNotifications(
+      notifications.filter((notification) => notification.id !== notificationId)
+    );
+  }, []);
+  useEffect(() => {
+    let newNotifications = [];
+    if (mails.allIds.length != 0) {
+      let cnt = 0;
+      mails.allIds.map((emailId) => {
+        if (!mails.byId[emailId].isUnread.seen) {
+          cnt++;
+        }
+      });
+      newNotifications.push({
+        id: '1',
+        author: 'SocialVex',
+        avatar: '/assets/icons/mail.png',
 
-  const isEmpty = notifications.length === 0;
+        createdAt: subHours(now, 2).getTime(),
+        job: 'There are ' + cnt + ' unread messages to you!',
+        read: false,
+        type: 'unread_mail'
+      });
+    }
+    setNotifications(newNotifications);
+  }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      let newNotifications = [];
+      if (mails.allIds.length != 0) {
+        let cnt = 0;
+        mails.allIds.map((emailId) => {
+          if (!mails.byId[emailId].isUnread.seen) {
+            cnt++;
+          }
+        });
+        newNotifications.push({
+          id: '1',
+          author: 'SocialVex',
+          avatar: '/assets/icons/mail.png',
+          createdAt: subHours(now, 2).getTime(),
+          job: 'There are ' + cnt + ' unread messages to you!',
+          read: false,
+          type: 'unread_mail'
+        });
+      }
+      setNotifications(newNotifications);
+    }, '10000');
+    setIsEmpty(notifications.length === 0);
+  }, [notifications]);
   return (
     <Popover
       anchorEl={anchorEl}
@@ -208,7 +279,8 @@ export const NotificationsPopover = (props) => {
       onClose={onClose}
       open={open}
       PaperProps={{ sx: { width: 380 } }}
-      {...other}>
+      {...other}
+    >
       <Stack
         alignItems="center"
         direction="row"
@@ -219,68 +291,59 @@ export const NotificationsPopover = (props) => {
           py: 2
         }}
       >
-        <Typography
-          color="inherit"
-          variant="h6"
-        >
+        <Typography color="inherit" variant="h6">
           Notifications
         </Typography>
         <Tooltip title="Mark all as read">
-          <IconButton
-            onClick={onMarkAllAsRead}
-            size="small"
-            color="inherit"
-          >
+          <IconButton onClick={onMarkAllAsRead} size="small" color="inherit">
             <SvgIcon>
               <Mail04Icon />
             </SvgIcon>
           </IconButton>
         </Tooltip>
       </Stack>
-      {isEmpty
-        ? (
-          <Box sx={{ p: 2 }}>
-            <Typography variant="subtitle2">
-              There are no notifications
-            </Typography>
-          </Box>
-        )
-        : (
-          <Scrollbar sx={{ maxHeight: 400 }}>
-            <List disablePadding>
-              {notifications.map((notification) => (
-                <ListItem
-                  divider
-                  key={notification.id}
-                  sx={{
-                    alignItems: 'flex-start',
-                    '&:hover': {
-                      backgroundColor: 'action.hover'
-                    },
-                    '& .MuiListItemSecondaryAction-root': {
-                      top: '24%'
-                    }
-                  }}
-                  secondaryAction={(
-                    <Tooltip title="Remove">
-                      <IconButton
-                        edge="end"
-                        onClick={() => onRemoveOne?.(notification.id)}
-                        size="small"
-                      >
-                        <SvgIcon>
-                          <XIcon />
-                        </SvgIcon>
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                >
-                  {renderContent(notification)}
-                </ListItem>
-              ))}
-            </List>
-          </Scrollbar>
-        )}
+      {isEmpty ? (
+        <Box sx={{ p: 2 }}>
+          <Typography variant="subtitle2">
+            There are no notifications
+          </Typography>
+        </Box>
+      ) : (
+        <Scrollbar sx={{ maxHeight: 400 }}>
+          <List disablePadding>
+            {notifications.map((notification) => (
+              <ListItem
+                divider
+                key={notification.id}
+                sx={{
+                  alignItems: 'flex-start',
+                  '&:hover': {
+                    backgroundColor: 'action.hover'
+                  },
+                  '& .MuiListItemSecondaryAction-root': {
+                    top: '24%'
+                  }
+                }}
+                secondaryAction={
+                  <Tooltip title="Remove">
+                    <IconButton
+                      edge="end"
+                      onClick={() => onRemoveOne?.(notification.id)}
+                      size="small"
+                    >
+                      <SvgIcon>
+                        <XIcon />
+                      </SvgIcon>
+                    </IconButton>
+                  </Tooltip>
+                }
+              >
+                {renderContent(notification)}
+              </ListItem>
+            ))}
+          </List>
+        </Scrollbar>
+      )}
     </Popover>
   );
 };
@@ -290,6 +353,5 @@ NotificationsPopover.propTypes = {
   notifications: PropTypes.array.isRequired,
   onClose: PropTypes.func,
   onMarkAllAsRead: PropTypes.func,
-  onRemoveOne: PropTypes.func,
   open: PropTypes.bool
 };

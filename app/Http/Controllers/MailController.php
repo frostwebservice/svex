@@ -479,7 +479,7 @@ class MailController extends Controller
                 $first = explode(".",$inline)[0];
                 //replace first with last value;
                 $message= str_replace($first,$this->url->to('/')."/inlines/".$last,$message);
-                // $message= str_replace($first,"http://app.socialvex.com/longlogo.png",$message);
+                // $message= str_replace($first,"https://app.socialvex.com/longlogo.png",$message);
             }
         }
         //living server
@@ -491,7 +491,7 @@ class MailController extends Controller
         //         $first = explode(".",$inline)[0].".".explode(".",$inline)[1].".".explode(".",$inline)[2];
         //         //replace first with last value;
         //         $message= str_replace($first,$this->url->to('/')."/inlines/".$last,$message);
-        //         // $message= str_replace($first,"http://app.socialvex.com/longlogo.png",$message);
+        //         // $message= str_replace($first,"https://app.socialvex.com/longlogo.png",$message);
         //     }
         // }
         // print_r($message);
