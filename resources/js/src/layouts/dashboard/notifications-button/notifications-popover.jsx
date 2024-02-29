@@ -210,12 +210,14 @@ export const NotificationsPopover = (props) => {
     onClose,
     onMarkAllAsRead,
     // onRemoveOne,
+    onparentNotification,
     open = false,
     ...other
   } = props;
   const [notifications, setNotifications] = useState([]);
   const [isEmpty, setIsEmpty] = useState(true);
   const mails = useSelector((state) => state.mail.cntemails);
+  const [refresh, setRefresh] = useState(false);
   const onRemoveOne = useCallback((notificationId) => {
     setNotifications(
       notifications.filter((notification) => notification.id !== notificationId)
@@ -230,44 +232,48 @@ export const NotificationsPopover = (props) => {
           cnt++;
         }
       });
-      newNotifications.push({
-        id: '1',
-        author: 'SocialVex',
-        avatar: '/assets/icons/mail.png',
-
-        createdAt: subHours(now, 2).getTime(),
-        job: 'There are ' + cnt + ' unread messages to you!',
-        read: false,
-        type: 'unread_mail'
-      });
-    }
-    setNotifications(newNotifications);
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      let newNotifications = [];
-      if (mails.allIds.length != 0) {
-        let cnt = 0;
-        mails.allIds.map((emailId) => {
-          if (!mails.byId[emailId].isUnread.seen) {
-            cnt++;
-          }
-        });
+      if (cnt != 0)
         newNotifications.push({
           id: '1',
           author: 'SocialVex',
           avatar: '/assets/icons/mail.png',
+
           createdAt: subHours(now, 2).getTime(),
           job: 'There are ' + cnt + ' unread messages to you!',
           read: false,
           type: 'unread_mail'
         });
-      }
-      setNotifications(newNotifications);
-    }, '10000');
+    }
+    setNotifications(newNotifications);
     setIsEmpty(notifications.length === 0);
-  }, [notifications]);
+    onparentNotification(notifications);
+  }, [mails]);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     let newNotifications = [];
+  //     if (mails.allIds.length != 0) {
+  //       let cnt = 0;
+  //       mails.allIds.map((emailId) => {
+  //         if (!mails.byId[emailId].isUnread.seen) {
+  //           cnt++;
+  //         }
+  //       });
+  //       newNotifications.push({
+  //         id: '1',
+  //         author: 'SocialVex',
+  //         avatar: '/assets/icons/mail.png',
+  //         createdAt: subHours(now, 2).getTime(),
+  //         job: 'There are ' + cnt + ' unread messages to you!',
+  //         read: false,
+  //         type: 'unread_mail'
+  //       });
+  //     }
+  //     setNotifications(newNotifications);
+  //   }, '10000');
+  //   setIsEmpty(notifications.length === 0);
+  //   onparentNotification(notifications);
+  // }, [notifications]);
   return (
     <Popover
       anchorEl={anchorEl}

@@ -35,34 +35,34 @@ class FinderController extends Controller
     }
     public function get_possible_infs(Request $request){
         $infs = array();
-        $igs = DB::table('influencers_instagram')->select('public_email')->distinct()->get()->toArray();
-        $yts = DB::table('influencers_youtube')->select('public_email')->distinct()->get()->toArray();
-        $tts = DB::table('influencers_tiktok')->select('public_email')->distinct()->get()->toArray();
-        $tws = DB::table('influencers_twitter')->select('public_email')->distinct()->get()->toArray();
-        $pts = DB::table('influencers_pinterest')->select('public_email')->distinct()->get()->toArray();
+        $igs = DB::table('influencers_instagram')->select('public_email','username')->distinct()->get()->toArray();
+        $yts = DB::table('influencers_youtube')->select('public_email','username')->distinct()->get()->toArray();
+        $tts = DB::table('influencers_tiktok')->select('public_email','username')->distinct()->get()->toArray();
+        $tws = DB::table('influencers_twitter')->select('public_email','username')->distinct()->get()->toArray();
+        $pts = DB::table('influencers_pinterest')->select('public_email','username')->distinct()->get()->toArray();
         foreach($igs as $ig){
-            if(!in_array($ig->public_email, $infs, true)&&$ig->public_email!=""){
-                array_push($infs, $ig->public_email);
+            if(!in_array($ig, $infs, true)&&$ig->public_email!=""){
+                array_push($infs, $ig);
             }
         }
         foreach($tts as $tt){
-            if(!in_array($tt->public_email, $infs, true)&&$tt->public_email!=""){
-                array_push($infs, $tt->public_email);
+            if(!in_array($tt, $infs, true)&&$tt->public_email!=""){
+                array_push($infs, $tt);
             }
         }
         foreach($yts as $yt){
-            if(!in_array($yt->public_email, $infs, true)&&$yt->public_email!=""){
-                array_push($infs, $yt->public_email);
+            if(!in_array($yt, $infs, true)&&$yt->public_email!=""){
+                array_push($infs, $yt);
             }
         }
         foreach($tws as $tw){
-            if(!in_array($tw->public_email, $infs, true)&&$tw->public_email!=""){
-                array_push($infs, $tw->public_email);
+            if(!in_array($tw, $infs, true)&&$tw->public_email!=""){
+                array_push($infs, $tw);
             }
         }
         foreach($pts as $pt){
-            if(!in_array($pt->public_email, $infs, true)&&$pt->public_email!=""){
-                array_push($infs, $pt->public_email);
+            if(!in_array($pt, $infs, true)&&$pt->public_email!=""){
+                array_push($infs, $pt);
             }
         }
         print_r(json_encode($infs));
@@ -78,6 +78,10 @@ class FinderController extends Controller
         }
 
         return json_encode($infs);
+    }
+    public function get_inf_name(Request $request){
+        $infs = DB::table($request->table)->select('username')->get();
+        print_r(json_encode($infs));
     }
     public function get_total_infs(Request $request){
         $total = 0;
@@ -102,8 +106,12 @@ class FinderController extends Controller
             'inf_id' =>$request->inf_id,
             'social_type' =>$request->tab
         );
-        $res = DB::table("group_infs")->insert($data);
-        print_r(json_encode($res));
+        $exist = DB::table('group_infs')->where($data)->count();
+        if($exist==0){
+            $res = DB::table("group_infs")->insert($data);
+        }      
+       
+        print_r(json_encode(1));
     }
     public function delete_user_group(Request $request){
         $id = $request-> group_inf_id;

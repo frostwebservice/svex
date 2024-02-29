@@ -109,7 +109,6 @@ const useComposer = () => {
   }, []);
 
   const handleToChange = useCallback((to) => {
-    console.log(to);
     setState((prevState) => ({
       ...prevState,
       to
@@ -260,7 +259,6 @@ const useConnections = (search = '') => {
 const Page = (props) => {
   const settings = useSettings();
   const email = JSON.parse(localStorage.getItem('email'));
-  // console.log(props);
   const { socialinfo, userinfo } = props;
   const profile = useProfile();
   const [currentTab, setCurrentTab] = useState('infoverview');
@@ -684,6 +682,9 @@ const Page = (props) => {
                         composer.handleToChange(
                           tmp && tmp.public_email ? tmp.public_email : ''
                         );
+                        composer.handleDisplayChange(
+                          tmp && tmp.full_name ? tmp.full_name : ''
+                        );
                         composer.handleOpen();
                       }}
                       size="small"
@@ -711,31 +712,140 @@ const Page = (props) => {
                   href={showExternalUrl()}
                   target="_blank"
                 ></a>
-                <a
-                  className="instagram-icon quick-link"
-                  href="https://www.instagram.com"
-                  target="_blank"
-                ></a>
-                <a
-                  className="tiktok-icon quick-link"
-                  href="https://www.tiktok.com"
-                  target="_blank"
-                ></a>
-                <a
-                  className="youtube-icon quick-link"
-                  href="https://www.youtube.com"
-                  target="_blank"
-                ></a>
-                <a
-                  className="twitter-icon quick-link"
-                  href="https://www.twitter.com"
-                  target="_blank"
-                ></a>
-                <a
-                  className="pinterest-icon quick-link"
-                  href="https://www.pinterest"
-                  target="_blank"
-                ></a>
+                {socialinfo && socialinfo[socialinfo['basic']] ? (
+                  <a
+                    className="facebook-icon quick-link"
+                    href={
+                      'https://' +
+                      (socialinfo
+                        ? socialinfo[socialinfo['basic']].username.split('/')
+                            .length > 1
+                          ? socialinfo[socialinfo['basic']].username
+                          : 'www.facebook.com/' +
+                            socialinfo[socialinfo['basic']].username
+                        : '')
+                    }
+                    target="_blank"
+                  ></a>
+                ) : (
+                  <a
+                    className="facebook-icon quick-link"
+                    href="https://www.facebook.com"
+                    target="_blank"
+                  ></a>
+                )}
+
+                {socialinfo && socialinfo[socialinfo['basic']] ? (
+                  <a
+                    className="instagram-icon quick-link"
+                    href={
+                      'https://' +
+                      (socialinfo
+                        ? socialinfo[socialinfo['basic']].username.split('/')
+                            .length > 1
+                          ? socialinfo[socialinfo['basic']].username
+                          : 'www.instagram.com/' +
+                            socialinfo[socialinfo['basic']].username
+                        : '')
+                    }
+                    target="_blank"
+                  ></a>
+                ) : (
+                  <a
+                    className="instagram-icon quick-link"
+                    href="https://www.instagram.com"
+                    target="_blank"
+                  ></a>
+                )}
+                {socialinfo && socialinfo[socialinfo['basic']] ? (
+                  <a
+                    className="tiktok-icon quick-link"
+                    href={
+                      'https://' +
+                      (socialinfo
+                        ? socialinfo[socialinfo['basic']].username.split('/')
+                            .length > 1
+                          ? socialinfo[socialinfo['basic']].username
+                          : 'www.tiktok.com/' +
+                            socialinfo[socialinfo['basic']].username
+                        : '')
+                    }
+                    target="_blank"
+                  ></a>
+                ) : (
+                  <a
+                    className="tiktok-icon quick-link"
+                    href="https://www.tiktok.com"
+                    target="_blank"
+                  ></a>
+                )}
+                {socialinfo && socialinfo[socialinfo['basic']] ? (
+                  <a
+                    className="youtube-icon quick-link"
+                    href={
+                      'https://' +
+                      (socialinfo
+                        ? socialinfo[socialinfo['basic']].username.split('/')
+                            .length > 1
+                          ? socialinfo[socialinfo['basic']].username
+                          : 'www.youtube.com/@' +
+                            socialinfo[socialinfo['basic']].username
+                        : '')
+                    }
+                    target="_blank"
+                  ></a>
+                ) : (
+                  <a
+                    className="youtube-icon quick-link"
+                    href="https://www.youtube.com"
+                    target="_blank"
+                  ></a>
+                )}
+                {socialinfo && socialinfo[socialinfo['basic']] ? (
+                  <a
+                    a
+                    className="twitter-icon quick-link"
+                    href={
+                      'https://' +
+                      (socialinfo
+                        ? socialinfo[socialinfo['basic']].username.split('/')
+                            .length > 1
+                          ? socialinfo[socialinfo['basic']].username
+                          : 'www.twitter.com/' +
+                            socialinfo[socialinfo['basic']].username
+                        : '')
+                    }
+                    target="_blank"
+                  ></a>
+                ) : (
+                  <a
+                    className="twitter-icon quick-link"
+                    href="https://www.twitter.com"
+                    target="_blank"
+                  ></a>
+                )}
+                {socialinfo && socialinfo[socialinfo['basic']] ? (
+                  <a
+                    className="pinterest-icon quick-link"
+                    href={
+                      'https://' +
+                      (socialinfo
+                        ? socialinfo[socialinfo['basic']].username.split('/')
+                            .length > 1
+                          ? socialinfo[socialinfo['basic']].username
+                          : 'www.pinterest.com/' +
+                            socialinfo[socialinfo['basic']].username
+                        : '')
+                    }
+                    target="_blank"
+                  ></a>
+                ) : (
+                  <a
+                    className="pinterest-icon quick-link"
+                    href="https://www.pinterest"
+                    target="_blank"
+                  ></a>
+                )}
               </div>
             </div>
           </div>

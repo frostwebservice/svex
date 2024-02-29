@@ -90,6 +90,7 @@ Route::post('update_group', [App\Http\Controllers\FinderController::class, 'upda
 Route::post('delete_group', [App\Http\Controllers\FinderController::class, 'delete_group']);
 Route::post('add_group', [App\Http\Controllers\FinderController::class, 'add_group']);
 Route::post('delete_user_group', [App\Http\Controllers\FinderController::class, 'delete_user_group']);
+Route::post('get_inf_name', [App\Http\Controllers\FinderController::class, 'get_inf_name']);
 
 
 Route::post('payByStripe',[App\Http\Controllers\PaymentController::class,'payByStripe']);
@@ -99,10 +100,12 @@ Route::post('update_paydate',[App\Http\Controllers\PaymentController::class,'upd
 
 
 Route::post('get_emails',[App\Http\Controllers\MailController::class,'get_emails']);
+Route::post('get_tmp_emails',[App\Http\Controllers\MailController::class,'get_tmp_emails']);
 Route::post('unread_set',[App\Http\Controllers\MailController::class,'unread_set']);
 Route::post('del_mail',[App\Http\Controllers\MailController::class,'del_mail']);
 Route::post('update_fav',[App\Http\Controllers\MailController::class,'update_fav']);
 Route::post('send_mail',[App\Http\Controllers\MailController::class,'send_mail']);
 Route::post('upload_inline',[App\Http\Controllers\MailController::class,'upload_inline']);
 Route::post('get_possible_infs',[App\Http\Controllers\FinderController::class,'get_possible_infs']);
-
+Route::post('save_template',[App\Http\Controllers\MailController::class,'save_template']);
+Route::post('del_tmpmail',[App\Http\Controllers\MailController::class,'del_tmpmail']);

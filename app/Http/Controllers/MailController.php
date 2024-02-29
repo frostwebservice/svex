@@ -336,7 +336,10 @@ class MailController extends Controller
             
         }
     }
-
+    public function get_tmp_emails(Request $request){
+        $templates = DB::table("templates")->where("email",$request->email)->get();
+        print_r(json_encode($templates));
+    }
     public function show(int $UID)
     {
         return view('show', [
@@ -532,5 +535,64 @@ class MailController extends Controller
         print_r(json_encode($res));
         die();
     
+    }
+    public function save_template(Request $request){
+        $message = $request->message;
+        $inlines = explode(",",$request->inlineImgs);
+        foreach($inlines as $key=>$inline){
+            if($inline=='') break;
+            $last = explode("/",$inline)[3];
+            if(isset(explode(".",$last)[1])){
+
+                $first = explode(".",$inline)[0];
+                //replace first with last value;
+                $message= str_replace($first,$this->url->to('/')."/inlines/".$last,$message);
+                // $message= str_replace($first,"https://app.socialvex.com/longlogo.png",$message);
+            }
+        }
+        //living server
+        // foreach($inlines as $key=>$inline){
+        //     if($inline=='') break;
+        //     $last = explode("/",$inline)[3];
+        //     if(isset(explode(".",$last)[1])){
+
+        //         $first = explode(".",$inline)[0].".".explode(".",$inline)[1].".".explode(".",$inline)[2];
+        //         //replace first with last value;
+        //         $message= str_replace($first,$this->url->to('/')."/inlines/".$last,$message);
+        //         // $message= str_replace($first,"https://app.socialvex.com/longlogo.png",$message);
+        //     }
+        // }
+        // print_r($message);
+        // die();
+        $len=0;
+        $files = array();
+        $files_txt="";
+        if(isset($request->len)){
+            $len = $request->len;
+            for($i=0;$i<$len;$i++){
+                $path = $request->file('file'.$i)->store('public/tmpfiles');
+                $filename = $request->file('file'.$i)->getClientOriginalName();
+                $location = 'tmpfiles'; 
+                $request->file('file'.$i)->move($location, $filename);
+                
+                if($i<$len-1) $files_txt.=$filename.",";
+                else $files_txt.=$filename;
+            }
+        }
+        $data= array(
+            'email'=>$request->email,
+            'subject'=>$request->subject,
+            'files'=>$files_txt,
+            'message'=>$message
+        );
+        $res = DB::table('templates')->insert($data);
+
+        print_r(json_encode($res));
+        die();
+    
+    }
+    public function del_tmpmail(Request $request){
+        $res = DB::table('templates')->where('id',$request->uid)->delete();
+        print_r(json_encode($res));
     }
 }

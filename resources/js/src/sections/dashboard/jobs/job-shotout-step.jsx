@@ -338,7 +338,7 @@ const JobShotoutStep = (props) => {
         <Button
           color="primary"
           className={isReview ? 'review-hidden' : ''}
-          onClick={onBack}
+          onClick={onNext}
           sx={{ px: 5, py: 2, fontSize: 18 }}
         >
           Skip

@@ -24,7 +24,6 @@ const Layout = withAuthGuard((props) => {
   const removeAdmin = (value) => {
     return value.title != 'Admin Panel';
   };
-  console.log(nsections);
   useEffect(() => {
     // setNsections(sections[0].items);
     if (userinfo.id) {

@@ -14,8 +14,11 @@ const getEmails = (params) => async (dispatch) => {
 };
 const getCntEmails = (params) => async (dispatch) => {
   const response = await mailApi.getEmails(params);
-
   dispatch(slice.actions.getCntEmails(response));
+};
+const getTmpEmails = (params) => async (dispatch) => {
+  const response = await mailApi.getTmpEmails(params);
+  dispatch(slice.actions.getTmpEmails(response));
 };
 const getEmail = (params) => async (dispatch) => {
   const response = await mailApi.getEmail(params);
@@ -27,5 +30,6 @@ export const thunks = {
   getEmail,
   getEmails,
   getCntEmails,
+  getTmpEmails,
   getLabels
 };

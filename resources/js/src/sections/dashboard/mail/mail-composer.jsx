@@ -189,9 +189,11 @@ const MailComposer = (props) => {
       }
     }
 
-    if (isOutreach) {
-    }
-    if (to == '') {
+    if (isOutreach && to == '') {
+      if (isOutreach) {
+        toast.error('This outreach group has no influencers');
+        return;
+      }
       toast.error('You should input To field.');
       return;
     }
@@ -199,13 +201,22 @@ const MailComposer = (props) => {
       toast.error('You should input Subject field.');
       return;
     }
-    if (infaddresses.includes(to) == false) {
-      toast.error('You should input known email address of influencers');
-      onToChange('');
-      return;
+    if (!isOutreach) {
+      var toValue =
+        infaddresses.filter((inf) => inf.username == toDisplay).length > 0
+          ? infaddresses.filter((inf) => inf.username == toDisplay)[0]
+              .public_email
+          : '';
+      onToChange?.(toValue);
+
+      if (toValue == '') {
+        toast.error('You should send mail to known address of influencers');
+        onToChange('');
+        return;
+      }
     }
 
-    onSubmit();
+    onSubmit(toValue);
   };
   useEffect(() => {
     onMessageChange?.(content);
@@ -355,7 +366,7 @@ const MailComposer = (props) => {
                   avatar != ''
                     ? avatar
                     : `https://ui-avatars.com/api/?name=${
-                        to ? to : ''
+                        toDisplay ? toDisplay : ''
                       }&background=2970FF&color=fff&rounded=true`
                 }
               />
@@ -381,9 +392,9 @@ const MailComposer = (props) => {
                 <Input
                   disableUnderline
                   fullWidth
-                  onChange={handleToChange}
+                  onChange={handleDisplayChange}
                   placeholder="Input Address To"
-                  value={to}
+                  value={toDisplay}
                   list="suggestion"
                   className="suggestion"
                   inputProps={{ list: 'suggestion' }}
@@ -393,8 +404,8 @@ const MailComposer = (props) => {
                 {infaddresses.map((address, index) => {
                   //Parsing the array and displaying suggestion with option tag
                   return (
-                    <option key={index} value={address}>
-                      {address}
+                    <option key={index} value={address.username}>
+                      {address.username}
                     </option>
                   );
                 })}
@@ -426,7 +437,7 @@ const MailComposer = (props) => {
             alignItems="center"
             direction="row"
             spacing={1}
-            className="shower-reach"
+            // className="shower-reach"
           >
             <Typography sx={{ mx: 2, fontWeight: 600, fontSize: 16 }}>
               Outreach Group

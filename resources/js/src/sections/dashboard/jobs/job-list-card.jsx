@@ -4,7 +4,6 @@ import {
   Box,
   Card,
   CardContent,
-  Link,
   Stack,
   SvgIcon,
   Typography,
@@ -15,6 +14,7 @@ import {
   Button,
   Switch
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { RouterLink } from '@/components/router-link';
 // import './manage.css';
 import { getJobs } from '@/actions';
@@ -22,6 +22,7 @@ import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import XIcon from '@untitled-ui/icons-react/build/esm/X';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
 const JobListCard = (props) => {
   const {
@@ -41,12 +42,10 @@ const JobListCard = (props) => {
   useEffect(() => {
     dispatch(getJobs(email, 1));
   }, []);
-
-  const timeSince = (date) => {
+  const timeSince = (date1, date2) => {
     var seconds = Math.floor(
-      (new Date().getTime() - new Date(date).getTime()) / 1000
+      (new Date(date2) - new Date(date1).getTime()) / 1000
     );
-
     var interval = seconds / 31536000;
 
     if (interval > 1) {
@@ -78,6 +77,7 @@ const JobListCard = (props) => {
         tab: currentTab
       })
       .then((response) => {
+        toast.success('Invited to project successfuly!');
         onClose();
       })
       .catch((e) => {});
@@ -107,7 +107,7 @@ const JobListCard = (props) => {
     }
   };
   return (
-    <Dialog fullWidth maxWidth="lg" open={open} onClose={onClose}>
+    <Dialog fullWidth maxWidth="md" open={open} onClose={onClose}>
       <Stack
         alignItems="center"
         direction="row"
@@ -127,6 +127,50 @@ const JobListCard = (props) => {
       </Stack>
       <DialogContent>
         <Box sx={{ mt: 2 }}>
+          {jobs?.filter((job) => job.is_active == '1').length == 0 && (
+            <Card sx={{ mb: 3 }}>
+              <Stack divider={<Divider />}>
+                <Stack
+                  alignItems="flex-start"
+                  direction="row"
+                  flexWrap="wrap"
+                  justifyContent="space-between"
+                  sx={{
+                    px: 2,
+                    py: 1.5
+                  }}
+                >
+                  <Stack
+                    alignItems="center"
+                    direction="row"
+                    spacing={2}
+                    // className='right-panel'
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        flexGrow: 1,
+                        fontFamily: (theme) => theme.typography.fontFamily,
+                        fontSize: 14,
+                        fontWeight: 600,
+                        ml: 1
+                      }}
+                    >
+                      There are no active jobs. Please click this link if you
+                      want to create a new job.
+                      <Link
+                        style={{ marginLeft: 9 }}
+                        to="/dashboard/jobs/create"
+                        underline="always"
+                      >
+                        Create a Job
+                      </Link>
+                    </Box>
+                  </Stack>
+                </Stack>
+              </Stack>
+            </Card>
+          )}
           {jobs?.map((job) => {
             return job.is_active == '1' ? (
               <Card sx={{ mb: 3 }}>
@@ -138,7 +182,7 @@ const JobListCard = (props) => {
                     justifyContent="space-between"
                     sx={{
                       px: 2,
-                      py: 1.5
+                      pt: 2
                     }}
                   >
                     {/* <div className='top'> */}
@@ -149,6 +193,7 @@ const JobListCard = (props) => {
                       alignItems="center"
                       direction="row"
                       spacing={2}
+
                       // className='right-panel'
                     >
                       <Typography
@@ -156,7 +201,7 @@ const JobListCard = (props) => {
                         variant="caption"
                         style={{ fontSize: 12 }}
                       >
-                        {timeSince(job.created_at)} ago
+                        {timeSince(job.created_at, job.time)} ago
                       </Typography>
                       {isGroup ? (
                         <Button
@@ -181,7 +226,10 @@ const JobListCard = (props) => {
 
                     {/* </div> */}
                   </Stack>
-                  <Typography variant="inherit" sx={{ fontSize: 14, px: 2 }}>
+                  <Typography
+                    variant="inherit"
+                    sx={{ fontSize: 14, px: 2, pb: 2 }}
+                  >
                     Job Brief: {job.brief}
                   </Typography>
                 </Stack>

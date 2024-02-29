@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import CreditCard01Icon from '@untitled-ui/icons-react/build/esm/CreditCard01';
@@ -33,7 +33,7 @@ const AccountPopover = (props) => {
   const user = useMockedUser();
   const dispatch = useDispatch();
   const mails = useSelector((state) => state.mail.emails);
-
+  const [refresh, setRefresh] = useState(false);
   // const displayBadge = () => {
   useEffect(() => {
     dispatch(
@@ -42,6 +42,7 @@ const AccountPopover = (props) => {
         email: JSON.parse(localStorage.getItem('email'))
       })
     );
+    setRefresh(!refresh);
   }, []);
   useEffect(() => {
     setTimeout(() => {
@@ -51,8 +52,9 @@ const AccountPopover = (props) => {
           email: JSON.parse(localStorage.getItem('email'))
         })
       );
-    }, '15000');
-  }, [mails]);
+      setRefresh(!refresh);
+    }, '10000');
+  }, [refresh]);
   // };
   // setInterval(displayBadge, 30000);
 

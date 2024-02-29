@@ -412,7 +412,7 @@ export const InfCard = (props) => {
                   <Button
                     onClick={() => {
                       composer.handleToChange(influencer.public_email);
-                      composer.handleDisplayChange(influencer.public_email);
+                      composer.handleDisplayChange(influencer.full_name);
                       composer.handleOpen();
                     }}
                     size="small"

@@ -61,9 +61,8 @@ const sections = [
 export const Footer = (props) => (
   <Box
     sx={{
-      backgroundColor: (theme) => theme.palette.mode === 'dark'
-        ? 'neutral.800'
-        : 'neutral.50',
+      backgroundColor: (theme) =>
+        theme.palette.mode === 'dark' ? 'neutral.800' : 'neutral.50',
       borderTopColor: 'divider',
       borderTopStyle: 'solid',
       borderTopWidth: 1,
@@ -73,12 +72,10 @@ export const Footer = (props) => (
         xs: 6
       }
     }}
-    {...props}>
+    {...props}
+  >
     <Container maxWidth="lg">
-      <Grid
-        container
-        spacing={3}
-      >
+      <Grid container spacing={3}>
         <Grid
           xs={12}
           sm={4}
@@ -103,7 +100,7 @@ export const Footer = (props) => (
               <Box
                 sx={{
                   display: 'inline-flex',
-                  height: 30,
+                  height: 25
                   // width: 24
                 }}
               >
@@ -125,10 +122,7 @@ export const Footer = (props) => (
                 <span>Svex</span>
               </Box> */}
             </Stack>
-            <Typography
-              color="text.secondary"
-              variant="caption"
-            >
+            <Typography color="text.secondary" variant="caption">
               © 2022 Devias IO
             </Typography>
           </Stack>
@@ -146,10 +140,7 @@ export const Footer = (props) => (
               }
             }}
           >
-            <Typography
-              color="text.secondary"
-              variant="overline"
-            >
+            <Typography color="text.secondary" variant="overline">
               {section.title}
             </Typography>
             <Stack
@@ -165,14 +156,14 @@ export const Footer = (props) => (
                 const linkProps = item.path
                   ? item.external
                     ? {
-                      component: 'a',
-                      href: item.path,
-                      target: '_blank'
-                    }
+                        component: 'a',
+                        href: item.path,
+                        target: '_blank'
+                      }
                     : {
-                      component: RouterLink,
-                      href: item.path
-                    }
+                        component: RouterLink,
+                        href: item.path
+                      }
                   : {};
 
                 return (
@@ -192,7 +183,8 @@ export const Footer = (props) => (
                     <Link
                       color="text.primary"
                       variant="subtitle2"
-                      {...linkProps}>
+                      {...linkProps}
+                    >
                       {item.title}
                     </Link>
                   </Stack>
@@ -203,10 +195,7 @@ export const Footer = (props) => (
         ))}
       </Grid>
       <Divider sx={{ my: 6 }} />
-      <Typography
-        color="text.secondary"
-        variant="caption"
-      >
+      <Typography color="text.secondary" variant="caption">
         All Rights Reserved.
       </Typography>
     </Container>

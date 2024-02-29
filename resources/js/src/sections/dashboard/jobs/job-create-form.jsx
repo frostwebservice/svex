@@ -167,7 +167,6 @@ const JobCreateForm = (props) => {
       navigate('/dashboard/jobs');
     });
   };
-  console.log(job);
   const steps = useMemo(() => {
     return [
       {

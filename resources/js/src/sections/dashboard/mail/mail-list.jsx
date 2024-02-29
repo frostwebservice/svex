@@ -93,6 +93,7 @@ const useSelectionModel = (emailIds) => {
 export const MailList = (props) => {
   const { currentLabelId, disCount, onSidebarToggle, onCompose, ...other } =
     props;
+
   const emails = useEmails(currentLabelId);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();

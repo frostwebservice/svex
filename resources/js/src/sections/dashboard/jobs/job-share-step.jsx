@@ -109,6 +109,7 @@ const JobShareStep = (props) => {
             sx={{ maxheight: '700px' }}
             items={mulArr}
             key={tempKey}
+            title="Favorites"
             selectAllLabel="Select All"
             value={job.favarray}
             onChange={handleSelectionChange}

@@ -6,13 +6,20 @@ import {
   Autocomplete,
   Checkbox,
   Grid,
+  FormGroup,
   FormControlLabel,
   TextField,
   Button
 } from '@mui/material';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import './multiselect.css';
-const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
+const MultiSelectAll = ({
+  items,
+  selectAllLabel,
+  onChange,
+  title = 'Social Media Types',
+  value
+}) => {
   const [selectedOptions, setSelectedOptions] = useState(value);
   const [filteredOptions, setFilteredOptions] = useState(null);
   const multiSelectRef = useRef(null);
@@ -127,7 +134,29 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
       // onChange(result);
     }
   };
-
+  const handleClickLabel = (e, option) => {
+    if (option.value === 'select-all') {
+      handleToggleSelectAll();
+      // if (e.target.checked) {
+      //     // onChange(items);
+      // } else {
+      //     // onChange([]);
+      // }
+    } else {
+      let exist = selectedOptions.filter(
+        (selOption) => selOption.value == option.value
+      ).length;
+      if (exist == 0) {
+        const result = [...selectedOptions, option];
+        setSelectedOptions(result);
+      } else {
+        const result = selectedOptions.filter(
+          (selOption) => selOption.value !== option.value
+        );
+        setSelectedOptions(result);
+      }
+    }
+  };
   const optionRenderer = (props, option, { selected }) => {
     const selectAllProps =
       option.value === 'select-all' // To control the state of 'select-all' checkbox
@@ -154,19 +183,24 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
     return (
       <Grid container key={option.label}>
         <Grid item xs={12} sx={{ pl: 1, pr: 1 }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                key={option.label}
-                checked={selected}
-                onChange={(e) => handleCheckboxChange(e, option)}
-                {...selectAllProps}
-                sx={{ mr: 1 }}
-              />
-            }
-            label={getOptionLabel(option)}
-            key={option.label}
-          />
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id={option.label}
+                  key={option.label}
+                  checked={selected}
+                  onChange={(e) => handleCheckboxChange(e, option)}
+                  {...selectAllProps}
+                  sx={{ mr: 1 }}
+                />
+              }
+              onClick={(e) => handleClickLabel(e, option)}
+              htmlFor={option.label}
+              label={getOptionLabel(option)}
+              key={option.label}
+            />
+          </FormGroup>
         </Grid>
       </Grid>
     );
@@ -184,9 +218,7 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
     debouncedStateValue(filtered);
   };
 
-  const inputRenderer = (params) => (
-    <TextField {...params} label="Social Media Types" />
-  );
+  const inputRenderer = (params) => <TextField {...params} label={title} />;
 
   const filter = createFilterOptions();
 

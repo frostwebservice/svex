@@ -66,7 +66,7 @@ export const MailThreadToolbar = (props) => {
       })
       .catch((e) => {});
   };
-
+  console.log(to);
   return (
     <div>
       <Stack
@@ -152,18 +152,18 @@ export const MailThreadToolbar = (props) => {
             ></Avatar>
             <div>
               <Typography component="span" variant="subtitle2">
-                {from.name}
+                From: {from.name}
               </Typography>{' '}
-              <Link color="text.secondary" component="span" variant="body2">
+              {/* <Link color="text.secondary" component="span" variant="body2">
                 {from.email}
-              </Link>
+              </Link> */}
               <Typography color="text.secondary" variant="subtitle2">
-                To:{' '}
-                {to.map((person) => (
+                To: Me
+                {/* {to.map((person) => (
                   <Link color="inherit" key={person.email}>
                     {person.email}
                   </Link>
-                ))}
+                ))} */}
               </Typography>
             </div>
           </Stack>
@@ -174,13 +174,20 @@ export const MailThreadToolbar = (props) => {
             ></Avatar>
             <div>
               <Typography component="span" variant="subtitle2">
-                {from.name}
+                From: {from.name}
               </Typography>{' '}
-              <Link color="text.secondary" component="span" variant="body2">
+              {/* <Link color="text.secondary" component="span" variant="body2">
                 {from.email}
-              </Link>
+              </Link> */}
               <Typography color="text.secondary" variant="subtitle2">
                 To:{' '}
+                {/* {to[0].name.map((person, index) => (
+                  <Link color="inherit" key={person.mail}>
+                    {index == to[0].name.length - 1
+                      ? person.mail
+                      : person.mail + ', '}
+                  </Link>
+                ))} */}
                 {to[0].name.map((person, index) => (
                   <Link color="inherit" key={person.mail}>
                     {index == to[0].name.length - 1

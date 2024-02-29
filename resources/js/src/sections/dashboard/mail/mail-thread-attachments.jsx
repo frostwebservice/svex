@@ -40,7 +40,6 @@ export const MailThreadAttachments = (props) => {
     }`;
   };
 
-  console.log(attachments);
   return (
     <Stack spacing={2}>
       <Typography variant="h6">{count} Attachments</Typography>

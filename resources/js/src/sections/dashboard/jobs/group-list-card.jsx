@@ -4,7 +4,6 @@ import {
   Box,
   Card,
   CardContent,
-  Link,
   Stack,
   SvgIcon,
   Typography,
@@ -15,6 +14,8 @@ import {
   Button,
   Switch
 } from '@mui/material';
+import { Link } from 'react-router-dom';
+
 import { RouterLink } from '@/components/router-link';
 import { getJobs } from '@/actions';
 import { useDispatch } from 'react-redux';
@@ -62,7 +63,7 @@ const GroupListCard = (props) => {
       .catch((e) => {});
   };
   return (
-    <Dialog fullWidth maxWidth="lg" open={open} onClose={onClose}>
+    <Dialog fullWidth maxWidth="md" open={open} onClose={onClose}>
       <Stack
         alignItems="center"
         direction="row"
@@ -82,11 +83,55 @@ const GroupListCard = (props) => {
       </Stack>
       <DialogContent>
         <Box sx={{ mt: 2 }}>
+          {(groups?.length == 0 || groups[0]?.length == 0) && (
+            <Card sx={{ mb: 3 }}>
+              <Stack divider={<Divider />}>
+                <Stack
+                  alignItems="flex-start"
+                  direction="row"
+                  flexWrap="wrap"
+                  justifyContent="space-between"
+                  sx={{
+                    px: 2,
+                    py: 1.5
+                  }}
+                >
+                  <Stack
+                    alignItems="center"
+                    direction="row"
+                    spacing={2}
+                    // className='right-panel'
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        flexGrow: 1,
+                        fontFamily: (theme) => theme.typography.fontFamily,
+                        fontSize: 14,
+                        fontWeight: 600,
+                        ml: 1
+                      }}
+                    >
+                      There are no outreach groups. Please click this link if
+                      you want to create a new group.
+                      <Link
+                        style={{ marginLeft: 9 }}
+                        to="/inf-finder/new-group"
+                        underline="always"
+                      >
+                        Create Outreach Group
+                      </Link>
+                    </Box>
+                  </Stack>
+                </Stack>
+              </Stack>
+            </Card>
+          )}
           {groups?.map((group, index) => {
             return index == 0 ? (
               <></>
             ) : (
-              <Card sx={{ mb: 3 }}>
+              <Card sx={{ mb: 1 }}>
                 <Stack>
                   <Stack
                     alignItems="flex-start"
@@ -95,7 +140,7 @@ const GroupListCard = (props) => {
                     justifyContent="space-between"
                     sx={{
                       px: 2,
-                      py: 1.5
+                      pt: 2
                     }}
                   >
                     {/* <div className='top'> */}
@@ -109,7 +154,11 @@ const GroupListCard = (props) => {
                       // className='right-panel'
                     >
                       <Button
-                        onClick={() => AddGroup(group[0].group_id)}
+                        onClick={() =>
+                          AddGroup(
+                            group[0].group_id ? group[0].group_id : group[0].id
+                          )
+                        }
                         variant="contained"
                         size="small"
                         style={{ fontSize: 14 }}
@@ -120,7 +169,10 @@ const GroupListCard = (props) => {
 
                     {/* </div> */}
                   </Stack>
-                  <Typography variant="inherit" sx={{ fontSize: 14, px: 2 }}>
+                  <Typography
+                    variant="inherit"
+                    sx={{ fontSize: 14, px: 2, pb: 2, pt: 0 }}
+                  >
                     Brief Description: {group[0].brief_group}
                   </Typography>
                 </Stack>

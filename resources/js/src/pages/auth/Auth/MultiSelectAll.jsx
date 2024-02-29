@@ -127,7 +127,29 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
       // onChange(result);
     }
   };
-
+  const handleClickLabel = (e, option) => {
+    if (option.value === 'select-all') {
+      handleToggleSelectAll();
+      // if (e.target.checked) {
+      //     // onChange(items);
+      // } else {
+      //     // onChange([]);
+      // }
+    } else {
+      let exist = selectedOptions.filter(
+        (selOption) => selOption.value == option.value
+      ).length;
+      if (exist == 0) {
+        const result = [...selectedOptions, option];
+        setSelectedOptions(result);
+      } else {
+        const result = selectedOptions.filter(
+          (selOption) => selOption.value !== option.value
+        );
+        setSelectedOptions(result);
+      }
+    }
+  };
   const optionRenderer = (props, option, { selected }) => {
     const selectAllProps =
       option.value === 'select-all' // To control the state of 'select-all' checkbox
@@ -164,6 +186,8 @@ const MultiSelectAll = ({ items, selectAllLabel, onChange, value }) => {
                 sx={{ mr: 1 }}
               />
             }
+            onClick={(e) => handleClickLabel(e, option)}
+            htmlFor={option.label}
             label={getOptionLabel(option)}
             key={option.label}
           />

@@ -1,12 +1,6 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Chip,
-  Container,
-  Stack,
-  useMediaQuery
-} from '@mui/material';
+import { Box, Chip, Container, Stack, useMediaQuery } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { Logo1 } from '@/components/logo1';
 import { RouterLink } from '@/components/router-link';
@@ -23,7 +17,7 @@ const items = [
   {
     title: 'Register',
     path: paths.auth.auth.signup
-  },
+  }
 ];
 
 const TOP_NAV_HEIGHT = 64;
@@ -68,21 +62,19 @@ export const TopNav = (props) => {
           backgroundColor: 'transparent',
           borderRadius: 2.5,
           boxShadow: 'none',
-          transition: (theme) => theme.transitions.create('box-shadow, background-color', {
-            easing: theme.transitions.easing.easeInOut,
-            duration: 200
-          }),
+          transition: (theme) =>
+            theme.transitions.create('box-shadow, background-color', {
+              easing: theme.transitions.easing.easeInOut,
+              duration: 200
+            }),
           ...(elevate && {
-            backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.90),
+            backgroundColor: (theme) =>
+              alpha(theme.palette.background.paper, 0.9),
             boxShadow: 8
           })
         }}
       >
-        <Stack
-          direction="row"
-          spacing={2}
-          sx={{ height: TOP_NAV_HEIGHT }}
-        >
+        <Stack direction="row" spacing={2} sx={{ height: TOP_NAV_HEIGHT }}>
           <Stack
             alignItems="center"
             direction="row"
@@ -101,7 +93,7 @@ export const TopNav = (props) => {
               <Box
                 sx={{
                   display: 'inline-flex',
-                  height: 30,
+                  height: 25
                   // width: 400
                 }}
               >
@@ -125,21 +117,11 @@ export const TopNav = (props) => {
                 </Box>
               )} */}
             </Stack>
-            <Chip
-              label="v6.1.0"
-              size="small"
-            />
+            <Chip label="v6.1.0" size="small" />
           </Stack>
           {mdUp && (
-            <Stack
-              alignItems="center"
-              direction="row"
-              spacing={2}
-            >
-              <Box
-                component="nav"
-                sx={{ height: '100%' }}
-              >
+            <Stack alignItems="center" direction="row" spacing={2}>
+              <Box component="nav" sx={{ height: '100%' }}>
                 <Stack
                   component="ul"
                   alignItems="center"
@@ -156,10 +138,14 @@ export const TopNav = (props) => {
                   <>
                     {items.map((item) => {
                       const checkPath = !!(item.path && pathname);
-                      const partialMatch = checkPath ? pathname.includes(item.path) : false;
-                      const exactMatch = checkPath ? pathname === item.path : false;
+                      const partialMatch = checkPath
+                        ? pathname.includes(item.path)
+                        : false;
+                      const exactMatch = checkPath
+                        ? pathname === item.path
+                        : false;
                       const active = item.popover ? partialMatch : exactMatch;
-                      
+
                       return (
                         <TopNavItem
                           active={active}
@@ -170,7 +156,6 @@ export const TopNav = (props) => {
                           title={item.title}
                         />
                       );
-                      
                     })}
                   </>
                 </Stack>

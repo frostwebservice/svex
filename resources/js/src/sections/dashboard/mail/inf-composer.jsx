@@ -90,10 +90,12 @@ const InfComposer = (props) => {
   const [selectedGroup, setSelectedGroup] = useState(0);
   const [groups, setGroups] = useState([]);
   useEffect(() => {
-    axios.post('/api/getoutreachs', { email: email }, {}).then((res) => {
-      setGroups(res.data);
-    });
-  }, []);
+    if (open) {
+      axios.post('/api/getoutreachs', { email: email }, {}).then((res) => {
+        setGroups(res.data);
+      });
+    }
+  }, [open]);
 
   useEffect(() => {
     let massTo = '';

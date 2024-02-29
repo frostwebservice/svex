@@ -35,15 +35,13 @@ export const TopNav = (props) => {
   const [mailCnt, setMailCnt] = useState(0);
 
   useEffect(() => {
-    if (mails.allIds.length != 0) {
-      let cnt = 0;
-      mails.allIds.map((emailId) => {
-        if (!mails.byId[emailId].isUnread.seen) {
-          cnt++;
-        }
-      });
-      setMailCnt(cnt);
-    }
+    let cnt = 0;
+    mails.allIds.map((emailId) => {
+      if (!mails.byId[emailId].isUnread.seen) {
+        cnt++;
+      }
+    });
+    setMailCnt(cnt);
   }, [mails]);
 
   const dispatch = useDispatch();
@@ -89,7 +87,7 @@ export const TopNav = (props) => {
           )}
           <SearchButton />
         </Stack>
-        <Stack alignItems="center" direction="row" spacing={2}>
+        <Stack alignItems="center" direction="row" spacing={0}>
           <Tooltip title="Settings" className="small-show">
             <Box
               sx={{
@@ -121,8 +119,9 @@ export const TopNav = (props) => {
               </ButtonBase>
             </Box>
           </Tooltip>
-          <Box>
+          <Box sx={{ pr: 0 }}>
             <Button
+              sx={{ pr: 1 }}
               className="custom-mailbox"
               component={RouterLink}
               href={paths.dashboard.mail}
@@ -131,15 +130,15 @@ export const TopNav = (props) => {
                   {mailCnt == 0 ? (
                     <img
                       src="/assets/icons/mail-empty.png"
-                      width={40}
-                      height={30}
+                      width={30}
+                      height={25}
                     />
                   ) : (
                     <Badge badgeContent={mailCnt} color="primary">
                       <img
                         src="/assets/icons/mail.png"
-                        width={40}
-                        height={30}
+                        width={30}
+                        height={25}
                       />
                     </Badge>
                   )}

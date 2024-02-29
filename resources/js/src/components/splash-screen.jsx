@@ -25,7 +25,7 @@ export const SplashScreen = () => (
         width: 100
       }}
     >
-      <img src="/longlogo.png" />
+      {/* <img src="/longlogo.png" /> */}
     </Box>
   </Box>
 );

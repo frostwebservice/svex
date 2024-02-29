@@ -269,6 +269,7 @@ const Page = (props) => {
       }
       setInfcounter(result.result.length);
     }
+    window.scrollTo(0, 0);
 
     dispatch(getUserProfile({ email: email }));
   }, [dispatch, results]);

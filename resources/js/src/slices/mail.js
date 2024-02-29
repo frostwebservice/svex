@@ -10,6 +10,7 @@ const initialState = {
     byId: {},
     allIds: []
   },
+  tmpmails: [],
   labels: []
 };
 
@@ -27,6 +28,10 @@ const reducers = {
     const cntemails = action.payload;
     state.cntemails.byId = objFromArrayMail(cntemails);
     state.cntemails.allIds = Object.keys(state.cntemails.byId);
+  },
+  getTmpEmails(state, action) {
+    const tmpemails = action.payload;
+    state.tmpmails = tmpemails;
   },
   getEmail(state, action) {
     const email = action.payload;

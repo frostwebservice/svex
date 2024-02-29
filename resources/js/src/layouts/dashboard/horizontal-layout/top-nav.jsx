@@ -233,7 +233,7 @@ export const TopNav = (props) => {
           </Box>
           <TenantSwitch />
         </Stack>
-        <Stack alignItems="center" direction="row" spacing={2}>
+        <Stack alignItems="center" direction="row" spacing={0}>
           {/* <LanguageSwitch /> */}
           <Tooltip title="Settings" className="small-show">
             <Box
@@ -266,8 +266,9 @@ export const TopNav = (props) => {
               </ButtonBase>
             </Box>
           </Tooltip>
-          <Box>
+          <Box sx={{ pr: 0 }}>
             <Button
+              sx={{ pr: 1 }}
               className="custom-mailbox"
               component={RouterLink}
               href={paths.dashboard.mail}
@@ -276,15 +277,15 @@ export const TopNav = (props) => {
                   {mailCnt == 0 ? (
                     <img
                       src="/assets/icons/mail-empty.png"
-                      width={40}
-                      height={30}
+                      width={30}
+                      height={25}
                     />
                   ) : (
                     <Badge badgeContent={mailCnt} color="primary">
                       <img
                         src="/assets/icons/mail.png"
-                        width={40}
-                        height={30}
+                        width={30}
+                        height={25}
                       />
                     </Badge>
                   )}

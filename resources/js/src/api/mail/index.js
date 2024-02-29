@@ -95,7 +95,33 @@ class MailApi {
       }
     });
   }
+  getTmpEmails(request) {
+    const { label, email } = request;
 
+    return new Promise((resolve, reject) => {
+      try {
+        // Initially we make a copy of all emails.
+        // On a real server this will be different since there will be a real DB query.
+        if (label == 'template') {
+          axios
+            .post('/api/get_tmp_emails', {
+              email: email,
+              label: label
+            })
+            .then((response) => {
+              const clonedEmails = response.data;
+
+              clonedEmails.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+
+              resolve(clonedEmails);
+            });
+        }
+      } catch (err) {
+        console.error('[Mail Api]: ', err);
+        reject(new Error('Internal server error'));
+      }
+    });
+  }
   getEmail(request) {
     const { emailId } = request;
 

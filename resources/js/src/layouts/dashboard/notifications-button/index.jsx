@@ -4,7 +4,7 @@ import { Badge, IconButton, SvgIcon, Tooltip } from '@mui/material';
 import { usePopover } from '@/hooks/use-popover';
 import { notifications as initialNotifications } from './notifications';
 import { NotificationsPopover } from './notifications-popover';
-
+import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
 const useNotifications = () => {
   // const [notifications, setNotifications] = useState(initialNotifications);
   const [notifications, setNotifications] = useState([]);
@@ -42,27 +42,39 @@ const useNotifications = () => {
 
 export const NotificationsButton = () => {
   const popover = usePopover();
-  const { handleRemoveOne, handleMarkAllAsRead, notifications, unread } =
-    useNotifications();
-
+  const { handleRemoveOne, handleMarkAllAsRead, unread } = useNotifications();
+  const [notifications, setNotifications] = useState([]);
+  const onparentNotification = (notifi) => {
+    setNotifications(notifi);
+  };
   return (
     <div className="small-show">
       <Tooltip title="Notifications">
-        <IconButton ref={popover.anchorRef} onClick={popover.handleOpen}>
+        <IconButton
+          ref={popover.anchorRef}
+          onClick={popover.handleOpen}
+          sx={{ margin: '4px', padding: '4px' }}
+        >
           <Badge color="error" badgeContent={unread}>
-            <SvgIcon>
-              <Bell01Icon />
-            </SvgIcon>
+            {notifications?.length == 0 ? (
+              <SvgIcon>
+                <Bell01Icon />
+              </SvgIcon>
+            ) : (
+              <SvgIcon>
+                <NotificationImportantIcon />
+              </SvgIcon>
+            )}
           </Badge>
         </IconButton>
       </Tooltip>
       <NotificationsPopover
         anchorEl={popover.anchorRef.current}
-        notifications={notifications}
         onClose={popover.handleClose}
         onMarkAllAsRead={handleMarkAllAsRead}
         onRemoveOne={handleRemoveOne}
         open={popover.open}
+        onparentNotification={onparentNotification}
       />
     </div>
   );

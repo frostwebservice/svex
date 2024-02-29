@@ -47,6 +47,17 @@ const LinkedinSearch = (props) => {
   useEffect(() => {
     dispatch(getSearchs({ email: email }));
   }, [dispatch]);
+  const [iginfs, setIginfs] = useState([]);
+  useEffect(() => {
+    axios
+      .post('/api/get_inf_name', {
+        table: 'influencers_linkedin'
+      })
+      .then((response) => {
+        setIginfs(response.data);
+      })
+      .catch((e) => {});
+  }, []);
   const [savedSearchs, setSavedSearchs] = useState(searchs);
   const saveSearch = () => {
     let values = searchParams;
@@ -71,6 +82,8 @@ const LinkedinSearch = (props) => {
     setOpen(false);
   };
   const handleCreate = () => {
+    toast.success('A new search filters created.');
+
     saveSearch();
   };
 
@@ -671,9 +684,21 @@ const LinkedinSearch = (props) => {
                 fullWidth
                 label="Search"
                 name="username"
+                list="suggestion"
                 placeholder="Username"
                 InputLabelProps={{ shrink: true }}
+                inputProps={{ list: 'suggestion' }}
               />
+              <datalist id="suggestion">
+                {iginfs.map((iginf, index) => {
+                  //Parsing the array and displaying suggestion with option tag
+                  return (
+                    <option key={index} value={iginf.username}>
+                      {iginf.username}
+                    </option>
+                  );
+                })}
+              </datalist>
             </Box>
           </Grid>
           <Grid item xs={12} md={2} sm={4} className="custom-grid">
