@@ -471,7 +471,7 @@ class MailController extends Controller
         print_r(json_encode($type));
     }
     public function send_mail(Request $request){
-        // die();
+        die();
         $message = $request->message;
         $inlines = explode(",",$request->inlineImgs);
         foreach($inlines as $key=>$inline){
